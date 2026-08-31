@@ -1,0 +1,54 @@
+{
+  "_comment": [
+    "Church-specific language data, kept OUT of the source tree (S2 + S7).",
+    "",
+    "Three things live here, because all are per-congregation and none belongs in",
+    "code that is published:",
+    "  properNouns        - names and abbreviations the translator must keep verbatim.",
+    "                       Injected into the GPT prompt for the target languages whose",
+    "                       rule block carries that instruction - 10 of the 12 today;",
+    "                       Polish and one other have never had it.",
+    "  glossaryTerms      - extra glossary records merged on top of theologicalGlossary.json.",
+    "                       Same shape as the entries there: category, context, translations.",
+    "  glossaryCategories - descriptions for categories introduced above. getCategories()",
+    "                       merges them, so a category used by a record but described",
+    "                       nowhere would show up unnamed.",
+    "",
+    "VALIDATED ON LOAD. An absent file is fine - the base glossary works on its own.",
+    "A file that EXISTS but is malformed is a hard startup error, not a silent empty",
+    "configuration: a broken file would otherwise serve every congregation without its",
+    "names and terms while looking healthy.",
+    "",
+    "The real file is created per deployment and never committed - see .gitignore.",
+    "Point CHURCH_DATA_PATH at it, or drop it next to this example as churchData.json.",
+    "",
+    "Keys are church ids as used in churches.json. 'default' applies to any church",
+    "with no entry of its own."
+  ],
+  "default": {
+    "properNouns": [
+      "FiKo"
+    ],
+    "glossaryTerms": {}
+  },
+  "example-church": {
+    "properNouns": [
+      "FiKo",
+      "ExampleName"
+    ],
+    "glossaryCategories": {
+      "church_staff": "Congregation-specific people and roles"
+    },
+    "glossaryTerms": {
+      "Beispielperson": {
+        "category": "church_staff",
+        "context": "Example of a congregation-specific term: a person or role name",
+        "translations": {
+          "de": "Beispielperson",
+          "en": "Example Person",
+          "pl": "Osoba przykladowa"
+        }
+      }
+    }
+  }
+}

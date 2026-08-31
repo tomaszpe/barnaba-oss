@@ -1,0 +1,59 @@
+name: Bug report
+description: Something behaves differently from what the documentation says.
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Before filing: the ASR/streaming core, the translation prompt and the
+        latency-critical delivery path are **closed to outside changes** (see
+        CONTRIBUTING.md). Bug reports about them are still welcome — it is pull
+        requests changing them that get closed.
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened
+      description: What you did, what you expected, what you got instead.
+    validations:
+      required: true
+  - type: textarea
+    id: repro
+    attributes:
+      label: How to reproduce
+      placeholder: |
+        1. ...
+        2. ...
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: Commit
+      description: The commit you are running. "latest main" is not a commit.
+    validations:
+      required: true
+  - type: textarea
+    id: env
+    attributes:
+      label: Environment
+      description: Azure region, Container Apps workload profile, GPU model, source commit, and ACR image digest.
+    validations:
+      required: true
+  - type: textarea
+    id: logs
+    attributes:
+      label: Logs
+      description: |
+        Relevant log lines. **Remove any transcript or translated text** before
+        pasting — this project handles sermon audio, and that content should not
+        end up in a public issue. Redacting it does not weaken the report.
+      render: text
+  - type: checkboxes
+    id: gpu
+    attributes:
+      label: Confirmation
+      options:
+        - label: I am running the Whisper service on an NVIDIA GPU. (CPU is not supported and "it is slow on CPU" is not a bug.)
+          required: true
+        - label: I have removed sermon transcript or translation text from anything I pasted above.
+          required: true

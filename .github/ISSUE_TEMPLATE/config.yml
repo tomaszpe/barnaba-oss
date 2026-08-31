@@ -1,0 +1,11 @@
+# Blank issues are disabled deliberately. CONTRIBUTING.md names three areas that
+# are open and three that are closed; the templates are the only mechanism that
+# actually enforces that split at the point where someone starts typing.
+blank_issues_enabled: false
+contact_links:
+  - name: Security vulnerability
+    url: https://github.com/tomaszpe/barnaba-oss/security/advisories/new
+    about: Please report vulnerabilities privately. Do not open a public issue. See SECURITY.md.
+  - name: Question about deployment or licensing
+    url: https://github.com/tomaszpe/barnaba-oss/blob/main/README.md
+    about: Read the README first, in particular Requirements and the third-party model licence.

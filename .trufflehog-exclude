@@ -1,0 +1,20 @@
+# TruffleHog exclusion list, shipped WITH the export on purpose.
+#
+# It lives here rather than in the private tooling because the scanning
+# procedure is documented with a relative path, and a documented command that
+# only works on the maintainer's machine is not a procedure - it is a note.
+#
+# EXPORT_SOURCE.txt is the provenance marker: source commit, file count, and a
+# SHA-256 of every exported file. Those hashes are 64-character hex strings, and
+# one of them sits on the same line as app/cache/liturgicalPhrases.json, so
+# TruffleHog's Phrase detector reads "the word phrase, near a 64-hex token" and
+# reports a secret. It is the hash of app/cacheService.js and you can check that
+# in one line:
+#
+#   python -c "import hashlib,pathlib;print(hashlib.sha256(pathlib.Path('app/cacheService.js').read_bytes()).hexdigest())"
+#
+# Run the scan TWICE and report both numbers. Once without this file, to see the
+# single known finding; once with it and --fail, as the gate. Excluding the
+# marker without the first pass would turn a known false positive into an
+# invisible channel for a real one.
+EXPORT_SOURCE.txt

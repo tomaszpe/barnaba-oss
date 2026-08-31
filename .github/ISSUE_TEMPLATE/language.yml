@@ -1,0 +1,43 @@
+name: Language coverage
+description: Terminology, glossary or UI localisation for a target language.
+labels: ["language"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        This is one of the three areas explicitly open to contributions. A native
+        speaker who has sat through services in the language is worth more here
+        than any amount of engineering.
+  - type: input
+    id: language
+    attributes:
+      label: Language
+      description: Target language, and the variant if it matters (e.g. European vs Brazilian Portuguese).
+    validations:
+      required: true
+  - type: dropdown
+    id: area
+    attributes:
+      label: Area
+      options:
+        - Theological or liturgical terminology (glossary)
+        - Liturgical phrase cache
+        - UI localisation (listener interface)
+        - Other
+    validations:
+      required: true
+  - type: textarea
+    id: detail
+    attributes:
+      label: What is wrong or missing
+      description: |
+        Give the current output and the correct output. For terminology, the
+        register matters: say whether a rendering is wrong, or merely unusual in
+        the tradition you have in mind.
+    validations:
+      required: true
+  - type: input
+    id: background
+    attributes:
+      label: Your background with this language
+      description: Native speaker, translator, regular attender of services in it? This is context, not a qualification test.

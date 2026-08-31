@@ -1,0 +1,26 @@
+# Barnaba gateway image - public repository
+#
+# Written from scratch, NOT copied from the source repository, because of one
+# line that must not travel in the other direction.
+#
+#   Here, config/churches.json is created per deployment and mounted read-only,
+#   so it must never be baked into the image. Note that .gitignore protects the
+#   commit, not the image: `COPY . .` ignores .gitignore entirely. Those are two
+#   separate boundaries and this file is the second one.
+
+node_modules
+npm-debug.log
+.git
+.gitignore
+.env
+*.md
+.DS_Store
+test-tools
+__tests__
+*.test.mjs
+
+# Runtime church whitelist: mounted read-only at run time, never baked in.
+# The image ships config/churches.example.json only.
+config/churches.json
+# Same rule, same reason: mounted at run time, never baked into the image.
+config/churchData.json

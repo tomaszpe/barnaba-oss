@@ -1,0 +1,30 @@
+{
+  "name": "barnabas-server",
+  "version": "3.0.0",
+  "license": "AGPL-3.0-or-later",
+  "type": "module",
+  "main": "server.js",
+  "description": "Swiss German church sermon translation system with Whisper ASR",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js",
+    "preload-whisper": "node -e \"if(!process.env.WHISPER_SERVICE_URL) throw new Error('WHISPER_SERVICE_URL is required'); import('./whisperClient.js').then(m => m.initWhisper())\"",
+    "test": "vitest run",
+    "test:watch": "vitest"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.18.2",
+    "helmet": "^8.3.0",
+    "multer": "^2.0.2",
+    "openai": "^4.28.0",
+    "qrcode": "^1.5.3",
+    "ws": "^8.16.0"
+  },
+  "engines": {
+    "node": "^22.12.0 || >=24.0.0"
+  },
+  "devDependencies": {
+    "vitest": "^4.1.4"
+  }
+}

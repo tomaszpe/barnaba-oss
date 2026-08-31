@@ -1,0 +1,181 @@
+# Barnaba - public CI
+#
+# WRITTEN FOR THE PUBLIC REPOSITORY, and it lives in tools/oss-export/generated/
+# rather than in the private repository's .github/workflows/ for a concrete reason:
+# a workflow placed there would also RUN there, on every push to the private repo,
+# and its gitleaks step would then scan the private tree. Keeping it in generated/
+# means it exists only in the export.
+#
+# WHAT THIS IS NOT: there are no deployment workflows in this repository, on
+# purpose. A fork-based pull request never receives repository secrets, so a deploy
+# workflow here would contribute nothing except a published description of our
+# infrastructure topology.
+#
+# WHAT THIS IS NOT, PART TWO: this workflow contains NO project-specific token or
+# identifier list. That control belongs in the private exporter and runs BEFORE a
+# push, because detecting a leak after publication is not prevention - the content
+# is already served, indexed and possibly forked. What runs here is a general
+# scanner, as a safety net, plus GitHub's own secret scanning and push protection
+# (enabled in repository settings).
+#
+# CPU ONLY. Running the service needs an NVIDIA GPU; running the tests does not,
+# because whisper/mock_whisper.py stands in for the model. That is why CI is
+# possible on an ordinary runner at all.
+
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  gateway:
+    name: Gateway tests (Node)
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: app
+    steps:
+      - uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8  # v6.0.1
+        with:
+          # The default leaves a usable GITHUB_TOKEN in .git/config for every
+          # later step - including anything npm/pip runs. Nothing here pushes.
+          persist-credentials: false
+
+      - uses: actions/setup-node@6044e13b5dc448c55e2357c09f80417699197238  # v6.2.0
+        with:
+          # Node 24 (LTS). NOT Node 20: that line reached end of life on
+          # 30 April 2026, so it stopped receiving security fixes four months
+          # before this repository was prepared, and CI green on an unsupported
+          # runtime is a comfortable way to ship a known-vulnerable runtime.
+          # app/package.json declares "^22.12.0 || >=24.0.0" - 22 is still in
+          # maintenance, 20 is not, and the lockfile's own floors (vite 8.2.2,
+          # vitest 4.1.4) are satisfied by both.
+          node-version: '24.x'
+          cache: npm
+          cache-dependency-path: app/package-lock.json
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Install ffmpeg
+        # Two QA replay integration suites invoke ffmpeg directly. A green local
+        # run on a workstation that already has ffmpeg must not hide a missing CI
+        # prerequisite on the clean GitHub-hosted runner.
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends ffmpeg
+
+      - name: Run tests
+        run: npx vitest run
+
+      - name: Audit production dependencies
+        # --omit=dev on purpose: an advisory in vitest's tree is not shipped to
+        # anyone. --audit-level=high keeps the gate from turning red on a
+        # low-severity transitive advisory that cannot be fixed here, which is
+        # how audit gates get disabled by whoever is on the rota that week.
+        run: npm audit --omit=dev --audit-level=high
+
+  whisper:
+    name: ASR service tests (Python, CPU)
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: whisper
+    steps:
+      - uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8  # v6.0.1
+        with:
+          # The default leaves a usable GITHUB_TOKEN in .git/config for every
+          # later step - including anything npm/pip runs. Nothing here pushes.
+          persist-credentials: false
+
+      - uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405  # v6.2.0
+        with:
+          python-version: '3.11'
+
+      - name: Install CPU PyTorch
+        # requirements.txt deliberately leaves torch commented out - the image
+        # installs a CUDA build. A CPU runner has to install the CPU wheel
+        # explicitly, or pytest cannot even import the modules under test.
+        # Version pinned to match whisper/Dockerfile.base (torch 2.5.1). Testing a
+        # different torch from the one production runs makes a green CI mean less than
+        # it appears to.
+        run: pip install torch==2.5.1 torchaudio==2.5.1 --index-url https://download.pytorch.org/whl/cpu
+
+      - name: Install dependencies
+        run: pip install -r requirements-test.txt
+
+      - name: Audit Python dependencies
+        # FOUR advisories are accepted, by ID, with the reasoning in
+        # whisper/requirements.txt. Naming them one by one is the point: a new
+        # advisory - or a fifth one on transformers - turns this step red instead
+        # of hiding behind a blanket "we know about transformers".
+        #   PYSEC-2025-217  X-CLIP checkpoint conversion, never invoked
+        #   PYSEC-2026-2288 Trainer._load_rng_state, inference-only service
+        #   PYSEC-2026-2289 CVE-2026-4372, mitigated by the pinned config.json
+        #   PYSEC-2026-2290 LightGlue loading path, neither version nor model applies
+        run: |
+          pip install pip-audit==2.9.0
+          pip-audit --strict --requirement requirements.txt             --ignore-vuln PYSEC-2025-217             --ignore-vuln PYSEC-2026-2288             --ignore-vuln PYSEC-2026-2289             --ignore-vuln PYSEC-2026-2290
+
+      - name: Run tests
+        # Tests that need a locally cached tokenizer snapshot skip themselves here;
+        # they are meant to be run in strict mode against a candidate image, which
+        # is a private step and not part of this workflow.
+        run: python -m pytest -q
+
+  secrets:
+    name: Secret scan (general rules only)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8  # v6.0.1
+        with:
+          # Full history: the scan below covers it.
+          fetch-depth: 0
+          # The scanner runs as a container over this checkout. Leaving the
+          # token in .git/config would hand it to that container along with the
+          # repository, for a job that needs no credentials at all.
+          persist-credentials: false
+
+      - name: gitleaks
+        # DEFAULT RULES ONLY. No custom configuration and no project identifier
+        # list - see the header. v8.30.1 is the version this export was scanned
+        # with before publication.
+        #
+        # PINNED BY DIGEST, not by tag. A tag on a registry is a pointer and can be
+        # moved; `@sha256:...` cannot. The digest below is the multi-arch OCI index
+        # that ghcr.io returns for v8.30.1, so it resolves on any runner
+        # architecture. A pinned GitHub Action next to an unpinned container image
+        # would be a lock on the front door and an open window beside it.
+        #
+        # LEAST PRIVILEGE FOR THE SCANNER ITSELF. It reads a repository in order to
+        # look for credentials, which is the last thing that should also hold any:
+        #   --network=none   nothing to exfiltrate to, and the scan needs no network
+        #   /repo:ro         a read-only view; gitleaks reports on stdout
+        #   GIT_CONFIG_*     safe.directory for /repo, injected through the
+        #                    environment. The checkout belongs to the runner user
+        #                    and the container is root, so git would otherwise
+        #                    refuse with "dubious ownership". Env config is used
+        #                    rather than `git config --global` because the mount is
+        #                    read-only and nothing should be written anywhere.
+        #
+        # HISTORY, NOT JUST THE WORKING TREE. An earlier version passed --no-git, which
+        # discarded the history that `fetch-depth: 0` above exists to fetch: a secret
+        # committed and then deleted in a later commit stays public forever while this
+        # job reports green. `--log-opts=--all` walks every ref, not only the checkout.
+        run: |
+          docker run --rm --network=none \
+            -v "${{ github.workspace }}:/repo:ro" \
+            -e GIT_CONFIG_COUNT=1 \
+            -e GIT_CONFIG_KEY_0=safe.directory \
+            -e GIT_CONFIG_VALUE_0=/repo \
+            ghcr.io/gitleaks/gitleaks:v8.30.1@sha256:c00b6bd0aeb3071cbcb79009cb16a60dd9e0a7c60e2be9ab65d25e6bc8abbb7f \
+            detect --source=/repo --log-opts=--all --redact --verbose --no-banner

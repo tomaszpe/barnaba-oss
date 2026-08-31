@@ -1,0 +1,11 @@
+.git
+.pytest_cache
+__pycache__
+*.py[cod]
+test_*.py
+requirements-test.txt
+pytest.ini
+*.wav
+*.mp3
+*.m4a
+*.webm

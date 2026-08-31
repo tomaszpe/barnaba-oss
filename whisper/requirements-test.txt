@@ -1,0 +1,5 @@
+# Test environment. Runtime images install requirements.txt only.
+-r requirements.txt
+
+pytest==9.1.0
+pytest-asyncio==1.4.0

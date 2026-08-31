@@ -1,0 +1,46 @@
+name: Measurement claim
+description: A claim about quality, latency or accuracy, backed by a measurement.
+labels: ["measurement"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Use this for anything of the form "X would be better than Y" about the
+        ASR core, the translation prompt or the delivery path. Those areas are
+        closed to pull requests **precisely because a change there cannot be
+        reviewed by reading it** — several intuitively-better values have been
+        measured and rejected. Open this instead of a PR. If the measurement
+        holds up, we will run it through the protocol and credit you.
+  - type: textarea
+    id: claim
+    attributes:
+      label: The claim
+      description: One sentence. What is better, and than what.
+    validations:
+      required: true
+  - type: textarea
+    id: method
+    attributes:
+      label: How you measured it
+      description: |
+        What material, how many runs, what varied and what was held fixed. A
+        single anecdote is a hypothesis, not a measurement — that is fine, just
+        label it as one.
+    validations:
+      required: true
+  - type: textarea
+    id: numbers
+    attributes:
+      label: The numbers
+      description: Before and after, with the units.
+    validations:
+      required: true
+  - type: textarea
+    id: notverified
+    attributes:
+      label: What you did NOT verify
+      description: |
+        The most useful box on this form. Naming the gap makes the rest
+        trustworthy; leaving it empty does the opposite.
+    validations:
+      required: true

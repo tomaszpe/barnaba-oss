@@ -1,0 +1,42 @@
+# Barnaba — public repository
+#
+# Written from scratch. The private .dockerignore is NOT reused: it
+# un-ignores paths that do not exist here and names private directories.
+
+.git
+.gitignore
+.github
+
+node_modules
+app/node_modules
+
+__pycache__
+**/__pycache__
+*.py[cod]
+.pytest_cache
+**/.pytest_cache
+.venv
+venv
+
+.env
+.env.local
+*.log
+
+.vscode
+.idea
+.DS_Store
+Thumbs.db
+
+# Docs are not needed inside the image
+README.md
+CONTRIBUTING.md
+CODE_OF_CONDUCT.md
+SECURITY.md
+CLA.md
+docker-compose.yml
+
+# Tests are not needed inside the runtime image
+app/__tests__
+whisper/test_*.py
+whisper/conftest.py
+whisper/pytest.ini

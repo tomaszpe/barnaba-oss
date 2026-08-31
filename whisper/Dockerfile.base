@@ -1,0 +1,102 @@
+# Barnaba Whisper base image
+# ==========================
+# Heavy, rarely-changing CUDA/Python/system/Python dependency layer.
+
+# Pinned by digest. `12.3.2-cudnn9-devel-ubuntu22.04` is a tag, and a tag on a
+# registry is a pointer: the same build a month apart can start from two
+# different CUDA images with nothing in the log to say so.
+FROM nvidia/cuda:12.3.2-cudnn9-devel-ubuntu22.04@sha256:fb1ad20f2552f5b3aafb2c9c478ed57da95e2bb027d15218d7a55b3a0e4b4413
+
+ENV DEBIAN_FRONTEND=noninteractive
+ENV PYTHONUNBUFFERED=1
+ENV PYTHONDONTWRITEBYTECODE=1
+ENV TORCH_HOME=/var/cache/torch
+ENV HF_HOME=/var/cache/whisper
+ENV TRANSFORMERS_CACHE=/var/cache/whisper
+ENV MODEL_CACHE_DIR=/models
+ENV LD_LIBRARY_PATH=/usr/local/cuda/lib64:$LD_LIBRARY_PATH
+ENV PATH=/opt/venv/bin:$PATH
+
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    software-properties-common \
+    && add-apt-repository ppa:deadsnakes/ppa \
+    && apt-get update && apt-get install -y --no-install-recommends \
+    python3.11 \
+    python3.11-venv \
+    python3.11-dev \
+    ffmpeg \
+    git \
+    curl \
+    ninja-build \
+    && rm -rf /var/lib/apt/lists/*
+
+# Keep pip and every installed module on the same interpreter. Installing Ubuntu's
+# python3-pip and then repointing /usr/bin/python3 at Deadsnakes Python 3.11 couples a
+# 3.10 package layout to a 3.11 interpreter and can fail before the first real layer.
+RUN python3.11 -m venv /opt/venv
+RUN python -m pip install --no-cache-dir \
+    pip==26.2.1 \
+    setuptools==84.0.0 \
+    wheel==0.48.0 \
+    packaging==26.3 \
+    ninja==1.13.0
+
+RUN python -m pip install --no-cache-dir \
+    torch==2.5.1+cu121 \
+    torchaudio==2.5.1+cu121 \
+    --index-url https://download.pytorch.org/whl/cu121
+
+# Flash Attention 2.
+#
+# TRAP REMOVED 26.08.2026: this step used to be
+#     pip install ... 2>/dev/null || echo "not available - using SDPA fallback"
+# which swallowed BOTH the compiler output and the failure. A green build could
+# therefore produce an image WITHOUT Flash Attention and say nothing about it,
+# so "the image has flash-attn" was never something the build proved.
+#
+# Fallback to SDPA stays allowed - it is a supported configuration - but it must
+# now be a RECORDED outcome, not an invisible one. stderr is kept here; the VERDICT
+# is made further down by build_info.py, which decides by IMPORTING flash_attn.
+# A successful pip install is not evidence: flash-attn compiles against a specific
+# torch/CUDA ABI and can install yet fail to load.
+ARG WHISPER_REQUIRE_FLASH_ATTN=0
+ENV WHISPER_REQUIRE_FLASH_ATTN=${WHISPER_REQUIRE_FLASH_ATTN}
+RUN set -eu; \
+    python -m pip install --no-cache-dir flash-attn==2.8.3.post1 --no-build-isolation \
+    || echo "WARNING: flash-attn install failed; build_info.py decides if that is fatal" >&2
+WORKDIR /app
+
+COPY requirements.txt .
+RUN python -m pip install --no-cache-dir -r requirements.txt
+
+RUN mkdir -p /var/cache/whisper /var/cache/torch /models
+
+# Silero VAD, PINNED.
+#
+# Build and runtime used to call torch.hub.load() against HEAD of a third-party
+# repository, independently of each other. Two builds a week apart could bake
+# different VAD versions with no record.
+#
+# CORRECTION 26.08: the first version of this comment justified duplicating the
+# value (instead of COPYing config.py) by cache invalidation. That reason was WRONG -
+# a COPY placed after the heavy layers does not invalidate them. The duplication
+# stays for a smaller, honest reason: config.py is application code and this is the
+# base image, so keeping the base independent of it avoids a build-context coupling
+# that buys nothing. What makes the duplication safe is the contract test
+# whisper/test_silero_pin_contract.py, which fails the moment the two drift apart.
+#
+# NOT a neutral change: 'master' currently resolves to 867c2aa, NOT to this pin.
+# Pinning v6.2 is a VERSION CHOICE that needs verifying against whatever the running
+# image carries - see config.py for the full note.
+ARG SILERO_VAD_REF=be95df9152c0d7618fa1edfeb296fc3dae32376f
+# ENV, not just ARG: an ARG disappears after the build, so an image built from
+# a different pin would silently report the default at runtime.
+# Persisting the EFFECTIVE value makes the runtime load exactly what was baked in.
+ENV SILERO_VAD_REF=${SILERO_VAD_REF}
+RUN set -eu; \
+    python -c "import torch,sys; torch.hub.load('snakers4/silero-vad:'+sys.argv[1], 'silero_vad', force_reload=True)" "$SILERO_VAD_REF"
+
+# Inventory and verification. Python writes and imports it itself - an error means a non-zero
+# exit code. The previous version (echo "x=$(python ...)") exited 0 even when Python failed.
+COPY build_info.py /tmp/build_info.py
+RUN set -eu; python /tmp/build_info.py; rm -f /tmp/build_info.py

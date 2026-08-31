@@ -1,0 +1,239 @@
+{
+  "description": "SYNTHETIC fixtures for the F2 prose guard. They replace 32 verbatim fragments of real sermons captured from live sessions, which had no place in a published repository. Generated and self-verified by tools/s12/generate_f2_fixtures.py: every entry matches the F2 comma-list pattern (dropped with the guard off) and reproduces its declared behaviour with the guard on. The metric range and the threshold boundary are preserved on purpose - the fixtures calibrate F2_PROSE_GUARD_MIN_MEAN_WORDS (2.5), so a set that ignored the numbers would leave the test green while proving nothing.",
+  "calibration": {
+    "min_mean_words": 2.4,
+    "max_mean_words": 5.2,
+    "threshold": 2.5,
+    "at_threshold": [
+      2.5
+    ],
+    "expected_pass": 31,
+    "expected_drop": 1
+  },
+  "fixtures": [
+    {
+      "sha16": "d93b7e8b2aee6cac",
+      "session": "synthetic-00",
+      "text": "die zweite Reihe, feste Knoten, harte Bretter, ein langer Faden, alte Karten.",
+      "mean_words": 2.4,
+      "expected_pass_with_guard": false
+    },
+    {
+      "sha16": "c1c64947cce68799",
+      "session": "synthetic-01",
+      "text": "ein rotes Dach, kleine Fenster, ein glatter Stein, harte Bretter, ein langer Faden, alte Karten",
+      "mean_words": 2.5,
+      "expected_pass_with_guard": true
+    },
+    {
+      "sha16": "8a774bd0192fb9da",
+      "session": "synthetic-02",
+      "text": "die letzte Kiste, ein rotes Dach, kleine Fenster, ein glatter Stein, harte Bretter",
+      "mean_words": 2.6,
+      "expected_pass_with_guard": true
+    },
+    {
+      "sha16": "4e7f124ede9fa6ea",
+      "session": "synthetic-03",
+      "text": "ein offenes Tor, die letzte Kiste, ein rotes Dach, die zweite Reihe, ein glatter Stein.",
+      "mean_words": 3.0,
+      "expected_pass_with_guard": true
+    },
+    {
+      "sha16": "0b2bbfc75aeb0a8a",
+      "session": "synthetic-04",
+      "text": "wir schliessen die Tore, ein offenes Tor, die letzte Kiste, ein rotes Dach, die zweite Reihe",
+      "mean_words": 3.2,
+      "expected_pass_with_guard": true
+    },
+    {
+      "sha16": "3264ad1794fc2c6a",
+      "session": "synthetic-05",
+      "text": "wir tragen die Steine, wir schliessen die Tore, ein offenes Tor, die letzte Kiste, ein rotes Dach",
+      "mean_words": 3.4,
+      "expected_pass_with_guard": true
+    },
+    {
+      "sha16": "8d625903631bed82",
+      "session": "synthetic-06",
+      "text": "wir pruefen die Knoten, wir tragen die Steine, wir schliessen die Tore, ein offenes Tor, die letzte Kiste.",
+      "mean_words": 3.6,
+      "expected_pass_with_guard": true
+    },
+    {
+      "sha16": "fbf2f292ce7f893d",
+      "session": "synthetic-07",
+      "text": "wir zaehlen die Kisten, wir pruefen die Knoten, wir tragen die Steine, wir schliessen die Tore, ein offenes Tor",
+      "mean_words": 3.8,
+      "expected_pass_with_guard": true
+    },
+    {
+      "sha16": "a39afd91437142b6",
+      "session": "synthetic-08",
+      "text": "sie oeffnen die Fenster, wir zaehlen die Kisten, wir pruefen die Knoten, wir tragen die Steine, wir schliessen die Tore",
+      "mean_words": 4.0,
+      "expected_pass_with_guard": true
+    },
+    {
+      "sha16": "48416b20603a145c",
+      "session": "synthetic-09",
+      "text": "sie zaehlen die Fenster erneut, sie oeffnen die Fenster, wir zaehlen die Kisten, wir pruefen die Knoten, wir tragen die Steine.",
+      "mean_words": 4.2,
+      "expected_pass_with_guard": true
+    },
+    {
+      "sha16": "1a100265dde8a7da",
+      "session": "synthetic-10",
+      "text": "sie stellen die Kisten daneben, sie zaehlen die Fenster erneut, sie oeffnen die Fenster, wir zaehlen die Kisten, wir pruefen die Knoten",
+      "mean_words": 4.4,
+      "expected_pass_with_guard": true
+    },
+    {
+      "sha16": "d8cd199d43633c75",
+      "session": "synthetic-11",
+      "text": "er faltet die Tuecher langsam, sie stellen die Kisten daneben, sie zaehlen die Fenster erneut, sie oeffnen die Fenster, wir zaehlen die Kisten",
+      "mean_words": 4.6,
+      "expected_pass_with_guard": true
+    },
+    {
+      "sha16": "a4e9bd9b2e523d9b",
+      "session": "synthetic-12",
+      "text": "er ordnet die Steine anders, er faltet die Tuecher langsam, sie stellen die Kisten daneben, sie zaehlen die Fenster erneut, sie oeffnen die Fenster.",
+      "mean_words": 4.8,
+      "expected_pass_with_guard": true
+    },
+    {
+      "sha16": "2c528299004db75f",
+      "session": "synthetic-13",
+      "text": "er bindet die Faeden neu, er ordnet die Steine anders, er faltet die Tuecher langsam, sie stellen die Kisten daneben, sie zaehlen die Fenster erneut",
+      "mean_words": 5.0,
+      "expected_pass_with_guard": true
+    },
+    {
+      "sha16": "3f690ca82a041d4b",
+      "session": "synthetic-14",
+      "text": "wir pruefen die festen Knoten erneut, er bindet die Faeden neu, er ordnet die Steine anders, er faltet die Tuecher langsam, sie stellen die Kisten daneben",
+      "mean_words": 5.2,
+      "expected_pass_with_guard": true
+    },
+    {
+      "sha16": "1df1ad1895bbef21",
+      "session": "synthetic-15",
+      "text": "ein schmaler Pfad, die alte Uhr, ein offenes Tor, die letzte Kiste, ein rotes Dach.",
+      "mean_words": 3.0,
+      "expected_pass_with_guard": true
+    },
+    {
+      "sha16": "467bcafcc4b8100b",
+      "session": "synthetic-16",
+      "text": "wir pruefen die Knoten, ein schmaler Pfad, die alte Uhr, ein offenes Tor, die letzte Kiste",
+      "mean_words": 3.2,
+      "expected_pass_with_guard": true
+    },
+    {
+      "sha16": "a933c6f440118c5b",
+      "session": "synthetic-17",
+      "text": "wir zaehlen die Kisten, wir pruefen die Knoten, ein schmaler Pfad, die alte Uhr, ein offenes Tor",
+      "mean_words": 3.4,
+      "expected_pass_with_guard": true
+    },
+    {
+      "sha16": "61b5bf769ff8f8cc",
+      "session": "synthetic-18",
+      "text": "sie oeffnen die Fenster, wir zaehlen die Kisten, wir pruefen die Knoten, ein schmaler Pfad, die alte Uhr.",
+      "mean_words": 3.6,
+      "expected_pass_with_guard": true
+    },
+    {
+      "sha16": "7adc38770d6714a5",
+      "session": "synthetic-19",
+      "text": "sie falten die Tuecher, sie oeffnen die Fenster, wir zaehlen die Kisten, wir pruefen die Knoten, ein schmaler Pfad",
+      "mean_words": 3.8,
+      "expected_pass_with_guard": true
+    },
+    {
+      "sha16": "3a48326e658fef88",
+      "session": "synthetic-20",
+      "text": "sie ordnen die Karten, sie falten die Tuecher, sie oeffnen die Fenster, wir zaehlen die Kisten, wir pruefen die Knoten",
+      "mean_words": 4.0,
+      "expected_pass_with_guard": true
+    },
+    {
+      "sha16": "d48b411dca56f60c",
+      "session": "synthetic-21",
+      "text": "er faltet die Tuecher langsam, sie ordnen die Karten, sie falten die Tuecher, sie oeffnen die Fenster, wir zaehlen die Kisten.",
+      "mean_words": 4.2,
+      "expected_pass_with_guard": true
+    },
+    {
+      "sha16": "2a3fa3c425577dbf",
+      "session": "synthetic-22",
+      "text": "er ordnet die Steine anders, er faltet die Tuecher langsam, sie ordnen die Karten, sie falten die Tuecher, sie oeffnen die Fenster",
+      "mean_words": 4.4,
+      "expected_pass_with_guard": true
+    },
+    {
+      "sha16": "23d5c0bf228d9812",
+      "session": "synthetic-23",
+      "text": "er bindet die Faeden neu, er ordnet die Steine anders, er faltet die Tuecher langsam, sie ordnen die Karten, sie falten die Tuecher",
+      "mean_words": 4.6,
+      "expected_pass_with_guard": true
+    },
+    {
+      "sha16": "ac5c76b83e9a8a83",
+      "session": "synthetic-24",
+      "text": "wir zeichnen die Linien gerade, er bindet die Faeden neu, er ordnet die Steine anders, er faltet die Tuecher langsam, sie ordnen die Karten.",
+      "mean_words": 4.8,
+      "expected_pass_with_guard": true
+    },
+    {
+      "sha16": "1cb0a1f322e20703",
+      "session": "synthetic-25",
+      "text": "wir pruefen die Knoten sorgfaeltig, wir zeichnen die Linien gerade, er bindet die Faeden neu, er ordnet die Steine anders, er faltet die Tuecher langsam",
+      "mean_words": 5.0,
+      "expected_pass_with_guard": true
+    },
+    {
+      "sha16": "63030c0ee56b9a50",
+      "session": "synthetic-26",
+      "text": "wir pruefen die festen Knoten erneut, wir pruefen die Knoten sorgfaeltig, wir zeichnen die Linien gerade, er bindet die Faeden neu, er ordnet die Steine anders",
+      "mean_words": 5.2,
+      "expected_pass_with_guard": true
+    },
+    {
+      "sha16": "9f9700d9fdc24841",
+      "session": "synthetic-27",
+      "text": "ein langer Faden, der dritte Wagen, ein schmaler Pfad, die alte Uhr, ein offenes Tor.",
+      "mean_words": 3.0,
+      "expected_pass_with_guard": true
+    },
+    {
+      "sha16": "56629005f5163aa5",
+      "session": "synthetic-28",
+      "text": "sie oeffnen die Fenster, ein langer Faden, der dritte Wagen, ein schmaler Pfad, die alte Uhr",
+      "mean_words": 3.2,
+      "expected_pass_with_guard": true
+    },
+    {
+      "sha16": "2b773ccccace9fc1",
+      "session": "synthetic-29",
+      "text": "sie falten die Tuecher, sie oeffnen die Fenster, ein langer Faden, der dritte Wagen, ein schmaler Pfad",
+      "mean_words": 3.4,
+      "expected_pass_with_guard": true
+    },
+    {
+      "sha16": "1be57efba6476ddb",
+      "session": "synthetic-30",
+      "text": "sie ordnen die Karten, sie falten die Tuecher, sie oeffnen die Fenster, ein langer Faden, der dritte Wagen.",
+      "mean_words": 3.6,
+      "expected_pass_with_guard": true
+    },
+    {
+      "sha16": "1194cdcc72540ba5",
+      "session": "synthetic-31",
+      "text": "er sammelt die Faeden, sie ordnen die Karten, sie falten die Tuecher, sie oeffnen die Fenster, ein langer Faden",
+      "mean_words": 3.8,
+      "expected_pass_with_guard": true
+    }
+  ]
+}

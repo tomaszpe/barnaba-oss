@@ -1,0 +1,89 @@
+# Barnaba Control Plane - PUBLIC image
+# ====================================
+# Starts and stops the Azure Container Apps that host Whisper and the gateway.
+#
+# TWO DIFFERENCES FROM THE PRIVATE IMAGE, both deliberate, both documented here
+# because a Dockerfile that silently differs from the one that ships is worse than
+# no Dockerfile at all:
+#
+#  1. PINNED AZURE CLI. The private image uses a downloaded shell installer. The
+#     public image configures Microsoft's signed Debian repository explicitly and
+#     installs an exact package version; no remote script is piped into a shell.
+#
+#  2. THE RIGHT package.json. The private build renames the file while packing the
+#     upload, so its Dockerfile says `COPY package.json ./` and gets the
+#     control-plane one. Nothing renames anything here, so that line would have
+#     copied the GATEWAY manifest and installed the gateway's whole dependency
+#     tree - which is neither minimal nor what the comment claimed.
+#
+# `npm ci` uses the dedicated lockfile. An install without a lockfile resolves
+# whatever is current on the day of the build, so two builds of the same commit
+# are two different images.
+#
+# Azure Container Registry builds this file; local Docker is not a supported path.
+
+# Pinned by digest: a tag is a pointer and can be moved, a digest cannot.
+ARG NODE_BASE_IMAGE=node:24-bookworm-slim@sha256:ba849c60be29959425b8734d57b8b4b7d56f98edd9504c9af091d5281095a71e
+FROM ${NODE_BASE_IMAGE}
+
+ARG AZURE_CLI_VERSION=2.89.1-1~bookworm
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends ca-certificates curl gnupg && \
+    mkdir -p /etc/apt/keyrings && \
+    curl -fsSL https://packages.microsoft.com/keys/microsoft.asc -o /tmp/microsoft.asc && \
+    gpg --dearmor --yes -o /etc/apt/keyrings/microsoft.gpg /tmp/microsoft.asc && \
+    chmod go+r /etc/apt/keyrings/microsoft.gpg && \
+    printf '%s\n' \
+      'Types: deb' \
+      'URIs: https://packages.microsoft.com/repos/azure-cli/' \
+      'Suites: bookworm' \
+      'Components: main' \
+      'Architectures: amd64' \
+      'Signed-By: /etc/apt/keyrings/microsoft.gpg' \
+      > /etc/apt/sources.list.d/azure-cli.sources && \
+    apt-get update && \
+    apt-get install -y --no-install-recommends azure-cli=${AZURE_CLI_VERSION} && \
+    rm -rf /var/lib/apt/lists/* /tmp/microsoft.asc
+
+WORKDIR /app
+
+# The control-plane manifest, under the name npm expects, with its own lockfile.
+COPY package.control-plane.json package.json
+COPY package-lock.control-plane.json package-lock.json
+
+RUN npm ci --omit=dev && npm cache clean --force
+
+# Copy control plane code and static files.
+# This list is EXPLICIT (unlike the gateway image, which does `COPY . .`), so every
+# local import of control-plane.js must be listed here or the container crashes on
+# boot with ERR_MODULE_NOT_FOUND. Locked by app/__tests__/controlPlaneImageContract.test.mjs.
+COPY control-plane.js ./
+COPY csrfService.js ./
+COPY clientFeatureConfig.js ./
+COPY startup.sh ./
+COPY public/ ./public/
+COPY config/ ./config/
+
+# The build context is often produced on Windows. Normalize defensively even when
+# Git attributes were bypassed (for example by an ACR upload or a ZIP artifact),
+# otherwise Linux reads the shebang as /bin/bash\r and the container exits 127.
+RUN sed -i 's/\r$//' startup.sh && \
+    chmod +x startup.sh && \
+    chown -R node:node /app
+
+# The base image provides the unprivileged `node` account. Azure CLI stores its
+# managed-identity session beneath /home/node; the application only reads /app.
+USER node
+
+ENV NODE_ENV=production
+ENV CONTROL_PLANE_PORT=8090
+ENV AZURE_USE_MANAGED_IDENTITY=true
+
+EXPOSE 8090
+
+# Health check
+HEALTHCHECK --interval=30s --timeout=10s --start-period=10s --retries=3 \
+    CMD node -e "fetch('http://localhost:8090/health').then(r => r.ok ? process.exit(0) : process.exit(1)).catch(() => process.exit(1))"
+
+# Start with Azure login then run control plane
+CMD ["./startup.sh"]

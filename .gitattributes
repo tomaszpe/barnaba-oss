@@ -1,0 +1,23 @@
+# Barnaba — public repository
+#
+# Written from scratch. The private .gitattributes is NOT reused: its
+# rules pin artifacts of a measurement harness that stays private.
+
+* text=auto eol=lf
+
+*.js    text eol=lf
+*.mjs   text eol=lf
+*.json  text eol=lf
+*.py    text eol=lf
+*.md    text eol=lf
+*.yml   text eol=lf
+*.yaml  text eol=lf
+*.html  text eol=lf
+*.svg   text eol=lf
+*.sh    text eol=lf
+
+Dockerfile*  text eol=lf
+.env.example text eol=lf
+
+*.png binary
+*.wav binary

@@ -1,0 +1,1204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Barnabas - Broadcaster</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #2d1b4e, #1a1a2e);
+            min-height: 100vh;
+            color: #fff;
+            padding: 20px;
+        }
+        .container { max-width: 600px; margin: 0 auto; }
+        header { text-align: center; margin-bottom: 30px; }
+        h1 { font-size: 1.5rem; margin-bottom: 5px; }
+        .subtitle { color: #a0a0a0; font-size: 0.85rem; }
+
+        .section {
+            background: rgba(255,255,255,0.05);
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        .section-title {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            color: #a0a0a0;
+            margin-bottom: 15px;
+        }
+
+        .status {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+        .status-dot {
+            width: 12px; height: 12px;
+            border-radius: 50%;
+            background: #ff4444;
+        }
+        .status-dot.connected { background: #44ff44; }
+        .status-dot.recording { background: #ff8800; animation: pulse 1s infinite; }
+        @keyframes pulse { 50% { opacity: 0.5; transform: scale(1.2); } }
+
+        input {
+            width: 100%;
+            padding: 12px 15px;
+            margin-bottom: 15px;
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 8px;
+            background: rgba(255,255,255,0.1);
+            color: #fff;
+            font-size: 1rem;
+        }
+        input:focus { outline: none; border-color: #4a90d9; }
+
+        .btn {
+            width: 100%;
+            padding: 15px;
+            border: none;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            margin-bottom: 10px;
+            transition: transform 0.2s;
+        }
+        .btn:active { transform: scale(0.98); }
+        .btn-primary { background: #4a90d9; color: white; }
+        .btn-success { background: #44aa44; color: white; }
+        .btn-danger { background: #d94a4a; color: white; }
+        .btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+        .speech-box {
+            min-height: 120px;
+            background: rgba(0,0,0,0.3);
+            border-radius: 10px;
+            padding: 15px;
+            font-size: 1.1rem;
+            line-height: 1.5;
+            margin-bottom: 15px;
+        }
+        .speech-box .partial { color: #888; font-style: italic; }
+        .speech-box .final { color: #4a90d9; }
+
+        .log {
+            max-height: 150px;
+            overflow-y: auto;
+            background: rgba(0,0,0,0.3);
+            border-radius: 10px;
+            padding: 10px;
+            font-family: monospace;
+            font-size: 0.75rem;
+        }
+        .log-entry { margin-bottom: 3px; }
+        .log-entry.info { color: #a0a0a0; }
+        .log-entry.success { color: #44ff44; }
+        .log-entry.error { color: #ff4444; }
+
+        .info-box {
+            background: rgba(74,144,217,0.2);
+            border: 1px solid rgba(74,144,217,0.5);
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            font-size: 0.9rem;
+        }
+
+        .auth-required {
+            text-align: center;
+            padding: 30px;
+        }
+        .auth-required h2 {
+            margin-bottom: 15px;
+            font-size: 1.2rem;
+        }
+        .auth-required p {
+            color: #a0a0a0;
+            margin-bottom: 20px;
+            line-height: 1.5;
+        }
+        .auth-required .btn {
+            max-width: 250px;
+            margin: 0 auto;
+            display: block;
+        }
+
+        .session-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 15px;
+            background: rgba(68, 170, 68, 0.2);
+            border: 1px solid rgba(68, 170, 68, 0.3);
+            border-radius: 10px;
+            margin-bottom: 15px;
+        }
+        .session-info .icon { font-size: 1.2rem; }
+        .session-info .text { flex: 1; }
+        .session-info .name { font-weight: 600; }
+        .session-info .id { font-size: 0.75rem; color: #a0a0a0; }
+        .logout-btn {
+            background: rgba(255,255,255,0.1);
+            border: none;
+            color: #fff;
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            cursor: pointer;
+        }
+        .logout-btn:hover { background: rgba(255,255,255,0.2); }
+
+        .whisper-status {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 12px;
+            background: rgba(255,136,0,0.2);
+            border-radius: 6px;
+            margin-bottom: 10px;
+            font-size: 0.8rem;
+        }
+        .whisper-status.ready { background: rgba(68,255,68,0.2); }
+        .whisper-status .spinner {
+            width: 12px;
+            height: 12px;
+            border: 2px solid rgba(255,255,255,0.3);
+            border-top-color: #fff;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        /* QR/PIN section */
+        .qr-toggle-btn {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 8px;
+            background: rgba(255,255,255,0.05);
+            color: #a0a0a0;
+            font-size: 0.9rem;
+            cursor: pointer;
+            margin-bottom: 10px;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .qr-toggle-btn:hover { background: rgba(255,255,255,0.1); }
+        .qr-toggle-btn .icon { transition: transform 0.2s; }
+        .qr-toggle-btn.expanded .icon { transform: rotate(180deg); }
+        .qr-content {
+            display: none;
+            margin-bottom: 15px;
+        }
+        .qr-content.visible { display: block; }
+        .qr-container {
+            text-align: center;
+            padding: 15px;
+            background: white;
+            border-radius: 10px;
+            margin-bottom: 15px;
+        }
+        .qr-container img {
+            max-width: 180px;
+            width: 100%;
+            height: auto;
+        }
+        .pin-display {
+            text-align: center;
+            padding: 15px;
+            background: rgba(74,144,217,0.2);
+            border: 1px solid rgba(74,144,217,0.3);
+            border-radius: 10px;
+            margin-bottom: 10px;
+        }
+        .pin-label { font-size: 0.75rem; color: #a0a0a0; margin-bottom: 5px; }
+        .pin-code {
+            font-size: 1.8rem;
+            font-weight: 700;
+            letter-spacing: 6px;
+            font-family: monospace;
+            color: #4a90d9;
+        }
+        .pin-expires { font-size: 0.7rem; color: #888; margin-top: 5px; }
+        .join-url {
+            background: rgba(0,0,0,0.3);
+            padding: 10px;
+            border-radius: 6px;
+            font-family: monospace;
+            font-size: 0.65rem;
+            word-break: break-all;
+            color: #a0a0a0;
+        }
+
+        /* Latency chart */
+        .latency-section {
+            margin-top: 10px;
+        }
+        .latency-chart-container {
+            background: rgba(60,60,80,0.5);
+            border-radius: 8px;
+            padding: 10px;
+            margin-top: 10px;
+        }
+        .latency-chart {
+            width: 100%;
+            height: 80px;
+        }
+        .latency-stats {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 8px;
+            font-size: 0.85rem;
+            color: #c0c0c0;
+        }
+        .latency-stats .value {
+            color: #7ab8ff;
+            font-weight: 600;
+        }
+
+        /* Monitor toggle */
+        .monitor-control {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 15px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 8px;
+            margin-bottom: 15px;
+        }
+        .monitor-control label {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            font-size: 0.9rem;
+        }
+        .monitor-control input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+        }
+        .monitor-control input[type="range"] {
+            flex: 1;
+            max-width: 120px;
+            height: 6px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 3px;
+            cursor: pointer;
+        }
+        .monitor-control .volume-label {
+            font-size: 0.75rem;
+            color: #a0a0a0;
+            min-width: 35px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🎙️ Barnabas Broadcaster</h1>
+            <p class="subtitle">Speech Recognition Node</p>
+        </header>
+
+        <div class="info-box">
+            ℹ️ Speech recognition powered by <strong>Whisper ASR</strong> (Swiss German optimized).<br>
+            Speak in <strong>German/Swiss German</strong> and it will be translated to 12 languages.
+        </div>
+
+        <!-- Auth Required Section -->
+        <div class="section" id="authRequired">
+            <div class="auth-required">
+                <h2>🔐 Authentication Required</h2>
+                <p>You need to authenticate as a broadcaster before you can start streaming.<br>
+                Go to the Admin Setup page to register your church.</p>
+                <a href="admin.html" class="btn btn-primary">Go to Admin Setup</a>
+            </div>
+        </div>
+
+        <!-- Authenticated Session Section -->
+        <div class="section" id="sessionSection" style="display:none;">
+            <div class="section-title">Session</div>
+            <div class="session-info">
+                <span class="icon">⛪</span>
+                <div class="text">
+                    <div class="name" id="sessionChurchName">Church Name</div>
+                    <div class="id" id="sessionChurchId">church-id</div>
+                </div>
+                <button class="logout-btn" onclick="logout()">Logout</button>
+            </div>
+            <!-- QR Code and PIN for listeners -->
+            <button class="qr-toggle-btn" id="qrToggleBtn" onclick="toggleQrSection()">
+                <span>📱 Show QR Code & PIN for Listeners</span>
+                <span class="icon">▼</span>
+            </button>
+            <div class="qr-content" id="qrContent">
+                <div class="qr-container">
+                    <img id="qrImage" src="" alt="QR Code">
+                </div>
+                <div class="pin-display">
+                    <div class="pin-label">Access PIN</div>
+                    <div class="pin-code" id="pinCode">------</div>
+                    <div class="pin-expires" id="pinExpires"></div>
+                </div>
+                <div class="join-url" id="joinUrl"></div>
+            </div>
+
+            <div class="status">
+                <div class="status-dot" id="statusDot"></div>
+                <span id="statusText">Disconnected</span>
+            </div>
+            <button class="btn btn-primary" id="connectBtn">🔌 Connect & Start</button>
+        </div>
+
+        <div class="section" id="speechSection" style="display:none;">
+            <div class="section-title">Speech Recognition (Whisper ASR)</div>
+
+            <div class="whisper-status" id="whisperStatus">
+                <div class="spinner"></div>
+                <span id="whisperStatusText">Checking Whisper status...</span>
+            </div>
+
+            <div class="monitor-control" id="monitorControl" style="display:none;">
+                <label>
+                    <input type="checkbox" id="monitorToggle" onchange="toggleMonitor()">
+                    🔊 Monitor
+                </label>
+                <input type="range" id="monitorVolume" min="0" max="100" value="50" onchange="setMonitorVolume(this.value)">
+                <span class="volume-label" id="monitorVolumeLabel">50%</span>
+            </div>
+
+            <div class="speech-box" id="speechBox">
+                <span class="partial">Click Start Recording and speak in German...</span>
+            </div>
+            <button class="btn btn-success" id="startBtn">🎙️ Start Recording</button>
+            <button class="btn btn-danger" id="stopBtn" style="display:none;">⏹️ Stop</button>
+
+            <!-- Latency Chart -->
+            <div class="latency-section" id="latencySection" style="display:none;">
+                <div class="section-title">End-to-End Latency (30s window)</div>
+                <div class="latency-chart-container">
+                    <canvas class="latency-chart" id="latencyChart"></canvas>
+                    <div class="latency-stats">
+                        <span>Current: <span class="value" id="latencyCurrent">-</span></span>
+                        <span>Avg: <span class="value" id="latencyAvg">-</span></span>
+                        <span>Max: <span class="value" id="latencyMax">-</span></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-title">Log</div>
+            <div class="log" id="log"></div>
+        </div>
+    </div>
+
+    <script>
+        // Config - auto-detect server
+        const wsProtocol = location.protocol === 'https:' ? 'wss:' : 'ws:';
+        const WS_URL = `${wsProtocol}//${location.host}/ws`;
+        const API_BASE = `${location.protocol}//${location.host}`;
+
+        // State
+        let ws = null;
+        let churchId = null;
+        let churchName = null;
+        let sessionToken = null;
+        let isRecording = false;
+        let whisperReady = false;
+
+        // AudioWorklet for Whisper mode (Phase B: low-latency PCM)
+        let audioContext = null;
+        let audioWorkletNode = null;
+        let audioStream = null;
+        let resampleBuffer = [];  // Buffer for resampling to 16kHz
+        const TARGET_SAMPLE_RATE = 16000;  // Whisper's native sample rate
+
+        // Monitor (playback to speakers)
+        let monitorGainNode = null;
+        let audioSource = null;
+        let isMonitorEnabled = false;
+
+        // Audio accumulation settings
+        const AUDIO_CHUNK_INTERVAL_MS = 2000;  // Send audio every 2 seconds (optimal for Swiss German)
+        let audioChunkTimer = null;
+        let accumulatedSamples = [];
+
+        // Legacy MediaRecorder (fallback)
+        let mediaRecorder = null;
+
+        // Elements
+        const $ = id => document.getElementById(id);
+        const authRequired = $('authRequired');
+        const sessionSection = $('sessionSection');
+        const sessionChurchName = $('sessionChurchName');
+        const sessionChurchId = $('sessionChurchId');
+        const statusDot = $('statusDot');
+        const statusText = $('statusText');
+        const connectBtn = $('connectBtn');
+        const speechSection = $('speechSection');
+        const speechBox = $('speechBox');
+        const startBtn = $('startBtn');
+        const stopBtn = $('stopBtn');
+        const logEl = $('log');
+        const whisperStatus = $('whisperStatus');
+        const whisperStatusText = $('whisperStatusText');
+        const monitorControl = $('monitorControl');
+        const monitorToggle = $('monitorToggle');
+        const monitorVolume = $('monitorVolume');
+        const monitorVolumeLabel = $('monitorVolumeLabel');
+
+        // Logging
+        function log(msg, type = 'info') {
+            const div = document.createElement('div');
+            div.className = `log-entry ${type}`;
+            div.textContent = `[${new Date().toLocaleTimeString()}] ${msg}`;
+            logEl.appendChild(div);
+            logEl.scrollTop = logEl.scrollHeight;
+        }
+
+        // Check Whisper service status
+        async function checkWhisperStatus() {
+            whisperStatus.style.display = 'flex';
+            whisperStatus.classList.remove('ready');
+            whisperStatusText.textContent = 'Checking Whisper status...';
+
+            // Add timeout to prevent hanging on slow/unresponsive server
+            const controller = new AbortController();
+            const timeoutId = setTimeout(() => controller.abort(), 5000);
+
+            try {
+                // Use the same-origin gateway/control-plane route so the HttpOnly
+                // broadcaster session cookie accompanies operational status requests.
+                const res = await fetch('/api/whisper/status', { signal: controller.signal });
+                clearTimeout(timeoutId);
+                const status = await res.json();
+
+                if (status.initialized) {
+                    whisperReady = true;
+                    whisperStatus.classList.add('ready');
+                    whisperStatus.innerHTML = '';
+                    const icon = document.createElement('span');
+                    icon.textContent = '✓';
+                    const text = document.createElement('span');
+                    text.textContent = `Whisper ready: ${status.model || 'Model loaded'}`;
+                    whisperStatus.appendChild(icon);
+                    whisperStatus.appendChild(text);
+                    startBtn.disabled = false;
+                } else if (status.initializing) {
+                    whisperStatusText.textContent = 'Whisper model loading... Please wait.';
+                    startBtn.disabled = true;
+                    // Retry in 3 seconds
+                    setTimeout(checkWhisperStatus, 3000);
+                } else {
+                    whisperStatus.innerHTML = '';
+                    const icon = document.createElement('span');
+                    icon.textContent = '⚠️';
+                    const text = document.createElement('span');
+                    text.textContent = 'Whisper not available on this server';
+                    whisperStatus.appendChild(icon);
+                    whisperStatus.appendChild(text);
+                    startBtn.disabled = true;
+                }
+            } catch (error) {
+                whisperStatus.innerHTML = '';
+                const icon = document.createElement('span');
+                icon.textContent = '❌';
+                const text = document.createElement('span');
+                text.textContent = 'Could not check Whisper status';
+                whisperStatus.appendChild(icon);
+                whisperStatus.appendChild(text);
+                startBtn.disabled = true;
+                log('Failed to check Whisper status: ' + error.message, 'error');
+            }
+        }
+
+        // WebSocket
+        function connect() {
+            log('Connecting...');
+            ws = new WebSocket(WS_URL);
+
+            ws.onopen = () => {
+                statusDot.className = 'status-dot connected';
+                statusText.textContent = 'Connected';
+                connectBtn.textContent = '🔌 Disconnect';
+                log('Connected', 'success');
+
+                // Authenticate with session token
+                ws.send(JSON.stringify({
+                    type: 'authenticate_broadcaster',
+                    sessionToken: sessionToken,
+                    churchId: churchId,
+                    churchName: churchName
+                }));
+            };
+
+            ws.onmessage = e => {
+                const msg = JSON.parse(e.data);
+                switch (msg.type) {
+                    case 'authenticated':
+                        log(`Authenticated as ${msg.churchName}`, 'success');
+                        speechSection.style.display = 'block';
+                        checkWhisperStatus();  // Auto-check Whisper when authenticated
+                        break;
+                    case 'auth_error':
+                        log(`Auth failed: ${msg.error}`, 'error');
+                        disconnect();
+                        logout();
+                        break;
+                    case 'registered':
+                        log(`Registered: ${msg.name}`, 'success');
+                        speechSection.style.display = 'block';
+                        checkWhisperStatus();  // Auto-check Whisper when registered
+                        break;
+                    case 'transcription':
+                        // Whisper transcription result from server (safe DOM manipulation)
+                        speechBox.innerHTML = '';
+                        const transcriptSpan = document.createElement('span');
+                        transcriptSpan.className = 'final';
+                        transcriptSpan.textContent = msg.text;
+                        speechBox.appendChild(transcriptSpan);
+                        log(`Whisper: "${msg.text.substring(0, 50)}..."`, 'success');
+                        break;
+                    case 'transcription_error':
+                        log(`Transcription error: ${msg.error}`, 'error');
+                        break;
+                    case 'clock_sync':
+                        // NTP-lite: respond with client timestamp for clock offset calculation
+                        ws.send(JSON.stringify({
+                            type: 'clock_sync_ack',
+                            serverTime: msg.serverTime,
+                            clientTime: Date.now()
+                        }));
+                        break;
+                    default:
+                        console.debug(`Unhandled message type: ${msg.type}`);
+                }
+            };
+
+            ws.onclose = () => {
+                statusDot.className = 'status-dot';
+                statusText.textContent = 'Disconnected';
+                connectBtn.textContent = '🔌 Connect & Start';
+                speechSection.style.display = 'none';
+                stopRecording();
+                log('Disconnected', 'error');
+            };
+        }
+
+        function disconnect() {
+            stopRecording();
+            ws?.close();
+            ws = null;
+        }
+
+        // Speech Recognition (Whisper ASR)
+        function startRecording() {
+            startWhisperRecording();
+        }
+
+        // Whisper ASR Recording (AudioWorklet - low-latency PCM)
+        async function startWhisperRecording() {
+            try {
+                // Check audio source setting from admin page
+                const isLineIn = localStorage.getItem('barnaba_audio_source') === 'line-in';
+                log(`Audio source: ${isLineIn ? 'Line-In / Dante (processing disabled)' : 'Microphone'}`, 'info');
+
+                // Request microphone access (disable processing for Line-In/Dante)
+                audioStream = await navigator.mediaDevices.getUserMedia({
+                    audio: {
+                        channelCount: 1,
+                        echoCancellation: !isLineIn,
+                        noiseSuppression: !isLineIn,
+                        autoGainControl: !isLineIn
+                    }
+                });
+
+                // Use NATIVE sample rate - don't force 16kHz!
+                // Chrome's internal resampling causes aliasing artifacts ("Whisper returns ." bug)
+                // Python server has high-quality torchaudio sinc resampling
+                audioContext = new AudioContext();
+                log(`Native sample rate: ${audioContext.sampleRate}Hz (server will resample)`, 'info');
+
+                // Load AudioWorklet processor
+                try {
+                    await audioContext.audioWorklet.addModule('pcm-recorder-processor.js');
+                } catch (e) {
+                    log('AudioWorklet not supported, falling back to MediaRecorder', 'error');
+                    await startWhisperRecordingLegacy();
+                    return;
+                }
+
+                // Create audio source from microphone
+                audioSource = audioContext.createMediaStreamSource(audioStream);
+
+                // Create monitor gain node (for optional playback to speakers)
+                monitorGainNode = audioContext.createGain();
+                monitorGainNode.gain.value = isMonitorEnabled ? (monitorVolume.value / 100) : 0;
+                monitorGainNode.connect(audioContext.destination);
+
+                // Create AudioWorklet node
+                audioWorkletNode = new AudioWorkletNode(audioContext, 'pcm-recorder', {
+                    processorOptions: {
+                        bufferSize: 4096  // ~256ms at 16kHz
+                    }
+                });
+
+                // Handle audio data from worklet
+                // NOTE: We NO LONGER resample in the browser!
+                // Server-side Python uses high-quality torchaudio sinc resampling
+                // to avoid aliasing artifacts that caused "Whisper returns ." bug
+                audioWorkletNode.port.onmessage = (event) => {
+                    const msg = event.data;
+
+                    if (msg.type === 'ready') {
+                        log('AudioWorklet processor ready', 'success');
+                        log(`Native sample rate: ${audioContext.sampleRate}Hz (server will resample)`, 'info');
+                    } else if (msg.type === 'audio') {
+                        // DON'T resample! Send raw samples at native rate
+                        // Server has high-quality torchaudio resampler
+                        accumulatedSamples.push(...msg.samples);
+
+                        // Update level meter
+                        updateLevelMeter(msg.peakLevel);
+                    } else if (msg.type === 'flushed') {
+                        sendAccumulatedAudio(true);
+                    }
+                };
+
+                // Connect audio graph
+                audioSource.connect(audioWorkletNode);
+                audioSource.connect(monitorGainNode);  // Monitor output (controlled by gain)
+
+                // Start periodic audio chunk sending
+                audioChunkTimer = setInterval(() => {
+                    sendAccumulatedAudio(false);
+                }, AUDIO_CHUNK_INTERVAL_MS);
+
+                // Show monitor control
+                monitorControl.style.display = 'flex';
+
+                // Update UI
+                isRecording = true;
+                statusDot.className = 'status-dot recording';
+                statusText.textContent = 'Recording (Whisper PCM)...';
+                startBtn.style.display = 'none';
+                stopBtn.style.display = 'block';
+                speechBox.innerHTML = '<span class="partial">Recording PCM audio for Whisper...</span>';
+                log('Whisper AudioWorklet recording started (16kHz PCM)', 'success');
+                startLatencyTracking();  // Start latency chart
+                if (isMonitorEnabled) {
+                    log('Monitor enabled - audio playing through speakers', 'info');
+                }
+
+            } catch (error) {
+                log('Microphone access denied: ' + error.message, 'error');
+            }
+        }
+
+        // Send accumulated audio samples via WebSocket
+        // Binary format (v2 with sample_rate):
+        // - Bytes 0-3: flags (uint32 LE) - bit 0 = isFinal
+        // - Bytes 4-7: sample_rate (uint32 LE) - native browser rate (e.g., 48000)
+        // - Bytes 8+: Float32 PCM samples at native rate (server will resample)
+        function sendAccumulatedAudio(isFinal) {
+            if (accumulatedSamples.length === 0 && !isFinal) return;
+            if (!ws || ws.readyState !== WebSocket.OPEN) return;
+
+            // Convert to Float32Array
+            const samples = new Float32Array(accumulatedSamples);
+            accumulatedSamples = [];
+
+            // Get actual sample rate from AudioContext
+            const actualSampleRate = audioContext ? audioContext.sampleRate : TARGET_SAMPLE_RATE;
+
+            // Send as binary WebSocket frame (v3 format with sample_rate + capturedAt)
+            // Header: 16 bytes (flags + sample_rate + capturedAt), then Float32 PCM
+            // flags bit 0 = isFinal, bit 1 = has capturedAt timestamp (v3)
+            const flagsValue = (isFinal ? 1 : 0) | 2;  // bit 1 = v3 timestamp present
+            const buffer = new ArrayBuffer(16 + samples.length * 4);
+            const view = new DataView(buffer);
+            view.setUint32(0, flagsValue, true);           // Little-endian flags
+            view.setUint32(4, actualSampleRate, true);     // Little-endian sample_rate
+            view.setFloat64(8, Date.now(), true);          // Little-endian capturedAt (ms)
+
+            const floatView = new Float32Array(buffer, 16);
+            floatView.set(samples);
+
+            ws.send(buffer);
+
+            if (samples.length > 0) {
+                const durationMs = (samples.length / actualSampleRate * 1000).toFixed(0);
+                log(`Sent ${samples.length} samples @ ${actualSampleRate}Hz (${durationMs}ms)${isFinal ? ' [FINAL]' : ''}`);
+            }
+        }
+
+        // Resample audio from source rate to target rate
+        function resampleAudio(samples, sourceRate, targetRate) {
+            if (sourceRate === targetRate) return samples;
+
+            const ratio = sourceRate / targetRate;
+            const newLength = Math.round(samples.length / ratio);
+            const result = new Float32Array(newLength);
+
+            for (let i = 0; i < newLength; i++) {
+                const srcIndex = i * ratio;
+                const srcIndexFloor = Math.floor(srcIndex);
+                const srcIndexCeil = Math.min(srcIndexFloor + 1, samples.length - 1);
+                const fraction = srcIndex - srcIndexFloor;
+
+                // Linear interpolation
+                result[i] = samples[srcIndexFloor] * (1 - fraction) +
+                            samples[srcIndexCeil] * fraction;
+            }
+
+            return result;
+        }
+
+        // Update level meter visualization
+        function updateLevelMeter(level) {
+            // Convert to dB-like scale for better visualization
+            const normalizedLevel = Math.min(1, level * 3);
+            const levelPercent = Math.round(normalizedLevel * 100);
+
+            // Update speech box with level indicator
+            if (isRecording && currentMode === 'whisper') {
+                const bars = '█'.repeat(Math.round(normalizedLevel * 10)) +
+                            '░'.repeat(10 - Math.round(normalizedLevel * 10));
+                const partialText = speechBox.querySelector('.partial');
+                if (partialText && !speechBox.querySelector('.final')) {
+                    partialText.innerHTML = `Recording... [${bars}] ${levelPercent}%`;
+                }
+            }
+        }
+
+        // Monitor controls (playback to speakers)
+        function toggleMonitor() {
+            isMonitorEnabled = monitorToggle.checked;
+            if (monitorGainNode) {
+                monitorGainNode.gain.value = isMonitorEnabled ? (monitorVolume.value / 100) : 0;
+            }
+            log(isMonitorEnabled ? 'Monitor ON - audio playing through speakers' : 'Monitor OFF', 'info');
+        }
+
+        function setMonitorVolume(value) {
+            monitorVolumeLabel.textContent = `${value}%`;
+            if (monitorGainNode && isMonitorEnabled) {
+                monitorGainNode.gain.value = value / 100;
+            }
+        }
+
+        // Latency Chart
+        const LATENCY_WINDOW_SEC = 30;
+        const LATENCY_INTERVAL_SEC = 5;
+        const MAX_LATENCY_POINTS = LATENCY_WINDOW_SEC / LATENCY_INTERVAL_SEC;  // 6 points
+        let latencyData = [];
+        let latencyInterval = null;
+        const latencySection = $('latencySection');
+        const latencyChart = $('latencyChart');
+        const latencyCurrent = $('latencyCurrent');
+        const latencyAvg = $('latencyAvg');
+        const latencyMax = $('latencyMax');
+
+        // Fetch latency stats from server
+        async function fetchLatencyStats() {
+            const controller = new AbortController();
+            const timeoutId = setTimeout(() => controller.abort(), 3000);
+
+            try {
+                const res = await fetch('/api/latency-stats', { signal: controller.signal });
+                clearTimeout(timeoutId);
+                const stats = await res.json();
+
+                // Get the most recent end-to-end latency
+                if (stats.recent && stats.recent.length > 0) {
+                    const latest = stats.recent[0];
+                    if (latest.end_to_end !== null) {
+                        // Add to data array (sliding window)
+                        latencyData.push({
+                            time: Date.now(),
+                            value: latest.end_to_end
+                        });
+
+                        // Keep only last N points
+                        if (latencyData.length > MAX_LATENCY_POINTS) {
+                            latencyData.shift();
+                        }
+
+                        // Update stats display
+                        updateLatencyStats(stats.latencies_ms.end_to_end);
+                        drawLatencyChart();
+                    }
+                }
+            } catch (error) {
+                clearTimeout(timeoutId);
+                if (error.name !== 'AbortError') {
+                    console.error('Failed to fetch latency stats:', error);
+                }
+            }
+        }
+
+        // Update latency statistics display (in seconds)
+        function updateLatencyStats(stats) {
+            if (latencyData.length > 0) {
+                const current = latencyData[latencyData.length - 1].value;
+                latencyCurrent.textContent = `${(current / 1000).toFixed(1)}s`;
+            }
+            if (stats && stats.avg !== null) {
+                latencyAvg.textContent = `${(stats.avg / 1000).toFixed(1)}s`;
+            }
+            if (stats && stats.max !== null) {
+                latencyMax.textContent = `${(stats.max / 1000).toFixed(1)}s`;
+            }
+        }
+
+        // Draw the latency chart
+        function drawLatencyChart() {
+            const canvas = latencyChart;
+            const ctx = canvas.getContext('2d');
+            const dpr = window.devicePixelRatio || 1;
+
+            // Set canvas size for high DPI
+            const rect = canvas.getBoundingClientRect();
+            canvas.width = rect.width * dpr;
+            canvas.height = rect.height * dpr;
+            ctx.scale(dpr, dpr);
+
+            const width = rect.width;
+            const height = rect.height;
+            const padding = { top: 5, right: 5, bottom: 15, left: 35 };
+            const chartWidth = width - padding.left - padding.right;
+            const chartHeight = height - padding.top - padding.bottom;
+
+            // Clear canvas
+            ctx.clearRect(0, 0, width, height);
+
+            if (latencyData.length < 2) return;
+
+            // Find max for scaling (min is always 0)
+            const values = latencyData.map(d => d.value);
+            const maxVal = Math.max(...values) * 1.15;  // Add 15% headroom
+            const minVal = 0;  // Always start from 0
+            const range = maxVal - minVal || 1;
+
+            // Draw grid lines
+            ctx.strokeStyle = 'rgba(255,255,255,0.2)';
+            ctx.lineWidth = 1;
+            for (let i = 0; i <= 4; i++) {
+                const y = padding.top + (i / 4) * chartHeight;
+                ctx.beginPath();
+                ctx.moveTo(padding.left, y);
+                ctx.lineTo(width - padding.right, y);
+                ctx.stroke();
+            }
+
+            // Draw Y-axis labels (in seconds)
+            ctx.fillStyle = '#ffffff';
+            ctx.font = '11px sans-serif';
+            ctx.textAlign = 'right';
+            for (let i = 0; i <= 4; i++) {
+                const valMs = maxVal - (i / 4) * range;
+                const valSec = (valMs / 1000).toFixed(1);
+                const y = padding.top + (i / 4) * chartHeight + 4;
+                ctx.fillText(`${valSec}s`, padding.left - 5, y);
+            }
+
+            // Draw line chart
+            ctx.strokeStyle = '#7ab8ff';
+            ctx.lineWidth = 2;
+            ctx.lineCap = 'round';
+            ctx.lineJoin = 'round';
+            ctx.beginPath();
+
+            latencyData.forEach((d, i) => {
+                const x = padding.left + (i / (MAX_LATENCY_POINTS - 1)) * chartWidth;
+                const y = padding.top + ((maxVal - d.value) / range) * chartHeight;
+
+                if (i === 0) {
+                    ctx.moveTo(x, y);
+                } else {
+                    ctx.lineTo(x, y);
+                }
+            });
+            ctx.stroke();
+
+            // Draw points
+            ctx.fillStyle = '#7ab8ff';
+            latencyData.forEach((d, i) => {
+                const x = padding.left + (i / (MAX_LATENCY_POINTS - 1)) * chartWidth;
+                const y = padding.top + ((maxVal - d.value) / range) * chartHeight;
+                ctx.beginPath();
+                ctx.arc(x, y, 3, 0, Math.PI * 2);
+                ctx.fill();
+            });
+
+            // Draw X-axis label
+            ctx.fillStyle = '#a0a0a0';
+            ctx.font = '10px sans-serif';
+            ctx.textAlign = 'center';
+            ctx.fillText('← 30s ago', padding.left + 25, height - 2);
+            ctx.fillText('now →', width - padding.right - 18, height - 2);
+        }
+
+        // Start/stop latency tracking
+        function startLatencyTracking() {
+            latencySection.style.display = 'block';
+            latencyData = [];
+            fetchLatencyStats();  // Initial fetch
+            latencyInterval = setInterval(fetchLatencyStats, LATENCY_INTERVAL_SEC * 1000);
+        }
+
+        function stopLatencyTracking() {
+            if (latencyInterval) {
+                clearInterval(latencyInterval);
+                latencyInterval = null;
+            }
+        }
+
+        // Legacy MediaRecorder fallback (for browsers without AudioWorklet)
+        async function startWhisperRecordingLegacy() {
+            const options = { mimeType: 'audio/webm;codecs=opus' };
+            if (!MediaRecorder.isTypeSupported(options.mimeType)) {
+                options.mimeType = 'audio/webm';
+            }
+
+            mediaRecorder = new MediaRecorder(audioStream, options);
+
+            mediaRecorder.ondataavailable = async (event) => {
+                if (event.data.size > 0 && ws?.readyState === WebSocket.OPEN) {
+                    const reader = new FileReader();
+                    reader.onloadend = () => {
+                        const base64 = reader.result.split(',')[1];
+                        ws.send(JSON.stringify({
+                            type: 'audio_chunk',
+                            audio: base64,
+                            isFinal: false
+                        }));
+                    };
+                    reader.readAsDataURL(event.data);
+                }
+            };
+
+            mediaRecorder.onstart = () => {
+                isRecording = true;
+                statusDot.className = 'status-dot recording';
+                statusText.textContent = 'Recording (Whisper Legacy)...';
+                startBtn.style.display = 'none';
+                stopBtn.style.display = 'block';
+                speechBox.innerHTML = '<span class="partial">Recording audio (MediaRecorder fallback)...</span>';
+                log('Whisper recording started (legacy MediaRecorder)', 'success');
+            };
+
+            mediaRecorder.start(2000);
+        }
+
+        function stopRecording() {
+            isRecording = false;
+
+            // Stop AudioWorklet
+            if (audioWorkletNode) {
+                // Flush remaining audio
+                audioWorkletNode.port.postMessage({ type: 'flush' });
+
+                // Clear chunk timer
+                if (audioChunkTimer) {
+                    clearInterval(audioChunkTimer);
+                    audioChunkTimer = null;
+                }
+
+                // Send final accumulated audio
+                sendAccumulatedAudio(true);
+
+                // Disconnect and cleanup
+                audioWorkletNode.disconnect();
+                audioWorkletNode = null;
+            }
+
+            // Cleanup monitor
+            if (monitorGainNode) {
+                monitorGainNode.disconnect();
+                monitorGainNode = null;
+            }
+            if (audioSource) {
+                audioSource.disconnect();
+                audioSource = null;
+            }
+            monitorControl.style.display = 'none';
+
+            // Close AudioContext
+            if (audioContext) {
+                audioContext.close();
+                audioContext = null;
+            }
+
+            // Stop MediaRecorder (legacy fallback)
+            if (mediaRecorder && mediaRecorder.state !== 'inactive') {
+                // Send final chunk marker
+                if (ws?.readyState === WebSocket.OPEN) {
+                    ws.send(JSON.stringify({
+                        type: 'audio_chunk',
+                        audio: '',
+                        isFinal: true
+                    }));
+                }
+                mediaRecorder.stop();
+                mediaRecorder = null;
+            }
+
+            // Stop audio stream
+            if (audioStream) {
+                audioStream.getTracks().forEach(track => track.stop());
+                audioStream = null;
+            }
+
+            // Clear accumulated samples
+            accumulatedSamples = [];
+
+            statusDot.className = ws ? 'status-dot connected' : 'status-dot';
+            statusText.textContent = ws ? 'Connected' : 'Disconnected';
+            startBtn.style.display = 'block';
+            stopBtn.style.display = 'none';
+            stopLatencyTracking();  // Stop latency chart
+            log('Recording stopped');
+        }
+
+        // Auto-connect flag to prevent race condition
+        let autoConnectPending = false;
+
+        // Events
+        connectBtn.onclick = () => {
+            if (autoConnectPending) return;  // Block double-connect
+            ws ? disconnect() : connect();
+        };
+        startBtn.onclick = startRecording;
+        stopBtn.onclick = stopRecording;
+
+        // QR/PIN Section Toggle
+        function toggleQrSection() {
+            const btn = $('qrToggleBtn');
+            const content = $('qrContent');
+            const isVisible = content.classList.contains('visible');
+
+            content.classList.toggle('visible');
+            btn.classList.toggle('expanded');
+            btn.querySelector('span:first-child').textContent = isVisible
+                ? '📱 Show QR Code & PIN for Listeners'
+                : '📱 Hide QR Code & PIN';
+        }
+
+        // Load QR/PIN data from sessionStorage (set by admin.html)
+        function loadQrPinData() {
+            const authData = sessionStorage.getItem('barnabas_auth_data');
+            if (authData) {
+                try {
+                    const data = JSON.parse(authData);
+                    if (data.qrCode) $('qrImage').src = data.qrCode;
+                    if (data.pin) $('pinCode').textContent = data.pin;
+                    if (data.expiresIn) $('pinExpires').textContent = `Valid for ${data.expiresIn}`;
+                    if (data.joinUrl) $('joinUrl').textContent = data.joinUrl;
+                    return true;
+                } catch (e) {
+                    console.error('Invalid auth data');
+                }
+            }
+            return false;
+        }
+
+        function getCookie(name) {
+            return document.cookie
+                .split(';')
+                .map(part => part.trim())
+                .filter(Boolean)
+                .reduce((value, part) => {
+                    const idx = part.indexOf('=');
+                    if (idx === -1) return value;
+                    const key = decodeURIComponent(part.slice(0, idx));
+                    if (key !== name) return value;
+                    return decodeURIComponent(part.slice(idx + 1));
+                }, null);
+        }
+
+        // Session Management
+        async function checkSession() {
+            try {
+                const response = await fetch(`${API_BASE}/api/auth/validate-session`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    credentials: 'same-origin',
+                    body: JSON.stringify({})
+                });
+                const session = await response.json();
+                if (!session.success || session.role !== 'broadcaster') return false;
+
+                sessionToken = null;
+                churchId = session.churchId;
+                churchName = session.churchName;
+
+                authRequired.style.display = 'none';
+                sessionSection.style.display = 'block';
+                sessionChurchName.textContent = churchName;
+                sessionChurchId.textContent = `ID: ${churchId}`;
+
+                loadQrPinData();
+
+                log(`Session loaded: ${churchName}`);
+                return true;
+            } catch (e) {
+                console.error('Session check failed', e);
+                return false;
+            }
+        }
+
+        async function logout() {
+            try {
+                const csrfToken = getCookie('barnaba_csrf');
+                await fetch(`${API_BASE}/api/auth/logout`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        ...(csrfToken ? { 'x-barnaba-csrf': csrfToken } : {})
+                    },
+                    credentials: 'same-origin',
+                    body: JSON.stringify({})
+                });
+            } catch (e) {
+                console.warn('Logout request failed', e);
+            }
+            sessionToken = null;
+            churchId = null;
+            churchName = null;
+
+            authRequired.style.display = 'block';
+            sessionSection.style.display = 'none';
+            speechSection.style.display = 'none';
+
+            if (ws) disconnect();
+            log('Logged out');
+        }
+
+        // Initialize
+        checkSession().then((hasSession) => {
+            if (hasSession) {
+                log('Session loaded. Auto-connecting...');
+                autoConnectPending = true;
+                setTimeout(() => {
+                    if (autoConnectPending) {
+                        connect();
+                    }
+                    autoConnectPending = false;
+                }, 500);
+            } else {
+                log('Please authenticate via Admin Setup first.');
+            }
+        });
+    </script>
+</body>
+</html>

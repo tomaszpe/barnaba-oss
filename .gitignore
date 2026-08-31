@@ -1,0 +1,63 @@
+# Barnaba — public repository
+#
+# Written from scratch for the public tree. The private repository's
+# .gitignore is NOT reused: its rules describe a working tree that does
+# not exist here, and its comments name things that stay private.
+
+# Node.js
+node_modules/
+app/node_modules/
+
+# Python
+.venv/
+venv/
+__pycache__/
+**/__pycache__/
+*.py[cod]
+.pytest_cache/
+**/.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.coverage
+htmlcov/
+
+# Environment — never commit a real .env
+.env
+.env.local
+.env.*.local
+
+# Logs
+*.log
+app/logs/
+
+# Build artifacts
+*.zip
+
+# Whisper model cache (weights are downloaded, never committed)
+.cache/
+whisper-models/
+
+# Audio: no recordings in this repository.
+# app/public/silent-noise.wav is a 5-second mono low-level-noise primer
+# (~-65 dBFS), required at runtime by the listener PWA and tracked explicitly.
+*.wav
+*.mp3
+*.m4a
+*.webm
+!app/public/silent-noise.wav
+
+# Runtime church whitelist. The repository ships config/churches.example.json;
+# the real config/churches.json is created per deployment and must never be
+# committed - it names actual congregations.
+app/config/churches.json
+# Church-specific language data: proper nouns and glossary records naming real
+# people. Only churchData.example.json ships.
+app/config/churchData.json
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db

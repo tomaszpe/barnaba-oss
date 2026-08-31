@@ -1,0 +1,110 @@
+# Barnaba Whisper Service Dependencies
+# =====================================
+# Updated for HuggingFace transformers + Flash Attention 2 (16.01.2026)
+# Migration from faster-whisper/CTranslate2 due to CT2 conversion bug
+# with fine-tuned whisper-large-v3-turbo (128 vs 80 mel bins)
+
+# =============================================================================
+# FastAPI and Server
+# =============================================================================
+# Exact top-level pins are the runtime image contract. Lower bounds made two
+# builds of the same source resolve different servers, validators and numeric
+# libraries. Transitive packages remain resolver-managed; changing any pin
+# requires the CPU suite plus the Azure A100 qualification described in README.
+fastapi==0.137.1
+uvicorn[standard]==0.49.0
+pydantic==2.13.4
+
+# =============================================================================
+# Whisper and ML (HuggingFace transformers pipeline)
+# =============================================================================
+# PyTorch with CUDA support (installed separately in Dockerfile)
+# torch>=2.2.0
+# torchaudio>=2.2.0
+
+# =============================================================================
+# HuggingFace Model Support
+# =============================================================================
+# transformers 4.36+ required for Whisper pipeline with Flash Attention 2
+#
+# KNOWN ADVISORIES ON THE PINNED VERSION - ACCEPTED RISK, WITH REASONS.
+# pip-audit reports four advisories against 4.57.5. Three are not on this service's path:
+#   PYSEC-2025-217  (CVE-2025-14929) X-CLIP CHECKPOINT CONVERSION script. Never invoked.
+#   PYSEC-2026-2288 (CVE-2026-1839)  Trainer._load_rng_state -> torch.load without
+#                                    weights_only. This service does inference only and
+#                                    never constructs a Trainer.
+#   PYSEC-2026-2290 (CVE-2026-5241)  LightGlue model loading path, introduced in 5.2.0.
+#                                    Neither the version nor the model applies.
+#
+# The fourth IS on this path and is the reason the pin below is a full SHA:
+#   PYSEC-2026-2289 (CVE-2026-4372, GHSA-29pf-2h5f-8g72) RCE in every version before
+#   5.3.0 via a malicious `config.json` carrying `_attn_implementation_internal` pointing
+#   at an attacker-controlled repository.
+#
+#   Mitigation, verified rather than argued: the model is pinned to an immutable
+#   40-character commit SHA (whisper/config.py rejects anything shorter, fail-closed), and
+#   the config.json AT THAT REVISION was inspected - no `_attn_implementation_internal`,
+#   no `auto_map`, no `trust_remote_code`. A later relicense or edit by the repository
+#   owner cannot reach a pinned commit.
+#
+#   THE SCOPE OF THIS EXCEPTION IS ONE MODEL AT ONE REVISION, AND NOTHING ELSE. A full
+#   SHA guarantees immutability, not trustworthiness: an attacker's repository pins just
+#   as immutably as ours. Since README.md tells a commercial deployment to substitute the
+#   model (the default is CC BY-NC), the substitution is gated in code rather than left
+#   to the reader: whisper/config.py refuses to start on any other model/revision pair
+#   unless WHISPER_ALLOW_UNVERIFIED_MODEL=true is set deliberately, and says why.
+#
+#   This is an accepted risk, not a clean bill. Moving to transformers >= 5.3 is the real
+#   fix, and it is NOT a drop-in: token_timestamp_probe.py and test_decode_asr_contract.py
+#   reproduce `_decode_asr` per version and their registry knows only 4.47.1 and 4.57.5.
+#   Qualifying 5.x means re-running those contract tests plus a sealed A/B on GPU.
+#
+# PIN RAISED TO 4.57.5 after a formal A/B.
+# Result: zero-length word ranges 7.00% -> 2.64% on the canonical 300+300 set, critical errors
+# 17 -> 12 under blind listening review. Requires `generation_compat.py`: model revision
+# `3441523` carries `eos_token_id` as a single-element list, and `WhisperTimeStampLogitsProcessor`
+# in 4.57.x uses it as a slice boundary -> `TypeError` on EVERY decode without normalisation.
+#
+# WHAT IS VALIDATED AND WHAT IS NOT - do not conflate the two:
+#   * the STREAMING path (`use_chunking=False`, the one used for live speech): 300/300 decodes
+#     without error on 4.57.5, plus 30/30 in smoke. This is the only path the broadcaster uses.
+#   * the CHUNKED path (`chunk_length_s=30`, `POST /transcribe` only): NOT VALIDATED on 4.57.5.
+#     This is what the old `<4.48.0` pin was about (the "float stride" bug), although the
+#     historical traceback is nowhere in the repo. `/api/transcribe` is an administrative
+#     endpoint - no broadcaster calls it. Measure before using it on 4.57.5.
+transformers==4.57.5
+tokenizers==0.22.2
+safetensors==0.8.0
+accelerate==1.14.0
+
+# =============================================================================
+# Flash Attention 2 (2.2x speedup + 20% VRAM savings on A100)
+# =============================================================================
+# IMPORTANT: Installed separately in Dockerfile with --no-build-isolation flag
+# DO NOT include here - requires torch during build which breaks pip isolation
+# pip install flash-attn --no-build-isolation
+# Falls back to SDPA if not available
+# flash-attn>=2.5.0  # <-- INSTALLED IN DOCKERFILE, NOT HERE
+
+# =============================================================================
+# Silero VAD
+# =============================================================================
+# Silero VAD is loaded via torch.hub (not a pip package)
+# Requires: torch (see above)
+
+# =============================================================================
+# Audio Processing
+# =============================================================================
+# IMPORTANT: numpy must be <2.0 for compatibility with PyTorch 2.x binaries
+# PyTorch was compiled with NumPy 1.x ABI
+numpy==1.26.4
+scipy==1.17.1
+
+# =============================================================================
+# HTTP and Utilities
+# =============================================================================
+python-multipart==0.0.32
+httpx==0.28.1
+
+# Test-only dependencies live in requirements-test.txt. Keeping them out of
+# this file keeps pytest and its dependency tree out of the runtime image.

@@ -1,0 +1,3246 @@
+<!DOCTYPE html>
+<!-- build: multi-speaker-dante v1 (08.04.2026) -->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Barnabas - Admin Setup</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #2d1b4e, #1a1a2e);
+            min-height: 100vh;
+            color: #fff;
+            padding: 20px;
+            cursor: default;
+            -webkit-user-select: none;
+            user-select: none;
+            caret-color: transparent;
+        }
+        input, textarea {
+            cursor: text;
+            -webkit-user-select: text;
+            user-select: text;
+            caret-color: auto;
+        }
+        .speech-box, .bc-log, .join-url, .pin-code, .sermon-prep-preview {
+            -webkit-user-select: text;
+            user-select: text;
+        }
+        /* Two-column layout */
+        .main-layout {
+            display: flex;
+            gap: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .left-panel {
+            flex: 0 0 540px;
+            min-width: 500px;
+        }
+        .right-panel {
+            flex: 1;
+            min-width: 400px;
+            display: none;
+        }
+        .right-panel.visible {
+            display: block;
+        }
+        @media (max-width: 900px) {
+            .main-layout {
+                flex-direction: column;
+            }
+            .left-panel, .right-panel {
+                flex: none;
+                min-width: auto;
+                width: 100%;
+            }
+        }
+        .container { max-width: 500px; margin: 0 auto; }
+        header { text-align: center; margin-bottom: 20px; }
+        h1 { font-size: 1.5rem; margin-bottom: 5px; }
+        .subtitle { color: #a0a0a0; font-size: 0.85rem; }
+
+        .section {
+            background: rgba(255,255,255,0.05);
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        .section-title {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            color: #a0a0a0;
+            margin-bottom: 15px;
+            letter-spacing: 1px;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 14px 15px;
+            margin-bottom: 15px;
+            border: 2px solid rgba(255,255,255,0.1);
+            border-radius: 10px;
+            background: rgba(255,255,255,0.08);
+            color: #fff;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+        input:focus, select:focus { outline: none; border-color: #4a90d9; }
+        input::placeholder { color: rgba(255,255,255,0.4); }
+        select {
+            appearance: none;
+            -webkit-appearance: none;
+            background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'><path fill='%23ffffff' d='M2 4l4 4 4-4z'/></svg>");
+            background-repeat: no-repeat;
+            background-position: right 12px center;
+            padding-right: 36px;
+            cursor: pointer;
+        }
+        select option { background: #1a1a2e; color: #fff; }
+
+        .btn {
+            width: 100%;
+            padding: 15px;
+            border: none;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .btn:active { transform: scale(0.98); }
+        .btn-primary { background: #4a90d9; color: white; }
+        .btn-success { background: #44aa44; color: white; }
+        .btn-danger { background: #dc3545; color: white; }
+        .btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+        /* Control Panel Styles */
+        .control-panel {
+            margin-bottom: 25px;
+        }
+        .control-buttons {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        .control-buttons .btn {
+            flex: 1;
+        }
+        .status-row {
+            display: flex;
+            align-items: center;
+            padding: 12px 15px;
+            background: rgba(255,255,255,0.03);
+            border-radius: 8px;
+            margin-bottom: 8px;
+        }
+        .status-indicator {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin-right: 12px;
+            flex-shrink: 0;
+        }
+        .status-indicator.inactive { background: #666; }
+        .status-indicator.ready { background: #44aa44; box-shadow: 0 0 8px #44aa44; }
+        .status-indicator.error { background: #dc3545; box-shadow: 0 0 8px #dc3545; }
+        .status-indicator.loading {
+            background: #f0ad4e;
+            animation: pulse 1s infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.4; }
+        }
+        .status-label {
+            flex: 1;
+            font-weight: 500;
+        }
+        .status-badge {
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+        .status-badge.inactive { background: rgba(102,102,102,0.3); color: #999; }
+        .status-badge.ready { background: rgba(68,170,68,0.2); color: #44aa44; }
+        .status-badge.error { background: rgba(220,53,69,0.2); color: #ff6b6b; }
+        .status-badge.loading { background: rgba(240,173,78,0.2); color: #f0ad4e; }
+
+        .barnaba-ready {
+            text-align: center;
+            padding: 20px;
+            background: rgba(68,170,68,0.15);
+            border: 2px solid rgba(68,170,68,0.5);
+            border-radius: 12px;
+            margin-top: 15px;
+            display: none;
+        }
+        .barnaba-ready.visible { display: block; }
+        .barnaba-ready h3 {
+            color: #44aa44;
+            margin-bottom: 5px;
+            font-size: 1.2rem;
+        }
+        .barnaba-ready p {
+            color: #a0a0a0;
+            font-size: 0.85rem;
+            margin: 0;
+        }
+
+        /* Confirmation Dialog */
+        .dialog-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.7);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+        .dialog-overlay.visible { display: flex; }
+        .dialog-box {
+            background: #2d2d3d;
+            border-radius: 16px;
+            padding: 25px;
+            max-width: 350px;
+            width: 90%;
+            text-align: center;
+        }
+        .dialog-box h3 {
+            margin-bottom: 10px;
+            color: #fff;
+        }
+        .dialog-box p {
+            color: #a0a0a0;
+            margin-bottom: 20px;
+            font-size: 0.9rem;
+        }
+        .dialog-buttons {
+            display: flex;
+            gap: 10px;
+        }
+        .dialog-buttons .btn {
+            flex: 1;
+            padding: 12px;
+        }
+        .btn-cancel {
+            background: rgba(255,255,255,0.1);
+            color: #fff;
+        }
+
+        /* Audio Source Toggle */
+        .audio-source-toggle {
+            display: flex;
+            gap: 10px;
+        }
+        .audio-source-btn {
+            flex: 1;
+            padding: 12px;
+            border: 2px solid rgba(255,255,255,0.15);
+            border-radius: 10px;
+            background: rgba(255,255,255,0.05);
+            color: #a0a0a0;
+            font-size: 0.9rem;
+            font-weight: 500;
+            cursor: pointer;
+            text-align: center;
+            transition: all 0.2s;
+            white-space: nowrap;
+        }
+        .audio-source-btn:hover { background: rgba(255,255,255,0.08); }
+        .audio-source-btn.active {
+            border-color: #4a90d9;
+            background: rgba(74,144,217,0.2);
+            color: #fff;
+        }
+        .audio-source-hint {
+            font-size: 0.75rem;
+            color: #888;
+            margin-top: 8px;
+            line-height: 1.4;
+        }
+
+        /* Password Modal */
+        .password-modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.8);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1001;
+        }
+        .password-modal-box {
+            background: #2d2d3d;
+            border-radius: 16px;
+            padding: 25px;
+            max-width: 350px;
+            width: 90%;
+        }
+        .password-modal-box h3 {
+            margin-bottom: 15px;
+            color: #fff;
+            text-align: center;
+        }
+        .password-modal-box input {
+            margin-bottom: 20px;
+        }
+        .password-modal-buttons {
+            display: flex;
+            gap: 10px;
+        }
+        .password-modal-buttons .btn {
+            flex: 1;
+            padding: 12px;
+        }
+
+        /* Toast Notifications */
+        .toast {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 15px 20px;
+            border-radius: 10px;
+            color: white;
+            font-weight: 500;
+            z-index: 2000;
+            max-width: 400px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            animation: slideIn 0.3s ease;
+        }
+        .toast.error { background: #dc3545; }
+        .toast.success { background: #44aa44; }
+        .toast.warning { background: #f0ad4e; color: #333; }
+        @keyframes slideIn {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        .error-msg {
+            background: rgba(220, 53, 69, 0.2);
+            border: 1px solid rgba(220, 53, 69, 0.5);
+            color: #ff6b6b;
+            padding: 12px 15px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            font-size: 0.9rem;
+            display: none;
+        }
+
+        /* Right panel styles */
+        .church-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 15px;
+            background: rgba(68, 170, 68, 0.2);
+            border-radius: 10px;
+            margin-bottom: 15px;
+        }
+        .church-info .icon { font-size: 1.5rem; line-height: 1; }
+        .church-info .icon img { width: 32px; height: 32px; object-fit: contain; }
+        .church-info .name { font-weight: 600; font-size: 1.1rem; }
+        .church-info .id { font-size: 0.75rem; color: #a0a0a0; }
+
+        .qr-container {
+            text-align: center;
+            padding: 20px;
+            background: white;
+            border-radius: 12px;
+            margin-bottom: 15px;
+        }
+        .qr-container img {
+            max-width: 200px;
+            width: 100%;
+            height: auto;
+        }
+        .pin-display {
+            text-align: center;
+            padding: 20px;
+            background: rgba(74,144,217,0.2);
+            border: 2px solid rgba(74,144,217,0.5);
+            border-radius: 12px;
+            margin-bottom: 10px;
+        }
+        .pin-label {
+            font-size: 0.85rem;
+            color: #a0a0a0;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+        .pin-code {
+            font-size: 2.5rem;
+            font-weight: 700;
+            letter-spacing: 8px;
+            font-family: monospace;
+            color: #4a90d9;
+        }
+        .pin-expires {
+            font-size: 0.8rem;
+            color: #a0a0a0;
+            margin-top: 10px;
+        }
+        .join-url {
+            background: rgba(0,0,0,0.3);
+            padding: 12px;
+            border-radius: 8px;
+            font-family: monospace;
+            font-size: 0.75rem;
+            word-break: break-all;
+            margin-bottom: 15px;
+        }
+        .copy-btn {
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.2);
+            color: #fff;
+            padding: 10px 15px;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            cursor: pointer;
+            width: 100%;
+            margin-bottom: 15px;
+            transition: all 0.2s;
+        }
+        .copy-btn:hover { background: rgba(255,255,255,0.15); }
+        .copy-btn.copied { background: #44aa44; border-color: #44aa44; }
+
+        .info-box {
+            background: rgba(74,144,217,0.15);
+            border-left: 3px solid #4a90d9;
+            padding: 15px;
+            font-size: 0.85rem;
+            line-height: 1.5;
+            margin-bottom: 20px;
+        }
+
+        /* Collapsible toggle buttons */
+        .toggle-section-btn {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 8px;
+            background: rgba(255,255,255,0.05);
+            color: #a0a0a0;
+            font-size: 0.9rem;
+            cursor: pointer;
+            margin-bottom: 8px;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            text-align: left;
+        }
+        .toggle-section-btn:hover { background: rgba(255,255,255,0.1); }
+        .toggle-section-btn .toggle-icon { transition: transform 0.2s; }
+        .toggle-section-btn.expanded .toggle-icon { transform: rotate(180deg); }
+        .collapsible {
+            display: none;
+            margin-bottom: 10px;
+        }
+        .collapsible.visible { display: block; }
+
+        /* Sermon Preparation Context (02.03.2026) */
+        .sermon-prep-status {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 12px;
+            border-radius: 8px;
+            margin-bottom: 12px;
+            font-size: 0.85rem;
+        }
+        .sermon-prep-status.empty {
+            background: rgba(255,255,255,0.05);
+            color: #a0a0a0;
+        }
+        .sermon-prep-status.loaded {
+            background: rgba(68,170,68,0.15);
+            color: #6fcf6f;
+        }
+        .sermon-prep-preview {
+            background: rgba(0,0,0,0.3);
+            padding: 10px 12px;
+            border-radius: 8px;
+            font-size: 0.8rem;
+            color: #c0c0c0;
+            margin-bottom: 12px;
+            max-height: 100px;
+            overflow-y: auto;
+            word-break: break-word;
+        }
+        .sermon-prep-meta {
+            font-size: 0.75rem;
+            color: #a0a0a0;
+            margin-bottom: 8px;
+        }
+        .sermon-file-input {
+            margin-bottom: 12px;
+        }
+        .sermon-file-input input[type="file"] {
+            padding: 8px;
+            font-size: 0.85rem;
+            margin-bottom: 0;
+        }
+        .sermon-btn-row {
+            display: flex;
+            gap: 8px;
+        }
+        .sermon-btn-row .btn {
+            flex: 1;
+            padding: 10px;
+            font-size: 0.85rem;
+        }
+
+        /* Broadcaster panel styles */
+        .broadcaster-status {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+        .status-dot {
+            width: 12px; height: 12px;
+            border-radius: 50%;
+            background: #ff4444;
+        }
+        .status-dot.connected { background: #44ff44; }
+        .status-dot.recording { background: #ff8800; animation: pulseRecord 1s infinite; }
+        @keyframes pulseRecord { 50% { opacity: 0.5; transform: scale(1.2); } }
+
+        .speech-box {
+            min-height: 100px;
+            background: rgba(0,0,0,0.3);
+            border-radius: 10px;
+            padding: 15px;
+            font-size: 1rem;
+            line-height: 1.5;
+            margin-bottom: 15px;
+        }
+        .speech-box .partial { color: #888; font-style: italic; }
+        .speech-box .final { color: #4a90d9; }
+
+        .bc-log {
+            max-height: 150px;
+            overflow-y: auto;
+            background: rgba(0,0,0,0.3);
+            border-radius: 10px;
+            padding: 10px;
+            font-family: monospace;
+            font-size: 0.75rem;
+        }
+        .log-entry { margin-bottom: 3px; }
+        .log-entry.info { color: #a0a0a0; }
+        .log-entry.success { color: #44ff44; }
+        .log-entry.error { color: #ff4444; }
+
+        .whisper-status-box {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 12px;
+            background: rgba(255,136,0,0.2);
+            border-radius: 6px;
+            margin-bottom: 10px;
+            font-size: 0.8rem;
+        }
+        .whisper-status-box.ready { background: rgba(68,255,68,0.2); }
+        .whisper-status-box .spinner {
+            width: 12px; height: 12px;
+            border: 2px solid rgba(255,255,255,0.3);
+            border-top-color: #fff;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        .latency-chart-container {
+            background: rgba(60,60,80,0.5);
+            border-radius: 8px;
+            padding: 10px;
+            margin-top: 10px;
+        }
+        .latency-chart { width: 100%; height: 80px; }
+        .latency-stats {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 8px;
+            font-size: 0.85rem;
+            color: #c0c0c0;
+        }
+        .latency-stats .value { color: #7ab8ff; font-weight: 600; }
+
+        .bc-monitor-control {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 15px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 8px;
+            margin-bottom: 15px;
+        }
+        .bc-monitor-control label {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            font-size: 0.9rem;
+        }
+        .bc-monitor-control input[type="checkbox"] {
+            width: 18px; height: 18px;
+            cursor: pointer;
+        }
+        .bc-monitor-control input[type="range"] {
+            flex: 1;
+            max-width: 120px;
+            height: 6px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 3px;
+            cursor: pointer;
+        }
+        .bc-monitor-control .volume-label {
+            font-size: 0.75rem;
+            color: #a0a0a0;
+            min-width: 35px;
+        }
+
+        /* Record Session */
+        .record-lang-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+        .record-lang-item {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 8px;
+            padding: 10px;
+        }
+        .record-lang-name {
+            font-weight: 600;
+            font-size: 0.82rem;
+            color: #4a90d9;
+            margin-bottom: 6px;
+        }
+        .record-cb-row {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            margin-bottom: 3px;
+        }
+        .record-cb-row input { width: 15px; height: 15px; cursor: pointer; }
+        .record-cb-row label { font-size: 0.78rem; color: #a0a0a0; cursor: pointer; }
+        .record-option-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 12px;
+        }
+        .record-label { font-size: 0.82rem; color: #a0a0a0; }
+        .record-gender-btn {
+            padding: 6px 14px;
+            border: 2px solid rgba(255,255,255,0.12);
+            border-radius: 6px;
+            background: rgba(255,255,255,0.04);
+            color: #888;
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .record-gender-btn.active {
+            border-color: #4a90d9;
+            background: rgba(74,144,217,0.15);
+            color: #fff;
+        }
+        .record-folder-path {
+            flex: 1;
+            padding: 6px 10px;
+            background: rgba(0,0,0,0.25);
+            border-radius: 5px;
+            font-size: 0.72rem;
+            font-family: monospace;
+            color: #777;
+        }
+        .record-info {
+            font-size: 0.75rem;
+            color: #777;
+            font-style: italic;
+            margin-top: 4px;
+        }
+        .record-status {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 12px;
+            padding: 10px;
+            background: rgba(220,53,69,0.12);
+            border-radius: 8px;
+            font-size: 0.82rem;
+        }
+        .record-dot {
+            width: 10px; height: 10px;
+            border-radius: 50%;
+            background: #dc3545;
+            animation: recPulse 1.2s infinite;
+        }
+        @keyframes recPulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.3; }
+        }
+
+        /* Quick Start */
+        .quick-start-section {
+            background: rgba(68,170,68,0.1);
+            border: 2px solid rgba(68,170,68,0.3);
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        .quick-start-section .section-title {
+            color: #44aa44;
+            font-size: 0.85rem;
+            margin-bottom: 12px;
+        }
+        .qs-settings {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+        .qs-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .qs-row label {
+            min-width: 80px;
+            font-size: 0.85rem;
+            color: #a0a0a0;
+        }
+        .qs-row input[type="text"],
+        .qs-row select {
+            flex: 1;
+            padding: 10px 12px;
+            margin-bottom: 0;
+            font-size: 0.9rem;
+        }
+        .qs-row .qs-value {
+            flex: 1;
+            font-size: 0.85rem;
+            color: #ccc;
+        }
+        .qs-row .qs-edit-btn {
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.2);
+            color: #a0a0a0;
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            cursor: pointer;
+        }
+        .qs-row .qs-edit-btn:hover { background: rgba(255,255,255,0.15); }
+        #qsStartBtn {
+            width: 100%;
+            padding: 18px;
+            border: none;
+            border-radius: 12px;
+            font-size: 1.2rem;
+            font-weight: 700;
+            cursor: pointer;
+            background: linear-gradient(135deg, #44aa44, #228B22);
+            color: white;
+            transition: all 0.2s;
+            letter-spacing: 0.5px;
+        }
+        #qsStartBtn:hover { transform: scale(1.01); box-shadow: 0 4px 15px rgba(68,170,68,0.4); }
+        #qsStartBtn:active { transform: scale(0.98); }
+        #qsStartBtn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; box-shadow: none; }
+
+        .qs-progress {
+            display: none;
+            margin-top: 15px;
+        }
+        .qs-progress.visible { display: block; }
+        .qs-progress-bar {
+            height: 8px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 4px;
+            overflow: hidden;
+            margin-bottom: 10px;
+        }
+        .qs-progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #44aa44, #66cc66);
+            border-radius: 4px;
+            transition: width 0.5s ease;
+            width: 0%;
+        }
+        .qs-progress-text {
+            font-size: 0.85rem;
+            color: #a0a0a0;
+        }
+        .qs-folder-row {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .qs-folder-btn {
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.2);
+            color: #ccc;
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            cursor: pointer;
+            white-space: nowrap;
+        }
+        .qs-folder-btn:hover { background: rgba(255,255,255,0.15); }
+        .qs-folder-name {
+            font-size: 0.8rem;
+            color: #888;
+            font-family: monospace;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+    </style>
+</head>
+<body>
+    <header style="text-align: center; margin-bottom: 20px;">
+        <h1>🔐 Barnabas Admin</h1>
+        <p class="subtitle">Broadcaster Setup & Control Panel</p>
+    </header>
+
+    <div class="main-layout">
+        <!-- LEFT PANEL: System Control & Login -->
+        <div class="left-panel">
+            <!-- Quick Start Section -->
+            <div class="quick-start-section" id="quickStartSection">
+                <div class="section-title">Quick Start</div>
+                <div class="qs-settings">
+                    <div class="qs-row">
+                        <label>Church:</label>
+                        <select id="qsChurchSelect">
+                            <option value="" disabled selected>Loading...</option>
+                        </select>
+                    </div>
+                    <div class="qs-row">
+                        <label>Audio:</label>
+                        <div class="audio-source-toggle" style="flex:1;">
+                            <button class="audio-source-btn active" id="srcMicBtn" onclick="setAudioSource('mic')">
+                                <span style="font-size:1.3em">🎙️</span> Microphone
+                            </button>
+                            <button class="audio-source-btn" id="srcLineInBtn" onclick="setAudioSource('line-in')">
+                                <span style="font-size:1.3em">🔌</span> Line-In / Dante
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <button id="qsStartBtn" onclick="quickStart()">
+                    ▶️ START BARNABA
+                </button>
+                <div class="qs-progress" id="qsProgress">
+                    <div class="qs-progress-bar"><div class="qs-progress-fill" id="qsProgressFill"></div></div>
+                    <div class="qs-progress-text" id="qsProgressText">Preparing...</div>
+                </div>
+                <button class="btn btn-danger" id="qsStopBtn" onclick="confirmStop()" style="display:none; margin-top: 10px;">
+                    ⏹️ STOP BARNABA
+                </button>
+                <button class="btn" id="qsRefreshBtn" onclick="checkInitialState()" style="background: #666; margin-top: 8px;">
+                    🔄 REFRESH
+                </button>
+            </div>
+
+            <!-- Hidden status indicators (used by JS) -->
+            <div style="display:none;">
+                <div id="whisperIndicator" class="status-indicator inactive"></div>
+                <span id="whisperBadge" class="status-badge inactive">OFFLINE</span>
+                <div id="gatewayIndicator" class="status-indicator inactive"></div>
+                <span id="gatewayBadge" class="status-badge inactive">OFFLINE</span>
+                <div id="barnabaReady"></div>
+                <div id="audioSourceHint"></div>
+                <span id="qsFolderName"></span>
+            </div>
+
+            <!-- Stop Confirmation Dialog -->
+            <div class="dialog-overlay" id="stopDialog">
+                <div class="dialog-box">
+                    <h3>⚠️ Stop Barnaba?</h3>
+                    <p>Do you really want to STOP Barnaba? This will disconnect all active listeners.</p>
+                    <div class="dialog-buttons">
+                        <button class="btn btn-cancel" onclick="closeStopDialog()">Cancel</button>
+                        <button class="btn btn-danger" onclick="stopBarnaba()">Stop</button>
+                    </div>
+                </div>
+            </div>
+
+        <!-- Login Section (hidden until Barnaba is ready) -->
+        <div class="section" id="loginSection" style="display: none;">
+            <div class="section-title">Church Registration</div>
+
+            <div class="info-box" id="loginInfoBox">
+                Select your church and enter the master password to register as a broadcaster.
+                You will receive a QR code and PIN for listeners to join.
+            </div>
+
+            <div class="error-msg" id="errorMsg"></div>
+
+            <select id="churchSelect">
+                <option value="" disabled selected>Loading churches...</option>
+            </select>
+            <div id="passwordRow">
+                <input type="password" id="password" placeholder="Master Password" autocomplete="off">
+            </div>
+
+            <button class="btn btn-primary" id="loginBtn" onclick="authenticate()">
+                🔓 Authenticate & Register
+            </button>
+        </div>
+        </div><!-- END left-panel -->
+
+        <!-- RIGHT PANEL: Broadcaster (after auth) -->
+        <div class="right-panel" id="rightPanel">
+            <div class="section-title" style="margin-bottom: 15px; font-size: 0.9rem;">📡 Broadcasting Session</div>
+            <div class="church-info">
+                <span class="icon" id="churchIcon">⛪</span>
+                <div>
+                    <div class="name" id="displayChurchName">Church Name</div>
+                    <div class="id" id="displayChurchId">church-id</div>
+                </div>
+            </div>
+
+            <!-- QR Code (collapsible) -->
+            <button class="toggle-section-btn" id="qrToggleBtn" onclick="toggleCollapsible('qrSection', this)">
+                <span>📱 QR Code for Listeners</span>
+                <span class="toggle-icon">▼</span>
+            </button>
+            <div class="collapsible" id="qrSection">
+                <div class="section" style="margin-bottom: 0;">
+                    <div class="qr-container">
+                        <img id="qrImage" src="" alt="QR Code">
+                    </div>
+                    <p style="text-align: center; color: #a0a0a0; font-size: 0.85rem;">
+                        Display this QR code for listeners to scan
+                    </p>
+                </div>
+            </div>
+
+            <!-- Access PIN (collapsible) -->
+            <button class="toggle-section-btn" id="pinToggleBtn" onclick="toggleCollapsible('pinSection', this)">
+                <span>🔢 Access PIN</span>
+                <span class="toggle-icon">▼</span>
+            </button>
+            <div class="collapsible" id="pinSection">
+                <div class="section" style="margin-bottom: 0;">
+                    <div class="pin-display">
+                        <div class="pin-label">6-Digit PIN</div>
+                        <div class="pin-code" id="pinCode">------</div>
+                        <div class="pin-expires" id="pinExpires">Valid for 30 days</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Join URL -->
+            <div class="section">
+                <div class="section-title">Direct Join URL</div>
+                <div class="join-url" id="joinUrl">Loading...</div>
+                <button class="copy-btn" id="copyBtn" onclick="copyUrl()">
+                    📋 Copy URL to Clipboard
+                </button>
+            </div>
+
+            <!-- Sermon Preparation Context (02.03.2026) -->
+            <div class="section" id="sermonPrepSection">
+                <div class="section-title">Sermon Preparation</div>
+
+                <div class="sermon-prep-status empty" id="sermonStatus">
+                    <span>No sermon context loaded</span>
+                </div>
+
+                <div id="sermonPreviewBox" style="display:none;">
+                    <div class="sermon-prep-meta" id="sermonMeta"></div>
+                    <div class="sermon-prep-preview" id="sermonPreview"></div>
+                </div>
+
+                <div class="sermon-file-input">
+                    <input type="file" id="sermonFileInput" accept=".txt,.md,.jpg,.jpeg,.png">
+                </div>
+
+                <div class="sermon-btn-row">
+                    <button class="btn btn-primary" id="sermonUploadBtn" onclick="sermonUpload()">📄 Upload</button>
+                    <button class="btn btn-danger" id="sermonClearBtn" onclick="sermonClear()" style="display:none;">🗑 Clear</button>
+                </div>
+            </div>
+
+            <!-- Broadcaster Connection -->
+            <div class="section">
+                <div class="section-title">Broadcaster</div>
+                <div class="broadcaster-status">
+                    <div class="status-dot" id="bcStatusDot"></div>
+                    <span id="bcStatusText">Disconnected</span>
+                </div>
+                <button class="btn btn-primary" id="bcConnectBtn">🔌 Connect & Start</button>
+            </div>
+
+            <!-- Speech Section (hidden until WS connected) -->
+            <div class="section" id="bcSpeechSection" style="display:none;">
+                <div class="section-title">Speech Recognition (Whisper ASR)</div>
+
+                <div class="whisper-status-box" id="bcWhisperStatus">
+                    <div class="spinner"></div>
+                    <span id="bcWhisperStatusText">Checking Whisper status...</span>
+                </div>
+
+                <div class="bc-monitor-control" id="bcMonitorControl" style="display:none;">
+                    <label>
+                        <input type="checkbox" id="bcMonitorToggle" onchange="bcToggleMonitor()">
+                        🔊 Monitor
+                    </label>
+                    <input type="range" id="bcMonitorVolume" min="0" max="100" value="50" onchange="bcSetMonitorVolume(this.value)">
+                    <span class="volume-label" id="bcMonitorVolumeLabel">50%</span>
+                </div>
+
+                <div class="speech-box" id="bcSpeechBox">
+                    <span class="partial">Click Start Recording and speak in German...</span>
+                </div>
+                <button class="btn btn-success" id="bcStartBtn">🎙️ Start Recording</button>
+                <button class="btn btn-danger" id="bcStopBtn" style="display:none;">⏹️ Stop</button>
+
+                <!-- Latency Chart -->
+                <div id="bcLatencySection" style="display:none; margin-top: 15px;">
+                    <div class="section-title">Latency (30s window) — <span style="color:#7ab8ff">Gateway</span> / <span style="color:#ffb347">True E2E</span></div>
+                    <div class="latency-chart-container">
+                        <canvas class="latency-chart" id="bcLatencyChart"></canvas>
+                        <div class="latency-stats">
+                            <span style="color:#ffb347">Upload: <span class="value" id="bcLatencyUpload">-</span></span>
+                            <span style="color:#ffb347">GW: <span class="value" id="bcLatencyCurrent">-</span></span>
+                            <span style="color:#ffb347">Download: <span class="value" id="bcLatencyDownload">-</span></span>
+                            <span style="color:#ffb347">True: <span class="value" id="bcLatencyTrue">-</span></span>
+                            <span style="color:#7ab8ff">GW Avg: <span class="value" id="bcLatencyAvg">-</span></span>
+                        </div>
+                        <div class="latency-diagram" style="font-family:monospace; font-size:10px; color:#a0a0a0; padding:6px 0 2px 0; line-height:1.4; white-space:pre;">Browser ─[Upload]─► Gateway ─[GW: Whisper+Translation]─► Broadcast ─[Download]─► Listener
+└──────────────────────── True E2E ────────────────────────────────────────────┘</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- RECORD SESSION Section (collapsible) -->
+            <button class="toggle-section-btn" id="recordToggleBtn" onclick="toggleCollapsible('recordSection', this)" style="display:none;">
+                <span>📼 Record Session</span>
+                <span class="toggle-icon">▼</span>
+            </button>
+            <div class="collapsible" id="recordSection">
+                <div class="section" style="margin-bottom: 0;">
+                    <!-- Language Grid -->
+                    <div class="record-lang-grid" id="recordLangGrid"></div>
+
+                    <!-- Voice Gender Toggle -->
+                    <div class="record-option-row">
+                        <span class="record-label">Voice:</span>
+                        <button class="record-gender-btn active" data-gender="male" onclick="recordSetGender(this)">Male</button>
+                        <button class="record-gender-btn" data-gender="female" onclick="recordSetGender(this)">Female</button>
+                    </div>
+
+                    <!-- Save Folder -->
+                    <div class="record-option-row">
+                        <button class="btn" id="recordChooseFolderBtn" onclick="recordChooseFolder()" style="padding:8px 14px; font-size:0.8rem;">
+                            📁 Choose Folder
+                        </button>
+                        <span class="record-folder-path" id="recordFolderPath">No folder selected</span>
+                    </div>
+
+                    <!-- Info -->
+                    <div class="record-info" id="recordInfo">
+                        Recording starts with first translation.
+                    </div>
+
+                    <!-- Record / Stop -->
+                    <button class="btn btn-danger" id="recordBtn" disabled onclick="recordToggle()" style="width:100%; margin-top:10px;">
+                        ⏺️ RECORD
+                    </button>
+
+                    <!-- Recording indicator -->
+                    <div class="record-status" id="recordStatus" style="display:none;">
+                        <div class="record-dot"></div>
+                        <span>Recording...</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Log -->
+            <div class="section">
+                <div class="section-title">Log</div>
+                <div class="bc-log" id="bcLog"></div>
+            </div>
+        </div><!-- END right-panel -->
+    </div><!-- END main-layout -->
+
+    <script>
+        // ============================================================
+        // State
+        // ============================================================
+        let sessionToken = null;
+        let churchData = null;
+        let masterPassword = null;
+        let systemState = 'stopped';
+
+        // Elements
+        const $ = id => document.getElementById(id);
+        const loginSection = $('loginSection');
+        const rightPanel = $('rightPanel');
+        const errorMsg = $('errorMsg');
+        const loginBtn = $('loginBtn');
+
+        // ============================================================
+        // Constants
+        // ============================================================
+        // 12 min. This IS the limit that governs Quick start: the panel orchestrates on its own
+        // side (start-whisper -> waitForSystemStatus -> start-gateway) rather than through
+        // /api/control/start-system. On a loaded GPU pool Whisper once took 7 min 28 s to come
+        // up - about 6 min 20 s of which was purely waiting for a node (the platform rescheduled
+        // the replica roughly every 60 s). A 5-minute limit expired in the middle of that wait,
+        // so the panel gave up and NEVER reached the gateway step. It looked like a deploy
+        // failure but was only too short a limit. The image pull alone is 59 s, start plus model
+        // about 30 s; the rest is queueing for a GPU.
+        const WHISPER_STARTUP_WAIT_MS = 720000;
+        const GATEWAY_STARTUP_WAIT_MS = 120000;
+        const HEALTH_CHECK_INTERVAL_MS = 10000;
+        const FETCH_TIMEOUT_MS = 30000;
+        const HEALTH_CHECK_TIMEOUT_MS = 30000;
+        const CONNECTIVITY_CHECK_DELAY_MS = 2000;
+        const WHISPER_MAX_HEALTH_CHECKS = Math.ceil(WHISPER_STARTUP_WAIT_MS / HEALTH_CHECK_INTERVAL_MS);
+        const GATEWAY_MAX_HEALTH_CHECKS = Math.ceil(GATEWAY_STARTUP_WAIT_MS / HEALTH_CHECK_INTERVAL_MS);
+
+        // ============================================================
+        // Helper Functions
+        // ============================================================
+
+        function getCookie(name) {
+            return document.cookie
+                .split(';')
+                .map(part => part.trim())
+                .filter(Boolean)
+                .reduce((value, part) => {
+                    const idx = part.indexOf('=');
+                    if (idx === -1) return value;
+                    const key = decodeURIComponent(part.slice(0, idx));
+                    if (key !== name) return value;
+                    return decodeURIComponent(part.slice(idx + 1));
+                }, null);
+        }
+
+        async function fetchWithTimeout(url, options = {}, timeoutMs = FETCH_TIMEOUT_MS) {
+            const controller = new AbortController();
+            const timeout = setTimeout(() => controller.abort(), timeoutMs);
+            try {
+                const method = String(options.method || 'GET').toUpperCase();
+                const headers = new Headers(options.headers || {});
+                if (!['GET', 'HEAD', 'OPTIONS'].includes(method)) {
+                    const csrfToken = getCookie('barnaba_csrf');
+                    if (csrfToken) headers.set('x-barnaba-csrf', csrfToken);
+                }
+                const response = await fetch(url, {
+                    credentials: 'same-origin',
+                    ...options,
+                    headers,
+                    signal: controller.signal
+                });
+                clearTimeout(timeout);
+                return response;
+            } catch (error) {
+                clearTimeout(timeout);
+                if (error.name === 'AbortError') {
+                    throw new Error(`Request timeout after ${timeoutMs}ms`);
+                }
+                throw error;
+            }
+        }
+
+        function showToast(message, type = 'error', durationMs = 5000) {
+            const toast = document.createElement('div');
+            toast.className = `toast ${type}`;
+            toast.textContent = message;
+            document.body.appendChild(toast);
+            setTimeout(() => {
+                toast.style.animation = 'slideIn 0.3s ease reverse';
+                setTimeout(() => toast.remove(), 300);
+            }, durationMs);
+        }
+
+        async function ensureControlSession(password) {
+            const response = await fetchWithTimeout('/api/control/login', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ password })
+            });
+            const data = await response.json();
+            if (!data.success) {
+                throw new Error(data.error || 'Control login failed');
+            }
+        }
+
+        async function readJsonResponse(response, fallbackMessage) {
+            const text = await response.text();
+            let data = {};
+            if (text) {
+                try {
+                    data = JSON.parse(text);
+                } catch (error) {
+                    throw new Error(`${fallbackMessage}: ${text.slice(0, 200)}`);
+                }
+            }
+            if (!response.ok) {
+                throw new Error(data.error || fallbackMessage || `HTTP ${response.status}`);
+            }
+            return data;
+        }
+
+        async function fetchControlJson(url, options = {}, timeoutMs = FETCH_TIMEOUT_MS, fallbackMessage = 'Control request failed') {
+            const response = await fetchWithTimeout(url, options, timeoutMs);
+            return readJsonResponse(response, fallbackMessage);
+        }
+
+        async function waitForSystemStatus(predicate, timeoutMs, onProgress = () => {}, waitingMessage = 'Waiting for system...', progressStart = null, progressEnd = null) {
+            const startedAt = Date.now();
+            let lastStatus = null;
+
+            while (Date.now() - startedAt < timeoutMs) {
+                lastStatus = await fetchControlJson('/api/control/status', {}, HEALTH_CHECK_TIMEOUT_MS, 'Status check failed');
+                if (predicate(lastStatus)) return lastStatus;
+
+                const elapsedMs = Date.now() - startedAt;
+                const elapsedSec = Math.round(elapsedMs / 1000);
+                let percent = null;
+                if (typeof progressStart === 'number' && typeof progressEnd === 'number') {
+                    const ratio = Math.max(0, Math.min(1, elapsedMs / timeoutMs));
+                    percent = progressStart + ((progressEnd - progressStart) * ratio);
+                }
+                onProgress(`${waitingMessage} (${elapsedSec}s)`, percent);
+                await sleep(HEALTH_CHECK_INTERVAL_MS);
+            }
+
+            const lastError = lastStatus?.lastAction?.error
+                || lastStatus?.whisper?.error
+                || lastStatus?.gateway?.error
+                || 'timeout';
+            throw new Error(`${waitingMessage} timed out after ${Math.round(timeoutMs / 1000)}s: ${lastError}`);
+        }
+
+        async function startSystemFromControlPlane(onProgress = () => {}) {
+            onProgress('Checking current system status...', 5);
+            const initialStatus = await fetchControlJson('/api/control/status', {}, HEALTH_CHECK_TIMEOUT_MS, 'Initial status check failed');
+            if (initialStatus.systemReady) {
+                setStatus('whisper', 'ready', 'READY');
+                setStatus('gateway', 'ready', 'READY');
+                onProgress('System already running', 100);
+                return initialStatus;
+            }
+
+            const whisperWasOffline = initialStatus.whisper?.status !== 'running';
+            const gatewayWasRunning = initialStatus.gateway?.status === 'running';
+
+            if (whisperWasOffline) {
+                onProgress('Starting Whisper container...', 10);
+                setStatus('whisper', 'loading', 'STARTING...');
+                setStatus('gateway', 'loading', gatewayWasRunning ? 'WAITING...' : 'OFFLINE');
+                const whisperData = await fetchControlJson('/api/control/start-whisper', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({})
+                }, FETCH_TIMEOUT_MS, 'Whisper start failed');
+                if (!whisperData.success) {
+                    throw new Error(whisperData.error || 'Whisper start failed');
+                }
+
+                setStatus('whisper', 'loading', 'INITIALIZING...');
+                onProgress('Waiting for Whisper Azure readiness and model warm-up...', 15);
+                await waitForSystemStatus(
+                    status => status.whisper?.status === 'running',
+                    WHISPER_STARTUP_WAIT_MS,
+                    onProgress,
+                    'Waiting for Whisper Azure readiness and model warm-up',
+                    15,
+                    55
+                );
+            }
+            setStatus('whisper', 'ready', 'READY');
+            onProgress('Whisper is ready', 58);
+
+            if (gatewayWasRunning && whisperWasOffline) {
+                onProgress('Restarting Gateway to reconnect to Whisper...', 60);
+                setStatus('gateway', 'loading', 'RESTARTING...');
+                await fetchControlJson('/api/control/stop-gateway', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({})
+                }, FETCH_TIMEOUT_MS, 'Gateway stop failed');
+                await sleep(5000);
+            }
+
+            onProgress('Starting Gateway container...', 65);
+            setStatus('gateway', 'loading', 'STARTING...');
+            const gatewayData = await fetchControlJson('/api/control/start-gateway', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({})
+            }, FETCH_TIMEOUT_MS, 'Gateway start failed');
+            if (!gatewayData.success) {
+                throw new Error(gatewayData.error || 'Gateway start failed');
+            }
+
+            setStatus('gateway', 'loading', 'INITIALIZING...');
+            onProgress('Waiting for Gateway readiness...', 70);
+            const finalStatus = await waitForSystemStatus(
+                status => status.systemReady,
+                GATEWAY_STARTUP_WAIT_MS,
+                onProgress,
+                'Waiting for Gateway readiness',
+                70,
+                92
+            );
+            setStatus('gateway', 'ready', 'READY');
+            onProgress('Gateway is ready', 94);
+            return finalStatus;
+        }
+
+        function showPasswordModal(title) {
+            return new Promise((resolve) => {
+                const overlay = document.createElement('div');
+                overlay.className = 'password-modal-overlay';
+                overlay.innerHTML = `
+                    <div class="password-modal-box">
+                        <h3>${title}</h3>
+                        <input type="password" id="modalPasswordInput" placeholder="Password" autocomplete="off">
+                        <div class="password-modal-buttons">
+                            <button class="btn btn-cancel" id="modalCancelBtn">Cancel</button>
+                            <button class="btn btn-primary" id="modalOkBtn">OK</button>
+                        </div>
+                    </div>
+                `;
+                document.body.appendChild(overlay);
+                const input = overlay.querySelector('#modalPasswordInput');
+                const okBtn = overlay.querySelector('#modalOkBtn');
+                const cancelBtn = overlay.querySelector('#modalCancelBtn');
+                input.focus();
+                const cleanup = (value) => { overlay.remove(); resolve(value); };
+                okBtn.onclick = () => cleanup(input.value);
+                cancelBtn.onclick = () => cleanup(null);
+                input.onkeypress = (e) => { if (e.key === 'Enter') cleanup(input.value); };
+                overlay.onclick = (e) => { if (e.target === overlay) cleanup(null); };
+            });
+        }
+
+        function sleep(ms) {
+            return new Promise(resolve => setTimeout(resolve, ms));
+        }
+
+        let CHURCHES_CACHE = [];
+
+        async function loadChurchesIntoSelect(selectEl, preselectId) {
+            try {
+                const res = await fetch('/api/churches');
+                const data = await res.json();
+                if (!data.success || !Array.isArray(data.churches)) {
+                    throw new Error('Invalid /api/churches response');
+                }
+                CHURCHES_CACHE = data.churches;
+                selectEl.innerHTML = '<option value="" disabled selected>Select church...</option>';
+                for (const c of data.churches) {
+                    const opt = document.createElement('option');
+                    opt.value = c.id;
+                    opt.textContent = c.name;
+                    if (preselectId && c.id === preselectId) opt.selected = true;
+                    selectEl.appendChild(opt);
+                }
+            } catch (e) {
+                selectEl.innerHTML = '<option value="" disabled selected>Failed to load churches</option>';
+                console.error('[Churches] load failed:', e);
+            }
+        }
+
+        // Collapsible toggle
+        function toggleCollapsible(id, btn) {
+            const el = $(id);
+            el.classList.toggle('visible');
+            btn.classList.toggle('expanded');
+        }
+
+        // ============================================================
+        // Control Panel Functions
+        // ============================================================
+
+        function setStatus(component, status, text) {
+            const indicator = $(`${component}Indicator`);
+            const badge = $(`${component}Badge`);
+            indicator.className = 'status-indicator';
+            badge.className = 'status-badge';
+            indicator.classList.add(status);
+            badge.classList.add(status);
+            badge.textContent = text;
+        }
+
+        function updateProgress(message, percent = null) {
+            console.log(`[Barnaba] ${message}`);
+            $('qsProgress').classList.add('visible');
+            $('qsProgressText').textContent = message;
+            if (typeof percent === 'number' && Number.isFinite(percent)) {
+                const bounded = Math.max(0, Math.min(100, Math.round(percent)));
+                $('qsProgressFill').style.width = `${bounded}%`;
+            }
+        }
+
+        async function startBarnaba() {
+            if (systemState === 'starting' || systemState === 'running') return;
+
+            if (!masterPassword) {
+                masterPassword = await showPasswordModal('Enter master password to start Barnaba:');
+                if (!masterPassword) return;
+            }
+            await ensureControlSession(masterPassword);
+
+            systemState = 'starting';
+            $('qsStartBtn').disabled = true;
+            $('qsStartBtn').textContent = '⏳ STARTING...';
+
+            try {
+                setStatus('whisper', 'loading', 'STARTING...');
+                setStatus('gateway', 'loading', 'WAITING...');
+                await startSystemFromControlPlane(updateProgress);
+
+                updateProgress('Verifying system connectivity...', 96);
+                await sleep(CONNECTIVITY_CHECK_DELAY_MS);
+
+                const legacyFinalStatus = await fetchWithTimeout('/api/control/status', {}, HEALTH_CHECK_TIMEOUT_MS);
+                const legacyStatus = await legacyFinalStatus.json();
+
+                if (!legacyStatus.systemReady) {
+                    resetControlPanel('System connectivity check failed');
+                    return;
+                }
+
+                systemState = 'running';
+                $('barnabaReady').classList.add('visible');
+                showLoginSection();
+                $('qsStartBtn').disabled = true;
+                $('qsStartBtn').textContent = '✅ RUNNING';
+                $('qsStopBtn').style.display = '';
+                showToast('BARNABA is ready!', 'success');
+                updateProgress('BARNABA is ready!', 100);
+                return;
+
+                // STEP 0: Check initial state
+                updateProgress('Checking current system state...');
+                let whisperWasOffline = true;
+                let gatewayWasRunning = false;
+
+                try {
+                    const statusRes = await fetchWithTimeout('/api/control/status', {}, HEALTH_CHECK_TIMEOUT_MS);
+                    const status = await statusRes.json();
+                    whisperWasOffline = status.whisper?.status !== 'running';
+                    gatewayWasRunning = status.gateway?.status === 'running';
+                    console.log(`[Barnaba] Initial state: Whisper=${status.whisper?.status}, Gateway=${status.gateway?.status}`);
+                } catch (e) {
+                    console.log('[Barnaba] Could not check initial state, assuming both offline');
+                }
+
+                // STEP 1: Start Whisper
+                setStatus('whisper', 'loading', 'STARTING...');
+                updateProgress('Starting Whisper container...');
+
+                const whisperRes = await fetchWithTimeout('/api/control/start-whisper', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({})
+                });
+                const whisperData = await whisperRes.json();
+
+                if (!whisperData.success) {
+                    setStatus('whisper', 'error', 'ERROR');
+                    masterPassword = null;
+                    resetControlPanel('Whisper start failed: ' + whisperData.error);
+                    return;
+                }
+
+                setStatus('whisper', 'loading', 'INITIALIZING...');
+                updateProgress('Waiting for Whisper to initialize (up to 2 min)...');
+
+                let whisperReady = false;
+                for (let i = 0; i < WHISPER_MAX_HEALTH_CHECKS; i++) {
+                    await sleep(HEALTH_CHECK_INTERVAL_MS);
+                    const health = await checkWhisperHealth();
+                    if (health.healthy) { whisperReady = true; break; }
+                    updateProgress(`Whisper health check ${i+1}/${WHISPER_MAX_HEALTH_CHECKS}: waiting...`);
+                }
+
+                if (!whisperReady) {
+                    setStatus('whisper', 'error', 'TIMEOUT');
+                    resetControlPanel('Whisper failed to start within 5 minutes');
+                    return;
+                }
+
+                setStatus('whisper', 'ready', 'READY');
+                updateProgress('Whisper is ready!');
+
+                // STEP 2: Handle Gateway
+                const needsGatewayRestart = gatewayWasRunning && whisperWasOffline;
+
+                if (needsGatewayRestart) {
+                    setStatus('gateway', 'loading', 'RESTARTING...');
+                    updateProgress('Restarting Gateway to reconnect to Whisper...');
+                    console.log('[Barnaba] Gateway needs restart because Whisper was offline');
+                    try {
+                        await fetchWithTimeout('/api/control/stop-gateway', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({})
+                        });
+                        await sleep(5000);
+                    } catch (e) {
+                        console.log('[Barnaba] Stop gateway error (continuing): ' + e.message);
+                    }
+                } else {
+                    setStatus('gateway', 'loading', 'STARTING...');
+                    updateProgress('Starting Gateway container...');
+                }
+
+                const gatewayRes = await fetchWithTimeout('/api/control/start-gateway', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({})
+                });
+                const gatewayData = await gatewayRes.json();
+
+                if (!gatewayData.success) {
+                    setStatus('gateway', 'error', 'ERROR');
+                    resetControlPanel('Gateway start failed: ' + gatewayData.error);
+                    return;
+                }
+
+                setStatus('gateway', 'loading', 'INITIALIZING...');
+                updateProgress('Waiting for Gateway to initialize...');
+
+                let gatewayReady = false;
+                for (let i = 0; i < GATEWAY_MAX_HEALTH_CHECKS; i++) {
+                    await sleep(HEALTH_CHECK_INTERVAL_MS);
+                    const health = await checkGatewayHealth();
+                    if (health.healthy) { gatewayReady = true; break; }
+                    updateProgress(`Gateway health check ${i+1}/${GATEWAY_MAX_HEALTH_CHECKS}: waiting...`);
+                }
+
+                if (!gatewayReady) {
+                    setStatus('gateway', 'error', 'TIMEOUT');
+                    resetControlPanel('Gateway failed to start within 2 minutes');
+                    return;
+                }
+
+                setStatus('gateway', 'ready', 'READY');
+                updateProgress('Gateway is ready!');
+
+                // STEP 3: Verify connectivity
+                updateProgress('Verifying system connectivity...');
+                await sleep(CONNECTIVITY_CHECK_DELAY_MS);
+
+                const finalStatus = await fetchWithTimeout('/api/control/status', {}, HEALTH_CHECK_TIMEOUT_MS);
+                const status = await finalStatus.json();
+
+                if (!status.systemReady) {
+                    resetControlPanel('System connectivity check failed');
+                    return;
+                }
+
+                // ALL SYSTEMS READY
+                systemState = 'running';
+                $('barnabaReady').classList.add('visible');
+                showLoginSection();
+                $('qsStartBtn').disabled = true;
+                $('qsStartBtn').textContent = '✅ RUNNING';
+                $('qsStopBtn').style.display = '';
+                showToast('BARNABA is ready!', 'success');
+                updateProgress('BARNABA is ready!');
+
+            } catch (error) {
+                console.error('Start error:', error);
+                resetControlPanel('Error: ' + error.message);
+            }
+        }
+
+        async function checkWhisperHealth() {
+            try {
+                const res = await fetchWithTimeout('/api/control/whisper-health', {}, HEALTH_CHECK_TIMEOUT_MS);
+                return await res.json();
+            } catch (error) {
+                return { healthy: false, error: error.message };
+            }
+        }
+
+        async function checkGatewayHealth() {
+            try {
+                const res = await fetchWithTimeout('/api/control/gateway-health', {}, HEALTH_CHECK_TIMEOUT_MS);
+                return await res.json();
+            } catch (error) {
+                return { healthy: false, error: error.message };
+            }
+        }
+
+        function confirmStop() {
+            $('stopDialog').classList.add('visible');
+        }
+
+        function closeStopDialog() {
+            $('stopDialog').classList.remove('visible');
+        }
+
+        async function stopBarnaba() {
+            closeStopDialog();
+            if (systemState !== 'running') return;
+
+            if (!masterPassword) {
+                masterPassword = await showPasswordModal('Enter master password to stop Barnaba:');
+                if (!masterPassword) return;
+            }
+            await ensureControlSession(masterPassword);
+
+            systemState = 'stopping';
+            $('qsStopBtn').disabled = true;
+            $('qsStopBtn').textContent = '⏳ STOPPING...';
+            setStatus('whisper', 'loading', 'STOPPING...');
+            setStatus('gateway', 'loading', 'STOPPING...');
+
+            try {
+                const res = await fetchWithTimeout('/api/control/stop-all', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({})
+                });
+                const data = await res.json();
+
+                if (data.success) {
+                    resetControlPanel();
+                    showToast('Barnaba stopped successfully', 'success');
+                } else {
+                    showToast('Failed to stop: ' + (data.error || 'Unknown error'), 'error');
+                    $('qsStopBtn').style.display = '';
+                    $('qsStopBtn').textContent = '⏹️ STOP BARNABA';
+                    systemState = 'running';
+                }
+            } catch (error) {
+                showToast('Error stopping: ' + error.message, 'error');
+                $('qsStopBtn').style.display = '';
+                $('qsStopBtn').textContent = '⏹️ STOP BARNABA';
+                systemState = 'running';
+            }
+        }
+
+        function resetControlPanel(errorMessage) {
+            systemState = 'stopped';
+            setStatus('whisper', 'inactive', 'OFFLINE');
+            setStatus('gateway', 'inactive', 'OFFLINE');
+            $('loginSection').style.display = 'none';
+            // Hide right panel (broadcasting session)
+            $('rightPanel').classList.remove('visible');
+            // Disconnect broadcaster if connected
+            if (bcWs) bcDisconnect();
+            // Reset Quick Start UI completely
+            $('qsStartBtn').disabled = false;
+            $('qsStartBtn').textContent = '▶️ START BARNABA';
+            $('qsStopBtn').style.display = 'none';
+            $('qsStopBtn').disabled = false;
+            $('qsStopBtn').textContent = '⏹️ STOP BARNABA';
+            $('qsProgress').classList.remove('visible');
+            $('qsProgressFill').style.width = '0%';
+            $('qsProgressText').textContent = 'Preparing...';
+            $('quickStartSection').style.borderColor = 'rgba(68,170,68,0.3)';
+            if (errorMessage) showToast(errorMessage, 'error', 7000);
+        }
+
+        // Check initial system state on page load
+        async function checkInitialState() {
+            const refreshBtn = $('qsRefreshBtn');
+            try {
+                refreshBtn.disabled = true;
+                refreshBtn.textContent = '⏳ CHECKING...';
+                setStatus('whisper', 'loading', 'CHECKING...');
+                setStatus('gateway', 'loading', 'CHECKING...');
+                updateProgress('Checking system status...');
+
+                const res = await fetchWithTimeout('/api/control/status', {}, HEALTH_CHECK_TIMEOUT_MS);
+                const status = await res.json();
+
+                if (status.systemReady) {
+                    setStatus('whisper', 'ready', 'READY');
+                    setStatus('gateway', 'ready', 'READY');
+                    showLoginSection();
+                    $('qsStartBtn').disabled = true;
+                    $('qsStartBtn').textContent = '✅ RUNNING';
+                    $('qsStopBtn').style.display = '';
+                    systemState = 'running';
+                    updateProgress('System is already running');
+                    showToast('System is running', 'success', 3000);
+                } else {
+                    if (status.whisper?.status === 'running') {
+                        setStatus('whisper', 'ready', 'READY');
+                    } else {
+                        setStatus('whisper', 'inactive', 'OFFLINE');
+                    }
+                    if (status.gateway?.status === 'running') {
+                        setStatus('gateway', 'ready', 'READY');
+                    } else {
+                        setStatus('gateway', 'inactive', 'OFFLINE');
+                    }
+                    updateProgress('Click START BARNABA to begin');
+                }
+            } catch (error) {
+                console.log('Initial state check failed:', error);
+                setStatus('whisper', 'inactive', 'UNKNOWN');
+                setStatus('gateway', 'inactive', 'UNKNOWN');
+                updateProgress('Could not check status - click REFRESH');
+            } finally {
+                refreshBtn.disabled = false;
+                refreshBtn.textContent = '🔄 REFRESH';
+            }
+        }
+
+        checkInitialState();
+
+        // ============================================================
+        // Audio Source Selection
+        // ============================================================
+
+        function setAudioSource(source) {
+            localStorage.setItem('barnaba_audio_source', source);
+            $('srcMicBtn').classList.toggle('active', source === 'mic');
+            $('srcLineInBtn').classList.toggle('active', source === 'line-in');
+            $('audioSourceHint').textContent = source === 'line-in'
+                ? 'Line-In / Dante — echo cancellation & noise suppression OFF'
+                : 'Direct microphone — echo cancellation & noise suppression ON';
+            console.log(`[Audio] Source set to: ${source}`);
+        }
+
+        // Restore saved audio source on load
+        (function() {
+            const saved = localStorage.getItem('barnaba_audio_source');
+            if (saved) setAudioSource(saved);
+        })();
+
+        // ============================================================
+        // Authentication Functions
+        // ============================================================
+
+        /**
+         * Show loginSection, hiding password field if masterPassword already known
+         * (e.g., entered during START flow)
+         */
+        async function showLoginSection() {
+            if (masterPassword) {
+                $('passwordRow').style.display = 'none';
+                $('loginInfoBox').textContent = 'Select your church to register as a broadcaster.';
+            } else {
+                $('passwordRow').style.display = 'block';
+                $('loginInfoBox').textContent = 'Select your church and enter the master password to register as a broadcaster. You will receive a QR code and PIN for listeners to join.';
+            }
+            $('loginSection').style.display = 'block';
+
+            const preselect = localStorage.getItem('barnaba_church_id');
+            await loadChurchesIntoSelect($('churchSelect'), preselect);
+        }
+
+        function showError(msg) {
+            errorMsg.textContent = msg;
+            errorMsg.style.display = 'block';
+        }
+
+        function hideError() {
+            errorMsg.style.display = 'none';
+        }
+
+        async function authenticate() {
+            hideError();
+
+            const churchId = $('churchSelect').value;
+            const password = masterPassword || $('password').value;
+
+            if (!churchId) { showError('Please select a church'); return; }
+            if (!password) { showError('Please enter the master password'); return; }
+
+            loginBtn.disabled = true;
+            loginBtn.textContent = '⏳ Authenticating...';
+
+            try {
+                localStorage.setItem('barnaba_church_id', churchId);
+
+                const response = await fetchWithTimeout('/api/auth/broadcaster', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ password, churchId })
+                });
+
+                const data = await response.json();
+
+                if (!data.success) {
+                    showError(data.error || 'Authentication failed');
+                    loginBtn.disabled = false;
+                    loginBtn.textContent = '🔓 Authenticate & Register';
+                    return;
+                }
+
+                masterPassword = password;
+                sessionToken = data.sessionToken;
+                churchData = data;
+
+                showSuccess(data);
+
+            } catch (error) {
+                console.error('Auth error:', error);
+                showError(error.message.includes('timeout')
+                    ? 'Request timeout - Gateway not responding'
+                    : 'Connection error. Please try again.');
+                loginBtn.disabled = false;
+                loginBtn.textContent = '🔓 Authenticate & Register';
+            }
+        }
+
+        function updatePinExpiry(expiresAt) {
+            const el = $('pinExpires');
+            if (!expiresAt) {
+                el.textContent = 'Permanent';
+                return;
+            }
+            const remaining = expiresAt - Date.now();
+            if (remaining <= 0) {
+                el.textContent = 'Expired';
+                el.style.color = '#ff6b6b';
+                return;
+            }
+            const days = Math.floor(remaining / 86400000);
+            const years = Math.floor(days / 365);
+            const remainingDays = days % 365;
+            if (years > 0) {
+                el.textContent = `Valid for ${years}y ${remainingDays}d`;
+            } else {
+                el.textContent = `Valid for ${days}d`;
+            }
+        }
+
+        function showSuccess(data) {
+            sessionStorage.setItem('barnabas_auth_data', JSON.stringify({
+                qrCode: data.qrCode,
+                pin: data.pin,
+                expiresIn: data.expiresIn,
+                expiresAt: data.expiresAt,
+                joinUrl: data.joinUrl
+            }));
+
+            $('displayChurchName').textContent = data.churchName;
+            $('displayChurchId').textContent = data.churchId;
+
+            // Per-church logo (prefer SVG, keep PNG fallback for existing churches).
+            const churchIcon = $('churchIcon');
+            if (data.churchId) {
+                const logo = document.createElement('img');
+                logo.src = `logos/${data.churchId}.svg`;
+                logo.alt = data.churchName || '';
+                logo.onerror = () => {
+                    if (!logo.dataset.pngFallback) {
+                        logo.dataset.pngFallback = '1';
+                        logo.src = `logos/${data.churchId}.png`;
+                        return;
+                    }
+                    churchIcon.textContent = '⛪';
+                };
+                churchIcon.replaceChildren(logo);
+            } else {
+                churchIcon.textContent = '⛪';
+            }
+
+            $('qrImage').src = data.qrCode;
+            $('pinCode').textContent = data.pin;
+            updatePinExpiry(data.expiresAt);
+            $('joinUrl').textContent = data.joinUrl;
+
+            // Hide login section - authentication complete
+            $('loginSection').style.display = 'none';
+
+            $('rightPanel').classList.add('visible');
+
+            loginBtn.textContent = '✅ Registered';
+            loginBtn.disabled = true;
+
+            showToast('Church registered successfully!', 'success', 3000);
+
+            // Show Record Session section
+            recordShowSection();
+
+            // Check if sermon context already loaded for this church
+            sermonCheckStatus();
+
+            // Auto-connect broadcaster to Gateway
+            setTimeout(() => {
+                if (!bcWs) {
+                    bcLog('Auto-connecting to Gateway...');
+                    bcConnect();
+                }
+            }, 500);
+        }
+
+        function copyUrl() {
+            const url = $('joinUrl').textContent;
+            navigator.clipboard.writeText(url).then(() => {
+                const btn = $('copyBtn');
+                btn.textContent = '✓ Copied!';
+                btn.classList.add('copied');
+                setTimeout(() => {
+                    btn.textContent = '📋 Copy URL to Clipboard';
+                    btn.classList.remove('copied');
+                }, 2000);
+            });
+        }
+
+        $('password').addEventListener('keypress', e => {
+            if (e.key === 'Enter') authenticate();
+        });
+
+        // ============================================================
+        // BROADCASTER
+        // ============================================================
+
+        // Gateway config
+        let gatewayUrl = null;
+        let gatewayWsUrl = null;
+
+        async function fetchGatewayConfig() {
+            try {
+                const res = await fetchWithTimeout('/api/control/config', {}, 5000);
+                const cfg = await res.json();
+                gatewayUrl = cfg.gatewayUrl;
+                gatewayWsUrl = gatewayUrl.replace('https://', 'wss://').replace('http://', 'ws://') + '/ws';
+                console.log('[Broadcaster] Gateway URL:', gatewayUrl);
+            } catch (e) {
+                console.error('[Broadcaster] Failed to fetch gateway config:', e);
+            }
+        }
+
+        // Broadcaster state
+        let bcWs = null;
+        let bcPingInterval = null;
+        let bcReconnectTimer = null;
+        let bcReconnectAttempts = 0;
+        const BC_MAX_RECONNECT_ATTEMPTS = 10;
+        const BC_PING_INTERVAL_MS = 30000; // 30s keepalive (Azure idle timeout = 4min)
+        let bcIsRecording = false;
+        let bcWhisperReady = false;
+        let bcAudioContext = null;
+        let bcAudioWorkletNode = null;
+        let bcAudioStream = null;
+        let bcMonitorGainNode = null;
+        let bcAudioSource = null;
+        let bcIsMonitorEnabled = false;
+        let bcAccumulatedSamples = [];
+        let bcAudioChunkTimer = null;
+        const BC_TARGET_SAMPLE_RATE = 16000;
+        const BC_AUDIO_CHUNK_INTERVAL_MS = 2000;
+
+        // Broadcaster elements
+        const bcStatusDot = $('bcStatusDot');
+        const bcStatusText = $('bcStatusText');
+        const bcConnectBtn = $('bcConnectBtn');
+        const bcSpeechSection = $('bcSpeechSection');
+        const bcSpeechBox = $('bcSpeechBox');
+        const bcStartBtn = $('bcStartBtn');
+        const bcStopBtn = $('bcStopBtn');
+        const bcWhisperStatusEl = $('bcWhisperStatus');
+        const bcWhisperStatusTextEl = $('bcWhisperStatusText');
+        const bcMonitorControl = $('bcMonitorControl');
+        const bcMonitorToggle = $('bcMonitorToggle');
+        const bcMonitorVolumeEl = $('bcMonitorVolume');
+        const bcMonitorVolumeLabel = $('bcMonitorVolumeLabel');
+        const bcLogEl = $('bcLog');
+
+        // Broadcaster log
+        function bcLog(msg, type = 'info') {
+            const div = document.createElement('div');
+            div.className = `log-entry ${type}`;
+            div.textContent = `[${new Date().toLocaleTimeString()}] ${msg}`;
+            bcLogEl.appendChild(div);
+            bcLogEl.scrollTop = bcLogEl.scrollHeight;
+        }
+
+        // Check Whisper status (proxied through control-plane)
+        async function bcCheckWhisperStatus() {
+            bcWhisperStatusEl.style.display = 'flex';
+            bcWhisperStatusEl.classList.remove('ready');
+            bcWhisperStatusTextEl.textContent = 'Checking Whisper status...';
+
+            const controller = new AbortController();
+            const timeoutId = setTimeout(() => controller.abort(), 5000);
+
+            try {
+                const res = await fetch('/api/whisper/status', { signal: controller.signal });
+                clearTimeout(timeoutId);
+                const status = await res.json();
+
+                if (status.initialized) {
+                    bcWhisperReady = true;
+                    bcWhisperStatusEl.classList.add('ready');
+                    bcWhisperStatusEl.innerHTML = '';
+                    const icon = document.createElement('span');
+                    icon.textContent = '✓';
+                    const text = document.createElement('span');
+                    text.textContent = ` Whisper ready: ${status.model || 'Model loaded'}`;
+                    bcWhisperStatusEl.appendChild(icon);
+                    bcWhisperStatusEl.appendChild(text);
+                    bcStartBtn.disabled = false;
+                } else if (status.initializing) {
+                    bcWhisperStatusTextEl.textContent = 'Whisper model loading... Please wait.';
+                    bcStartBtn.disabled = true;
+                    setTimeout(bcCheckWhisperStatus, 3000);
+                } else {
+                    bcWhisperStatusEl.innerHTML = '';
+                    const icon = document.createElement('span');
+                    icon.textContent = '⚠️';
+                    const text = document.createElement('span');
+                    text.textContent = ' Whisper not available';
+                    bcWhisperStatusEl.appendChild(icon);
+                    bcWhisperStatusEl.appendChild(text);
+                    bcStartBtn.disabled = true;
+                }
+            } catch (error) {
+                clearTimeout(timeoutId);
+                bcWhisperStatusEl.innerHTML = '';
+                const icon = document.createElement('span');
+                icon.textContent = '❌';
+                const text = document.createElement('span');
+                text.textContent = ' Could not check Whisper status';
+                bcWhisperStatusEl.appendChild(icon);
+                bcWhisperStatusEl.appendChild(text);
+                bcStartBtn.disabled = true;
+                bcLog('Failed to check Whisper status: ' + error.message, 'error');
+            }
+        }
+
+        // WebSocket connection to Gateway
+        function bcConnect() {
+            if (bcReconnectTimer) { clearTimeout(bcReconnectTimer); bcReconnectTimer = null; }
+            if (bcWs) return; // already connected or connecting
+            if (!gatewayWsUrl) {
+                bcLog('Gateway URL not configured yet, retrying...', 'error');
+                fetchGatewayConfig().then(() => {
+                    if (gatewayWsUrl) bcConnect();
+                    else bcLog('Could not get Gateway URL', 'error');
+                });
+                return;
+            }
+
+            bcLog('Connecting to Gateway...');
+            bcWs = new WebSocket(gatewayWsUrl);
+
+            bcWs.onopen = () => {
+                bcStatusDot.className = 'status-dot connected';
+                bcStatusText.textContent = 'Connected';
+                bcConnectBtn.textContent = '🔌 Disconnect';
+                bcLog('Connected', 'success');
+                bcReconnectAttempts = 0;
+
+                // Keepalive ping every 30s to prevent Azure idle timeout
+                if (bcPingInterval) clearInterval(bcPingInterval);
+                bcPingInterval = setInterval(() => {
+                    if (bcWs && bcWs.readyState === WebSocket.OPEN) {
+                        bcWs.send(JSON.stringify({ type: 'ping' }));
+                    }
+                }, BC_PING_INTERVAL_MS);
+
+                // Authenticate with session token
+                bcWs.send(JSON.stringify({
+                    type: 'authenticate_broadcaster',
+                    sessionToken: sessionToken,
+                    churchId: churchData.churchId,
+                    churchName: churchData.churchName
+                }));
+            };
+
+            bcWs.onmessage = e => {
+                const msg = JSON.parse(e.data);
+                switch (msg.type) {
+                    case 'authenticated':
+                        bcLog(`Authenticated as ${msg.churchName}`, 'success');
+                        bcSpeechSection.style.display = 'block';
+                        bcCheckWhisperStatus();
+                        break;
+                    case 'auth_error':
+                        bcLog(`Auth failed: ${msg.error}`, 'error');
+                        bcDisconnect();
+                        // Auto re-authenticate if session expired (gateway restarted)
+                        if (msg.error === 'Invalid session' && churchData) {
+                            if (masterPassword) {
+                                bcLog('Re-authenticating...', 'info');
+                                bcReauthenticate();
+                            } else {
+                                bcLog('Password required for re-auth', 'error');
+                                showPasswordModal('Session expired. Enter password to reconnect:').then(pw => {
+                                    if (pw) {
+                                        masterPassword = pw;
+                                        bcReauthenticate();
+                                    }
+                                });
+                            }
+                        }
+                        break;
+                    case 'registered':
+                        bcLog(`Registered: ${msg.name}`, 'success');
+                        bcSpeechSection.style.display = 'block';
+                        bcCheckWhisperStatus();
+                        break;
+                    case 'transcription':
+                        bcSpeechBox.innerHTML = '';
+                        const span = document.createElement('span');
+                        span.className = 'final';
+                        span.textContent = msg.text;
+                        bcSpeechBox.appendChild(span);
+                        bcLog(`Whisper: "${msg.text.substring(0, 50)}..."`, 'success');
+                        break;
+                    case 'transcription_error':
+                        bcLog(`Transcription error: ${msg.error}`, 'error');
+                        break;
+                }
+            };
+
+            bcWs.onerror = () => {
+                // Suppress default error logging — onclose handles reconnect
+            };
+
+            bcWs.onclose = (event) => {
+                if (bcPingInterval) { clearInterval(bcPingInterval); bcPingInterval = null; }
+                bcWs = null;
+
+                // Intentional disconnect (user clicked Disconnect)
+                if (bcReconnectAttempts < 0) {
+                    bcStatusDot.className = 'status-dot';
+                    bcStatusText.textContent = 'Disconnected';
+                    bcConnectBtn.textContent = '🔌 Connect & Start';
+                    bcSpeechSection.style.display = 'none';
+                    bcStopRecording();
+                    bcLog('Disconnected', 'error');
+                    bcReconnectAttempts = 0;
+                    return;
+                }
+
+                // Auto-reconnect
+                if (bcReconnectAttempts < BC_MAX_RECONNECT_ATTEMPTS) {
+                    bcReconnectAttempts++;
+                    const delay = Math.min(2000 * bcReconnectAttempts, 15000);
+                    bcStatusDot.className = 'status-dot';
+                    bcStatusText.textContent = `Reconnecting (${bcReconnectAttempts}/${BC_MAX_RECONNECT_ATTEMPTS})...`;
+                    bcLog(`Connection lost. Reconnecting in ${delay/1000}s... (${bcReconnectAttempts}/${BC_MAX_RECONNECT_ATTEMPTS})`, 'error');
+                    bcReconnectTimer = setTimeout(() => bcConnect(), delay);
+                } else {
+                    bcStatusDot.className = 'status-dot';
+                    bcStatusText.textContent = 'Disconnected';
+                    bcConnectBtn.textContent = '🔌 Connect & Start';
+                    bcSpeechSection.style.display = 'none';
+                    bcStopRecording();
+                    bcLog('Max reconnect attempts reached. Click Connect to retry.', 'error');
+                    bcReconnectAttempts = 0;
+                }
+            };
+        }
+
+        function bcDisconnect() {
+            bcStopRecording();
+            if (bcReconnectTimer) { clearTimeout(bcReconnectTimer); bcReconnectTimer = null; }
+            if (bcPingInterval) { clearInterval(bcPingInterval); bcPingInterval = null; }
+            bcReconnectAttempts = -1; // Signal intentional disconnect to onclose
+            bcWs?.close();
+        }
+
+        async function bcReauthenticate() {
+            try {
+                const response = await fetchWithTimeout('/api/auth/broadcaster', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        password: masterPassword,
+                        churchId: churchData.churchId
+                    })
+                });
+                const data = await response.json();
+                if (data.success) {
+                    sessionToken = data.sessionToken;
+                    churchData = data;
+                    sessionStorage.setItem('barnabas_auth_data', JSON.stringify({
+                        qrCode: data.qrCode,
+                        pin: data.pin,
+                        expiresIn: data.expiresIn,
+                        expiresAt: data.expiresAt,
+                        joinUrl: data.joinUrl
+                    }));
+                    // Update QR/PIN display
+                    $('qrImage').src = data.qrCode;
+                    $('pinCode').textContent = data.pin;
+                    updatePinExpiry(data.expiresAt);
+                    $('joinUrl').textContent = data.joinUrl;
+                    bcLog('Re-authenticated, reconnecting...', 'success');
+                    bcConnect();
+                } else {
+                    bcLog(`Re-auth failed: ${data.error}`, 'error');
+                }
+            } catch (e) {
+                bcLog(`Re-auth error: ${e.message}`, 'error');
+            }
+        }
+
+        // Recording (AudioWorklet PCM)
+        async function bcStartRecording() {
+            try {
+                const isLineIn = localStorage.getItem('barnaba_audio_source') === 'line-in';
+                bcAudioStream = await navigator.mediaDevices.getUserMedia({
+                    audio: {
+                        channelCount: 1,
+                        echoCancellation: !isLineIn,
+                        noiseSuppression: !isLineIn,
+                        autoGainControl: !isLineIn
+                    }
+                });
+                bcLog(`Audio source: ${isLineIn ? 'Line-In (processing disabled)' : 'Microphone'}`, 'info');
+
+                bcAudioContext = new AudioContext();
+                bcLog(`Native sample rate: ${bcAudioContext.sampleRate}Hz`, 'info');
+
+                try {
+                    await bcAudioContext.audioWorklet.addModule('pcm-recorder-processor.js');
+                } catch (e) {
+                    bcLog('AudioWorklet not supported', 'error');
+                    return;
+                }
+
+                bcAudioSource = bcAudioContext.createMediaStreamSource(bcAudioStream);
+
+                bcMonitorGainNode = bcAudioContext.createGain();
+                bcMonitorGainNode.gain.value = bcIsMonitorEnabled ? (bcMonitorVolumeEl.value / 100) : 0;
+                bcMonitorGainNode.connect(bcAudioContext.destination);
+
+                bcAudioWorkletNode = new AudioWorkletNode(bcAudioContext, 'pcm-recorder', {
+                    processorOptions: { bufferSize: 4096 }
+                });
+
+                bcAudioWorkletNode.port.onmessage = (event) => {
+                    const msg = event.data;
+                    if (msg.type === 'ready') {
+                        bcLog('AudioWorklet processor ready', 'success');
+                    } else if (msg.type === 'audio') {
+                        bcAccumulatedSamples.push(...msg.samples);
+                    } else if (msg.type === 'flushed') {
+                        bcSendAccumulatedAudio(true);
+                    }
+                };
+
+                bcAudioSource.connect(bcAudioWorkletNode);
+                bcAudioSource.connect(bcMonitorGainNode);
+
+                bcAudioChunkTimer = setInterval(() => {
+                    bcSendAccumulatedAudio(false);
+                }, BC_AUDIO_CHUNK_INTERVAL_MS);
+
+                bcMonitorControl.style.display = 'flex';
+                $('srcMicBtn').disabled = true;
+                $('srcLineInBtn').disabled = true;
+                bcIsRecording = true;
+                bcStatusDot.className = 'status-dot recording';
+                bcStatusText.textContent = 'Recording...';
+                bcStartBtn.style.display = 'none';
+                bcStopBtn.style.display = 'block';
+                bcSpeechBox.innerHTML = '<span class="partial">Recording PCM audio for Whisper...</span>';
+                bcLog('Recording started (PCM)', 'success');
+                bcStartLatencyTracking();
+
+            } catch (error) {
+                bcLog('Microphone access denied: ' + error.message, 'error');
+            }
+        }
+
+        // Send accumulated audio via WebSocket (binary v2 format)
+        function bcSendAccumulatedAudio(isFinal) {
+            if (bcAccumulatedSamples.length === 0 && !isFinal) return;
+            if (!bcWs || bcWs.readyState !== WebSocket.OPEN) return;
+
+            const samples = new Float32Array(bcAccumulatedSamples);
+            bcAccumulatedSamples = [];
+
+            const actualSampleRate = bcAudioContext ? bcAudioContext.sampleRate : BC_TARGET_SAMPLE_RATE;
+
+            // v3 format: 16-byte header (flags + sample_rate + capturedAt)
+            const flagsValue = (isFinal ? 1 : 0) | 2;  // bit 1 = v3 timestamp present
+            const buffer = new ArrayBuffer(16 + samples.length * 4);
+            const view = new DataView(buffer);
+            view.setUint32(0, flagsValue, true);
+            view.setUint32(4, actualSampleRate, true);
+            view.setFloat64(8, Date.now(), true);  // capturedAt timestamp
+
+            const floatView = new Float32Array(buffer, 16);
+            floatView.set(samples);
+
+            bcWs.send(buffer);
+
+            if (samples.length > 0) {
+                const durationMs = (samples.length / actualSampleRate * 1000).toFixed(0);
+                bcLog(`Sent ${samples.length} samples @ ${actualSampleRate}Hz (${durationMs}ms)${isFinal ? ' [FINAL]' : ''}`);
+            }
+        }
+
+        function bcStopRecording() {
+            bcIsRecording = false;
+
+            if (bcAudioWorkletNode) {
+                bcAudioWorkletNode.port.postMessage({ type: 'flush' });
+                if (bcAudioChunkTimer) { clearInterval(bcAudioChunkTimer); bcAudioChunkTimer = null; }
+                bcSendAccumulatedAudio(true);
+                bcAudioWorkletNode.disconnect();
+                bcAudioWorkletNode = null;
+            }
+
+            if (bcMonitorGainNode) { bcMonitorGainNode.disconnect(); bcMonitorGainNode = null; }
+            if (bcAudioSource) { bcAudioSource.disconnect(); bcAudioSource = null; }
+            bcMonitorControl.style.display = 'none';
+
+            if (bcAudioContext) { bcAudioContext.close(); bcAudioContext = null; }
+            if (bcAudioStream) {
+                bcAudioStream.getTracks().forEach(track => track.stop());
+                bcAudioStream = null;
+            }
+
+            bcAccumulatedSamples = [];
+            bcStatusDot.className = bcWs ? 'status-dot connected' : 'status-dot';
+            bcStatusText.textContent = bcWs ? 'Connected' : 'Disconnected';
+            bcConnectBtn.textContent = bcWs ? '🔌 Disconnect' : '🔌 Connect & Start';
+            bcStartBtn.style.display = 'block';
+            bcStopBtn.style.display = 'none';
+            bcStopLatencyTracking();
+            $('srcMicBtn').disabled = false;
+            $('srcLineInBtn').disabled = false;
+            bcLog('Recording stopped');
+        }
+
+        // Monitor controls
+        function bcToggleMonitor() {
+            bcIsMonitorEnabled = bcMonitorToggle.checked;
+            if (bcMonitorGainNode) {
+                bcMonitorGainNode.gain.value = bcIsMonitorEnabled ? (bcMonitorVolumeEl.value / 100) : 0;
+            }
+            bcLog(bcIsMonitorEnabled ? 'Monitor ON' : 'Monitor OFF', 'info');
+        }
+
+        function bcSetMonitorVolume(value) {
+            bcMonitorVolumeLabel.textContent = `${value}%`;
+            if (bcMonitorGainNode && bcIsMonitorEnabled) {
+                bcMonitorGainNode.gain.value = value / 100;
+            }
+        }
+
+        // Latency tracking
+        const BC_LATENCY_WINDOW_SEC = 30;
+        const BC_LATENCY_INTERVAL_SEC = 5;
+        const BC_MAX_LATENCY_POINTS = BC_LATENCY_WINDOW_SEC / BC_LATENCY_INTERVAL_SEC;
+        let bcLatencyData = [];       // Server E2E (blue)
+        let bcTrueLatencyData = [];   // True E2E (orange)
+        let bcLatencyInterval = null;
+
+        async function bcFetchLatencyStats() {
+            const controller = new AbortController();
+            const timeoutId = setTimeout(() => controller.abort(), 3000);
+
+            try {
+                const res = await fetch('/api/latency-stats', { signal: controller.signal });
+                clearTimeout(timeoutId);
+                const stats = await res.json();
+
+                if (stats.recent && stats.recent.length > 0) {
+                    const latest = stats.recent[0];
+                    const now = Date.now();
+
+                    if (latest.end_to_end != null) {
+                        bcLatencyData.push({ time: now, value: latest.end_to_end });
+                        if (bcLatencyData.length > BC_MAX_LATENCY_POINTS) bcLatencyData.shift();
+                    }
+
+                    if (latest.true_end_to_end != null) {
+                        bcTrueLatencyData.push({ time: now, value: latest.true_end_to_end });
+                        if (bcTrueLatencyData.length > BC_MAX_LATENCY_POINTS) bcTrueLatencyData.shift();
+                    }
+
+                    bcUpdateLatencyStats(stats.latencies_ms);
+                    bcDrawLatencyChart();
+                }
+            } catch (error) {
+                clearTimeout(timeoutId);
+            }
+        }
+
+        function bcUpdateLatencyStats(latencies) {
+            // Server E2E (current)
+            if (bcLatencyData.length > 0) {
+                const current = bcLatencyData[bcLatencyData.length - 1].value;
+                $('bcLatencyCurrent').textContent = `${(current / 1000).toFixed(1)}s`;
+            }
+            // True E2E (current)
+            if (bcTrueLatencyData.length > 0) {
+                const current = bcTrueLatencyData[bcTrueLatencyData.length - 1].value;
+                $('bcLatencyTrue').textContent = `${(current / 1000).toFixed(1)}s`;
+            }
+            // Avg (server E2E)
+            if (latencies?.end_to_end?.avg != null) {
+                $('bcLatencyAvg').textContent = `${(latencies.end_to_end.avg / 1000).toFixed(1)}s`;
+            }
+            // Upload (capture → gateway)
+            if (latencies?.capture_to_gateway?.avg != null) {
+                $('bcLatencyUpload').textContent = `${Math.max(0, latencies.capture_to_gateway.avg)}ms`;
+            }
+            // Download (gateway → listener)
+            if (latencies?.gateway_to_listener?.avg != null) {
+                $('bcLatencyDownload').textContent = `${latencies.gateway_to_listener.avg}ms`;
+            }
+        }
+
+        function bcDrawLine(ctx, data, color, maxVal, range, chartWidth, chartHeight, padding) {
+            if (data.length < 2) return;
+            // Line
+            ctx.strokeStyle = color;
+            ctx.lineWidth = 2;
+            ctx.lineCap = 'round';
+            ctx.lineJoin = 'round';
+            ctx.beginPath();
+            data.forEach((d, i) => {
+                const x = padding.left + (i / (BC_MAX_LATENCY_POINTS - 1)) * chartWidth;
+                const y = padding.top + ((maxVal - d.value) / range) * chartHeight;
+                i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+            });
+            ctx.stroke();
+            // Points
+            ctx.fillStyle = color;
+            data.forEach((d, i) => {
+                const x = padding.left + (i / (BC_MAX_LATENCY_POINTS - 1)) * chartWidth;
+                const y = padding.top + ((maxVal - d.value) / range) * chartHeight;
+                ctx.beginPath();
+                ctx.arc(x, y, 3, 0, Math.PI * 2);
+                ctx.fill();
+            });
+        }
+
+        function bcDrawLatencyChart() {
+            const canvas = $('bcLatencyChart');
+            const ctx = canvas.getContext('2d');
+            const dpr = window.devicePixelRatio || 1;
+            const rect = canvas.getBoundingClientRect();
+            canvas.width = rect.width * dpr;
+            canvas.height = rect.height * dpr;
+            ctx.scale(dpr, dpr);
+
+            const width = rect.width;
+            const height = rect.height;
+            const padding = { top: 5, right: 5, bottom: 15, left: 35 };
+            const chartWidth = width - padding.left - padding.right;
+            const chartHeight = height - padding.top - padding.bottom;
+
+            ctx.clearRect(0, 0, width, height);
+            if (bcLatencyData.length < 2 && bcTrueLatencyData.length < 2) return;
+
+            // Fixed Y-axis 0-15s (was auto-scale)
+            const maxVal = 15000;  // 15 seconds in ms
+            const range = maxVal;
+
+            // Grid: 1s steps (0-15)
+            ctx.strokeStyle = 'rgba(255,255,255,0.1)';
+            ctx.lineWidth = 1;
+            for (let sec = 0; sec <= 15; sec++) {
+                const y = padding.top + ((maxVal - sec * 1000) / range) * chartHeight;
+                ctx.beginPath();
+                ctx.moveTo(padding.left, y);
+                ctx.lineTo(width - padding.right, y);
+                ctx.stroke();
+            }
+
+            // Y labels: every 5s to avoid clutter (0s, 5s, 10s, 15s)
+            ctx.fillStyle = '#ffffff';
+            ctx.font = '11px sans-serif';
+            ctx.textAlign = 'right';
+            for (const sec of [0, 5, 10, 15]) {
+                const y = padding.top + ((maxVal - sec * 1000) / range) * chartHeight;
+                ctx.fillText(`${sec}s`, padding.left - 5, y + 4);
+            }
+
+            // Draw both lines
+            bcDrawLine(ctx, bcLatencyData, '#7ab8ff', maxVal, range, chartWidth, chartHeight, padding);
+            bcDrawLine(ctx, bcTrueLatencyData, '#ffb347', maxVal, range, chartWidth, chartHeight, padding);
+
+            // X labels
+            ctx.fillStyle = '#a0a0a0';
+            ctx.font = '10px sans-serif';
+            ctx.textAlign = 'center';
+            ctx.fillText('← 30s ago', padding.left + 25, height - 2);
+            ctx.fillText('now →', width - padding.right - 18, height - 2);
+        }
+
+        function bcStartLatencyTracking() {
+            $('bcLatencySection').style.display = 'block';
+            bcLatencyData = [];
+            bcTrueLatencyData = [];
+            bcFetchLatencyStats();
+            bcLatencyInterval = setInterval(bcFetchLatencyStats, BC_LATENCY_INTERVAL_SEC * 1000);
+        }
+
+        function bcStopLatencyTracking() {
+            if (bcLatencyInterval) {
+                clearInterval(bcLatencyInterval);
+                bcLatencyInterval = null;
+            }
+        }
+
+        // Broadcaster event handlers
+        bcConnectBtn.onclick = () => { bcWs ? bcDisconnect() : bcConnect(); };
+        bcStartBtn.onclick = bcStartRecording;
+        bcStopBtn.onclick = bcStopRecording;
+
+        // Fetch gateway config on load
+        fetchGatewayConfig();
+
+        // ============================================================
+        // SERMON PREPARATION CONTEXT (02.03.2026)
+        // ============================================================
+
+        async function sermonUpload() {
+            const fileInput = $('sermonFileInput');
+            if (!fileInput.files || fileInput.files.length === 0) {
+                alert('Select a file first (.txt, .md, .jpg, .png)');
+                return;
+            }
+
+            const file = fileInput.files[0];
+            const btn = $('sermonUploadBtn');
+
+            // Check if context already loaded — confirm replace
+            const statusEl = $('sermonStatus');
+            if (statusEl.classList.contains('loaded')) {
+                if (!confirm('Sermon context already loaded. Replace with new file?')) return;
+            }
+
+            btn.disabled = true;
+            btn.textContent = '⏳ Uploading...';
+
+            try {
+                const formData = new FormData();
+                formData.append('file', file);
+                const response = await fetchWithTimeout('/api/sermon-context', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                const data = await response.json();
+                if (!data.success) {
+                    throw new Error(data.error || 'Upload failed');
+                }
+
+                sermonUpdateUI(data);
+                fileInput.value = '';
+            } catch (err) {
+                alert('Sermon upload failed: ' + err.message);
+            } finally {
+                btn.disabled = false;
+                btn.textContent = '📄 Upload';
+            }
+        }
+
+        async function sermonClear() {
+            if (!confirm('Clear sermon context?')) return;
+
+            try {
+                const response = await fetchWithTimeout('/api/sermon-context', {
+                    method: 'DELETE',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({})
+                });
+
+                const data = await response.json();
+                if (data.success) {
+                    sermonResetUI();
+                }
+            } catch (err) {
+                alert('Clear failed: ' + err.message);
+            }
+        }
+
+        async function sermonCheckStatus() {
+            if (!sessionToken) return;
+            try {
+                const response = await fetchWithTimeout('/api/sermon-context');
+                const data = await response.json();
+                if (data.success && data.hasContext) {
+                    sermonUpdateUI(data);
+                }
+            } catch (err) {
+                // Silently ignore — context check is non-critical
+            }
+        }
+
+        function sermonUpdateUI(data) {
+            const statusEl = $('sermonStatus');
+            statusEl.className = 'sermon-prep-status loaded';
+            statusEl.innerHTML = `<span>✅ Context loaded (${data.wordCount} words)</span>`;
+
+            $('sermonMeta').textContent = `File: ${data.fileName || '—'}`;
+            $('sermonPreview').textContent = data.preview || '';
+            $('sermonPreviewBox').style.display = 'block';
+            $('sermonClearBtn').style.display = 'block';
+        }
+
+        function sermonResetUI() {
+            const statusEl = $('sermonStatus');
+            statusEl.className = 'sermon-prep-status empty';
+            statusEl.innerHTML = '<span>No sermon context loaded</span>';
+
+            $('sermonPreviewBox').style.display = 'none';
+            $('sermonClearBtn').style.display = 'none';
+        }
+
+        // ============================================================
+        // RECORD SESSION
+        // ============================================================
+
+        const RECORD_LANGUAGES = [
+            { code: 'ar', name: 'العربية' },
+            { code: 'de', name: 'Deutsch' },
+            { code: 'en', name: 'English' },
+            { code: 'es', name: 'Español' },
+            { code: 'fr', name: 'Français' },
+            { code: 'it', name: 'Italiano' },
+            { code: 'pl', name: 'Polski' },
+            { code: 'pt', name: 'Português' },
+            { code: 'ru', name: 'Русский' },
+            { code: 'sw', name: 'Kiswahili' },
+            { code: 'tr', name: 'Türkçe' },
+            { code: 'uk', name: 'Українська' }
+        ];
+
+        let recordWs = null;
+        let recordIsRecording = false;
+        let recordFolderHandle = null;
+        let recordSelectedLangs = { txt: new Set(), audio: new Set() };
+        let recordVoiceGender = 'male';
+        let recordStartedAtMs = 0;
+        let recordAudioContext = null;
+        let recordData = new Map(); // Map<lang, { txt: string[], audio: Array<{ bytes: Uint8Array, receivedAtMs: number }> }>
+
+        function recordShowSection() {
+            $('recordToggleBtn').style.display = '';
+            recordInitLangGrid();
+
+            // Check File System Access API support
+            if (!('showDirectoryPicker' in window)) {
+                $('recordChooseFolderBtn').disabled = true;
+                $('recordFolderPath').textContent = 'Use Chrome or Edge';
+            }
+        }
+
+        function recordInitLangGrid() {
+            const grid = $('recordLangGrid');
+            grid.innerHTML = RECORD_LANGUAGES.map(lang => {
+                const isDe = lang.code === 'de';
+                return `
+                <div class="record-lang-item">
+                    <div class="record-lang-name">${lang.name}</div>
+                    <div class="record-cb-row">
+                        <input type="checkbox" id="rec-txt-${lang.code}"
+                               data-lang="${lang.code}" data-type="txt"
+                               ${isDe ? 'checked' : ''}
+                               onchange="recordCbChanged(this)">
+                        <label for="rec-txt-${lang.code}">TXT</label>
+                    </div>
+                    <div class="record-cb-row">
+                        <input type="checkbox" id="rec-audio-${lang.code}"
+                               data-lang="${lang.code}" data-type="audio"
+                               ${isDe ? 'checked' : ''}
+                               onchange="recordCbChanged(this)">
+                        <label for="rec-audio-${lang.code}">AUDIO</label>
+                    </div>
+                </div>`;
+            }).join('');
+
+            // Pre-select High German in state
+            recordSelectedLangs.txt.add('de');
+            recordSelectedLangs.audio.add('de');
+        }
+
+        function recordCbChanged(cb) {
+            const { lang, type } = cb.dataset;
+            if (cb.checked) recordSelectedLangs[type].add(lang);
+            else recordSelectedLangs[type].delete(lang);
+            recordUpdateBtn();
+        }
+
+        function recordSetGender(btn) {
+            document.querySelectorAll('.record-gender-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            recordVoiceGender = btn.dataset.gender;
+        }
+
+        function recordUpdateBtn() {
+            const btn = $('recordBtn');
+            const hasSelection = recordSelectedLangs.txt.size > 0 || recordSelectedLangs.audio.size > 0;
+
+            if (recordIsRecording) {
+                btn.disabled = false;
+                btn.textContent = '⏹️ STOP RECORDING';
+                return;
+            }
+
+            if (!hasSelection) {
+                btn.disabled = true;
+                btn.textContent = '⏺️ RECORD (select languages)';
+            } else if (!recordFolderHandle) {
+                btn.disabled = true;
+                btn.textContent = '⏺️ RECORD (choose folder)';
+            } else {
+                btn.disabled = false;
+                btn.textContent = '⏺️ RECORD';
+            }
+        }
+
+        async function recordChooseFolder() {
+            try {
+                recordFolderHandle = await window.showDirectoryPicker();
+                const name = recordFolderHandle.name;
+                $('recordFolderPath').textContent = name;
+                $('qsFolderName').textContent = name;
+                $('qsFolderName').style.color = '';
+                localStorage.setItem('barnaba_record_folder', name);
+                recordUpdateBtn();
+            } catch (e) {
+                if (e.name !== 'AbortError') showToast('Failed to select folder: ' + e.message, 'error');
+            }
+        }
+
+        function recordToggle() {
+            if (recordIsRecording) recordStop();
+            else recordStart();
+        }
+
+        async function recordStart() {
+            if (recordWs) return; // F2: prevent double-click
+            if (!churchData) { showToast('Authenticate first', 'error'); return; }
+
+            // Collect all languages that need subscription (union of txt + audio)
+            const allLangs = [...new Set([...recordSelectedLangs.txt, ...recordSelectedLangs.audio])];
+            if (allLangs.length === 0) { showToast('Select at least one language', 'error'); return; }
+
+            if (!gatewayWsUrl) await fetchGatewayConfig();
+            if (!gatewayWsUrl) { showToast('Gateway URL not available', 'error'); return; }
+
+            // Open second WebSocket for recording
+            recordWs = new WebSocket(gatewayWsUrl);
+
+            recordWs.onopen = () => {
+                console.log('[RECORD] WS connected');
+                recordWs.send(JSON.stringify({
+                    type: 'subscribe_recording',
+                    churchId: churchData.churchId,
+                    sessionToken: sessionToken,
+                    languages: allLangs,
+                    voiceGender: recordVoiceGender
+                }));
+            };
+
+            recordWs.onmessage = (e) => {
+                try {
+                    const msg = JSON.parse(e.data);
+                    if (msg.type === 'recording_subscribed') recordOnSubscribed(msg);
+                    else if (msg.type === 'translation') recordOnTranslation(msg);
+                    else if (msg.type === 'tts_chunk') recordOnTtsChunk(msg);
+                    else if (msg.type === 'church_offline') {
+                        showToast('Church went offline — stopping recording', 'error');
+                        recordStop();
+                    }
+                } catch (err) { /* ignore non-JSON */ }
+            };
+
+            recordWs.onclose = () => {
+                console.log('[RECORD] WS closed');
+                if (recordIsRecording) recordStop();
+            };
+
+            recordWs.onerror = () => showToast('Recording connection error', 'error');
+        }
+
+        function recordOnSubscribed(msg) {
+            recordIsRecording = true;
+            recordStartedAtMs = Date.now();
+            recordData.clear();
+            for (const lang of msg.languages) {
+                recordData.set(lang, { txt: [], audio: [] });
+            }
+
+            // Lock UI
+            document.querySelectorAll('#recordLangGrid input').forEach(cb => cb.disabled = true);
+            document.querySelectorAll('.record-gender-btn').forEach(b => b.style.pointerEvents = 'none');
+            $('recordChooseFolderBtn').disabled = true;
+            $('recordStatus').style.display = 'flex';
+            $('recordInfo').style.display = 'none';
+            recordUpdateBtn();
+
+            bcLog('Recording started (' + msg.languages.join(', ') + ')', 'success');
+        }
+
+        function recordOnTranslation(msg) {
+            const { language, translatedText, audioBase64 } = msg;
+            if (!recordData.has(language)) return;
+            const d = recordData.get(language);
+
+            // Store text
+            if (recordSelectedLangs.txt.has(language) && translatedText) {
+                d.txt.push(translatedText);
+            }
+
+            // Store audio as binary
+            if (recordSelectedLangs.audio.has(language) && audioBase64) {
+                recordStoreAudioChunk(language, audioBase64, msg);
+            }
+        }
+
+        function recordOnTtsChunk(msg) {
+            const { language, audioBase64 } = msg;
+            if (!recordData.has(language)) return;
+            if (!recordSelectedLangs.audio.has(language)) return;
+            if (!audioBase64) return; // Progressive soft-fail chunks use null audio.
+            recordStoreAudioChunk(language, audioBase64, msg);
+        }
+
+        function recordStoreAudioChunk(language, audioBase64, msg = {}) {
+            const d = recordData.get(language);
+            if (!d) return;
+            const bin = atob(audioBase64);
+            const bytes = new Uint8Array(bin.length);
+            for (let i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
+            d.audio.push({
+                bytes,
+                receivedAtMs: Date.now(),
+                emissionId: msg.emissionId ?? null,
+                sentenceIndex: msg.sentence_index ?? null,
+                totalSentences: msg.total_sentences ?? null,
+                isLast: msg.is_last ?? null,
+                audioCapturedAt: msg.audioCapturedAt ?? null,
+                emissionMode: msg.emissionMode ?? null,
+                emissionReason: msg.emissionReason ?? null,
+                messageType: msg.type ?? null
+            });
+        }
+
+        async function recordGetAudioDurationMs(bytes) {
+            try {
+                if (!recordAudioContext || recordAudioContext.state === 'closed') {
+                    recordAudioContext = new (window.AudioContext || window.webkitAudioContext)();
+                }
+                const buffer = bytes.buffer.slice(bytes.byteOffset, bytes.byteOffset + bytes.byteLength);
+                const decoded = await recordAudioContext.decodeAudioData(buffer);
+                return decoded.duration * 1000;
+            } catch (e) {
+                console.warn('[RECORD] Failed to decode MP3 duration:', e.message);
+                return null;
+            }
+        }
+
+        // Build per-chunk playback windows from the recorder's emission-arrival cursor.
+        // The server renderer normalizes MP3 formats and physically bakes gaps into one file.
+        async function recordBuildPlayWindows(chunks) {
+            const startedAtMs = recordStartedAtMs || (chunks[0]?.receivedAtMs ?? Date.now());
+            const durationsMs = await Promise.all(chunks.map(chunk => recordGetAudioDurationMs(chunk.bytes)));
+            const windows = [];
+            let playbackCursorMs = 0;
+            for (let i = 0; i < chunks.length; i++) {
+                const arrivalMs = Math.max(0, chunks[i].receivedAtMs - startedAtMs);
+                const durationMs = durationsMs[i];
+                const silenceBeforeMs = Math.max(0, arrivalMs - playbackCursorMs);
+                const playStartMs = playbackCursorMs + silenceBeforeMs;
+                if (durationMs === null || durationMs <= 0) {
+                    playbackCursorMs = Math.max(playbackCursorMs, arrivalMs);
+                    continue;
+                }
+                windows.push({ index: i, playStartMs, playEndMs: playStartMs + durationMs });
+                playbackCursorMs = playStartMs + durationMs;
+            }
+            return windows;
+        }
+
+        async function recordStop() {
+            const wasRecording = recordIsRecording;
+            recordIsRecording = false;
+
+            // Close WS
+            if (recordWs && recordWs.readyState === WebSocket.OPEN) {
+                recordWs.send(JSON.stringify({ type: 'unsubscribe_recording' }));
+                recordWs.close();
+            }
+            recordWs = null;
+
+            // Save files
+            if (wasRecording && recordFolderHandle) {
+                $('recordBtn').textContent = '💾 Saving...';
+                $('recordBtn').disabled = true;
+
+                const ts = new Date().toISOString().replace(/[:.]/g, '-').slice(0, 19);
+                let savedCount = 0;
+
+                for (const [lang, d] of recordData.entries()) {
+                    // Save TXT
+                    if (d.txt.length > 0 && recordSelectedLangs.txt.has(lang)) {
+                        const content = d.txt.join('\n') + '\n';
+                        await recordWriteFile(`barnaba_${lang}_${ts}.txt`, content);
+                        savedCount++;
+                    }
+                    // Render one normalized MP3 with real emission pauses; no JSON sidecar.
+                    if (d.audio.length > 0 && recordSelectedLangs.audio.has(lang)) {
+                        const windows = await recordBuildPlayWindows(d.audio);
+                        if (windows.length === 0) {
+                            bcLog(`No decodable audio to render for ${lang}`, 'error');
+                        } else {
+                            const form = new FormData();
+                            form.append('manifest', JSON.stringify({
+                                recordingId: `${churchData.churchId}-${lang}-${ts}`,
+                                churchId: churchData.churchId,
+                                language: lang,
+                                partial: false,
+                                plays: windows.map(window => ({
+                                    chunkKey: String(window.index),
+                                    playStartAt: window.playStartMs,
+                                    playEndAt: window.playEndMs,
+                                    effectivePlaybackRate: 1,
+                                    playbackEngine: 'html_audio',
+                                    preservesPitch: true
+                                }))
+                            }));
+                            for (const window of windows) {
+                                form.append('audio', new Blob([d.audio[window.index].bytes], { type: 'audio/mpeg' }), `${window.index}.mp3`);
+                            }
+                            const response = await fetch('/api/recording-render', {
+                                method: 'POST',
+                                body: form,
+                                credentials: 'same-origin',
+                                headers: { 'X-Session-Token': sessionToken }
+                            });
+                            if (!response.ok) {
+                                let detail = `HTTP ${response.status}`;
+                                try {
+                                    const error = await response.json();
+                                    if (error?.error) detail = error.error;
+                                } catch {}
+                                bcLog(`Render failed for ${lang}: ${detail}`, 'error');
+                                showToast(`Render failed (${lang})`, 'error');
+                            } else {
+                                await recordWriteBlob(`barnaba_${lang}_${ts}.mp3`, await response.blob());
+                                savedCount++;
+                            }
+                        }
+                    }
+                }
+
+                bcLog(`Recording saved: ${savedCount} files`, 'success');
+                showToast(`Saved ${savedCount} files`, 'success', 3000);
+            }
+
+            if (recordAudioContext) {
+                recordAudioContext.close().catch(() => {});
+                recordAudioContext = null;
+            }
+
+            // Reset UI
+            $('recordStatus').style.display = 'none';
+            $('recordInfo').style.display = '';
+            document.querySelectorAll('#recordLangGrid input').forEach(cb => cb.disabled = false);
+            document.querySelectorAll('.record-gender-btn').forEach(b => b.style.pointerEvents = '');
+            $('recordChooseFolderBtn').disabled = !('showDirectoryPicker' in window);
+            recordData.clear();
+            recordUpdateBtn();
+        }
+
+        async function recordWriteFile(name, content) {
+            try {
+                const fh = await recordFolderHandle.getFileHandle(name, { create: true });
+                const w = await fh.createWritable();
+                await w.write(content);
+                await w.close();
+                console.log('[RECORD] Saved:', name);
+            } catch (e) {
+                console.error('[RECORD] Write failed:', name, e);
+                showToast('Failed to save ' + name, 'error');
+            }
+        }
+
+        async function recordWriteBlob(name, blob) {
+            try {
+                const fh = await recordFolderHandle.getFileHandle(name, { create: true });
+                const w = await fh.createWritable();
+                await w.write(blob);
+                await w.close();
+                console.log('[RECORD] Saved:', name, `(${(blob.size/1024).toFixed(1)}KB)`);
+            } catch (e) {
+                console.error('[RECORD] Write failed:', name, e);
+                showToast('Failed to save ' + name, 'error');
+            }
+        }
+        // ============================================================
+        // QUICK START — "START BARNABA"
+        // ============================================================
+
+        // Restore saved church + populate dropdown
+        (function() {
+            loadChurchesIntoSelect($('qsChurchSelect'), localStorage.getItem('barnaba_church_id'));
+
+            // Show saved folder name with re-select hint (handle doesn't survive page reload)
+            const savedFolder = localStorage.getItem('barnaba_record_folder');
+            if (savedFolder) {
+                $('qsFolderName').textContent = savedFolder + ' (re-select)';
+                $('qsFolderName').style.color = '#f0ad4e';
+            }
+        })();
+
+        async function qsChooseFolder() {
+            try {
+                recordFolderHandle = await window.showDirectoryPicker();
+                const name = recordFolderHandle.name;
+                $('qsFolderName').textContent = name;
+                $('qsFolderName').style.color = '';
+                $('recordFolderPath').textContent = name;
+                localStorage.setItem('barnaba_record_folder', name);
+                recordUpdateBtn();
+            } catch (e) {
+                if (e.name !== 'AbortError') showToast('Failed to select folder: ' + e.message, 'error');
+            }
+        }
+
+        function qsSetProgress(percent, text) {
+            $('qsProgressFill').style.width = percent + '%';
+            $('qsProgressText').textContent = text;
+        }
+
+        async function quickStart() {
+            const churchId = $('qsChurchSelect').value;
+            if (!churchId) {
+                showToast('Please select a church', 'error');
+                $('qsChurchSelect').focus();
+                return;
+            }
+            const church = CHURCHES_CACHE.find(c => c.id === churchId);
+            const churchName = church ? church.name : churchId;
+
+            localStorage.setItem('barnaba_church_id', churchId);
+
+            // Mirror selection in the classic registration dropdown
+            if ($('churchSelect')) $('churchSelect').value = churchId;
+
+            // Ask for password
+            if (!masterPassword) {
+                masterPassword = await showPasswordModal('Enter master password:');
+                if (!masterPassword) return;
+            }
+            await ensureControlSession(masterPassword);
+
+            // Folder selection moved to Record Session section (right panel)
+            if (false) {
+            }
+
+            // Show progress
+            const qsBtn = $('qsStartBtn');
+            qsBtn.disabled = true;
+            qsBtn.textContent = '⏳ STARTING...';
+            $('qsProgress').classList.add('visible');
+
+            try {
+                // STEP 1: Start system (Whisper + Gateway)
+                qsSetProgress(10, 'Starting Whisper...');
+
+                if (systemState !== 'running') {
+                    // Inline the startBarnaba logic but with progress updates
+                    systemState = 'starting';
+                    $('qsStartBtn').disabled = true;
+                    $('qsStartBtn').textContent = '⏳ STARTING...';
+
+                    setStatus('whisper', 'loading', 'STARTING...');
+                    setStatus('gateway', 'loading', 'WAITING...');
+                    await startSystemFromControlPlane((message, percent) => qsSetProgress(percent ?? 20, message));
+                    systemState = 'running';
+                    $('barnabaReady').classList.add('visible');
+                    $('qsStartBtn').disabled = true;
+                    $('qsStartBtn').textContent = '✅ RUNNING';
+                    $('qsStopBtn').style.display = '';
+                    qsSetProgress(72, 'System ready. Registering church...');
+
+                    // Check initial state
+                    let whisperWasOffline = true;
+                    let gatewayWasRunning = false;
+                    try {
+                        const statusRes = await fetchWithTimeout('/api/control/status', {}, HEALTH_CHECK_TIMEOUT_MS);
+                        const status = await statusRes.json();
+                        whisperWasOffline = status.whisper?.status !== 'running';
+                        gatewayWasRunning = status.gateway?.status === 'running';
+
+                        if (status.systemReady) {
+                            // Already running!
+                            systemState = 'running';
+                            setStatus('whisper', 'ready', 'READY');
+                            setStatus('gateway', 'ready', 'READY');
+                            $('barnabaReady').classList.add('visible');
+                            $('qsStartBtn').disabled = true;
+                            $('qsStartBtn').textContent = '✅ RUNNING';
+                            $('qsStopBtn').style.display = '';
+                            qsSetProgress(50, 'System already running...');
+                        }
+                    } catch (e) { /* assume offline */ }
+
+                    if (systemState !== 'running') {
+                        // Start Whisper
+                        setStatus('whisper', 'loading', 'STARTING...');
+                        const whisperRes = await fetchWithTimeout('/api/control/start-whisper', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({})
+                        });
+                        const whisperData = await whisperRes.json();
+                        if (!whisperData.success) {
+                            throw new Error('Whisper start failed: ' + whisperData.error);
+                        }
+
+                        setStatus('whisper', 'loading', 'INITIALIZING...');
+                        qsSetProgress(20, 'Waiting for Whisper to initialize...');
+
+                        let whisperReady = false;
+                        for (let i = 0; i < WHISPER_MAX_HEALTH_CHECKS; i++) {
+                            await sleep(HEALTH_CHECK_INTERVAL_MS);
+                            const health = await checkWhisperHealth();
+                            if (health.healthy) { whisperReady = true; break; }
+                            const pct = 20 + Math.round((i / WHISPER_MAX_HEALTH_CHECKS) * 20);
+                            qsSetProgress(pct, `Whisper initializing... (${i+1}/${WHISPER_MAX_HEALTH_CHECKS})`);
+                        }
+                        if (!whisperReady) throw new Error('Whisper failed to start within 5 minutes');
+                        setStatus('whisper', 'ready', 'READY');
+
+                        // Start Gateway
+                        qsSetProgress(45, 'Starting Gateway...');
+                        setStatus('gateway', 'loading', 'STARTING...');
+
+                        const needsRestart = gatewayWasRunning && whisperWasOffline;
+                        if (needsRestart) {
+                            try {
+                                await fetchWithTimeout('/api/control/stop-gateway', {
+                                    method: 'POST',
+                                    headers: { 'Content-Type': 'application/json' },
+                                    body: JSON.stringify({})
+                                });
+                                await sleep(5000);
+                            } catch (e) { /* continue */ }
+                        }
+
+                        const gatewayRes = await fetchWithTimeout('/api/control/start-gateway', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({})
+                        });
+                        const gatewayData = await gatewayRes.json();
+                        if (!gatewayData.success) throw new Error('Gateway start failed: ' + gatewayData.error);
+
+                        setStatus('gateway', 'loading', 'INITIALIZING...');
+                        qsSetProgress(55, 'Waiting for Gateway...');
+
+                        let gatewayReady = false;
+                        for (let i = 0; i < GATEWAY_MAX_HEALTH_CHECKS; i++) {
+                            await sleep(HEALTH_CHECK_INTERVAL_MS);
+                            const health = await checkGatewayHealth();
+                            if (health.healthy) { gatewayReady = true; break; }
+                            const pct = 55 + Math.round((i / GATEWAY_MAX_HEALTH_CHECKS) * 15);
+                            qsSetProgress(pct, `Gateway initializing... (${i+1}/${GATEWAY_MAX_HEALTH_CHECKS})`);
+                        }
+                        if (!gatewayReady) throw new Error('Gateway failed to start within 2 minutes');
+                        setStatus('gateway', 'ready', 'READY');
+
+                        // Verify connectivity
+                        qsSetProgress(72, 'Verifying system...');
+                        await sleep(CONNECTIVITY_CHECK_DELAY_MS);
+                        const finalStatus = await fetchWithTimeout('/api/control/status', {}, HEALTH_CHECK_TIMEOUT_MS);
+                        const status = await finalStatus.json();
+                        if (!status.systemReady) throw new Error('System connectivity check failed');
+
+                        systemState = 'running';
+                        $('barnabaReady').classList.add('visible');
+                        $('qsStartBtn').disabled = true;
+                        $('qsStartBtn').textContent = '✅ RUNNING';
+                        $('qsStopBtn').style.display = '';
+                    }
+                }
+
+                // STEP 2: Register church
+                qsSetProgress(75, 'Registering church...');
+
+                const authResponse = await fetchWithTimeout('/api/auth/broadcaster', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ password: masterPassword, churchId })
+                });
+                const authData = await authResponse.json();
+                if (!authData.success) throw new Error('Registration failed: ' + (authData.error || 'Unknown'));
+
+                sessionToken = authData.sessionToken;
+                churchData = authData;
+
+                showSuccess(authData);
+
+                // STEP 3: Connect broadcaster
+                qsSetProgress(85, 'Connecting broadcaster...');
+
+                if (!gatewayWsUrl) await fetchGatewayConfig();
+
+                await new Promise((resolve, reject) => {
+                    const timeout = setTimeout(() => reject(new Error('Broadcaster connect timeout')), 15000);
+
+                    // Wait for bcConnect to complete authentication
+                    const origOnMessage = null;
+                    const checkConnected = setInterval(() => {
+                        if (bcWs && bcWs.readyState === WebSocket.OPEN && bcSpeechSection.style.display === 'block') {
+                            clearInterval(checkConnected);
+                            clearTimeout(timeout);
+                            resolve();
+                        }
+                    }, 500);
+                });
+
+                // STEP 4: Done
+                qsSetProgress(100, 'Ready! System is running.');
+                qsBtn.textContent = '✅ BARNABA ACTIVE';
+                $('quickStartSection').style.borderColor = 'rgba(68,170,68,0.7)';
+                $('qsStopBtn').style.display = '';
+                showToast('System ready! Start recording when needed.', 'success', 4000);
+
+                // Update folder handle in recording section
+                if (recordFolderHandle) {
+                    $('recordFolderPath').textContent = recordFolderHandle.name;
+                }
+                recordUpdateBtn();
+
+            } catch (error) {
+                console.error('Quick Start error:', error);
+                showToast('Quick Start failed: ' + error.message, 'error', 7000);
+                qsBtn.disabled = false;
+                qsBtn.textContent = '▶️ START BARNABA';
+                $('qsProgress').classList.remove('visible');
+
+                if (systemState === 'starting') {
+                    resetControlPanel(error.message);
+                }
+            }
+        }
+
+    </script>
+</body>
+</html>

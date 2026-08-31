@@ -1,0 +1,22 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "location": { "value": "swedencentral" },
+    "prefix": { "value": "example" },
+    "acrName": { "value": "replacewithgloballyuniqueacr" },
+    "environmentName": { "value": "example-env" },
+    "ownerTag": { "value": "replace-me" },
+    "environmentTag": { "value": "dev" },
+    "imageTag": { "value": "0000000000000000000000000000000000000000" },
+    "azureOpenAiEndpoint": { "value": "https://replace-me.openai.azure.com" },
+    "azureOpenAiKey": { "value": "" },
+    "azureSpeechRegion": { "value": "swedencentral" },
+    "azureSpeechKey": { "value": "" },
+    "accessPin": { "value": "" },
+    "broadcasterPassword": { "value": "" },
+    "churchesConfigJson": {
+      "value": ""
+    }
+  }
+}

@@ -1,0 +1,83 @@
+Barnaba
+Copyright (C) 2026 Tomasz Pelczarski, except as separately identified below.
+
+Except for the Barnaba logo files identified below, this program is free
+software: you can redistribute it and/or modify it under the terms of the GNU
+Affero General Public License as published by the Free Software Foundation,
+either version 3 of the License, or (at your option) any later version. See the
+LICENSE file for the full license text.
+
+This program is distributed in the hope that it will be useful, but WITHOUT ANY
+WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+PARTICULAR PURPOSE. See the GNU Affero General Public License for more details.
+
+------------------------------------------------------------------------------
+LOGO FILES - SEPARATE PERMISSION
+------------------------------------------------------------------------------
+The following files are excluded from the AGPL-3.0-or-later license:
+
+  app/public/barnaba-logo-black.png
+  app/public/barnaba-logo-white.png
+
+PRISMA, Freie Evang. Gemeinde Rapperswil-Jona, grants permission to reproduce and redistribute the unmodified Barnaba logo files solely as part of the barnaba-oss repository and its forks.
+
+The permission covers only the exact file revisions identified by SHA-256 in
+TRADEMARKS.md. Replacing either file requires a new permission and updated
+hash.
+
+This permission does not permit modification or separate reuse of the logo
+files. It grants no trademark license and no right to imply endorsement by
+the logo owner. All other rights are reserved. See TRADEMARKS.md for the
+complete logo and trademark policy.
+
+The AGPL does not grant rights in project names or trademarks. Nominative
+references such as "based on Barnaba" or "compatible with Barnaba" are
+permitted when they are accurate and do not imply endorsement.
+
+------------------------------------------------------------------------------
+NO COMMERCIAL LICENSE
+------------------------------------------------------------------------------
+Barnaba is a non-commercial project. There is no commercial edition and no
+proprietary variant of this software, and none is offered for sale. The
+AGPL-3.0 is the only license under which this code is made available.
+
+Independently of this project's own license, the speech-recognition model used
+by the reference deployment is published under a NonCommercial license (see the
+section below). A commercial deployment would therefore have to substitute a
+different model regardless of how this code were licensed.
+
+For questions about use, deployment, or licensing, contact: tomaszpe@barnaba.ch
+
+Note on contributions: this project requires a signed Contributor License
+Agreement (CLA) before a contribution can be merged. See CLA.md and
+CONTRIBUTING.md. The CLA keeps the right to license the codebase as a whole in
+one pair of hands. Contributions received without a signed CLA cannot be
+merged.
+
+------------------------------------------------------------------------------
+THIRD-PARTY MODELS AND SERVICES (not covered by this license)
+------------------------------------------------------------------------------
+Barnaba is application code. It does not contain, and does not redistribute,
+the machine-learning models or cloud services it calls. Those carry their own
+licenses and terms, and you are responsible for complying with them.
+
+In particular, the speech-recognition model configured by default,
+"Flurin17/whisper-large-v3-turbo-swiss-german", is CURRENTLY published under
+CC BY-NC 4.0 (Creative Commons Attribution-NonCommercial 4.0). That license
+permits non-commercial use only. Running Barnaba commercially with that model
+is therefore NOT permitted by the model's license, regardless of the terms of
+this project's own license. The model is configured, not bundled: see
+whisper/config.py. Any commercial deployment must substitute a model whose
+license permits commercial use.
+
+Note on the pinned revision. This project pins a specific model revision, and
+the model card AT THAT REVISION declares "apache-2.0"; the repository was
+relicensed to CC BY-NC 4.0 later. The code DOES download exactly that snapshot -
+it is pinned for reproducibility. What this project does NOT do is treat the
+"apache-2.0" string on that old snapshot as a grant of commercial use; the model
+is treated as non-commercial. A model repository's licence is a property of the
+revision you pull, not of the repository name, so verify the terms at the
+revision you actually deploy.
+
+This project makes no claim about the licensing of any third-party model or
+dataset beyond pointing at the terms published by their respective owners.

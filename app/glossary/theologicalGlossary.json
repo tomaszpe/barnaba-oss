@@ -1,0 +1,5858 @@
+{
+  "version": "2.1.0",
+  "lastUpdated": "2026-03-26",
+  "description": "Theological glossary for Protestant church sermon translation (12 languages)",
+  "termCount": 352,
+  "languages": [
+    "de",
+    "pl",
+    "en",
+    "uk",
+    "it",
+    "es",
+    "fr",
+    "pt",
+    "ru",
+    "tr",
+    "ar",
+    "sw"
+  ],
+  "categories": {
+    "trinity": "Terms related to the Holy Trinity",
+    "christology": "Terms related to Christ and His work",
+    "soteriology": "Terms related to salvation",
+    "ecclesiology": "Terms related to the Church",
+    "sacraments": "Terms related to sacraments and ordinances",
+    "scripture": "Terms related to the Bible and revelation",
+    "liturgy": "Terms related to worship and liturgy",
+    "eschatology": "Terms related to end times and eternal life",
+    "protestant": "Protestant-specific theological terms",
+    "pneumatology": "Terms related to the Holy Spirit",
+    "general": "General religious and spiritual terms",
+    "biblical_names": "Biblical proper names (patriarchs, prophets, apostles)",
+    "bible_books": "Books of the Bible",
+    "citations": "Scripture citation formulas and prophetic phrases"
+  },
+  "terms": {
+    "Gott": {
+      "category": "trinity",
+      "translations": {
+        "de": "Gott",
+        "pl": "Bóg",
+        "en": "God",
+        "uk": "Бог",
+        "it": "Dio",
+        "es": "Dios",
+        "fr": "Dieu",
+        "pt": "Deus",
+        "ru": "Бог",
+        "tr": "Tanrı",
+        "ar": "الله",
+        "sw": "Mungu"
+      }
+    },
+    "Herr": {
+      "category": "trinity",
+      "translations": {
+        "de": "Herr",
+        "pl": "Pan",
+        "en": "Lord",
+        "uk": "Господь",
+        "it": "Signore",
+        "es": "Señor",
+        "fr": "Seigneur",
+        "pt": "Senhor",
+        "ru": "Господь",
+        "tr": "Rab",
+        "ar": "الرب",
+        "sw": "Bwana"
+      }
+    },
+    "Vater": {
+      "category": "trinity",
+      "translations": {
+        "de": "Vater",
+        "pl": "Ojciec",
+        "en": "Father",
+        "uk": "Отець",
+        "it": "Padre",
+        "es": "Padre",
+        "fr": "Père",
+        "pt": "Pai",
+        "ru": "Отец",
+        "tr": "Baba",
+        "ar": "الآب",
+        "sw": "Baba"
+      },
+      "context": "God the Father"
+    },
+    "Sohn": {
+      "category": "trinity",
+      "translations": {
+        "de": "Sohn",
+        "pl": "Syn",
+        "en": "Son",
+        "uk": "Син",
+        "it": "Figlio",
+        "es": "Hijo",
+        "fr": "Fils",
+        "pt": "Filho",
+        "ru": "Сын",
+        "tr": "Oğul",
+        "ar": "الابن",
+        "sw": "Mwana"
+      },
+      "context": "God the Son"
+    },
+    "Heiliger Geist": {
+      "category": "trinity",
+      "translations": {
+        "de": "Heiliger Geist",
+        "pl": "Duch Święty",
+        "en": "Holy Spirit",
+        "uk": "Святий Дух",
+        "it": "Spirito Santo",
+        "es": "Espíritu Santo",
+        "fr": "Saint-Esprit",
+        "pt": "Espírito Santo",
+        "ru": "Святой Дух",
+        "tr": "Kutsal Ruh",
+        "ar": "الروح القدس",
+        "sw": "Roho Mtakatifu"
+      }
+    },
+    "Dreieinigkeit": {
+      "category": "trinity",
+      "translations": {
+        "de": "Dreieinigkeit",
+        "pl": "Trójca Święta",
+        "en": "Trinity",
+        "uk": "Трійця",
+        "it": "Trinità",
+        "es": "Trinidad",
+        "fr": "Trinité",
+        "pt": "Trindade",
+        "ru": "Троица",
+        "tr": "Teslis",
+        "ar": "الثالوث",
+        "sw": "Utatu"
+      }
+    },
+    "Dreifaltigkeit": {
+      "category": "trinity",
+      "translations": {
+        "de": "Dreifaltigkeit",
+        "pl": "Trójca Święta",
+        "en": "Trinity",
+        "uk": "Трійця",
+        "it": "Trinità",
+        "es": "Trinidad",
+        "fr": "Trinité",
+        "pt": "Trindade",
+        "ru": "Троица",
+        "tr": "Teslis",
+        "ar": "الثالوث",
+        "sw": "Utatu"
+      }
+    },
+    "Allmächtiger": {
+      "category": "trinity",
+      "translations": {
+        "de": "Allmächtiger",
+        "pl": "Wszechmogący",
+        "en": "Almighty",
+        "uk": "Всемогутній",
+        "it": "Onnipotente",
+        "es": "Todopoderoso",
+        "fr": "Tout-Puissant",
+        "pt": "Todo-Poderoso",
+        "ru": "Всемогущий",
+        "tr": "Her Şeye Gücü Yeten",
+        "ar": "القدير",
+        "sw": "Mwenyezi"
+      }
+    },
+    "Schöpfer": {
+      "category": "trinity",
+      "translations": {
+        "de": "Schöpfer",
+        "pl": "Stwórca",
+        "en": "Creator",
+        "uk": "Творець",
+        "it": "Creatore",
+        "es": "Creador",
+        "fr": "Créateur",
+        "pt": "Criador",
+        "ru": "Творец",
+        "tr": "Yaradan",
+        "ar": "الخالق",
+        "sw": "Muumba"
+      }
+    },
+    "Herr Gott": {
+      "category": "trinity",
+      "translations": {
+        "de": "Herr Gott",
+        "pl": "Pan Bóg",
+        "en": "Lord God",
+        "uk": "Господь Бог",
+        "it": "Signore Dio",
+        "es": "Señor Dios",
+        "fr": "Seigneur Dieu",
+        "pt": "Senhor Deus",
+        "ru": "Господь Бог",
+        "tr": "Rab Tanrı",
+        "ar": "الرب الإله",
+        "sw": "Bwana Mungu"
+      }
+    },
+    "himmlischer Vater": {
+      "category": "trinity",
+      "translations": {
+        "de": "himmlischer Vater",
+        "pl": "Ojciec niebieski",
+        "en": "heavenly Father",
+        "uk": "небесний Отець",
+        "it": "Padre celeste",
+        "es": "Padre celestial",
+        "fr": "Père céleste",
+        "pt": "Pai celestial",
+        "ru": "Отец Небесный",
+        "tr": "Göksel Baba",
+        "ar": "الآب السماوي",
+        "sw": "Baba wa Mbinguni"
+      }
+    },
+    "Ewiger": {
+      "category": "trinity",
+      "translations": {
+        "de": "Ewiger",
+        "pl": "Przedwieczny",
+        "en": "Eternal One",
+        "uk": "Превічний",
+        "it": "Eterno",
+        "es": "Eterno",
+        "fr": "Éternel",
+        "pt": "Eterno",
+        "ru": "Вечный",
+        "tr": "Ebedi Olan",
+        "ar": "الأزلي",
+        "sw": "Wa Milele"
+      }
+    },
+    "Höchster": {
+      "category": "trinity",
+      "translations": {
+        "de": "Höchster",
+        "pl": "Najwyższy",
+        "en": "Most High",
+        "uk": "Всевишній",
+        "it": "Altissimo",
+        "es": "Altísimo",
+        "fr": "Très-Haut",
+        "pt": "Altíssimo",
+        "ru": "Всевышний",
+        "tr": "Yüce Olan",
+        "ar": "العلي",
+        "sw": "Aliye Juu"
+      }
+    },
+    "Christus": {
+      "category": "christology",
+      "translations": {
+        "de": "Christus",
+        "pl": "Chrystus",
+        "en": "Christ",
+        "uk": "Христос",
+        "it": "Cristo",
+        "es": "Cristo",
+        "fr": "Christ",
+        "pt": "Cristo",
+        "ru": "Христос",
+        "tr": "Mesih",
+        "ar": "المسيح",
+        "sw": "Kristo"
+      }
+    },
+    "Jesus": {
+      "category": "christology",
+      "translations": {
+        "de": "Jesus",
+        "pl": "Jezus",
+        "en": "Jesus",
+        "uk": "Ісус",
+        "it": "Gesù",
+        "es": "Jesús",
+        "fr": "Jésus",
+        "pt": "Jesus",
+        "ru": "Иисус",
+        "tr": "İsa",
+        "ar": "يسوع",
+        "sw": "Yesu"
+      }
+    },
+    "Jesus Christus": {
+      "category": "christology",
+      "translations": {
+        "de": "Jesus Christus",
+        "pl": "Jezus Chrystus",
+        "en": "Jesus Christ",
+        "uk": "Ісус Христос",
+        "it": "Gesù Cristo",
+        "es": "Jesucristo",
+        "fr": "Jésus-Christ",
+        "pt": "Jesus Cristo",
+        "ru": "Иисус Христос",
+        "tr": "İsa Mesih",
+        "ar": "يسوع المسيح",
+        "sw": "Yesu Kristo"
+      }
+    },
+    "Heiland": {
+      "category": "christology",
+      "translations": {
+        "de": "Heiland",
+        "pl": "Zbawiciel",
+        "en": "Savior",
+        "uk": "Спаситель",
+        "it": "Salvatore",
+        "es": "Salvador",
+        "fr": "Sauveur",
+        "pt": "Salvador",
+        "ru": "Спаситель",
+        "tr": "Kurtarıcı",
+        "ar": "المخلّص",
+        "sw": "Mwokozi"
+      }
+    },
+    "Erlöser": {
+      "category": "christology",
+      "translations": {
+        "de": "Erlöser",
+        "pl": "Odkupiciel",
+        "en": "Redeemer",
+        "uk": "Викупитель",
+        "it": "Redentore",
+        "es": "Redentor",
+        "fr": "Rédempteur",
+        "pt": "Redentor",
+        "ru": "Искупитель",
+        "tr": "Kurtarıcı",
+        "ar": "الفادي",
+        "sw": "Mkombozi"
+      }
+    },
+    "Messias": {
+      "category": "christology",
+      "translations": {
+        "de": "Messias",
+        "pl": "Mesjasz",
+        "en": "Messiah",
+        "uk": "Месія",
+        "it": "Messia",
+        "es": "Mesías",
+        "fr": "Messie",
+        "pt": "Messias",
+        "ru": "Мессия",
+        "tr": "Mesih",
+        "ar": "المسيّا",
+        "sw": "Masihi"
+      }
+    },
+    "Lamm Gottes": {
+      "category": "christology",
+      "translations": {
+        "de": "Lamm Gottes",
+        "pl": "Baranek Boży",
+        "en": "Lamb of God",
+        "uk": "Агнець Божий",
+        "it": "Agnello di Dio",
+        "es": "Cordero de Dios",
+        "fr": "Agneau de Dieu",
+        "pt": "Cordeiro de Deus",
+        "ru": "Агнец Божий",
+        "tr": "Tanrı Kuzusu",
+        "ar": "حمل الله",
+        "sw": "Mwana-Kondoo wa Mungu"
+      }
+    },
+    "Menschensohn": {
+      "category": "christology",
+      "translations": {
+        "de": "Menschensohn",
+        "pl": "Syn Człowieczy",
+        "en": "Son of Man",
+        "uk": "Син Людський",
+        "it": "Figlio dell'uomo",
+        "es": "Hijo del Hombre",
+        "fr": "Fils de l'homme",
+        "pt": "Filho do Homem",
+        "ru": "Сын Человеческий",
+        "tr": "İnsanoğlu",
+        "ar": "ابن الإنسان",
+        "sw": "Mwana wa Adamu"
+      }
+    },
+    "Sohn Gottes": {
+      "category": "christology",
+      "translations": {
+        "de": "Sohn Gottes",
+        "pl": "Syn Boży",
+        "en": "Son of God",
+        "uk": "Син Божий",
+        "it": "Figlio di Dio",
+        "es": "Hijo de Dios",
+        "fr": "Fils de Dieu",
+        "pt": "Filho de Deus",
+        "ru": "Сын Божий",
+        "tr": "Tanrı'nın Oğlu",
+        "ar": "ابن الله",
+        "sw": "Mwana wa Mungu"
+      }
+    },
+    "Kreuz": {
+      "category": "christology",
+      "translations": {
+        "de": "Kreuz",
+        "pl": "Krzyż",
+        "en": "Cross",
+        "uk": "Хрест",
+        "it": "Croce",
+        "es": "Cruz",
+        "fr": "Croix",
+        "pt": "Cruz",
+        "ru": "Крест",
+        "tr": "Haç",
+        "ar": "الصليب",
+        "sw": "Msalaba"
+      }
+    },
+    "Kreuzigung": {
+      "category": "christology",
+      "translations": {
+        "de": "Kreuzigung",
+        "pl": "Ukrzyżowanie",
+        "en": "Crucifixion",
+        "uk": "Розп'яття",
+        "it": "Crocifissione",
+        "es": "Crucifixión",
+        "fr": "Crucifixion",
+        "pt": "Crucificação",
+        "ru": "Распятие",
+        "tr": "Çarmıha gerilme",
+        "ar": "الصلب",
+        "sw": "Kusulubiwa"
+      }
+    },
+    "Opfer": {
+      "category": "christology",
+      "translations": {
+        "de": "Opfer",
+        "pl": "Ofiara",
+        "en": "Sacrifice",
+        "uk": "Жертва",
+        "it": "Sacrificio",
+        "es": "Sacrificio",
+        "fr": "Sacrifice",
+        "pt": "Sacrifício",
+        "ru": "Жертва",
+        "tr": "Kurban",
+        "ar": "الذبيحة",
+        "sw": "Dhabihu"
+      }
+    },
+    "Blut Christi": {
+      "category": "christology",
+      "translations": {
+        "de": "Blut Christi",
+        "pl": "Krew Chrystusa",
+        "en": "Blood of Christ",
+        "uk": "Кров Христова",
+        "it": "Sangue di Cristo",
+        "es": "Sangre de Cristo",
+        "fr": "Sang du Christ",
+        "pt": "Sangue de Cristo",
+        "ru": "Кровь Христова",
+        "tr": "Mesih'in Kanı",
+        "ar": "دم المسيح",
+        "sw": "Damu ya Kristo"
+      }
+    },
+    "Leib Christi": {
+      "category": "christology",
+      "translations": {
+        "de": "Leib Christi",
+        "pl": "Ciało Chrystusa",
+        "en": "Body of Christ",
+        "uk": "Тіло Христове",
+        "it": "Corpo di Cristo",
+        "es": "Cuerpo de Cristo",
+        "fr": "Corps du Christ",
+        "pt": "Corpo de Cristo",
+        "ru": "Тело Христово",
+        "tr": "Mesih'in Bedeni",
+        "ar": "جسد المسيح",
+        "sw": "Mwili wa Kristo"
+      }
+    },
+    "Auferstehung": {
+      "category": "christology",
+      "translations": {
+        "de": "Auferstehung",
+        "pl": "Zmartwychwstanie",
+        "en": "Resurrection",
+        "uk": "Воскресіння",
+        "it": "Risurrezione",
+        "es": "Resurrección",
+        "fr": "Résurrection",
+        "pt": "Ressurreição",
+        "ru": "Воскресение",
+        "tr": "Diriliş",
+        "ar": "القيامة",
+        "sw": "Ufufuo"
+      }
+    },
+    "Himmelfahrt": {
+      "category": "christology",
+      "translations": {
+        "de": "Himmelfahrt",
+        "pl": "Wniebowstąpienie",
+        "en": "Ascension",
+        "uk": "Вознесіння",
+        "it": "Ascensione",
+        "es": "Ascensión",
+        "fr": "Ascension",
+        "pt": "Ascensão",
+        "ru": "Вознесение",
+        "tr": "Göğe Yükseliş",
+        "ar": "الصعود",
+        "sw": "Kupaa"
+      }
+    },
+    "Wiederkunft": {
+      "category": "christology",
+      "translations": {
+        "de": "Wiederkunft",
+        "pl": "Powtórne przyjście",
+        "en": "Second Coming",
+        "uk": "Друге пришестя",
+        "it": "Seconda venuta",
+        "es": "Segunda Venida",
+        "fr": "Seconde venue",
+        "pt": "Segunda Vinda",
+        "ru": "Второе пришествие",
+        "tr": "İkinci Geliş",
+        "ar": "المجيء الثاني",
+        "sw": "Kuja kwa Pili"
+      }
+    },
+    "Menschwerdung": {
+      "category": "christology",
+      "translations": {
+        "de": "Menschwerdung",
+        "pl": "Wcielenie",
+        "en": "Incarnation",
+        "uk": "Втілення",
+        "it": "Incarnazione",
+        "es": "Encarnación",
+        "fr": "Incarnation",
+        "pt": "Encarnação",
+        "ru": "Воплощение",
+        "tr": "Beden alma",
+        "ar": "التجسد",
+        "sw": "Kufanyika Mwili"
+      }
+    },
+    "König der Könige": {
+      "category": "christology",
+      "translations": {
+        "de": "König der Könige",
+        "pl": "Król królów",
+        "en": "King of Kings",
+        "uk": "Цар царів",
+        "it": "Re dei re",
+        "es": "Rey de reyes",
+        "fr": "Roi des rois",
+        "pt": "Rei dos reis",
+        "ru": "Царь царей",
+        "tr": "Krallar Kralı",
+        "ar": "ملك الملوك",
+        "sw": "Mfalme wa Wafalme"
+      }
+    },
+    "Herr der Herren": {
+      "category": "christology",
+      "translations": {
+        "de": "Herr der Herren",
+        "pl": "Pan panów",
+        "en": "Lord of Lords",
+        "uk": "Господь панів",
+        "it": "Signore dei signori",
+        "es": "Señor de señores",
+        "fr": "Seigneur des seigneurs",
+        "pt": "Senhor dos senhores",
+        "ru": "Господь господствующих",
+        "tr": "Rabler Rabbi",
+        "ar": "رب الأرباب",
+        "sw": "Bwana wa Mabwana"
+      }
+    },
+    "Mittler": {
+      "category": "christology",
+      "translations": {
+        "de": "Mittler",
+        "pl": "Pośrednik",
+        "en": "Mediator",
+        "uk": "Посередник",
+        "it": "Mediatore",
+        "es": "Mediador",
+        "fr": "Médiateur",
+        "pt": "Mediador",
+        "ru": "Посредник",
+        "tr": "Arabulucu",
+        "ar": "الوسيط",
+        "sw": "Mpatanishi"
+      }
+    },
+    "Fürsprecher": {
+      "category": "christology",
+      "translations": {
+        "de": "Fürsprecher",
+        "pl": "Orędownik",
+        "en": "Advocate",
+        "uk": "Заступник",
+        "it": "Avvocato",
+        "es": "Abogado",
+        "fr": "Avocat",
+        "pt": "Advogado",
+        "ru": "Ходатай",
+        "tr": "Savunucu",
+        "ar": "الشفيع",
+        "sw": "Mwombezi"
+      }
+    },
+    "Hoherpriester": {
+      "category": "christology",
+      "translations": {
+        "de": "Hoherpriester",
+        "pl": "Arcykapłan",
+        "en": "High Priest",
+        "uk": "Первосвященик",
+        "it": "Sommo Sacerdote",
+        "es": "Sumo Sacerdote",
+        "fr": "Souverain Sacrificateur",
+        "pt": "Sumo Sacerdote",
+        "ru": "Первосвященник",
+        "tr": "Başkâhin",
+        "ar": "رئيس الكهنة",
+        "sw": "Kuhani Mkuu"
+      }
+    },
+    "guter Hirte": {
+      "category": "christology",
+      "translations": {
+        "de": "guter Hirte",
+        "pl": "dobry Pasterz",
+        "en": "Good Shepherd",
+        "uk": "добрий Пастир",
+        "it": "buon Pastore",
+        "es": "buen Pastor",
+        "fr": "bon Berger",
+        "pt": "bom Pastor",
+        "ru": "добрый Пастырь",
+        "tr": "İyi Çoban",
+        "ar": "الراعي الصالح",
+        "sw": "Mchungaji Mwema"
+      }
+    },
+    "Gnade": {
+      "category": "soteriology",
+      "translations": {
+        "de": "Gnade",
+        "pl": "Łaska",
+        "en": "Grace",
+        "uk": "Благодать",
+        "it": "Grazia",
+        "es": "Gracia",
+        "fr": "Grâce",
+        "pt": "Graça",
+        "ru": "Благодать",
+        "tr": "Lütuf",
+        "ar": "النعمة",
+        "sw": "Neema"
+      }
+    },
+    "Erlösung": {
+      "category": "soteriology",
+      "translations": {
+        "de": "Erlösung",
+        "pl": "Odkupienie",
+        "en": "Redemption",
+        "uk": "Викуплення",
+        "it": "Redenzione",
+        "es": "Redención",
+        "fr": "Rédemption",
+        "pt": "Redenção",
+        "ru": "Искупление",
+        "tr": "Fidyeyle kurtuluş",
+        "ar": "الفداء",
+        "sw": "Ukombozi"
+      }
+    },
+    "Heil": {
+      "category": "soteriology",
+      "translations": {
+        "de": "Heil",
+        "pl": "Zbawienie",
+        "en": "Salvation",
+        "uk": "Спасіння",
+        "it": "Salvezza",
+        "es": "Salvación",
+        "fr": "Salut",
+        "pt": "Salvação",
+        "ru": "Спасение",
+        "tr": "Kurtuluş",
+        "ar": "الخلاص",
+        "sw": "Wokovu"
+      }
+    },
+    "Rettung": {
+      "category": "soteriology",
+      "translations": {
+        "de": "Rettung",
+        "pl": "Ocalenie",
+        "en": "Deliverance",
+        "uk": "Порятунок",
+        "it": "Liberazione",
+        "es": "Rescate",
+        "fr": "Délivrance",
+        "pt": "Livramento",
+        "ru": "Избавление",
+        "tr": "Kurtarış",
+        "ar": "الإنقاذ",
+        "sw": "Uokoaji"
+      }
+    },
+    "Vergebung": {
+      "category": "soteriology",
+      "translations": {
+        "de": "Vergebung",
+        "pl": "Przebaczenie",
+        "en": "Forgiveness",
+        "uk": "Прощення",
+        "it": "Perdono",
+        "es": "Perdón",
+        "fr": "Pardon",
+        "pt": "Perdão",
+        "ru": "Прощение",
+        "tr": "Bağışlanma",
+        "ar": "المغفرة",
+        "sw": "Msamaha"
+      }
+    },
+    "Sünde": {
+      "category": "soteriology",
+      "translations": {
+        "de": "Sünde",
+        "pl": "Grzech",
+        "en": "Sin",
+        "uk": "Гріх",
+        "it": "Peccato",
+        "es": "Pecado",
+        "fr": "Péché",
+        "pt": "Pecado",
+        "ru": "Грех",
+        "tr": "Günah",
+        "ar": "الخطيئة",
+        "sw": "Dhambi"
+      }
+    },
+    "Sünder": {
+      "category": "soteriology",
+      "translations": {
+        "de": "Sünder",
+        "pl": "Grzesznik",
+        "en": "Sinner",
+        "uk": "Грішник",
+        "it": "Peccatore",
+        "es": "Pecador",
+        "fr": "Pécheur",
+        "pt": "Pecador",
+        "ru": "Грешник",
+        "tr": "Günahkâr",
+        "ar": "الخاطئ",
+        "sw": "Mtenda Dhambi"
+      }
+    },
+    "Busse": {
+      "category": "soteriology",
+      "translations": {
+        "de": "Buße",
+        "pl": "Pokuta",
+        "en": "Repentance",
+        "uk": "Покаяння",
+        "it": "Pentimento",
+        "es": "Arrepentimiento",
+        "fr": "Repentance",
+        "pt": "Arrependimento",
+        "ru": "Покаяние",
+        "tr": "Tövbe",
+        "ar": "التوبة",
+        "sw": "Toba"
+      }
+    },
+    "Reue": {
+      "category": "soteriology",
+      "translations": {
+        "de": "Reue",
+        "pl": "Skrucha",
+        "en": "Contrition",
+        "uk": "Каяття",
+        "it": "Contrizione",
+        "es": "Contrición",
+        "fr": "Contrition",
+        "pt": "Contrição",
+        "ru": "Сокрушение",
+        "tr": "Pişmanlık",
+        "ar": "الندامة",
+        "sw": "Majuto"
+      }
+    },
+    "Bekehrung": {
+      "category": "soteriology",
+      "translations": {
+        "de": "Bekehrung",
+        "pl": "Nawrócenie",
+        "en": "Conversion",
+        "uk": "Навернення",
+        "it": "Conversione",
+        "es": "Conversión",
+        "fr": "Conversion",
+        "pt": "Conversão",
+        "ru": "Обращение",
+        "tr": "Dönüş",
+        "ar": "الاهتداء",
+        "sw": "Kuongoka"
+      }
+    },
+    "Wiedergeburt": {
+      "category": "soteriology",
+      "translations": {
+        "de": "Wiedergeburt",
+        "pl": "Nowe narodzenie",
+        "en": "New Birth",
+        "uk": "Нове народження",
+        "it": "Nuova nascita",
+        "es": "Nuevo nacimiento",
+        "fr": "Nouvelle naissance",
+        "pt": "Novo nascimento",
+        "ru": "Рождение свыше",
+        "tr": "Yeniden doğuş",
+        "ar": "الولادة الجديدة",
+        "sw": "Kuzaliwa Upya"
+      }
+    },
+    "Rechtfertigung": {
+      "category": "soteriology",
+      "translations": {
+        "de": "Rechtfertigung",
+        "pl": "Usprawiedliwienie",
+        "en": "Justification",
+        "uk": "Виправдання",
+        "it": "Giustificazione",
+        "es": "Justificación",
+        "fr": "Justification",
+        "pt": "Justificação",
+        "ru": "Оправдание",
+        "tr": "Aklanma",
+        "ar": "التبرير",
+        "sw": "Kuhesabiwa Haki"
+      }
+    },
+    "Heiligung": {
+      "category": "soteriology",
+      "translations": {
+        "de": "Heiligung",
+        "pl": "Uświęcenie",
+        "en": "Sanctification",
+        "uk": "Освячення",
+        "it": "Santificazione",
+        "es": "Santificación",
+        "fr": "Sanctification",
+        "pt": "Santificação",
+        "ru": "Освящение",
+        "tr": "Kutsal kılınma",
+        "ar": "التقديس",
+        "sw": "Utakaso"
+      }
+    },
+    "Versöhnung": {
+      "category": "soteriology",
+      "translations": {
+        "de": "Versöhnung",
+        "pl": "Pojednanie",
+        "en": "Reconciliation",
+        "uk": "Примирення",
+        "it": "Riconciliazione",
+        "es": "Reconciliación",
+        "fr": "Réconciliation",
+        "pt": "Reconciliação",
+        "ru": "Примирение",
+        "tr": "Barışma",
+        "ar": "المصالحة",
+        "sw": "Upatanisho"
+      }
+    },
+    "Sühne": {
+      "category": "soteriology",
+      "translations": {
+        "de": "Sühne",
+        "pl": "Zadośćuczynienie",
+        "en": "Atonement",
+        "uk": "Спокута",
+        "it": "Espiazione",
+        "es": "Expiación",
+        "fr": "Expiation",
+        "pt": "Expiação",
+        "ru": "Искупление",
+        "tr": "Kefaret",
+        "ar": "الكفارة",
+        "sw": "Upatanisho wa Dhambi"
+      }
+    },
+    "Verlorenheit": {
+      "category": "soteriology",
+      "translations": {
+        "de": "Verlorenheit",
+        "pl": "Zagubienie",
+        "en": "Lostness",
+        "uk": "Загубленість",
+        "it": "Perdizione",
+        "es": "Perdición",
+        "fr": "Perdition",
+        "pt": "Perdição",
+        "ru": "Погибель",
+        "tr": "Helak",
+        "ar": "الضلال",
+        "sw": "Kupotea"
+      }
+    },
+    "Schuld": {
+      "category": "soteriology",
+      "translations": {
+        "de": "Schuld",
+        "pl": "Wina",
+        "en": "Guilt",
+        "uk": "Вина",
+        "it": "Colpa",
+        "es": "Culpa",
+        "fr": "Culpabilité",
+        "pt": "Culpa",
+        "ru": "Вина",
+        "tr": "Suçluluk",
+        "ar": "الذنب",
+        "sw": "Hatia"
+      }
+    },
+    "Befreiung": {
+      "category": "soteriology",
+      "translations": {
+        "de": "Befreiung",
+        "pl": "Wyzwolenie",
+        "en": "Liberation",
+        "uk": "Визволення",
+        "it": "Liberazione",
+        "es": "Liberación",
+        "fr": "Libération",
+        "pt": "Libertação",
+        "ru": "Освобождение",
+        "tr": "Özgür kılma",
+        "ar": "التحرير",
+        "sw": "Uhuru"
+      }
+    },
+    "Erneuerung": {
+      "category": "soteriology",
+      "translations": {
+        "de": "Erneuerung",
+        "pl": "Odnowienie",
+        "en": "Renewal",
+        "uk": "Оновлення",
+        "it": "Rinnovamento",
+        "es": "Renovación",
+        "fr": "Renouvellement",
+        "pt": "Renovação",
+        "ru": "Обновление",
+        "tr": "Yenilenme",
+        "ar": "التجديد",
+        "sw": "Upya"
+      }
+    },
+    "Verheissung": {
+      "category": "soteriology",
+      "translations": {
+        "de": "Verheißung",
+        "pl": "Obietnica",
+        "en": "Promise",
+        "uk": "Обітниця",
+        "it": "Promessa",
+        "es": "Promesa",
+        "fr": "Promesse",
+        "pt": "Promessa",
+        "ru": "Обетование",
+        "tr": "Vaat",
+        "ar": "الوعد",
+        "sw": "Ahadi"
+      }
+    },
+    "Barmherzigkeit": {
+      "category": "soteriology",
+      "translations": {
+        "de": "Barmherzigkeit",
+        "pl": "Miłosierdzie",
+        "en": "Mercy",
+        "uk": "Милосердя",
+        "it": "Misericordia",
+        "es": "Misericordia",
+        "fr": "Miséricorde",
+        "pt": "Misericórdia",
+        "ru": "Милосердие",
+        "tr": "Merhamet",
+        "ar": "الرحمة",
+        "sw": "Huruma"
+      }
+    },
+    "Gerechtigkeit": {
+      "category": "soteriology",
+      "translations": {
+        "de": "Gerechtigkeit",
+        "pl": "Sprawiedliwość",
+        "en": "Righteousness",
+        "uk": "Праведність",
+        "it": "Giustizia",
+        "es": "Justicia",
+        "fr": "Justice",
+        "pt": "Justiça",
+        "ru": "Праведность",
+        "tr": "Doğruluk",
+        "ar": "البر",
+        "sw": "Haki"
+      }
+    },
+    "Berufung": {
+      "category": "soteriology",
+      "translations": {
+        "de": "Berufung",
+        "pl": "Powołanie",
+        "en": "Calling",
+        "uk": "Покликання",
+        "it": "Vocazione",
+        "es": "Llamamiento",
+        "fr": "Appel",
+        "pt": "Chamado",
+        "ru": "Призвание",
+        "tr": "Çağrı",
+        "ar": "الدعوة",
+        "sw": "Wito"
+      }
+    },
+    "Erwählung": {
+      "category": "soteriology",
+      "translations": {
+        "de": "Erwählung",
+        "pl": "Wybranie",
+        "en": "Election",
+        "uk": "Обрання",
+        "it": "Elezione",
+        "es": "Elección",
+        "fr": "Élection",
+        "pt": "Eleição",
+        "ru": "Избрание",
+        "tr": "Seçim",
+        "ar": "الاختيار",
+        "sw": "Uchaguzi"
+      }
+    },
+    "Erbsünde": {
+      "category": "soteriology",
+      "translations": {
+        "de": "Erbsünde",
+        "pl": "Grzech pierworodny",
+        "en": "Original Sin",
+        "uk": "Первородний гріх",
+        "it": "Peccato originale",
+        "es": "Pecado original",
+        "fr": "Péché originel",
+        "pt": "Pecado original",
+        "ru": "Первородный грех",
+        "tr": "Asli günah",
+        "ar": "الخطيئة الأصلية",
+        "sw": "Dhambi ya Asili"
+      }
+    },
+    "Kirche": {
+      "category": "ecclesiology",
+      "translations": {
+        "de": "Kirche",
+        "pl": "Kościół",
+        "en": "Church",
+        "uk": "Церква",
+        "it": "Chiesa",
+        "es": "Iglesia",
+        "fr": "Église",
+        "pt": "Igreja",
+        "ru": "Церковь",
+        "tr": "Kilise",
+        "ar": "الكنيسة",
+        "sw": "Kanisa"
+      }
+    },
+    "Gemeinde": {
+      "category": "ecclesiology",
+      "translations": {
+        "de": "Gemeinde",
+        "pl": "Zbór",
+        "en": "Congregation",
+        "uk": "Громада",
+        "it": "Comunità",
+        "es": "Congregación",
+        "fr": "Assemblée",
+        "pt": "Congregação",
+        "ru": "Община",
+        "tr": "Cemaat",
+        "ar": "الجماعة",
+        "sw": "Kanisa"
+      }
+    },
+    "Gemeinschaft": {
+      "category": "ecclesiology",
+      "translations": {
+        "de": "Gemeinschaft",
+        "pl": "Wspólnota",
+        "en": "Fellowship",
+        "uk": "Спільнота",
+        "it": "Comunione",
+        "es": "Comunión",
+        "fr": "Communion",
+        "pt": "Comunhão",
+        "ru": "Общение",
+        "tr": "Paydaşlık",
+        "ar": "الشركة",
+        "sw": "Ushirika"
+      }
+    },
+    "Glaubensgemeinschaft": {
+      "category": "ecclesiology",
+      "translations": {
+        "de": "Glaubensgemeinschaft",
+        "pl": "Wspólnota wiary",
+        "en": "Faith community",
+        "uk": "Спільнота віри",
+        "it": "Comunità di fede",
+        "es": "Comunidad de fe",
+        "fr": "Communauté de foi",
+        "pt": "Comunidade de fé",
+        "ru": "Община верующих",
+        "tr": "İman topluluğu",
+        "ar": "جماعة الإيمان",
+        "sw": "Jumuiya ya Imani"
+      }
+    },
+    "Prediger": {
+      "category": "bible_books",
+      "translations": {
+        "de": "Prediger (Kohelet)",
+        "pl": "Księga Koheleta",
+        "en": "Ecclesiastes",
+        "uk": "Еклезіаст",
+        "it": "Ecclesiaste",
+        "es": "Eclesiastés",
+        "fr": "Ecclésiaste",
+        "pt": "Eclesiastes",
+        "ru": "Екклесиаст",
+        "tr": "Vaiz",
+        "ar": "الجامعة",
+        "sw": "Mhubiri"
+      }
+    },
+    "Pastor": {
+      "category": "ecclesiology",
+      "translations": {
+        "de": "Pastor",
+        "pl": "Pastor",
+        "en": "Pastor",
+        "uk": "Пастор",
+        "it": "Pastore",
+        "es": "Pastor",
+        "fr": "Pasteur",
+        "pt": "Pastor",
+        "ru": "Пастор",
+        "tr": "Pastör",
+        "ar": "القسّ",
+        "sw": "Mchungaji"
+      }
+    },
+    "Pfarrer": {
+      "category": "ecclesiology",
+      "translations": {
+        "de": "Pfarrer",
+        "pl": "Ksiądz",
+        "en": "Minister",
+        "uk": "Священик",
+        "it": "Parroco",
+        "es": "Ministro",
+        "fr": "Ministre",
+        "pt": "Ministro",
+        "ru": "Служитель",
+        "tr": "Vaiz",
+        "ar": "القسّ",
+        "sw": "Mchungaji"
+      }
+    },
+    "Ältester": {
+      "category": "ecclesiology",
+      "translations": {
+        "de": "Ältester",
+        "pl": "Starszy",
+        "en": "Elder",
+        "uk": "Пресвітер",
+        "it": "Anziano",
+        "es": "Anciano",
+        "fr": "Ancien",
+        "pt": "Presbítero",
+        "ru": "Пресвитер",
+        "tr": "İhtiyar",
+        "ar": "الشيخ",
+        "sw": "Mzee"
+      }
+    },
+    "Diakon": {
+      "category": "ecclesiology",
+      "translations": {
+        "de": "Diakon",
+        "pl": "Diakon",
+        "en": "Deacon",
+        "uk": "Диякон",
+        "it": "Diacono",
+        "es": "Diácono",
+        "fr": "Diacre",
+        "pt": "Diácono",
+        "ru": "Диакон",
+        "tr": "Diyakon",
+        "ar": "الشمّاس",
+        "sw": "Shemasi"
+      }
+    },
+    "Gläubige": {
+      "category": "ecclesiology",
+      "translations": {
+        "de": "Gläubige",
+        "pl": "Wierzący",
+        "en": "Believer",
+        "uk": "Віруючий",
+        "it": "Credente",
+        "es": "Creyente",
+        "fr": "Croyant",
+        "pt": "Crente",
+        "ru": "Верующий",
+        "tr": "İmanlı",
+        "ar": "المؤمن",
+        "sw": "Mwamini"
+      }
+    },
+    "Bruder": {
+      "category": "ecclesiology",
+      "translations": {
+        "de": "Bruder",
+        "pl": "Brat",
+        "en": "Brother",
+        "uk": "Брат",
+        "it": "Fratello",
+        "es": "Hermano",
+        "fr": "Frère",
+        "pt": "Irmão",
+        "ru": "Брат",
+        "tr": "Erkek kardeş",
+        "ar": "الأخ",
+        "sw": "Ndugu"
+      }
+    },
+    "Schwester": {
+      "category": "ecclesiology",
+      "translations": {
+        "de": "Schwester",
+        "pl": "Siostra",
+        "en": "Sister",
+        "uk": "Сестра",
+        "it": "Sorella",
+        "es": "Hermana",
+        "fr": "Sœur",
+        "pt": "Irmã",
+        "ru": "Сестра",
+        "tr": "Kız kardeş",
+        "ar": "الأخت",
+        "sw": "Dada"
+      }
+    },
+    "Geschwister": {
+      "category": "ecclesiology",
+      "translations": {
+        "de": "Geschwister",
+        "pl": "Bracia i siostry",
+        "en": "Brothers and sisters",
+        "uk": "Брати і сестри",
+        "it": "Fratelli e sorelle",
+        "es": "Hermanos y hermanas",
+        "fr": "Frères et sœurs",
+        "pt": "Irmãos e irmãs",
+        "ru": "Братья и сёстры",
+        "tr": "Kardeşler",
+        "ar": "الإخوة والأخوات",
+        "sw": "Ndugu"
+      }
+    },
+    "Jünger": {
+      "category": "ecclesiology",
+      "translations": {
+        "de": "Jünger",
+        "pl": "Uczeń",
+        "en": "Disciple",
+        "uk": "Учень",
+        "it": "Discepolo",
+        "es": "Discípulo",
+        "fr": "Disciple",
+        "pt": "Discípulo",
+        "ru": "Ученик",
+        "tr": "Öğrenci",
+        "ar": "التلميذ",
+        "sw": "Mwanafunzi"
+      }
+    },
+    "Nachfolge": {
+      "category": "ecclesiology",
+      "translations": {
+        "de": "Nachfolge",
+        "pl": "Naśladowanie",
+        "en": "Discipleship",
+        "uk": "Наслідування",
+        "it": "Discepolato",
+        "es": "Discipulado",
+        "fr": "Discipulat",
+        "pt": "Discipulado",
+        "ru": "Ученичество",
+        "tr": "Öğrencilik",
+        "ar": "التلمذة",
+        "sw": "Uanafunzi"
+      }
+    },
+    "Dienst": {
+      "category": "ecclesiology",
+      "translations": {
+        "de": "Dienst",
+        "pl": "Służba",
+        "en": "Ministry",
+        "uk": "Служіння",
+        "it": "Ministero",
+        "es": "Ministerio",
+        "fr": "Ministère",
+        "pt": "Ministério",
+        "ru": "Служение",
+        "tr": "Hizmet",
+        "ar": "الخدمة",
+        "sw": "Huduma"
+      }
+    },
+    "Mission": {
+      "category": "ecclesiology",
+      "translations": {
+        "de": "Mission",
+        "pl": "Misja",
+        "en": "Mission",
+        "uk": "Місія",
+        "it": "Missione",
+        "es": "Misión",
+        "fr": "Mission",
+        "pt": "Missão",
+        "ru": "Миссия",
+        "tr": "Misyon",
+        "ar": "الإرسالية",
+        "sw": "Utume"
+      }
+    },
+    "Zeugnis": {
+      "category": "ecclesiology",
+      "translations": {
+        "de": "Zeugnis",
+        "pl": "Świadectwo",
+        "en": "Testimony",
+        "uk": "Свідчення",
+        "it": "Testimonianza",
+        "es": "Testimonio",
+        "fr": "Témoignage",
+        "pt": "Testemunho",
+        "ru": "Свидетельство",
+        "tr": "Tanıklık",
+        "ar": "الشهادة",
+        "sw": "Ushuhuda"
+      }
+    },
+    "Taufe": {
+      "category": "sacraments",
+      "translations": {
+        "de": "Taufe",
+        "pl": "Chrzest",
+        "en": "Baptism",
+        "uk": "Хрещення",
+        "it": "Battesimo",
+        "es": "Bautismo",
+        "fr": "Baptême",
+        "pt": "Batismo",
+        "ru": "Крещение",
+        "tr": "Vaftiz",
+        "ar": "المعمودية",
+        "sw": "Ubatizo"
+      }
+    },
+    "Täufling": {
+      "category": "sacraments",
+      "translations": {
+        "de": "Täufling",
+        "pl": "Chrzczony",
+        "en": "Baptismal candidate",
+        "uk": "Хрещений",
+        "it": "Battezzando",
+        "es": "Bautizando",
+        "fr": "Candidat au baptême",
+        "pt": "Batizando",
+        "ru": "Крещаемый",
+        "tr": "Vaftiz adayı",
+        "ar": "المعتمد",
+        "sw": "Mbatizwa"
+      }
+    },
+    "Abendmahl": {
+      "category": "sacraments",
+      "translations": {
+        "de": "Abendmahl",
+        "pl": "Wieczerza Pańska",
+        "en": "Lord's Supper",
+        "uk": "Вечеря Господня",
+        "it": "Santa Cena",
+        "es": "Santa Cena",
+        "fr": "Sainte-Cène",
+        "pt": "Santa Ceia",
+        "ru": "Вечеря Господня",
+        "tr": "Rab'bin Sofrası",
+        "ar": "العشاء الرباني",
+        "sw": "Meza ya Bwana"
+      }
+    },
+    "Kommunion": {
+      "category": "sacraments",
+      "translations": {
+        "de": "Kommunion",
+        "pl": "Komunia",
+        "en": "Communion",
+        "uk": "Причастя",
+        "it": "Comunione",
+        "es": "Comunión",
+        "fr": "Communion",
+        "pt": "Comunhão",
+        "ru": "Причастие",
+        "tr": "Komünyon",
+        "ar": "المناولة",
+        "sw": "Ushirika"
+      }
+    },
+    "Brot": {
+      "category": "sacraments",
+      "translations": {
+        "de": "Brot",
+        "pl": "Chleb",
+        "en": "Bread",
+        "uk": "Хліб",
+        "it": "Pane",
+        "es": "Pan",
+        "fr": "Pain",
+        "pt": "Pão",
+        "ru": "Хлеб",
+        "tr": "Ekmek",
+        "ar": "الخبز",
+        "sw": "Mkate"
+      },
+      "context": "Eucharistic bread"
+    },
+    "Wein": {
+      "category": "sacraments",
+      "translations": {
+        "de": "Wein",
+        "pl": "Wino",
+        "en": "Wine",
+        "uk": "Вино",
+        "it": "Vino",
+        "es": "Vino",
+        "fr": "Vin",
+        "pt": "Vinho",
+        "ru": "Вино",
+        "tr": "Şarap",
+        "ar": "الخمر",
+        "sw": "Divai"
+      },
+      "context": "Eucharistic wine"
+    },
+    "Kelch": {
+      "category": "sacraments",
+      "translations": {
+        "de": "Kelch",
+        "pl": "Kielich",
+        "en": "Chalice",
+        "uk": "Чаша",
+        "it": "Calice",
+        "es": "Copa",
+        "fr": "Coupe",
+        "pt": "Cálice",
+        "ru": "Чаша",
+        "tr": "Kâse",
+        "ar": "الكأس",
+        "sw": "Kikombe"
+      }
+    },
+    "Brotbrechen": {
+      "category": "sacraments",
+      "translations": {
+        "de": "Brotbrechen",
+        "pl": "Łamanie chleba",
+        "en": "Breaking of bread",
+        "uk": "Ламання хліба",
+        "it": "Frazione del pane",
+        "es": "Partimiento del pan",
+        "fr": "Fraction du pain",
+        "pt": "Partir do pão",
+        "ru": "Хлебопреломление",
+        "tr": "Ekmeğin bölünmesi",
+        "ar": "كسر الخبز",
+        "sw": "Kuumega Mkate"
+      }
+    },
+    "Konfirmation": {
+      "category": "sacraments",
+      "translations": {
+        "de": "Konfirmation",
+        "pl": "Konfirmacja",
+        "en": "Confirmation",
+        "uk": "Конфірмація",
+        "it": "Confermazione",
+        "es": "Confirmación",
+        "fr": "Confirmation",
+        "pt": "Confirmação",
+        "ru": "Конфирмация",
+        "tr": "Konfirmasyon",
+        "ar": "التثبيت",
+        "sw": "Kipaimara"
+      }
+    },
+    "Trauung": {
+      "category": "sacraments",
+      "translations": {
+        "de": "Trauung",
+        "pl": "Ślub",
+        "en": "Wedding",
+        "uk": "Вінчання",
+        "it": "Matrimonio",
+        "es": "Ceremonia nupcial",
+        "fr": "Bénédiction nuptiale",
+        "pt": "Cerimónia de casamento",
+        "ru": "Бракосочетание",
+        "tr": "Nikâh töreni",
+        "ar": "مراسم الزواج",
+        "sw": "Harusi"
+      }
+    },
+    "Beerdigung": {
+      "category": "sacraments",
+      "translations": {
+        "de": "Beerdigung",
+        "pl": "Pogrzeb",
+        "en": "Funeral",
+        "uk": "Похорон",
+        "it": "Funerale",
+        "es": "Funeral",
+        "fr": "Service funèbre",
+        "pt": "Funeral",
+        "ru": "Похороны",
+        "tr": "Cenaze töreni",
+        "ar": "مراسم الدفن",
+        "sw": "Mazishi"
+      }
+    },
+    "Salbung": {
+      "category": "sacraments",
+      "translations": {
+        "de": "Salbung",
+        "pl": "Namaszczenie",
+        "en": "Anointing",
+        "uk": "Помазання",
+        "it": "Unzione",
+        "es": "Unción",
+        "fr": "Onction",
+        "pt": "Unção",
+        "ru": "Помазание",
+        "tr": "Meshetme",
+        "ar": "المسحة",
+        "sw": "Kupakwa Mafuta"
+      }
+    },
+    "Bibel": {
+      "category": "scripture",
+      "translations": {
+        "de": "Bibel",
+        "pl": "Biblia",
+        "en": "Bible",
+        "uk": "Біблія",
+        "it": "Bibbia",
+        "es": "Biblia",
+        "fr": "Bible",
+        "pt": "Bíblia",
+        "ru": "Библия",
+        "tr": "Kutsal Kitap",
+        "ar": "الكتاب المقدس",
+        "sw": "Biblia"
+      }
+    },
+    "Heilige Schrift": {
+      "category": "scripture",
+      "translations": {
+        "de": "Heilige Schrift",
+        "pl": "Pismo Święte",
+        "en": "Holy Scripture",
+        "uk": "Святе Письмо",
+        "it": "Sacra Scrittura",
+        "es": "Sagrada Escritura",
+        "fr": "Sainte Écriture",
+        "pt": "Sagrada Escritura",
+        "ru": "Священное Писание",
+        "tr": "Kutsal Yazılar",
+        "ar": "الكتاب المقدس",
+        "sw": "Maandiko Matakatifu"
+      }
+    },
+    "Wort Gottes": {
+      "category": "scripture",
+      "translations": {
+        "de": "Wort Gottes",
+        "pl": "Słowo Boże",
+        "en": "Word of God",
+        "uk": "Слово Боже",
+        "it": "Parola di Dio",
+        "es": "Palabra de Dios",
+        "fr": "Parole de Dieu",
+        "pt": "Palavra de Deus",
+        "ru": "Слово Божье",
+        "tr": "Tanrı'nın Sözü",
+        "ar": "كلمة الله",
+        "sw": "Neno la Mungu"
+      }
+    },
+    "Evangelium": {
+      "category": "scripture",
+      "translations": {
+        "de": "Evangelium",
+        "pl": "Ewangelia",
+        "en": "Gospel",
+        "uk": "Євангелія",
+        "it": "Vangelo",
+        "es": "Evangelio",
+        "fr": "Évangile",
+        "pt": "Evangelho",
+        "ru": "Евангелие",
+        "tr": "Müjde",
+        "ar": "الإنجيل",
+        "sw": "Injili"
+      }
+    },
+    "Altes Testament": {
+      "category": "scripture",
+      "translations": {
+        "de": "Altes Testament",
+        "pl": "Stary Testament",
+        "en": "Old Testament",
+        "uk": "Старий Заповіт",
+        "it": "Antico Testamento",
+        "es": "Antiguo Testamento",
+        "fr": "Ancien Testament",
+        "pt": "Antigo Testamento",
+        "ru": "Ветхий Завет",
+        "tr": "Eski Antlaşma",
+        "ar": "العهد القديم",
+        "sw": "Agano la Kale"
+      }
+    },
+    "Neues Testament": {
+      "category": "scripture",
+      "translations": {
+        "de": "Neues Testament",
+        "pl": "Nowy Testament",
+        "en": "New Testament",
+        "uk": "Новий Заповіт",
+        "it": "Nuovo Testamento",
+        "es": "Nuevo Testamento",
+        "fr": "Nouveau Testament",
+        "pt": "Novo Testamento",
+        "ru": "Новый Завет",
+        "tr": "Yeni Antlaşma",
+        "ar": "العهد الجديد",
+        "sw": "Agano Jipya"
+      }
+    },
+    "Psalm": {
+      "category": "scripture",
+      "translations": {
+        "de": "Psalm",
+        "pl": "Psalm",
+        "en": "Psalm",
+        "uk": "Псалом",
+        "it": "Salmo",
+        "es": "Salmo",
+        "fr": "Psaume",
+        "pt": "Salmo",
+        "ru": "Псалом",
+        "tr": "Mezmur",
+        "ar": "مزمور",
+        "sw": "Zaburi"
+      }
+    },
+    "Prophet": {
+      "category": "scripture",
+      "translations": {
+        "de": "Prophet",
+        "pl": "Prorok",
+        "en": "Prophet",
+        "uk": "Пророк",
+        "it": "Profeta",
+        "es": "Profeta",
+        "fr": "Prophète",
+        "pt": "Profeta",
+        "ru": "Пророк",
+        "tr": "Peygamber",
+        "ar": "النبي",
+        "sw": "Nabii"
+      }
+    },
+    "Prophezeiung": {
+      "category": "scripture",
+      "translations": {
+        "de": "Prophezeiung",
+        "pl": "Proroctwo",
+        "en": "Prophecy",
+        "uk": "Пророцтво",
+        "it": "Profezia",
+        "es": "Profecía",
+        "fr": "Prophétie",
+        "pt": "Profecia",
+        "ru": "Пророчество",
+        "tr": "Peygamberlik",
+        "ar": "النبوءة",
+        "sw": "Unabii"
+      }
+    },
+    "Apostel": {
+      "category": "scripture",
+      "translations": {
+        "de": "Apostel",
+        "pl": "Apostoł",
+        "en": "Apostle",
+        "uk": "Апостол",
+        "it": "Apostolo",
+        "es": "Apóstol",
+        "fr": "Apôtre",
+        "pt": "Apóstolo",
+        "ru": "Апостол",
+        "tr": "Elçi",
+        "ar": "الرسول",
+        "sw": "Mtume"
+      }
+    },
+    "Offenbarung": {
+      "category": "scripture",
+      "translations": {
+        "de": "Offenbarung",
+        "pl": "Objawienie",
+        "en": "Revelation",
+        "uk": "Об'явлення",
+        "it": "Rivelazione",
+        "es": "Revelación",
+        "fr": "Révélation",
+        "pt": "Revelação",
+        "ru": "Откровение",
+        "tr": "Vahiy",
+        "ar": "الرؤيا",
+        "sw": "Ufunuo"
+      }
+    },
+    "Gebot": {
+      "category": "scripture",
+      "translations": {
+        "de": "Gebot",
+        "pl": "Przykazanie",
+        "en": "Commandment",
+        "uk": "Заповідь",
+        "it": "Comandamento",
+        "es": "Mandamiento",
+        "fr": "Commandement",
+        "pt": "Mandamento",
+        "ru": "Заповедь",
+        "tr": "Buyruk",
+        "ar": "الوصية",
+        "sw": "Amri"
+      }
+    },
+    "Zehn Gebote": {
+      "category": "scripture",
+      "translations": {
+        "de": "Zehn Gebote",
+        "pl": "Dziesięć przykazań",
+        "en": "Ten Commandments",
+        "uk": "Десять заповідей",
+        "it": "Dieci Comandamenti",
+        "es": "Diez Mandamientos",
+        "fr": "Dix Commandements",
+        "pt": "Dez Mandamentos",
+        "ru": "Десять заповедей",
+        "tr": "On Buyruk",
+        "ar": "الوصايا العشر",
+        "sw": "Amri Kumi"
+      }
+    },
+    "Gleichnis": {
+      "category": "scripture",
+      "translations": {
+        "de": "Gleichnis",
+        "pl": "Przypowieść",
+        "en": "Parable",
+        "uk": "Притча",
+        "it": "Parabola",
+        "es": "Parábola",
+        "fr": "Parabole",
+        "pt": "Parábola",
+        "ru": "Притча",
+        "tr": "Benzetme",
+        "ar": "المَثَل",
+        "sw": "Mfano"
+      }
+    },
+    "Vers": {
+      "category": "scripture",
+      "translations": {
+        "de": "Vers",
+        "pl": "Werset",
+        "en": "Verse",
+        "uk": "Вірш",
+        "it": "Versetto",
+        "es": "Versículo",
+        "fr": "Verset",
+        "pt": "Versículo",
+        "ru": "Стих",
+        "tr": "Ayet",
+        "ar": "آية",
+        "sw": "Mstari"
+      }
+    },
+    "Kapitel": {
+      "category": "scripture",
+      "translations": {
+        "de": "Kapitel",
+        "pl": "Rozdział",
+        "en": "Chapter",
+        "uk": "Розділ",
+        "it": "Capitolo",
+        "es": "Capítulo",
+        "fr": "Chapitre",
+        "pt": "Capítulo",
+        "ru": "Глава",
+        "tr": "Bölüm",
+        "ar": "إصحاح",
+        "sw": "Sura"
+      }
+    },
+    "Bergpredigt": {
+      "category": "scripture",
+      "translations": {
+        "de": "Bergpredigt",
+        "pl": "Kazanie na Górze",
+        "en": "Sermon on the Mount",
+        "uk": "Нагірна проповідь",
+        "it": "Discorso della Montagna",
+        "es": "Sermón del Monte",
+        "fr": "Sermon sur la montagne",
+        "pt": "Sermão do Monte",
+        "ru": "Нагорная проповедь",
+        "tr": "Dağdaki Vaaz",
+        "ar": "الموعظة على الجبل",
+        "sw": "Mahubiri ya Mlimani"
+      }
+    },
+    "Vaterunser": {
+      "category": "scripture",
+      "translations": {
+        "de": "Vaterunser",
+        "pl": "Ojcze nasz",
+        "en": "Lord's Prayer",
+        "uk": "Отче наш",
+        "it": "Padre nostro",
+        "es": "Padrenuestro",
+        "fr": "Notre Père",
+        "pt": "Pai Nosso",
+        "ru": "Отче наш",
+        "tr": "Rab'bin Duası",
+        "ar": "الصلاة الربانية",
+        "sw": "Sala ya Bwana"
+      }
+    },
+    "Seligpreisung": {
+      "category": "scripture",
+      "translations": {
+        "de": "Seligpreisung",
+        "pl": "Błogosławieństwo",
+        "en": "Beatitude",
+        "uk": "Блаженство",
+        "it": "Beatitudine",
+        "es": "Bienaventuranza",
+        "fr": "Béatitude",
+        "pt": "Bem-aventurança",
+        "ru": "Заповедь блаженства",
+        "tr": "Kutluluk",
+        "ar": "التطويبة",
+        "sw": "Heri"
+      }
+    },
+    "Gebet": {
+      "category": "liturgy",
+      "translations": {
+        "de": "Gebet",
+        "pl": "Modlitwa",
+        "en": "Prayer",
+        "uk": "Молитва",
+        "it": "Preghiera",
+        "es": "Oración",
+        "fr": "Prière",
+        "pt": "Oração",
+        "ru": "Молитва",
+        "tr": "Dua",
+        "ar": "الصلاة",
+        "sw": "Sala"
+      }
+    },
+    "Fürbitte": {
+      "category": "liturgy",
+      "translations": {
+        "de": "Fürbitte",
+        "pl": "Modlitwa wstawiennicza",
+        "en": "Intercession",
+        "uk": "Заступництво",
+        "it": "Intercessione",
+        "es": "Intercesión",
+        "fr": "Intercession",
+        "pt": "Intercessão",
+        "ru": "Ходатайственная молитва",
+        "tr": "Şefaat duası",
+        "ar": "الشفاعة",
+        "sw": "Maombezi"
+      }
+    },
+    "Segen": {
+      "category": "liturgy",
+      "translations": {
+        "de": "Segen",
+        "pl": "Błogosławieństwo",
+        "en": "Blessing",
+        "uk": "Благословення",
+        "it": "Benedizione",
+        "es": "Bendición",
+        "fr": "Bénédiction",
+        "pt": "Bênção",
+        "ru": "Благословение",
+        "tr": "Bereketleme",
+        "ar": "البركة",
+        "sw": "Baraka"
+      }
+    },
+    "Lobpreis": {
+      "category": "liturgy",
+      "translations": {
+        "de": "Lobpreis",
+        "pl": "Uwielbienie",
+        "en": "Praise",
+        "uk": "Хвала",
+        "it": "Lode",
+        "es": "Alabanza",
+        "fr": "Louange",
+        "pt": "Louvor",
+        "ru": "Хвала",
+        "tr": "Övgü",
+        "ar": "التسبيح",
+        "sw": "Sifa"
+      }
+    },
+    "Anbetung": {
+      "category": "liturgy",
+      "translations": {
+        "de": "Anbetung",
+        "pl": "Adoracja",
+        "en": "Worship",
+        "uk": "Поклоніння",
+        "it": "Adorazione",
+        "es": "Adoración",
+        "fr": "Adoration",
+        "pt": "Adoração",
+        "ru": "Поклонение",
+        "tr": "Tapınma",
+        "ar": "العبادة",
+        "sw": "Ibada"
+      }
+    },
+    "Predigt": {
+      "category": "liturgy",
+      "translations": {
+        "de": "Predigt",
+        "pl": "Kazanie",
+        "en": "Sermon",
+        "uk": "Проповідь",
+        "it": "Sermone",
+        "es": "Sermón",
+        "fr": "Prédication",
+        "pt": "Sermão",
+        "ru": "Проповедь",
+        "tr": "Vaaz",
+        "ar": "العظة",
+        "sw": "Mahubiri"
+      }
+    },
+    "Gottesdienst": {
+      "category": "liturgy",
+      "translations": {
+        "de": "Gottesdienst",
+        "pl": "Nabożeństwo",
+        "en": "Worship Service",
+        "uk": "Богослужіння",
+        "it": "Culto",
+        "es": "Culto",
+        "fr": "Culte",
+        "pt": "Culto",
+        "ru": "Богослужение",
+        "tr": "İbadet",
+        "ar": "خدمة العبادة",
+        "sw": "Ibada"
+      }
+    },
+    "Andacht": {
+      "category": "liturgy",
+      "translations": {
+        "de": "Andacht",
+        "pl": "Nabożeństwo",
+        "en": "Devotion",
+        "uk": "Молебень",
+        "it": "Devozione",
+        "es": "Devocional",
+        "fr": "Méditation",
+        "pt": "Devocional",
+        "ru": "Молитвенное собрание",
+        "tr": "Kısa ibadet",
+        "ar": "التأمل",
+        "sw": "Tafakuri"
+      }
+    },
+    "Lied": {
+      "category": "liturgy",
+      "translations": {
+        "de": "Lied",
+        "pl": "Pieśń",
+        "en": "Hymn",
+        "uk": "Гімн",
+        "it": "Inno",
+        "es": "Himno",
+        "fr": "Cantique",
+        "pt": "Hino",
+        "ru": "Гимн",
+        "tr": "İlahi",
+        "ar": "ترنيمة",
+        "sw": "Wimbo"
+      }
+    },
+    "Choral": {
+      "category": "liturgy",
+      "translations": {
+        "de": "Choral",
+        "pl": "Chorał",
+        "en": "Chorale",
+        "uk": "Хорал",
+        "it": "Corale",
+        "es": "Coral",
+        "fr": "Choral",
+        "pt": "Coral",
+        "ru": "Хорал",
+        "tr": "Koral",
+        "ar": "ترنيمة جماعية",
+        "sw": "Kwaya"
+      }
+    },
+    "Halleluja": {
+      "category": "liturgy",
+      "translations": {
+        "de": "Halleluja",
+        "pl": "Alleluja",
+        "en": "Hallelujah",
+        "uk": "Алілуя",
+        "it": "Alleluia",
+        "es": "Aleluya",
+        "fr": "Alléluia",
+        "pt": "Aleluia",
+        "ru": "Аллилуйя",
+        "tr": "Haleluya",
+        "ar": "هللويا",
+        "sw": "Haleluya"
+      }
+    },
+    "Amen": {
+      "category": "liturgy",
+      "translations": {
+        "de": "Amen",
+        "pl": "Amen",
+        "en": "Amen",
+        "uk": "Амінь",
+        "it": "Amen",
+        "es": "Amén",
+        "fr": "Amen",
+        "pt": "Ámen",
+        "ru": "Аминь",
+        "tr": "Amin",
+        "ar": "آمين",
+        "sw": "Amina"
+      }
+    },
+    "Lesung": {
+      "category": "liturgy",
+      "translations": {
+        "de": "Lesung",
+        "pl": "Czytanie",
+        "en": "Reading",
+        "uk": "Читання",
+        "it": "Lettura",
+        "es": "Lectura bíblica",
+        "fr": "Lecture biblique",
+        "pt": "Leitura bíblica",
+        "ru": "Чтение Писания",
+        "tr": "Kutsal Kitap okuması",
+        "ar": "القراءة",
+        "sw": "Kusoma"
+      }
+    },
+    "Kollekte": {
+      "category": "liturgy",
+      "translations": {
+        "de": "Kollekte",
+        "pl": "Kolekta",
+        "en": "Offering",
+        "uk": "Пожертва",
+        "it": "Colletta",
+        "es": "Ofrenda",
+        "fr": "Offrande",
+        "pt": "Oferta",
+        "ru": "Сбор пожертвований",
+        "tr": "Sunu",
+        "ar": "التقدمة",
+        "sw": "Sadaka"
+      }
+    },
+    "Opfergabe": {
+      "category": "liturgy",
+      "translations": {
+        "de": "Opfergabe",
+        "pl": "Ofiara",
+        "en": "Offering",
+        "uk": "Пожертва",
+        "it": "Offerta",
+        "es": "Ofrenda",
+        "fr": "Offrande",
+        "pt": "Oferta",
+        "ru": "Пожертвование",
+        "tr": "Sunu",
+        "ar": "التقدمة",
+        "sw": "Sadaka"
+      }
+    },
+    "Dankgebet": {
+      "category": "liturgy",
+      "translations": {
+        "de": "Dankgebet",
+        "pl": "Modlitwa dziękczynna",
+        "en": "Prayer of Thanksgiving",
+        "uk": "Подячна молитва",
+        "it": "Preghiera di ringraziamento",
+        "es": "Oración de acción de gracias",
+        "fr": "Prière d'action de grâces",
+        "pt": "Oração de ação de graças",
+        "ru": "Благодарственная молитва",
+        "tr": "Şükran duası",
+        "ar": "صلاة الشكر",
+        "sw": "Sala ya Shukrani"
+      }
+    },
+    "Bekenntnis": {
+      "category": "liturgy",
+      "translations": {
+        "de": "Bekenntnis",
+        "pl": "Wyznanie",
+        "en": "Confession",
+        "uk": "Сповідь",
+        "it": "Confessione",
+        "es": "Confesión",
+        "fr": "Confession",
+        "pt": "Confissão",
+        "ru": "Исповедание",
+        "tr": "İtiraf",
+        "ar": "الاعتراف",
+        "sw": "Ungamo"
+      }
+    },
+    "Glaubensbekenntnis": {
+      "category": "liturgy",
+      "translations": {
+        "de": "Glaubensbekenntnis",
+        "pl": "Wyznanie wiary",
+        "en": "Creed",
+        "uk": "Символ віри",
+        "it": "Credo",
+        "es": "Confesión de fe",
+        "fr": "Confession de foi",
+        "pt": "Confissão de fé",
+        "ru": "Символ веры",
+        "tr": "İman ikrarı",
+        "ar": "قانون الإيمان",
+        "sw": "Kanuni ya Imani"
+      }
+    },
+    "Himmel": {
+      "category": "eschatology",
+      "translations": {
+        "de": "Himmel",
+        "pl": "Niebo",
+        "en": "Heaven",
+        "uk": "Небо",
+        "it": "Cielo",
+        "es": "Cielo",
+        "fr": "Ciel",
+        "pt": "Céu",
+        "ru": "Небеса",
+        "tr": "Cennet",
+        "ar": "السماء",
+        "sw": "Mbingu"
+      }
+    },
+    "Hölle": {
+      "category": "eschatology",
+      "translations": {
+        "de": "Hölle",
+        "pl": "Piekło",
+        "en": "Hell",
+        "uk": "Пекло",
+        "it": "Inferno",
+        "es": "Infierno",
+        "fr": "Enfer",
+        "pt": "Inferno",
+        "ru": "Ад",
+        "tr": "Cehennem",
+        "ar": "الجحيم",
+        "sw": "Jehanamu"
+      }
+    },
+    "ewiges Leben": {
+      "category": "eschatology",
+      "translations": {
+        "de": "ewiges Leben",
+        "pl": "życie wieczne",
+        "en": "eternal life",
+        "uk": "вічне життя",
+        "it": "vita eterna",
+        "es": "Vida eterna",
+        "fr": "Vie éternelle",
+        "pt": "Vida eterna",
+        "ru": "Вечная жизнь",
+        "tr": "Sonsuz yaşam",
+        "ar": "الحياة الأبدية",
+        "sw": "Uzima wa Milele"
+      }
+    },
+    "ewige Verdammnis": {
+      "category": "eschatology",
+      "translations": {
+        "de": "ewige Verdammnis",
+        "pl": "wieczne potępienie",
+        "en": "eternal damnation",
+        "uk": "вічне засудження",
+        "it": "dannazione eterna",
+        "es": "Condenación eterna",
+        "fr": "Condamnation éternelle",
+        "pt": "Condenação eterna",
+        "ru": "Вечное осуждение",
+        "tr": "Sonsuz mahkumiyet",
+        "ar": "الهلاك الأبدي",
+        "sw": "Adhabu ya Milele"
+      }
+    },
+    "Jüngstes Gericht": {
+      "category": "eschatology",
+      "translations": {
+        "de": "Jüngstes Gericht",
+        "pl": "Sąd Ostateczny",
+        "en": "Last Judgment",
+        "uk": "Страшний суд",
+        "it": "Giudizio Universale",
+        "es": "Juicio Final",
+        "fr": "Jugement Dernier",
+        "pt": "Juízo Final",
+        "ru": "Страшный суд",
+        "tr": "Son Yargılama",
+        "ar": "الدينونة الأخيرة",
+        "sw": "Hukumu ya Mwisho"
+      }
+    },
+    "Reich Gottes": {
+      "category": "eschatology",
+      "translations": {
+        "de": "Reich Gottes",
+        "pl": "Królestwo Boże",
+        "en": "Kingdom of God",
+        "uk": "Царство Боже",
+        "it": "Regno di Dio",
+        "es": "Reino de Dios",
+        "fr": "Royaume de Dieu",
+        "pt": "Reino de Deus",
+        "ru": "Царство Божие",
+        "tr": "Tanrı'nın Egemenliği",
+        "ar": "ملكوت الله",
+        "sw": "Ufalme wa Mungu"
+      }
+    },
+    "Himmelreich": {
+      "category": "eschatology",
+      "translations": {
+        "de": "Himmelreich",
+        "pl": "Królestwo Niebieskie",
+        "en": "Kingdom of Heaven",
+        "uk": "Царство Небесне",
+        "it": "Regno dei Cieli",
+        "es": "Reino de los Cielos",
+        "fr": "Royaume des Cieux",
+        "pt": "Reino dos Céus",
+        "ru": "Царство Небесное",
+        "tr": "Göklerin Egemenliği",
+        "ar": "ملكوت السماوات",
+        "sw": "Ufalme wa Mbinguni"
+      }
+    },
+    "Endzeit": {
+      "category": "eschatology",
+      "translations": {
+        "de": "Endzeit",
+        "pl": "Czasy ostateczne",
+        "en": "End Times",
+        "uk": "Останні часи",
+        "it": "Fine dei tempi",
+        "es": "Tiempos finales",
+        "fr": "La fin des temps",
+        "pt": "Fim dos tempos",
+        "ru": "Последнее время",
+        "tr": "Son zamanlar",
+        "ar": "آخر الأيام",
+        "sw": "Siku za Mwisho"
+      }
+    },
+    "Auferweckung": {
+      "category": "eschatology",
+      "translations": {
+        "de": "Auferweckung",
+        "pl": "Wskrzeszenie",
+        "en": "Raising",
+        "uk": "Воскресіння",
+        "it": "Risuscitazione",
+        "es": "Resurrección",
+        "fr": "Résurrection",
+        "pt": "Ressurreição",
+        "ru": "Воскрешение",
+        "tr": "Diriltme",
+        "ar": "الإقامة",
+        "sw": "Kufufuliwa"
+      }
+    },
+    "Totenauferstehung": {
+      "category": "eschatology",
+      "translations": {
+        "de": "Totenauferstehung",
+        "pl": "Zmartwychwstanie umarłych",
+        "en": "Resurrection of the dead",
+        "uk": "Воскресіння мертвих",
+        "it": "Risurrezione dei morti",
+        "es": "Resurrección de los muertos",
+        "fr": "Résurrection des morts",
+        "pt": "Ressurreição dos mortos",
+        "ru": "Воскресение мёртвых",
+        "tr": "Ölülerin dirilişi",
+        "ar": "قيامة الأموات",
+        "sw": "Ufufuo wa Wafu"
+      }
+    },
+    "Ewigkeit": {
+      "category": "eschatology",
+      "translations": {
+        "de": "Ewigkeit",
+        "pl": "Wieczność",
+        "en": "Eternity",
+        "uk": "Вічність",
+        "it": "Eternità",
+        "es": "Eternidad",
+        "fr": "Éternité",
+        "pt": "Eternidade",
+        "ru": "Вечность",
+        "tr": "Sonsuzluk",
+        "ar": "الأبدية",
+        "sw": "Milele"
+      }
+    },
+    "Seligkeit": {
+      "category": "eschatology",
+      "translations": {
+        "de": "Seligkeit",
+        "pl": "Zbawienie",
+        "en": "Blessedness",
+        "uk": "Блаженство",
+        "it": "Beatitudine",
+        "es": "Bienaventuranza",
+        "fr": "Béatitude",
+        "pt": "Bem-aventurança",
+        "ru": "Блаженство",
+        "tr": "Bahtiyarlık",
+        "ar": "الطوبى",
+        "sw": "Baraka"
+      }
+    },
+    "Paradies": {
+      "category": "eschatology",
+      "translations": {
+        "de": "Paradies",
+        "pl": "Raj",
+        "en": "Paradise",
+        "uk": "Рай",
+        "it": "Paradiso",
+        "es": "Paraíso",
+        "fr": "Paradis",
+        "pt": "Paraíso",
+        "ru": "Рай",
+        "tr": "Cennet",
+        "ar": "الفردوس",
+        "sw": "Paradiso"
+      }
+    },
+    "Glaube": {
+      "category": "protestant",
+      "translations": {
+        "de": "Glaube",
+        "pl": "Wiara",
+        "en": "Faith",
+        "uk": "Віра",
+        "it": "Fede",
+        "es": "Fe",
+        "fr": "Foi",
+        "pt": "Fé",
+        "ru": "Вера",
+        "tr": "İman",
+        "ar": "الإيمان",
+        "sw": "Imani"
+      }
+    },
+    "allein durch Gnade": {
+      "category": "protestant",
+      "translations": {
+        "de": "allein durch Gnade",
+        "pl": "tylko z łaski",
+        "en": "by grace alone",
+        "uk": "тільки благодаттю",
+        "it": "sola grazia",
+        "es": "Solo por gracia",
+        "fr": "Par la grâce seule",
+        "pt": "Só pela graça",
+        "ru": "Только благодатью",
+        "tr": "Yalnız lütufla",
+        "ar": "بالنعمة وحدها",
+        "sw": "kwa Neema peke yake"
+      },
+      "context": "Sola Gratia"
+    },
+    "allein durch Glauben": {
+      "category": "protestant",
+      "translations": {
+        "de": "allein durch Glauben",
+        "pl": "tylko przez wiarę",
+        "en": "by faith alone",
+        "uk": "тільки вірою",
+        "it": "sola fede",
+        "es": "Solo por fe",
+        "fr": "Par la foi seule",
+        "pt": "Só pela fé",
+        "ru": "Только верою",
+        "tr": "Yalnız imanla",
+        "ar": "بالإيمان وحده",
+        "sw": "kwa Imani peke yake"
+      },
+      "context": "Sola Fide"
+    },
+    "allein die Schrift": {
+      "category": "protestant",
+      "translations": {
+        "de": "allein die Schrift",
+        "pl": "tylko Pismo",
+        "en": "Scripture alone",
+        "uk": "тільки Писання",
+        "it": "sola Scrittura",
+        "es": "Solo la Escritura",
+        "fr": "L'Écriture seule",
+        "pt": "Só a Escritura",
+        "ru": "Только Писание",
+        "tr": "Yalnız Kutsal Yazılar",
+        "ar": "الكتاب المقدس وحده",
+        "sw": "Maandiko peke yake"
+      },
+      "context": "Sola Scriptura"
+    },
+    "allein Christus": {
+      "category": "protestant",
+      "translations": {
+        "de": "allein Christus",
+        "pl": "tylko Chrystus",
+        "en": "Christ alone",
+        "uk": "тільки Христос",
+        "it": "solo Cristo",
+        "es": "Solo Cristo",
+        "fr": "Christ seul",
+        "pt": "Só Cristo",
+        "ru": "Только Христос",
+        "tr": "Yalnız Mesih",
+        "ar": "المسيح وحده",
+        "sw": "Kristo peke yake"
+      },
+      "context": "Solus Christus"
+    },
+    "Reformation": {
+      "category": "protestant",
+      "translations": {
+        "de": "Reformation",
+        "pl": "Reformacja",
+        "en": "Reformation",
+        "uk": "Реформація",
+        "it": "Riforma",
+        "es": "Reforma",
+        "fr": "Réforme",
+        "pt": "Reforma",
+        "ru": "Реформация",
+        "tr": "Reform",
+        "ar": "الإصلاح",
+        "sw": "Matengenezo"
+      }
+    },
+    "evangelisch": {
+      "category": "protestant",
+      "translations": {
+        "de": "evangelisch",
+        "pl": "ewangelicki",
+        "en": "evangelical",
+        "uk": "євангельський",
+        "it": "evangelico",
+        "es": "Evangélico",
+        "fr": "Évangélique",
+        "pt": "Evangélico",
+        "ru": "Евангельский",
+        "tr": "Evanjelik",
+        "ar": "إنجيلي",
+        "sw": "ya Kiinjili"
+      }
+    },
+    "reformiert": {
+      "category": "protestant",
+      "translations": {
+        "de": "reformiert",
+        "pl": "reformowany",
+        "en": "Reformed",
+        "uk": "реформатський",
+        "it": "riformato",
+        "es": "Reformado",
+        "fr": "Réformé",
+        "pt": "Reformado",
+        "ru": "Реформатский",
+        "tr": "Reform",
+        "ar": "مُصلَح",
+        "sw": "ya Kimatengenezo"
+      }
+    },
+    "lutherisch": {
+      "category": "protestant",
+      "translations": {
+        "de": "lutherisch",
+        "pl": "luterański",
+        "en": "Lutheran",
+        "uk": "лютеранський",
+        "it": "luterano",
+        "es": "Luterano",
+        "fr": "Luthérien",
+        "pt": "Luterano",
+        "ru": "Лютеранский",
+        "tr": "Lüteriyen",
+        "ar": "لوثري",
+        "sw": "ya Kilutheri"
+      }
+    },
+    "Priestertum aller Gläubigen": {
+      "category": "protestant",
+      "translations": {
+        "de": "Priestertum aller Gläubigen",
+        "pl": "Powszechne kapłaństwo wierzących",
+        "en": "Priesthood of all believers",
+        "uk": "Священство всіх віруючих",
+        "it": "Sacerdozio di tutti i credenti",
+        "es": "Sacerdocio universal de los creyentes",
+        "fr": "Sacerdoce universel des croyants",
+        "pt": "Sacerdócio universal de todos os crentes",
+        "ru": "Всеобщее священство верующих",
+        "tr": "Bütün imanlıların kâhinliği",
+        "ar": "كهنوت جميع المؤمنين",
+        "sw": "Ukuhani wa Waamini Wote"
+      }
+    },
+    "Geist Gottes": {
+      "category": "pneumatology",
+      "translations": {
+        "de": "Geist Gottes",
+        "pl": "Duch Boży",
+        "en": "Spirit of God",
+        "uk": "Дух Божий",
+        "it": "Spirito di Dio",
+        "es": "Espíritu de Dios",
+        "fr": "Esprit de Dieu",
+        "pt": "Espírito de Deus",
+        "ru": "Дух Божий",
+        "tr": "Tanrı'nın Ruhu",
+        "ar": "روح الله",
+        "sw": "Roho wa Mungu"
+      }
+    },
+    "Tröster": {
+      "category": "pneumatology",
+      "translations": {
+        "de": "Tröster",
+        "pl": "Pocieszyciel",
+        "en": "Comforter",
+        "uk": "Утішитель",
+        "it": "Consolatore",
+        "es": "Consolador",
+        "fr": "Consolateur",
+        "pt": "Consolador",
+        "ru": "Утешитель",
+        "tr": "Tesellici",
+        "ar": "المعزّي",
+        "sw": "Msaidizi"
+      }
+    },
+    "Geistesgabe": {
+      "category": "pneumatology",
+      "translations": {
+        "de": "Geistesgabe",
+        "pl": "Dar duchowy",
+        "en": "Spiritual gift",
+        "uk": "Духовний дар",
+        "it": "Dono spirituale",
+        "es": "Don espiritual",
+        "fr": "Don spirituel",
+        "pt": "Dom espiritual",
+        "ru": "Духовный дар",
+        "tr": "Ruhsal armağan",
+        "ar": "موهبة روحية",
+        "sw": "Karama ya Roho"
+      }
+    },
+    "Frucht des Geistes": {
+      "category": "pneumatology",
+      "translations": {
+        "de": "Frucht des Geistes",
+        "pl": "Owoc Ducha",
+        "en": "Fruit of the Spirit",
+        "uk": "Плід Духа",
+        "it": "Frutto dello Spirito",
+        "es": "Fruto del Espíritu",
+        "fr": "Fruit de l'Esprit",
+        "pt": "Fruto do Espírito",
+        "ru": "Плод Духа",
+        "tr": "Ruh'un Ürünü",
+        "ar": "ثمر الروح",
+        "sw": "Tunda la Roho"
+      }
+    },
+    "Erfüllung mit dem Heiligen Geist": {
+      "category": "pneumatology",
+      "translations": {
+        "de": "Erfüllung mit dem Heiligen Geist",
+        "pl": "Napełnienie Duchem Świętym",
+        "en": "Filling with the Holy Spirit",
+        "uk": "Наповнення Святим Духом",
+        "it": "Riempimento dello Spirito Santo",
+        "es": "Llenura del Espíritu Santo",
+        "fr": "Plénitude du Saint-Esprit",
+        "pt": "Enchimento do Espírito Santo",
+        "ru": "Исполнение Святым Духом",
+        "tr": "Kutsal Ruh'la Doluluk",
+        "ar": "الامتلاء بالروح القدس",
+        "sw": "Kujazwa na Roho Mtakatifu"
+      }
+    },
+    "Pfingsten": {
+      "category": "pneumatology",
+      "translations": {
+        "de": "Pfingsten",
+        "pl": "Zielone Świątki",
+        "en": "Pentecost",
+        "uk": "П'ятидесятниця",
+        "it": "Pentecoste",
+        "es": "Pentecostés",
+        "fr": "Pentecôte",
+        "pt": "Pentecostes",
+        "ru": "Пятидесятница",
+        "tr": "Pentikost",
+        "ar": "يوم الخمسين",
+        "sw": "Pentekoste"
+      }
+    },
+    "Liebe": {
+      "category": "general",
+      "translations": {
+        "de": "Liebe",
+        "pl": "Miłość",
+        "en": "Love",
+        "uk": "Любов",
+        "it": "Amore",
+        "es": "Amor",
+        "fr": "Amour",
+        "pt": "Amor",
+        "ru": "Любовь",
+        "tr": "Sevgi",
+        "ar": "المحبة",
+        "sw": "Upendo"
+      }
+    },
+    "Hoffnung": {
+      "category": "general",
+      "translations": {
+        "de": "Hoffnung",
+        "pl": "Nadzieja",
+        "en": "Hope",
+        "uk": "Надія",
+        "it": "Speranza",
+        "es": "Esperanza",
+        "fr": "Espérance",
+        "pt": "Esperança",
+        "ru": "Надежда",
+        "tr": "Umut",
+        "ar": "الرجاء",
+        "sw": "Tumaini"
+      }
+    },
+    "Frieden": {
+      "category": "general",
+      "translations": {
+        "de": "Frieden",
+        "pl": "Pokój",
+        "en": "Peace",
+        "uk": "Мир",
+        "it": "Pace",
+        "es": "Paz",
+        "fr": "Paix",
+        "pt": "Paz",
+        "ru": "Мир",
+        "tr": "Esenlik",
+        "ar": "السلام",
+        "sw": "Amani"
+      }
+    },
+    "Freude": {
+      "category": "general",
+      "translations": {
+        "de": "Freude",
+        "pl": "Radość",
+        "en": "Joy",
+        "uk": "Радість",
+        "it": "Gioia",
+        "es": "Gozo",
+        "fr": "Joie",
+        "pt": "Alegria",
+        "ru": "Радость",
+        "tr": "Sevinç",
+        "ar": "الفرح",
+        "sw": "Furaha"
+      }
+    },
+    "Wahrheit": {
+      "category": "general",
+      "translations": {
+        "de": "Wahrheit",
+        "pl": "Prawda",
+        "en": "Truth",
+        "uk": "Правда",
+        "it": "Verità",
+        "es": "Verdad",
+        "fr": "Vérité",
+        "pt": "Verdade",
+        "ru": "Истина",
+        "tr": "Gerçek",
+        "ar": "الحق",
+        "sw": "Ukweli"
+      }
+    },
+    "Licht": {
+      "category": "general",
+      "translations": {
+        "de": "Licht",
+        "pl": "Światło",
+        "en": "Light",
+        "uk": "Світло",
+        "it": "Luce",
+        "es": "Luz",
+        "fr": "Lumière",
+        "pt": "Luz",
+        "ru": "Свет",
+        "tr": "Işık",
+        "ar": "النور",
+        "sw": "Nuru"
+      }
+    },
+    "Dunkelheit": {
+      "category": "general",
+      "translations": {
+        "de": "Dunkelheit",
+        "pl": "Ciemność",
+        "en": "Darkness",
+        "uk": "Темрява",
+        "it": "Tenebre",
+        "es": "Tinieblas",
+        "fr": "Ténèbres",
+        "pt": "Trevas",
+        "ru": "Тьма",
+        "tr": "Karanlık",
+        "ar": "الظلمة",
+        "sw": "Giza"
+      }
+    },
+    "Leben": {
+      "category": "general",
+      "translations": {
+        "de": "Leben",
+        "pl": "Życie",
+        "en": "Life",
+        "uk": "Життя",
+        "it": "Vita",
+        "es": "Vida",
+        "fr": "Vie",
+        "pt": "Vida",
+        "ru": "Жизнь",
+        "tr": "Yaşam",
+        "ar": "الحياة",
+        "sw": "Uzima"
+      }
+    },
+    "Tod": {
+      "category": "general",
+      "translations": {
+        "de": "Tod",
+        "pl": "Śmierć",
+        "en": "Death",
+        "uk": "Смерть",
+        "it": "Morte",
+        "es": "Muerte",
+        "fr": "Mort",
+        "pt": "Morte",
+        "ru": "Смерть",
+        "tr": "Ölüm",
+        "ar": "الموت",
+        "sw": "Mauti"
+      }
+    },
+    "Seele": {
+      "category": "general",
+      "translations": {
+        "de": "Seele",
+        "pl": "Dusza",
+        "en": "Soul",
+        "uk": "Душа",
+        "it": "Anima",
+        "es": "Alma",
+        "fr": "Âme",
+        "pt": "Alma",
+        "ru": "Душа",
+        "tr": "Can",
+        "ar": "النفس",
+        "sw": "Nafsi"
+      }
+    },
+    "Geist": {
+      "category": "general",
+      "translations": {
+        "de": "Geist",
+        "pl": "Duch",
+        "en": "Spirit",
+        "uk": "Дух",
+        "it": "Spirito",
+        "es": "Espíritu",
+        "fr": "Esprit",
+        "pt": "Espírito",
+        "ru": "Дух",
+        "tr": "Ruh",
+        "ar": "الروح",
+        "sw": "Roho"
+      }
+    },
+    "Herz": {
+      "category": "general",
+      "translations": {
+        "de": "Herz",
+        "pl": "Serce",
+        "en": "Heart",
+        "uk": "Серце",
+        "it": "Cuore",
+        "es": "Corazón",
+        "fr": "Cœur",
+        "pt": "Coração",
+        "ru": "Сердце",
+        "tr": "Yürek",
+        "ar": "القلب",
+        "sw": "Moyo"
+      }
+    },
+    "Gewissen": {
+      "category": "general",
+      "translations": {
+        "de": "Gewissen",
+        "pl": "Sumienie",
+        "en": "Conscience",
+        "uk": "Совість",
+        "it": "Coscienza",
+        "es": "Conciencia",
+        "fr": "Conscience",
+        "pt": "Consciência",
+        "ru": "Совесть",
+        "tr": "Vicdan",
+        "ar": "الضمير",
+        "sw": "Dhamiri"
+      }
+    },
+    "Geduld": {
+      "category": "general",
+      "translations": {
+        "de": "Geduld",
+        "pl": "Cierpliwość",
+        "en": "Patience",
+        "uk": "Терпіння",
+        "it": "Pazienza",
+        "es": "Paciencia",
+        "fr": "Patience",
+        "pt": "Paciência",
+        "ru": "Терпение",
+        "tr": "Sabır",
+        "ar": "الصبر",
+        "sw": "Uvumilivu"
+      }
+    },
+    "Demut": {
+      "category": "general",
+      "translations": {
+        "de": "Demut",
+        "pl": "Pokora",
+        "en": "Humility",
+        "uk": "Смирення",
+        "it": "Umiltà",
+        "es": "Humildad",
+        "fr": "Humilité",
+        "pt": "Humildade",
+        "ru": "Смирение",
+        "tr": "Alçakgönüllülük",
+        "ar": "التواضع",
+        "sw": "Unyenyekevu"
+      }
+    },
+    "Treue": {
+      "category": "general",
+      "translations": {
+        "de": "Treue",
+        "pl": "Wierność",
+        "en": "Faithfulness",
+        "uk": "Вірність",
+        "it": "Fedeltà",
+        "es": "Fidelidad",
+        "fr": "Fidélité",
+        "pt": "Fidelidade",
+        "ru": "Верность",
+        "tr": "Sadakat",
+        "ar": "الأمانة",
+        "sw": "Uaminifu"
+      }
+    },
+    "Güte": {
+      "category": "general",
+      "translations": {
+        "de": "Güte",
+        "pl": "Dobroć",
+        "en": "Goodness",
+        "uk": "Доброта",
+        "it": "Bontà",
+        "es": "Bondad",
+        "fr": "Bonté",
+        "pt": "Bondade",
+        "ru": "Благость",
+        "tr": "İyilik",
+        "ar": "الصلاح",
+        "sw": "Wema"
+      }
+    },
+    "Sanftmut": {
+      "category": "general",
+      "translations": {
+        "de": "Sanftmut",
+        "pl": "Łagodność",
+        "en": "Gentleness",
+        "uk": "Лагідність",
+        "it": "Mitezza",
+        "es": "Mansedumbre",
+        "fr": "Douceur",
+        "pt": "Mansidão",
+        "ru": "Кротость",
+        "tr": "Uysallık",
+        "ar": "الوداعة",
+        "sw": "Upole"
+      }
+    },
+    "Selbstbeherrschung": {
+      "category": "general",
+      "translations": {
+        "de": "Selbstbeherrschung",
+        "pl": "Opanowanie",
+        "en": "Self-control",
+        "uk": "Стриманість",
+        "it": "Autocontrollo",
+        "es": "Dominio propio",
+        "fr": "Maîtrise de soi",
+        "pt": "Domínio próprio",
+        "ru": "Воздержание",
+        "tr": "Özdenetim",
+        "ar": "ضبط النفس",
+        "sw": "Kiasi"
+      }
+    },
+    "Weisheit": {
+      "category": "general",
+      "translations": {
+        "de": "Weisheit",
+        "pl": "Mądrość",
+        "en": "Wisdom",
+        "uk": "Мудрість",
+        "it": "Sapienza",
+        "es": "Sabiduría",
+        "fr": "Sagesse",
+        "pt": "Sabedoria",
+        "ru": "Мудрость",
+        "tr": "Bilgelik",
+        "ar": "الحكمة",
+        "sw": "Hekima"
+      }
+    },
+    "Kraft": {
+      "category": "general",
+      "translations": {
+        "de": "Kraft",
+        "pl": "Moc",
+        "en": "Power",
+        "uk": "Сила",
+        "it": "forza",
+        "es": "Poder",
+        "fr": "Puissance",
+        "pt": "Poder",
+        "ru": "Сила",
+        "tr": "Güç",
+        "ar": "القوة",
+        "sw": "Nguvu"
+      },
+      "context": "spiritual strength in Philippians 4:13"
+    },
+    "Wunder": {
+      "category": "general",
+      "translations": {
+        "de": "Wunder",
+        "pl": "Cud",
+        "en": "Miracle",
+        "uk": "Чудо",
+        "it": "Miracolo",
+        "es": "Milagro",
+        "fr": "Miracle",
+        "pt": "Milagre",
+        "ru": "Чудо",
+        "tr": "Mucize",
+        "ar": "المعجزة",
+        "sw": "Muujiza"
+      }
+    },
+    "Zeichen": {
+      "category": "general",
+      "translations": {
+        "de": "Zeichen",
+        "pl": "Znak",
+        "en": "Sign",
+        "uk": "Знак",
+        "it": "Segno",
+        "es": "Señal",
+        "fr": "Signe",
+        "pt": "Sinal",
+        "ru": "Знамение",
+        "tr": "Belirti",
+        "ar": "آية",
+        "sw": "Ishara"
+      }
+    },
+    "Heilung": {
+      "category": "general",
+      "translations": {
+        "de": "Heilung",
+        "pl": "Uzdrowienie",
+        "en": "Healing",
+        "uk": "Зцілення",
+        "it": "Guarigione",
+        "es": "Sanidad",
+        "fr": "Guérison",
+        "pt": "Cura",
+        "ru": "Исцеление",
+        "tr": "Şifa",
+        "ar": "الشفاء",
+        "sw": "Uponyaji"
+      }
+    },
+    "Engel": {
+      "category": "general",
+      "translations": {
+        "de": "Engel",
+        "pl": "Anioł",
+        "en": "Angel",
+        "uk": "Ангел",
+        "it": "Angelo",
+        "es": "Ángel",
+        "fr": "Ange",
+        "pt": "Anjo",
+        "ru": "Ангел",
+        "tr": "Melek",
+        "ar": "الملاك",
+        "sw": "Malaika"
+      }
+    },
+    "Teufel": {
+      "category": "general",
+      "translations": {
+        "de": "Teufel",
+        "pl": "Diabeł",
+        "en": "Devil",
+        "uk": "Диявол",
+        "it": "Diavolo",
+        "es": "Diablo",
+        "fr": "Diable",
+        "pt": "Diabo",
+        "ru": "Дьявол",
+        "tr": "İblis",
+        "ar": "إبليس",
+        "sw": "Ibilisi"
+      }
+    },
+    "Satan": {
+      "category": "general",
+      "translations": {
+        "de": "Satan",
+        "pl": "Szatan",
+        "en": "Satan",
+        "uk": "Сатана",
+        "it": "Satana",
+        "es": "Satanás",
+        "fr": "Satan",
+        "pt": "Satanás",
+        "ru": "Сатана",
+        "tr": "Şeytan",
+        "ar": "الشيطان",
+        "sw": "Shetani"
+      }
+    },
+    "Böse": {
+      "category": "general",
+      "translations": {
+        "de": "Böse",
+        "pl": "Zło",
+        "en": "Evil",
+        "uk": "Зло",
+        "it": "Male",
+        "es": "Mal",
+        "fr": "Mal",
+        "pt": "Mal",
+        "ru": "Зло",
+        "tr": "Kötülük",
+        "ar": "الشر",
+        "sw": "Uovu"
+      }
+    },
+    "Versuchung": {
+      "category": "general",
+      "translations": {
+        "de": "Versuchung",
+        "pl": "Pokusa",
+        "en": "Temptation",
+        "uk": "Спокуса",
+        "it": "Tentazione",
+        "es": "Tentación",
+        "fr": "Tentation",
+        "pt": "Tentação",
+        "ru": "Искушение",
+        "tr": "Ayartı",
+        "ar": "التجربة",
+        "sw": "Jaribu"
+      }
+    },
+    "Prüfung": {
+      "category": "general",
+      "translations": {
+        "de": "Prüfung",
+        "pl": "Próba",
+        "en": "Trial",
+        "uk": "Випробування",
+        "it": "Prova",
+        "es": "Prueba",
+        "fr": "Épreuve",
+        "pt": "Provação",
+        "ru": "Испытание",
+        "tr": "Denenme",
+        "ar": "الامتحان",
+        "sw": "Mtihani"
+      }
+    },
+    "Leiden": {
+      "category": "general",
+      "translations": {
+        "de": "Leiden",
+        "pl": "Cierpienie",
+        "en": "Suffering",
+        "uk": "Страждання",
+        "it": "Sofferenza",
+        "es": "Sufrimiento",
+        "fr": "Souffrance",
+        "pt": "Sofrimento",
+        "ru": "Страдание",
+        "tr": "Acı",
+        "ar": "الآلام",
+        "sw": "Mateso"
+      }
+    },
+    "Trost": {
+      "category": "general",
+      "translations": {
+        "de": "Trost",
+        "pl": "Pocieszenie",
+        "en": "Comfort",
+        "uk": "Утіха",
+        "it": "Consolazione",
+        "es": "Consuelo",
+        "fr": "Consolation",
+        "pt": "Consolo",
+        "ru": "Утешение",
+        "tr": "Teselli",
+        "ar": "التعزية",
+        "sw": "Faraja"
+      }
+    },
+    "Dankbarkeit": {
+      "category": "general",
+      "translations": {
+        "de": "Dankbarkeit",
+        "pl": "Wdzięczność",
+        "en": "Gratitude",
+        "uk": "Вдячність",
+        "it": "Gratitudine",
+        "es": "Gratitud",
+        "fr": "Gratitude",
+        "pt": "Gratidão",
+        "ru": "Благодарность",
+        "tr": "Şükran",
+        "ar": "الامتنان",
+        "sw": "Shukrani"
+      }
+    },
+    "Gehorsam": {
+      "category": "general",
+      "translations": {
+        "de": "Gehorsam",
+        "pl": "Posłuszeństwo",
+        "en": "Obedience",
+        "uk": "Послух",
+        "it": "Obbedienza",
+        "es": "Obediencia",
+        "fr": "Obéissance",
+        "pt": "Obediência",
+        "ru": "Послушание",
+        "tr": "İtaat",
+        "ar": "الطاعة",
+        "sw": "Utii"
+      }
+    },
+    "Vertrauen": {
+      "category": "general",
+      "translations": {
+        "de": "Vertrauen",
+        "pl": "Zaufanie",
+        "en": "Trust",
+        "uk": "Довіра",
+        "it": "Fiducia",
+        "es": "Confianza",
+        "fr": "Confiance",
+        "pt": "Confiança",
+        "ru": "Доверие",
+        "tr": "Güven",
+        "ar": "الثقة",
+        "sw": "Imani"
+      }
+    },
+    "Hingabe": {
+      "category": "general",
+      "translations": {
+        "de": "Hingabe",
+        "pl": "Oddanie",
+        "en": "Devotion",
+        "uk": "Відданість",
+        "it": "Devozione",
+        "es": "Devoción",
+        "fr": "Dévouement",
+        "pt": "Devoção",
+        "ru": "Посвящение",
+        "tr": "Adanma",
+        "ar": "التكريس",
+        "sw": "Kujitolea"
+      }
+    },
+    "Nächstenliebe": {
+      "category": "general",
+      "translations": {
+        "de": "Nächstenliebe",
+        "pl": "Miłość bliźniego",
+        "en": "Love of neighbor",
+        "uk": "Любов до ближнього",
+        "it": "Amore del prossimo",
+        "es": "Amor al prójimo",
+        "fr": "Amour du prochain",
+        "pt": "Amor ao próximo",
+        "ru": "Любовь к ближнему",
+        "tr": "Komşu sevgisi",
+        "ar": "محبة القريب",
+        "sw": "Upendo wa Jirani"
+      }
+    },
+    "Bund": {
+      "category": "general",
+      "translations": {
+        "de": "Bund",
+        "pl": "Przymierze",
+        "en": "Covenant",
+        "uk": "Заповіт",
+        "it": "Alleanza",
+        "es": "Pacto",
+        "fr": "Alliance",
+        "pt": "Aliança",
+        "ru": "Завет",
+        "tr": "Antlaşma",
+        "ar": "العهد",
+        "sw": "Agano"
+      }
+    },
+    "Neuer Bund": {
+      "category": "general",
+      "translations": {
+        "de": "Neuer Bund",
+        "pl": "Nowe Przymierze",
+        "en": "New Covenant",
+        "uk": "Новий Заповіт",
+        "it": "Nuova Alleanza",
+        "es": "Nuevo Pacto",
+        "fr": "Nouvelle Alliance",
+        "pt": "Nova Aliança",
+        "ru": "Новый Завет",
+        "tr": "Yeni Antlaşma",
+        "ar": "العهد الجديد",
+        "sw": "Agano Jipya"
+      }
+    },
+    "Gaben": {
+      "category": "general",
+      "translations": {
+        "de": "Gaben",
+        "pl": "Dary",
+        "en": "Gifts",
+        "uk": "Дари",
+        "it": "Doni",
+        "es": "Dones",
+        "fr": "Dons",
+        "pt": "Dons",
+        "ru": "Дары",
+        "tr": "Armağanlar",
+        "ar": "المواهب",
+        "sw": "Karama"
+      }
+    },
+    "Ostern": {
+      "category": "liturgy",
+      "translations": {
+        "de": "Ostern",
+        "pl": "Wielkanoc",
+        "en": "Easter",
+        "uk": "Великдень",
+        "it": "Pasqua",
+        "es": "Pascua",
+        "fr": "Pâques",
+        "pt": "Páscoa",
+        "ru": "Пасха",
+        "tr": "Paskalya",
+        "ar": "عيد القيامة",
+        "sw": "Pasaka"
+      }
+    },
+    "Weihnachten": {
+      "category": "liturgy",
+      "translations": {
+        "de": "Weihnachten",
+        "pl": "Boże Narodzenie",
+        "en": "Christmas",
+        "uk": "Різдво",
+        "it": "Natale",
+        "es": "Navidad",
+        "fr": "Noël",
+        "pt": "Natal",
+        "ru": "Рождество",
+        "tr": "Noel",
+        "ar": "عيد الميلاد",
+        "sw": "Krismasi"
+      }
+    },
+    "Advent": {
+      "category": "liturgy",
+      "translations": {
+        "de": "Advent",
+        "pl": "Adwent",
+        "en": "Advent",
+        "uk": "Адвент",
+        "it": "Avvento",
+        "es": "Adviento",
+        "fr": "Avent",
+        "pt": "Advento",
+        "ru": "Адвент",
+        "tr": "Advent",
+        "ar": "المجيء",
+        "sw": "Majilio"
+      }
+    },
+    "Karfreitag": {
+      "category": "liturgy",
+      "translations": {
+        "de": "Karfreitag",
+        "pl": "Wielki Piątek",
+        "en": "Good Friday",
+        "uk": "Страсна п'ятниця",
+        "it": "Venerdì Santo",
+        "es": "Viernes Santo",
+        "fr": "Vendredi saint",
+        "pt": "Sexta-feira Santa",
+        "ru": "Страстная пятница",
+        "tr": "Kutsal Cuma",
+        "ar": "الجمعة العظيمة",
+        "sw": "Ijumaa Kuu"
+      }
+    },
+    "Passionszeit": {
+      "category": "liturgy",
+      "translations": {
+        "de": "Passionszeit",
+        "pl": "Wielki Post",
+        "en": "Lent",
+        "uk": "Великий піст",
+        "it": "Quaresima",
+        "es": "Cuaresma",
+        "fr": "Carême",
+        "pt": "Quaresma",
+        "ru": "Великий пост",
+        "tr": "Büyük Oruç",
+        "ar": "زمن الآلام",
+        "sw": "Kwaresima"
+      }
+    },
+    "Erntedank": {
+      "category": "liturgy",
+      "translations": {
+        "de": "Erntedank",
+        "pl": "Dożynki",
+        "en": "Thanksgiving",
+        "uk": "День подяки",
+        "it": "Ringraziamento",
+        "es": "Acción de gracias por la cosecha",
+        "fr": "Action de grâce pour la récolte",
+        "pt": "Ação de graças pela colheita",
+        "ru": "Праздник жатвы",
+        "tr": "Hasat Şükran Günü",
+        "ar": "عيد الشكر",
+        "sw": "Shukrani ya Mavuno"
+      }
+    },
+    "Heiligabend": {
+      "category": "liturgy",
+      "translations": {
+        "de": "Heiligabend",
+        "pl": "Wigilia",
+        "en": "Christmas Eve",
+        "uk": "Святий вечір",
+        "it": "Vigilia di Natale",
+        "es": "Nochebuena",
+        "fr": "Veille de Noël",
+        "pt": "Véspera de Natal",
+        "ru": "Сочельник",
+        "tr": "Noel arifesi",
+        "ar": "ليلة عيد الميلاد",
+        "sw": "Usiku wa Krismasi"
+      }
+    },
+    "Altar": {
+      "category": "liturgy",
+      "translations": {
+        "de": "Altar",
+        "pl": "Ołtarz",
+        "en": "Altar",
+        "uk": "Вівтар",
+        "it": "Altare",
+        "es": "Altar",
+        "fr": "Autel",
+        "pt": "Altar",
+        "ru": "Алтарь",
+        "tr": "Sunak",
+        "ar": "المذبح",
+        "sw": "Madhabahu"
+      }
+    },
+    "Kanzel": {
+      "category": "liturgy",
+      "translations": {
+        "de": "Kanzel",
+        "pl": "Ambona",
+        "en": "Pulpit",
+        "uk": "Кафедра",
+        "it": "Pulpito",
+        "es": "Púlpito",
+        "fr": "Chaire",
+        "pt": "Púlpito",
+        "ru": "Кафедра",
+        "tr": "Kürsü",
+        "ar": "المنبر",
+        "sw": "Mimbari"
+      }
+    },
+    "Taufbecken": {
+      "category": "liturgy",
+      "translations": {
+        "de": "Taufbecken",
+        "pl": "Chrzcielnica",
+        "en": "Baptismal font",
+        "uk": "Хрестильниця",
+        "it": "Fonte battesimale",
+        "es": "Pila bautismal",
+        "fr": "Fonts baptismaux",
+        "pt": "Pia batismal",
+        "ru": "Купель",
+        "tr": "Vaftiz kurnası",
+        "ar": "جرن المعمودية",
+        "sw": "Beseni la Ubatizo"
+      }
+    },
+    "Abraham": {
+      "category": "biblical_names",
+      "translations": {
+        "de": "Abraham",
+        "pl": "Abraham",
+        "en": "Abraham",
+        "uk": "Авраам",
+        "it": "Abramo",
+        "es": "Abraham",
+        "fr": "Abraham",
+        "pt": "Abraão",
+        "ru": "Авраам",
+        "tr": "İbrahim",
+        "ar": "إبراهيم",
+        "sw": "Ibrahimu"
+      }
+    },
+    "Isaak": {
+      "category": "biblical_names",
+      "translations": {
+        "de": "Isaak",
+        "pl": "Izaak",
+        "en": "Isaac",
+        "uk": "Ісаак",
+        "it": "Isacco",
+        "es": "Isaac",
+        "fr": "Isaac",
+        "pt": "Isaque",
+        "ru": "Исаак",
+        "tr": "İshak",
+        "ar": "إسحاق",
+        "sw": "Isaka"
+      }
+    },
+    "Jakob": {
+      "category": "biblical_names",
+      "translations": {
+        "de": "Jakob",
+        "pl": "Jakub",
+        "en": "Jacob",
+        "uk": "Яків",
+        "it": "Giacobbe",
+        "es": "Jacob",
+        "fr": "Jacob",
+        "pt": "Jacó",
+        "ru": "Иаков",
+        "tr": "Yakup",
+        "ar": "يعقوب",
+        "sw": "Yakobo"
+      }
+    },
+    "Mose": {
+      "category": "biblical_names",
+      "translations": {
+        "de": "Mose",
+        "pl": "Mojżesz",
+        "en": "Moses",
+        "uk": "Мойсей",
+        "it": "Mosè",
+        "es": "Moisés",
+        "fr": "Moïse",
+        "pt": "Moisés",
+        "ru": "Моисей",
+        "tr": "Musa",
+        "ar": "موسى",
+        "sw": "Musa"
+      }
+    },
+    "Moses": {
+      "category": "biblical_names",
+      "translations": {
+        "de": "Moses",
+        "pl": "Mojżesz",
+        "en": "Moses",
+        "uk": "Мойсей",
+        "it": "Mosè",
+        "es": "Moisés",
+        "fr": "Moïse",
+        "pt": "Moisés",
+        "ru": "Моисей",
+        "tr": "Musa",
+        "ar": "موسى",
+        "sw": "Musa"
+      }
+    },
+    "David": {
+      "category": "biblical_names",
+      "translations": {
+        "de": "David",
+        "pl": "Dawid",
+        "en": "David",
+        "uk": "Давид",
+        "it": "Davide",
+        "es": "David",
+        "fr": "David",
+        "pt": "Davi",
+        "ru": "Давид",
+        "tr": "Davut",
+        "ar": "داود",
+        "sw": "Daudi"
+      }
+    },
+    "Salomo": {
+      "category": "biblical_names",
+      "translations": {
+        "de": "Salomo",
+        "pl": "Salomon",
+        "en": "Solomon",
+        "uk": "Соломон",
+        "it": "Salomone",
+        "es": "Salomón",
+        "fr": "Salomon",
+        "pt": "Salomão",
+        "ru": "Соломон",
+        "tr": "Süleyman",
+        "ar": "سليمان",
+        "sw": "Sulemani"
+      }
+    },
+    "Paulus": {
+      "category": "biblical_names",
+      "translations": {
+        "de": "Paulus",
+        "pl": "Paweł",
+        "en": "Paul",
+        "uk": "Павло",
+        "it": "Paolo",
+        "es": "Pablo",
+        "fr": "Paul",
+        "pt": "Paulo",
+        "ru": "Павел",
+        "tr": "Pavlus",
+        "ar": "بولس",
+        "sw": "Paulo"
+      }
+    },
+    "Petrus": {
+      "category": "biblical_names",
+      "translations": {
+        "de": "Petrus",
+        "pl": "Piotr",
+        "en": "Peter",
+        "uk": "Петро",
+        "it": "Pietro",
+        "es": "Pedro",
+        "fr": "Pierre",
+        "pt": "Pedro",
+        "ru": "Пётр",
+        "tr": "Petrus",
+        "ar": "بطرس",
+        "sw": "Petro"
+      }
+    },
+    "Johannes": {
+      "category": "biblical_names",
+      "translations": {
+        "de": "Johannes",
+        "pl": "Jan",
+        "en": "John",
+        "uk": "Іван",
+        "it": "Giovanni",
+        "es": "Juan",
+        "fr": "Jean",
+        "pt": "João",
+        "ru": "Иоанн",
+        "tr": "Yuhanna",
+        "ar": "يوحنا",
+        "sw": "Yohana"
+      }
+    },
+    "Maria": {
+      "category": "biblical_names",
+      "translations": {
+        "de": "Maria",
+        "pl": "Maria",
+        "en": "Mary",
+        "uk": "Марія",
+        "it": "Maria",
+        "es": "María",
+        "fr": "Marie",
+        "pt": "Maria",
+        "ru": "Мария",
+        "tr": "Meryem",
+        "ar": "مريم",
+        "sw": "Mariamu"
+      }
+    },
+    "Josef": {
+      "category": "biblical_names",
+      "translations": {
+        "de": "Josef",
+        "pl": "Józef",
+        "en": "Joseph",
+        "uk": "Йосип",
+        "it": "Giuseppe",
+        "es": "José",
+        "fr": "Joseph",
+        "pt": "José",
+        "ru": "Иосиф",
+        "tr": "Yusuf",
+        "ar": "يوسف",
+        "sw": "Yusufu"
+      }
+    },
+    "Noah": {
+      "category": "biblical_names",
+      "translations": {
+        "de": "Noah",
+        "pl": "Noe",
+        "en": "Noah",
+        "uk": "Ной",
+        "it": "Noè",
+        "es": "Noé",
+        "fr": "Noé",
+        "pt": "Noé",
+        "ru": "Ной",
+        "tr": "Nuh",
+        "ar": "نوح",
+        "sw": "Nuhu"
+      }
+    },
+    "Adam": {
+      "category": "biblical_names",
+      "translations": {
+        "de": "Adam",
+        "pl": "Adam",
+        "en": "Adam",
+        "uk": "Адам",
+        "it": "Adamo",
+        "es": "Adán",
+        "fr": "Adam",
+        "pt": "Adão",
+        "ru": "Адам",
+        "tr": "Adem",
+        "ar": "آدم",
+        "sw": "Adamu"
+      }
+    },
+    "Eva": {
+      "category": "biblical_names",
+      "translations": {
+        "de": "Eva",
+        "pl": "Ewa",
+        "en": "Eve",
+        "uk": "Єва",
+        "it": "Eva",
+        "es": "Eva",
+        "fr": "Ève",
+        "pt": "Eva",
+        "ru": "Ева",
+        "tr": "Havva",
+        "ar": "حواء",
+        "sw": "Hawa"
+      }
+    },
+    "Elija": {
+      "category": "biblical_names",
+      "translations": {
+        "de": "Elija",
+        "pl": "Eliasz",
+        "en": "Elijah",
+        "uk": "Ілля",
+        "it": "Elia",
+        "es": "Elías",
+        "fr": "Élie",
+        "pt": "Elias",
+        "ru": "Илия",
+        "tr": "İlyas",
+        "ar": "إيليا",
+        "sw": "Eliya"
+      }
+    },
+    "Elisa": {
+      "category": "biblical_names",
+      "context": "Prophet, Nachfolger von Elia (2. Könige). Whisper may transcribe as 'Lisa'.",
+      "translations": {
+        "de": "Elischa",
+        "pl": "Elizeusz",
+        "en": "Elisha",
+        "uk": "Єлисей",
+        "it": "Eliseo",
+        "es": "Eliseo",
+        "fr": "Élisée",
+        "pt": "Eliseu",
+        "ru": "Елисей",
+        "tr": "Elişa",
+        "ar": "إليشع",
+        "sw": "Elisha"
+      }
+    },
+    "Elischa": {
+      "category": "biblical_names",
+      "context": "Alternative spelling for Elisa (Prophet)",
+      "translations": {
+        "de": "Elischa",
+        "pl": "Elizeusz",
+        "en": "Elisha",
+        "uk": "Єлисей",
+        "it": "Eliseo",
+        "es": "Eliseo",
+        "fr": "Élisée",
+        "pt": "Eliseu",
+        "ru": "Елисей",
+        "tr": "Elişa",
+        "ar": "إليشع",
+        "sw": "Elisha"
+      }
+    },
+    "Jesaja": {
+      "category": "biblical_names",
+      "translations": {
+        "de": "Jesaja",
+        "pl": "Izajasz",
+        "en": "Isaiah",
+        "uk": "Ісая",
+        "it": "Isaia",
+        "es": "Isaías",
+        "fr": "Ésaïe",
+        "pt": "Isaías",
+        "ru": "Исаия",
+        "tr": "Yeşaya",
+        "ar": "إشعياء",
+        "sw": "Isaya"
+      }
+    },
+    "Jeremia": {
+      "category": "biblical_names",
+      "translations": {
+        "de": "Jeremia",
+        "pl": "Jeremiasz",
+        "en": "Jeremiah",
+        "uk": "Єремія",
+        "it": "Geremia",
+        "es": "Jeremías",
+        "fr": "Jérémie",
+        "pt": "Jeremias",
+        "ru": "Иеремия",
+        "tr": "Yeremya",
+        "ar": "إرميا",
+        "sw": "Yeremia"
+      }
+    },
+    "Daniel": {
+      "category": "biblical_names",
+      "translations": {
+        "de": "Daniel",
+        "pl": "Daniel",
+        "en": "Daniel",
+        "uk": "Даниїл",
+        "it": "Daniele",
+        "es": "Daniel",
+        "fr": "Daniel",
+        "pt": "Daniel",
+        "ru": "Даниил",
+        "tr": "Daniel",
+        "ar": "دانيال",
+        "sw": "Danieli"
+      }
+    },
+    "Jakobus": {
+      "category": "biblical_names",
+      "translations": {
+        "de": "Jakobus",
+        "pl": "Jakub",
+        "en": "James",
+        "uk": "Яків",
+        "it": "Giacomo",
+        "es": "Jacobo",
+        "fr": "Jacques",
+        "pt": "Tiago",
+        "ru": "Иаков",
+        "tr": "Yakup",
+        "ar": "يعقوب",
+        "sw": "Yakobo"
+      }
+    },
+    "Matthäus": {
+      "category": "biblical_names",
+      "translations": {
+        "de": "Matthäus",
+        "pl": "Mateusz",
+        "en": "Matthew",
+        "uk": "Матвій",
+        "it": "Matteo",
+        "es": "Mateo",
+        "fr": "Matthieu",
+        "pt": "Mateus",
+        "ru": "Матфей",
+        "tr": "Matta",
+        "ar": "متّى",
+        "sw": "Mathayo"
+      }
+    },
+    "Markus": {
+      "category": "biblical_names",
+      "translations": {
+        "de": "Markus",
+        "pl": "Marek",
+        "en": "Mark",
+        "uk": "Марко",
+        "it": "Marco",
+        "es": "Marcos",
+        "fr": "Marc",
+        "pt": "Marcos",
+        "ru": "Марк",
+        "tr": "Markos",
+        "ar": "مرقس",
+        "sw": "Marko"
+      }
+    },
+    "Lukas": {
+      "category": "biblical_names",
+      "translations": {
+        "de": "Lukas",
+        "pl": "Łukasz",
+        "en": "Luke",
+        "uk": "Лука",
+        "it": "Luca",
+        "es": "Lucas",
+        "fr": "Luc",
+        "pt": "Lucas",
+        "ru": "Лука",
+        "tr": "Luka",
+        "ar": "لوقا",
+        "sw": "Luka"
+      }
+    },
+    "Thomas": {
+      "category": "biblical_names",
+      "translations": {
+        "de": "Thomas",
+        "pl": "Tomasz",
+        "en": "Thomas",
+        "uk": "Тома",
+        "it": "Tommaso",
+        "es": "Tomás",
+        "fr": "Thomas",
+        "pt": "Tomé",
+        "ru": "Фома",
+        "tr": "Tomas",
+        "ar": "توما",
+        "sw": "Tomaso"
+      }
+    },
+    "Timotheus": {
+      "category": "biblical_names",
+      "translations": {
+        "de": "Timotheus",
+        "pl": "Tymoteusz",
+        "en": "Timothy",
+        "uk": "Тимофій",
+        "it": "Timoteo",
+        "es": "Timoteo",
+        "fr": "Timothée",
+        "pt": "Timóteo",
+        "ru": "Тимофей",
+        "tr": "Timoteos",
+        "ar": "تيموثاوس",
+        "sw": "Timotheo"
+      }
+    },
+    "Barnabas": {
+      "category": "biblical_names",
+      "translations": {
+        "de": "Barnabas",
+        "pl": "Barnaba",
+        "en": "Barnabas",
+        "uk": "Варнава",
+        "it": "Barnaba",
+        "es": "Bernabé",
+        "fr": "Barnabas",
+        "pt": "Barnabé",
+        "ru": "Варнава",
+        "tr": "Barnaba",
+        "ar": "برنابا",
+        "sw": "Barnaba"
+      }
+    },
+    "Lazarus": {
+      "category": "biblical_names",
+      "translations": {
+        "de": "Lazarus",
+        "pl": "Łazarz",
+        "en": "Lazarus",
+        "uk": "Лазар",
+        "it": "Lazzaro",
+        "es": "Lázaro",
+        "fr": "Lazare",
+        "pt": "Lázaro",
+        "ru": "Лазарь",
+        "tr": "Lazar",
+        "ar": "لعازر",
+        "sw": "Lazaro"
+      }
+    },
+    "Samuel": {
+      "category": "biblical_names",
+      "translations": {
+        "de": "Samuel",
+        "pl": "Samuel",
+        "en": "Samuel",
+        "uk": "Самуїл",
+        "it": "Samuele",
+        "es": "Samuel",
+        "fr": "Samuel",
+        "pt": "Samuel",
+        "ru": "Самуил",
+        "tr": "Samuel",
+        "ar": "صموئيل",
+        "sw": "Samweli"
+      }
+    },
+    "Saul": {
+      "category": "biblical_names",
+      "translations": {
+        "de": "Saul",
+        "pl": "Saul",
+        "en": "Saul",
+        "uk": "Саул",
+        "it": "Saul",
+        "es": "Saúl",
+        "fr": "Saül",
+        "pt": "Saul",
+        "ru": "Саул",
+        "tr": "Saul",
+        "ar": "شاول",
+        "sw": "Sauli"
+      }
+    },
+    "Judas": {
+      "category": "biblical_names",
+      "translations": {
+        "de": "Judas",
+        "pl": "Judasz",
+        "en": "Judas",
+        "uk": "Юда",
+        "it": "Giuda",
+        "es": "Judas",
+        "fr": "Judas",
+        "pt": "Judas",
+        "ru": "Иуда",
+        "tr": "Yahuda",
+        "ar": "يهوذا",
+        "sw": "Yuda"
+      }
+    },
+    "Maria Magdalena": {
+      "category": "biblical_names",
+      "translations": {
+        "de": "Maria Magdalena",
+        "pl": "Maria Magdalena",
+        "en": "Mary Magdalene",
+        "uk": "Марія Магдалина",
+        "it": "Maria Maddalena",
+        "es": "María Magdalena",
+        "fr": "Marie de Magdala",
+        "pt": "Maria Madalena",
+        "ru": "Мария Магдалина",
+        "tr": "Mecdelli Meryem",
+        "ar": "مريم المجدلية",
+        "sw": "Maria Magdalena"
+      }
+    },
+    "Johannes der Täufer": {
+      "category": "biblical_names",
+      "translations": {
+        "de": "Johannes der Täufer",
+        "pl": "Jan Chrzciciel",
+        "en": "John the Baptist",
+        "uk": "Іван Хреститель",
+        "it": "Giovanni Battista",
+        "es": "Juan el Bautista",
+        "fr": "Jean Baptiste",
+        "pt": "João Batista",
+        "ru": "Иоанн Креститель",
+        "tr": "Vaftizci Yahya",
+        "ar": "يوحنا المعمدان",
+        "sw": "Yohana Mbatizaji"
+      }
+    },
+    "1. Mose": {
+      "category": "bible_books",
+      "translations": {
+        "de": "1. Mose (Genesis)",
+        "pl": "Księga Rodzaju",
+        "en": "Genesis",
+        "uk": "Буття",
+        "it": "Genesi",
+        "es": "Génesis",
+        "fr": "Genèse",
+        "pt": "Gênesis",
+        "ru": "Бытие",
+        "tr": "Yaratılış",
+        "ar": "التكوين",
+        "sw": "Mwanzo"
+      },
+      "context": "Erstes Buch Mose"
+    },
+    "Genesis": {
+      "category": "bible_books",
+      "translations": {
+        "de": "Genesis",
+        "pl": "Księga Rodzaju",
+        "en": "Genesis",
+        "uk": "Буття",
+        "it": "Genesi",
+        "es": "Génesis",
+        "fr": "Genèse",
+        "pt": "Gênesis",
+        "ru": "Бытие",
+        "tr": "Yaratılış",
+        "ar": "التكوين",
+        "sw": "Mwanzo"
+      }
+    },
+    "2. Mose": {
+      "category": "bible_books",
+      "translations": {
+        "de": "2. Mose (Exodus)",
+        "pl": "Księga Wyjścia",
+        "en": "Exodus",
+        "uk": "Вихід",
+        "it": "Esodo",
+        "es": "Éxodo",
+        "fr": "Exode",
+        "pt": "Êxodo",
+        "ru": "Исход",
+        "tr": "Mısır'dan Çıkış",
+        "ar": "الخروج",
+        "sw": "Kutoka"
+      },
+      "context": "Zweites Buch Mose"
+    },
+    "Exodus": {
+      "category": "bible_books",
+      "translations": {
+        "de": "Exodus",
+        "pl": "Księga Wyjścia",
+        "en": "Exodus",
+        "uk": "Вихід",
+        "it": "Esodo",
+        "es": "Éxodo",
+        "fr": "Exode",
+        "pt": "Êxodo",
+        "ru": "Исход",
+        "tr": "Mısır'dan Çıkış",
+        "ar": "الخروج",
+        "sw": "Kutoka"
+      }
+    },
+    "3. Mose": {
+      "category": "bible_books",
+      "translations": {
+        "de": "3. Mose (Levitikus)",
+        "pl": "Księga Kapłańska",
+        "en": "Leviticus",
+        "uk": "Левіт",
+        "it": "Levitico",
+        "es": "Levítico",
+        "fr": "Lévitique",
+        "pt": "Levítico",
+        "ru": "Левит",
+        "tr": "Levililer",
+        "ar": "اللاويين",
+        "sw": "Mambo ya Walawi"
+      },
+      "context": "Drittes Buch Mose"
+    },
+    "4. Mose": {
+      "category": "bible_books",
+      "translations": {
+        "de": "4. Mose (Numeri)",
+        "pl": "Księga Liczb",
+        "en": "Numbers",
+        "uk": "Числа",
+        "it": "Numeri",
+        "es": "Números",
+        "fr": "Nombres",
+        "pt": "Números",
+        "ru": "Числа",
+        "tr": "Çölde Sayım",
+        "ar": "العدد",
+        "sw": "Hesabu"
+      },
+      "context": "Viertes Buch Mose"
+    },
+    "5. Mose": {
+      "category": "bible_books",
+      "translations": {
+        "de": "5. Mose (Deuteronomium)",
+        "pl": "Księga Powtórzonego Prawa",
+        "en": "Deuteronomy",
+        "uk": "Повторення Закону",
+        "it": "Deuteronomio",
+        "es": "Deuteronomio",
+        "fr": "Deutéronome",
+        "pt": "Deuteronômio",
+        "ru": "Второзаконие",
+        "tr": "Yasa'nın Tekrarı",
+        "ar": "التثنية",
+        "sw": "Kumbukumbu la Torati"
+      },
+      "context": "Fünftes Buch Mose"
+    },
+    "Josua": {
+      "category": "bible_books",
+      "translations": {
+        "de": "Josua",
+        "pl": "Księga Jozuego",
+        "en": "Joshua",
+        "uk": "Книга Ісуса Навина",
+        "it": "Giosuè",
+        "es": "Josué",
+        "fr": "Josué",
+        "pt": "Josué",
+        "ru": "Иисус Навин",
+        "tr": "Yeşu",
+        "ar": "يشوع",
+        "sw": "Yoshua"
+      }
+    },
+    "Richter": {
+      "category": "bible_books",
+      "translations": {
+        "de": "Richter",
+        "pl": "Księga Sędziów",
+        "en": "Judges",
+        "uk": "Книга Суддів",
+        "it": "Giudici",
+        "es": "Jueces",
+        "fr": "Juges",
+        "pt": "Juízes",
+        "ru": "Судей",
+        "tr": "Hâkimler",
+        "ar": "القضاة",
+        "sw": "Waamuzi"
+      }
+    },
+    "Rut": {
+      "category": "bible_books",
+      "translations": {
+        "de": "Rut",
+        "pl": "Księga Rut",
+        "en": "Ruth",
+        "uk": "Книга Рут",
+        "it": "Rut",
+        "es": "Rut",
+        "fr": "Ruth",
+        "pt": "Rute",
+        "ru": "Руфь",
+        "tr": "Rut",
+        "ar": "راعوث",
+        "sw": "Ruthu"
+      }
+    },
+    "1. Samuel": {
+      "category": "bible_books",
+      "translations": {
+        "de": "1. Samuel",
+        "pl": "1 Księga Samuela",
+        "en": "1 Samuel",
+        "uk": "1 Самуїла",
+        "it": "1 Samuele",
+        "es": "1 Samuel",
+        "fr": "1 Samuel",
+        "pt": "1 Samuel",
+        "ru": "1-я Царств",
+        "tr": "1. Samuel",
+        "ar": "صموئيل الأول",
+        "sw": "1 Samweli"
+      }
+    },
+    "2. Samuel": {
+      "category": "bible_books",
+      "translations": {
+        "de": "2. Samuel",
+        "pl": "2 Księga Samuela",
+        "en": "2 Samuel",
+        "uk": "2 Самуїла",
+        "it": "2 Samuele",
+        "es": "2 Samuel",
+        "fr": "2 Samuel",
+        "pt": "2 Samuel",
+        "ru": "2-я Царств",
+        "tr": "2. Samuel",
+        "ar": "صموئيل الثاني",
+        "sw": "2 Samweli"
+      }
+    },
+    "1. Könige": {
+      "category": "bible_books",
+      "translations": {
+        "de": "1. Könige",
+        "pl": "1 Księga Królewska",
+        "en": "1 Kings",
+        "uk": "1 Царів",
+        "it": "1 Re",
+        "es": "1 Reyes",
+        "fr": "1 Rois",
+        "pt": "1 Reis",
+        "ru": "3-я Царств",
+        "tr": "1. Krallar",
+        "ar": "الملوك الأول",
+        "sw": "1 Wafalme"
+      }
+    },
+    "2. Könige": {
+      "category": "bible_books",
+      "translations": {
+        "de": "2. Könige",
+        "pl": "2 Księga Królewska",
+        "en": "2 Kings",
+        "uk": "2 Царів",
+        "it": "2 Re",
+        "es": "2 Reyes",
+        "fr": "2 Rois",
+        "pt": "2 Reis",
+        "ru": "4-я Царств",
+        "tr": "2. Krallar",
+        "ar": "الملوك الثاني",
+        "sw": "2 Wafalme"
+      }
+    },
+    "1. Chronik": {
+      "category": "bible_books",
+      "translations": {
+        "de": "1. Chronik",
+        "pl": "1 Księga Kronik",
+        "en": "1 Chronicles",
+        "uk": "1 Хроніки",
+        "it": "1 Cronache",
+        "es": "1 Crónicas",
+        "fr": "1 Chroniques",
+        "pt": "1 Crônicas",
+        "ru": "1-я Паралипоменон",
+        "tr": "1. Tarihler",
+        "ar": "أخبار الأيام الأول",
+        "sw": "1 Mambo ya Nyakati"
+      }
+    },
+    "2. Chronik": {
+      "category": "bible_books",
+      "translations": {
+        "de": "2. Chronik",
+        "pl": "2 Księga Kronik",
+        "en": "2 Chronicles",
+        "uk": "2 Хроніки",
+        "it": "2 Cronache",
+        "es": "2 Crónicas",
+        "fr": "2 Chroniques",
+        "pt": "2 Crônicas",
+        "ru": "2-я Паралипоменон",
+        "tr": "2. Tarihler",
+        "ar": "أخبار الأيام الثاني",
+        "sw": "2 Mambo ya Nyakati"
+      }
+    },
+    "Esra": {
+      "category": "bible_books",
+      "translations": {
+        "de": "Esra",
+        "pl": "Księga Ezdrasza",
+        "en": "Ezra",
+        "uk": "Ездра",
+        "it": "Esdra",
+        "es": "Esdras",
+        "fr": "Esdras",
+        "pt": "Esdras",
+        "ru": "Ездра",
+        "tr": "Ezra",
+        "ar": "عزرا",
+        "sw": "Ezra"
+      }
+    },
+    "Nehemia": {
+      "category": "bible_books",
+      "translations": {
+        "de": "Nehemia",
+        "pl": "Księga Nehemiasza",
+        "en": "Nehemiah",
+        "uk": "Неемія",
+        "it": "Neemia",
+        "es": "Nehemías",
+        "fr": "Néhémie",
+        "pt": "Neemias",
+        "ru": "Неемия",
+        "tr": "Nehemya",
+        "ar": "نحميا",
+        "sw": "Nehemia"
+      }
+    },
+    "Ester": {
+      "category": "bible_books",
+      "translations": {
+        "de": "Ester",
+        "pl": "Księga Estery",
+        "en": "Esther",
+        "uk": "Естер",
+        "it": "Ester",
+        "es": "Ester",
+        "fr": "Esther",
+        "pt": "Ester",
+        "ru": "Есфирь",
+        "tr": "Ester",
+        "ar": "أستير",
+        "sw": "Esta"
+      }
+    },
+    "Hiob": {
+      "category": "bible_books",
+      "translations": {
+        "de": "Hiob",
+        "pl": "Księga Hioba",
+        "en": "Job",
+        "uk": "Йов",
+        "it": "Giobbe",
+        "es": "Job",
+        "fr": "Job",
+        "pt": "Jó",
+        "ru": "Иов",
+        "tr": "Eyüp",
+        "ar": "أيوب",
+        "sw": "Ayubu"
+      }
+    },
+    "Psalmen": {
+      "category": "bible_books",
+      "translations": {
+        "de": "Psalmen",
+        "pl": "Księga Psalmów",
+        "en": "Psalms",
+        "uk": "Псалми",
+        "it": "Salmi",
+        "es": "Salmos",
+        "fr": "Psaumes",
+        "pt": "Salmos",
+        "ru": "Псалмы",
+        "tr": "Mezmurlar",
+        "ar": "المزامير",
+        "sw": "Zaburi"
+      }
+    },
+    "Sprüche": {
+      "category": "bible_books",
+      "translations": {
+        "de": "Sprüche",
+        "pl": "Księga Przysłów",
+        "en": "Proverbs",
+        "uk": "Приповісті",
+        "it": "Proverbi",
+        "es": "Proverbios",
+        "fr": "Proverbes",
+        "pt": "Provérbios",
+        "ru": "Притчи",
+        "tr": "Süleyman'ın Özdeyişleri",
+        "ar": "الأمثال",
+        "sw": "Mithali"
+      }
+    },
+    "Hoheslied": {
+      "category": "bible_books",
+      "translations": {
+        "de": "Hoheslied",
+        "pl": "Pieśń nad Pieśniami",
+        "en": "Song of Solomon",
+        "uk": "Пісня над Піснями",
+        "it": "Cantico dei Cantici",
+        "es": "Cantar de los Cantares",
+        "fr": "Cantique des Cantiques",
+        "pt": "Cântico dos Cânticos",
+        "ru": "Песнь Песней",
+        "tr": "Ezgiler Ezgisi",
+        "ar": "نشيد الأنشاد",
+        "sw": "Wimbo Ulio Bora"
+      }
+    },
+    "Jesajabook": {
+      "category": "bible_books",
+      "translations": {
+        "de": "Jesaja",
+        "pl": "Księga Izajasza",
+        "en": "Isaiah",
+        "uk": "Ісая",
+        "it": "Isaia",
+        "es": "Isaías",
+        "fr": "Isaïe",
+        "pt": "Isaías",
+        "ru": "Исаия",
+        "tr": "Yeşaya",
+        "ar": "إشعياء",
+        "sw": "Isaya"
+      }
+    },
+    "Jeremiabook": {
+      "category": "bible_books",
+      "translations": {
+        "de": "Jeremia",
+        "pl": "Księga Jeremiasza",
+        "en": "Jeremiah",
+        "uk": "Єремія",
+        "it": "Geremia",
+        "es": "Jeremías",
+        "fr": "Jérémie",
+        "pt": "Jeremias",
+        "ru": "Иеремия",
+        "tr": "Yeremya",
+        "ar": "إرميا",
+        "sw": "Yeremia"
+      }
+    },
+    "Klagelieder": {
+      "category": "bible_books",
+      "translations": {
+        "de": "Klagelieder",
+        "pl": "Lamentacje",
+        "en": "Lamentations",
+        "uk": "Плач Єремії",
+        "it": "Lamentazioni",
+        "es": "Lamentaciones",
+        "fr": "Lamentations",
+        "pt": "Lamentações",
+        "ru": "Плач Иеремии",
+        "tr": "Ağıtlar",
+        "ar": "مراثي إرميا",
+        "sw": "Maombolezo"
+      }
+    },
+    "Hesekiel": {
+      "category": "bible_books",
+      "translations": {
+        "de": "Hesekiel (Ezechiel)",
+        "pl": "Księga Ezechiela",
+        "en": "Ezekiel",
+        "uk": "Єзекіїль",
+        "it": "Ezechiele",
+        "es": "Ezequiel",
+        "fr": "Ézéchiel",
+        "pt": "Ezequiel",
+        "ru": "Иезекииль",
+        "tr": "Hezekiel",
+        "ar": "حزقيال",
+        "sw": "Ezekieli"
+      }
+    },
+    "Danielbook": {
+      "category": "bible_books",
+      "translations": {
+        "de": "Daniel",
+        "pl": "Księga Daniela",
+        "en": "Daniel",
+        "uk": "Даниїл",
+        "it": "Daniele",
+        "es": "Daniel",
+        "fr": "Daniel",
+        "pt": "Daniel",
+        "ru": "Даниил",
+        "tr": "Daniel",
+        "ar": "دانيال",
+        "sw": "Danieli"
+      }
+    },
+    "Hosea": {
+      "category": "bible_books",
+      "translations": {
+        "de": "Hosea",
+        "pl": "Księga Ozeasza",
+        "en": "Hosea",
+        "uk": "Осія",
+        "it": "Osea",
+        "es": "Oseas",
+        "fr": "Osée",
+        "pt": "Oseias",
+        "ru": "Осия",
+        "tr": "Hoşea",
+        "ar": "هوشع",
+        "sw": "Hosea"
+      }
+    },
+    "Joel": {
+      "category": "bible_books",
+      "translations": {
+        "de": "Joel",
+        "pl": "Księga Joela",
+        "en": "Joel",
+        "uk": "Йоїл",
+        "it": "Gioele",
+        "es": "Joel",
+        "fr": "Joël",
+        "pt": "Joel",
+        "ru": "Иоиль",
+        "tr": "Yoel",
+        "ar": "يوئيل",
+        "sw": "Yoeli"
+      }
+    },
+    "Amos": {
+      "category": "bible_books",
+      "translations": {
+        "de": "Amos",
+        "pl": "Księga Amosa",
+        "en": "Amos",
+        "uk": "Амос",
+        "it": "Amos",
+        "es": "Amós",
+        "fr": "Amos",
+        "pt": "Amós",
+        "ru": "Амос",
+        "tr": "Amos",
+        "ar": "عاموس",
+        "sw": "Amosi"
+      }
+    },
+    "Obadja": {
+      "category": "bible_books",
+      "translations": {
+        "de": "Obadja",
+        "pl": "Księga Abdiasza",
+        "en": "Obadiah",
+        "uk": "Овдій",
+        "it": "Abdia",
+        "es": "Abdías",
+        "fr": "Abdias",
+        "pt": "Obadias",
+        "ru": "Авдий",
+        "tr": "Obadya",
+        "ar": "عوبديا",
+        "sw": "Obadia"
+      }
+    },
+    "Jona": {
+      "category": "bible_books",
+      "translations": {
+        "de": "Jona",
+        "pl": "Księga Jonasza",
+        "en": "Jonah",
+        "uk": "Йона",
+        "it": "Giona",
+        "es": "Jonás",
+        "fr": "Jonas",
+        "pt": "Jonas",
+        "ru": "Иона",
+        "tr": "Yunus",
+        "ar": "يونان",
+        "sw": "Yona"
+      }
+    },
+    "Micha": {
+      "category": "bible_books",
+      "translations": {
+        "de": "Micha",
+        "pl": "Księga Micheasza",
+        "en": "Micah",
+        "uk": "Михей",
+        "it": "Michea",
+        "es": "Miqueas",
+        "fr": "Michée",
+        "pt": "Miqueias",
+        "ru": "Михей",
+        "tr": "Mika",
+        "ar": "ميخا",
+        "sw": "Mika"
+      }
+    },
+    "Nahum": {
+      "category": "bible_books",
+      "translations": {
+        "de": "Nahum",
+        "pl": "Księga Nahuma",
+        "en": "Nahum",
+        "uk": "Наум",
+        "it": "Naum",
+        "es": "Nahúm",
+        "fr": "Nahum",
+        "pt": "Naum",
+        "ru": "Наум",
+        "tr": "Nahum",
+        "ar": "ناحوم",
+        "sw": "Nahumu"
+      }
+    },
+    "Habakuk": {
+      "category": "bible_books",
+      "translations": {
+        "de": "Habakuk",
+        "pl": "Księga Habakuka",
+        "en": "Habakkuk",
+        "uk": "Авакум",
+        "it": "Abacuc",
+        "es": "Habacuc",
+        "fr": "Habaquq",
+        "pt": "Habacuque",
+        "ru": "Аввакум",
+        "tr": "Habakkuk",
+        "ar": "حبقوق",
+        "sw": "Habakuki"
+      }
+    },
+    "Zefanja": {
+      "category": "bible_books",
+      "translations": {
+        "de": "Zefanja",
+        "pl": "Księga Sofoniasza",
+        "en": "Zephaniah",
+        "uk": "Софонія",
+        "it": "Sofonia",
+        "es": "Sofonías",
+        "fr": "Sophonie",
+        "pt": "Sofonias",
+        "ru": "Софония",
+        "tr": "Sefanya",
+        "ar": "صفنيا",
+        "sw": "Sefania"
+      }
+    },
+    "Haggai": {
+      "category": "bible_books",
+      "translations": {
+        "de": "Haggai",
+        "pl": "Księga Aggeusza",
+        "en": "Haggai",
+        "uk": "Огій",
+        "it": "Aggeo",
+        "es": "Hageo",
+        "fr": "Aggée",
+        "pt": "Ageu",
+        "ru": "Аггей",
+        "tr": "Hagay",
+        "ar": "حجّي",
+        "sw": "Hagai"
+      }
+    },
+    "Sacharja": {
+      "category": "bible_books",
+      "translations": {
+        "de": "Sacharja",
+        "pl": "Księga Zachariasza",
+        "en": "Zechariah",
+        "uk": "Захарія",
+        "it": "Zaccaria",
+        "es": "Zacarías",
+        "fr": "Zacharie",
+        "pt": "Zacarias",
+        "ru": "Захария",
+        "tr": "Zekeriya",
+        "ar": "زكريا",
+        "sw": "Zekaria"
+      }
+    },
+    "Maleachi": {
+      "category": "bible_books",
+      "translations": {
+        "de": "Maleachi",
+        "pl": "Księga Malachiasza",
+        "en": "Malachi",
+        "uk": "Малахій",
+        "it": "Malachia",
+        "es": "Malaquías",
+        "fr": "Malachie",
+        "pt": "Malaquias",
+        "ru": "Книга пророка Малахии",
+        "tr": "Malaki",
+        "ar": "ملاخي",
+        "sw": "Malaki"
+      }
+    },
+    "Matthäusevangelium": {
+      "category": "bible_books",
+      "translations": {
+        "de": "Matthäusevangelium",
+        "pl": "Ewangelia Mateusza",
+        "en": "Gospel of Matthew",
+        "uk": "Євангеліє від Матвія",
+        "it": "Vangelo di Matteo",
+        "es": "San Mateo",
+        "fr": "Matthieu",
+        "pt": "Mateus",
+        "ru": "Евангелие от Матфея",
+        "tr": "Matta",
+        "ar": "إنجيل متّى",
+        "sw": "Injili ya Mathayo"
+      }
+    },
+    "Markusevangelium": {
+      "category": "bible_books",
+      "translations": {
+        "de": "Markusevangelium",
+        "pl": "Ewangelia Marka",
+        "en": "Gospel of Mark",
+        "uk": "Євангеліє від Марка",
+        "it": "Vangelo di Marco",
+        "es": "San Marcos",
+        "fr": "Marc",
+        "pt": "Marcos",
+        "ru": "Евангелие от Марка",
+        "tr": "Markos",
+        "ar": "إنجيل مرقس",
+        "sw": "Injili ya Marko"
+      }
+    },
+    "Lukasevangelium": {
+      "category": "bible_books",
+      "translations": {
+        "de": "Lukasevangelium",
+        "pl": "Ewangelia Łukasza",
+        "en": "Gospel of Luke",
+        "uk": "Євангеліє від Луки",
+        "it": "Vangelo di Luca",
+        "es": "San Lucas",
+        "fr": "Luc",
+        "pt": "Lucas",
+        "ru": "Евангелие от Луки",
+        "tr": "Luka",
+        "ar": "إنجيل لوقا",
+        "sw": "Injili ya Luka"
+      }
+    },
+    "Johannesevangelium": {
+      "category": "bible_books",
+      "translations": {
+        "de": "Johannesevangelium",
+        "pl": "Ewangelia Jana",
+        "en": "Gospel of John",
+        "uk": "Євангеліє від Івана",
+        "it": "Vangelo di Giovanni",
+        "es": "San Juan",
+        "fr": "Jean",
+        "pt": "João",
+        "ru": "Евангелие от Иоанна",
+        "tr": "Yuhanna",
+        "ar": "إنجيل يوحنا",
+        "sw": "Injili ya Yohana"
+      }
+    },
+    "Apostelgeschichte": {
+      "category": "bible_books",
+      "translations": {
+        "de": "Apostelgeschichte",
+        "pl": "Dzieje Apostolskie",
+        "en": "Acts of the Apostles",
+        "uk": "Діяння Апостолів",
+        "it": "Atti degli Apostoli",
+        "es": "Hechos",
+        "fr": "Actes des apôtres",
+        "pt": "Atos dos Apóstolos",
+        "ru": "Деяния святых Апостолов",
+        "tr": "Elçilerin İşleri",
+        "ar": "أعمال الرسل",
+        "sw": "Matendo ya Mitume"
+      }
+    },
+    "Römerbrief": {
+      "category": "bible_books",
+      "translations": {
+        "de": "Römerbrief",
+        "pl": "List do Rzymian",
+        "en": "Romans",
+        "uk": "Послання до Римлян",
+        "it": "Lettera ai Romani",
+        "es": "Romanos",
+        "fr": "Romains",
+        "pt": "Romanos",
+        "ru": "Послание к Римлянам",
+        "tr": "Romalılar",
+        "ar": "رومية",
+        "sw": "Warumi"
+      }
+    },
+    "1. Korinther": {
+      "category": "bible_books",
+      "translations": {
+        "de": "1. Korintherbrief",
+        "pl": "1 List do Koryntian",
+        "en": "1 Corinthians",
+        "uk": "1 Коринтян",
+        "it": "1 Corinzi",
+        "es": "1 Corintios",
+        "fr": "1 Corinthiens",
+        "pt": "1 Coríntios",
+        "ru": "Первое послание к Коринфянам",
+        "tr": "1. Korintliler",
+        "ar": "كورنثوس الأولى",
+        "sw": "1 Wakorintho"
+      }
+    },
+    "2. Korinther": {
+      "category": "bible_books",
+      "translations": {
+        "de": "2. Korintherbrief",
+        "pl": "2 List do Koryntian",
+        "en": "2 Corinthians",
+        "uk": "2 Коринтян",
+        "it": "2 Corinzi",
+        "es": "2 Corintios",
+        "fr": "2 Corinthiens",
+        "pt": "2 Coríntios",
+        "ru": "Второе послание к Коринфянам",
+        "tr": "2. Korintliler",
+        "ar": "كورنثوس الثانية",
+        "sw": "2 Wakorintho"
+      }
+    },
+    "Galaterbrief": {
+      "category": "bible_books",
+      "translations": {
+        "de": "Galaterbrief",
+        "pl": "List do Galatów",
+        "en": "Galatians",
+        "uk": "Послання до Галатів",
+        "it": "Galati",
+        "es": "Gálatas",
+        "fr": "Galates",
+        "pt": "Gálatas",
+        "ru": "Послание к Галатам",
+        "tr": "Galatyalılar",
+        "ar": "غلاطية",
+        "sw": "Wagalatia"
+      }
+    },
+    "Epheserbrief": {
+      "category": "bible_books",
+      "translations": {
+        "de": "Epheserbrief",
+        "pl": "List do Efezjan",
+        "en": "Ephesians",
+        "uk": "Послання до Ефесян",
+        "it": "Efesini",
+        "es": "Efesios",
+        "fr": "Ephésiens",
+        "pt": "Efésios",
+        "ru": "Послание к Ефесянам",
+        "tr": "Efesliler",
+        "ar": "أفسس",
+        "sw": "Waefeso"
+      }
+    },
+    "Philipperbrief": {
+      "category": "bible_books",
+      "translations": {
+        "de": "Philipperbrief",
+        "pl": "List do Filipian",
+        "en": "Philippians",
+        "uk": "Послання до Филип'ян",
+        "it": "Filippesi",
+        "es": "Filipenses",
+        "fr": "Philippiens",
+        "pt": "Filipenses",
+        "ru": "Послание к Филиппийцам",
+        "tr": "Filipililer",
+        "ar": "فيلبي",
+        "sw": "Wafilipi"
+      }
+    },
+    "Kolosserbrief": {
+      "category": "bible_books",
+      "translations": {
+        "de": "Kolosserbrief",
+        "pl": "List do Kolosan",
+        "en": "Colossians",
+        "uk": "Послання до Колосян",
+        "it": "Colossesi",
+        "es": "Colosenses",
+        "fr": "Colossiens",
+        "pt": "Colossenses",
+        "ru": "Послание к Колоссянам",
+        "tr": "Koloseliler",
+        "ar": "كولوسي",
+        "sw": "Wakolosai"
+      }
+    },
+    "1. Thessalonicher": {
+      "category": "bible_books",
+      "translations": {
+        "de": "1. Thessalonicherbrief",
+        "pl": "1 List do Tesaloniczan",
+        "en": "1 Thessalonians",
+        "uk": "1 Солунян",
+        "it": "1 Tessalonicesi",
+        "es": "1 Tesalonicenses",
+        "fr": "1 Thessaloniciens",
+        "pt": "1 Tessalonicenses",
+        "ru": "Первое послание к Фессалоникийцам",
+        "tr": "1. Selanikliler",
+        "ar": "تسالونيكي الأولى",
+        "sw": "1 Wathesalonike"
+      }
+    },
+    "2. Thessalonicher": {
+      "category": "bible_books",
+      "translations": {
+        "de": "2. Thessalonicherbrief",
+        "pl": "2 List do Tesaloniczan",
+        "en": "2 Thessalonians",
+        "uk": "2 Солунян",
+        "it": "2 Tessalonicesi",
+        "es": "2 Tesalonicenses",
+        "fr": "2 Thessaloniciens",
+        "pt": "2 Tessalonicenses",
+        "ru": "Второе послание к Фессалоникийцам",
+        "tr": "2. Selanikliler",
+        "ar": "تسالونيكي الثانية",
+        "sw": "2 Wathesalonike"
+      }
+    },
+    "1. Timotheus": {
+      "category": "bible_books",
+      "translations": {
+        "de": "1. Timotheusbrief",
+        "pl": "1 List do Tymoteusza",
+        "en": "1 Timothy",
+        "uk": "1 Тимофія",
+        "it": "1 Timoteo",
+        "es": "1 Timoteo",
+        "fr": "1 Timothée",
+        "pt": "1 Timóteo",
+        "ru": "Первое послание к Тимофею",
+        "tr": "1. Timoteos",
+        "ar": "تيموثاوس الأولى",
+        "sw": "1 Timotheo"
+      }
+    },
+    "2. Timotheus": {
+      "category": "bible_books",
+      "translations": {
+        "de": "2. Timotheusbrief",
+        "pl": "2 List do Tymoteusza",
+        "en": "2 Timothy",
+        "uk": "2 Тимофія",
+        "it": "2 Timoteo",
+        "es": "2 Timoteo",
+        "fr": "2 Timothée",
+        "pt": "2 Timóteo",
+        "ru": "Второе послание к Тимофею",
+        "tr": "2. Timoteos",
+        "ar": "تيموثاوس الثانية",
+        "sw": "2 Timotheo"
+      }
+    },
+    "Titusbrief": {
+      "category": "bible_books",
+      "translations": {
+        "de": "Titusbrief",
+        "pl": "List do Tytusa",
+        "en": "Titus",
+        "uk": "Послання до Тита",
+        "it": "Tito",
+        "es": "Tito",
+        "fr": "Tite",
+        "pt": "Tito",
+        "ru": "Послание к Титу",
+        "tr": "Titus",
+        "ar": "تيطس",
+        "sw": "Tito"
+      }
+    },
+    "Philemonbrief": {
+      "category": "bible_books",
+      "translations": {
+        "de": "Philemonbrief",
+        "pl": "List do Filemona",
+        "en": "Philemon",
+        "uk": "Послання до Филимона",
+        "it": "Filemone",
+        "es": "Filemón",
+        "fr": "Philémon",
+        "pt": "Filemom",
+        "ru": "Послание к Филимону",
+        "tr": "Filimon",
+        "ar": "فليمون",
+        "sw": "Filemoni"
+      }
+    },
+    "Hebräerbrief": {
+      "category": "bible_books",
+      "translations": {
+        "de": "Hebräerbrief",
+        "pl": "List do Hebrajczyków",
+        "en": "Hebrews",
+        "uk": "Послання до Євреїв",
+        "it": "Ebrei",
+        "es": "Hebreos",
+        "fr": "Hébreux",
+        "pt": "Hebreus",
+        "ru": "Послание к Евреям",
+        "tr": "İbraniler",
+        "ar": "العبرانيين",
+        "sw": "Waebrania"
+      }
+    },
+    "Jakobusbrief": {
+      "category": "bible_books",
+      "translations": {
+        "de": "Jakobusbrief",
+        "pl": "List Jakuba",
+        "en": "James",
+        "uk": "Послання Якова",
+        "it": "Giacomo",
+        "es": "Santiago",
+        "fr": "Jacques",
+        "pt": "Tiago",
+        "ru": "Послание Иакова",
+        "tr": "Yakup",
+        "ar": "يعقوب",
+        "sw": "Yakobo"
+      }
+    },
+    "1. Petrus": {
+      "category": "bible_books",
+      "translations": {
+        "de": "1. Petrusbrief",
+        "pl": "1 List Piotra",
+        "en": "1 Peter",
+        "uk": "1 Петра",
+        "it": "1 Pietro",
+        "es": "1 Pedro",
+        "fr": "1 Pierre",
+        "pt": "1 Pedro",
+        "ru": "Первое послание Петра",
+        "tr": "1. Petrus",
+        "ar": "بطرس الأولى",
+        "sw": "1 Petro"
+      }
+    },
+    "2. Petrus": {
+      "category": "bible_books",
+      "translations": {
+        "de": "2. Petrusbrief",
+        "pl": "2 List Piotra",
+        "en": "2 Peter",
+        "uk": "2 Петра",
+        "it": "2 Pietro",
+        "es": "2 Pedro",
+        "fr": "2 Pierre",
+        "pt": "2 Pedro",
+        "ru": "Второе послание Петра",
+        "tr": "2. Petrus",
+        "ar": "بطرس الثانية",
+        "sw": "2 Petro"
+      }
+    },
+    "1. Johannes": {
+      "category": "bible_books",
+      "translations": {
+        "de": "1. Johannesbrief",
+        "pl": "1 List Jana",
+        "en": "1 John",
+        "uk": "1 Івана",
+        "it": "1 Giovanni",
+        "es": "1 Juan",
+        "fr": "1 Jean",
+        "pt": "1 João",
+        "ru": "Первое послание Иоанна",
+        "tr": "1. Yuhanna",
+        "ar": "يوحنا الأولى",
+        "sw": "1 Yohana"
+      }
+    },
+    "2. Johannes": {
+      "category": "bible_books",
+      "translations": {
+        "de": "2. Johannesbrief",
+        "pl": "2 List Jana",
+        "en": "2 John",
+        "uk": "2 Івана",
+        "it": "2 Giovanni",
+        "es": "2 Juan",
+        "fr": "2 Jean",
+        "pt": "2 João",
+        "ru": "Второе послание Иоанна",
+        "tr": "2. Yuhanna",
+        "ar": "يوحنا الثانية",
+        "sw": "2 Yohana"
+      }
+    },
+    "3. Johannes": {
+      "category": "bible_books",
+      "translations": {
+        "de": "3. Johannesbrief",
+        "pl": "3 List Jana",
+        "en": "3 John",
+        "uk": "3 Івана",
+        "it": "3 Giovanni",
+        "es": "3 Juan",
+        "fr": "3 Jean",
+        "pt": "3 João",
+        "ru": "Третье послание Иоанна",
+        "tr": "3. Yuhanna",
+        "ar": "يوحنا الثالثة",
+        "sw": "3 Yohana"
+      }
+    },
+    "Judasbrief": {
+      "category": "bible_books",
+      "translations": {
+        "de": "Judasbrief",
+        "pl": "List Judy",
+        "en": "Jude",
+        "uk": "Послання Юди",
+        "it": "Giuda",
+        "es": "Judas",
+        "fr": "Jude",
+        "pt": "Judas",
+        "ru": "Послание Иуды",
+        "tr": "Yahuda",
+        "ar": "يهوذا",
+        "sw": "Yuda"
+      }
+    },
+    "Offenbarung des Johannes": {
+      "category": "bible_books",
+      "translations": {
+        "de": "Offenbarung des Johannes",
+        "pl": "Apokalipsa św. Jana",
+        "en": "Revelation",
+        "uk": "Об'явлення",
+        "it": "Apocalisse",
+        "es": "Apocalipsis",
+        "fr": "Apocalypse",
+        "pt": "Apocalipse",
+        "ru": "Откровение Иоанна Богослова",
+        "tr": "Vahiy",
+        "ar": "رؤيا يوحنا",
+        "sw": "Ufunuo wa Yohana"
+      }
+    },
+    "Es steht geschrieben": {
+      "category": "citations",
+      "translations": {
+        "de": "Es steht geschrieben",
+        "pl": "Napisane jest",
+        "en": "It is written",
+        "uk": "Написано",
+        "it": "Sta scritto",
+        "es": "Escrito está",
+        "fr": "Il est écrit",
+        "pt": "Está escrito",
+        "ru": "Написано",
+        "tr": "Yazılmıştır",
+        "ar": "مكتوب",
+        "sw": "Imeandikwa"
+      },
+      "context": "Zitatformel"
+    },
+    "So spricht der Herr": {
+      "category": "citations",
+      "translations": {
+        "de": "So spricht der Herr",
+        "pl": "Tak mówi Pan",
+        "en": "Thus says the Lord",
+        "uk": "Так говорить Господь",
+        "it": "Così dice il Signore",
+        "es": "Así dice el Señor",
+        "fr": "Ainsi parle le Seigneur",
+        "pt": "Assim diz o Senhor",
+        "ru": "Так говорит Господь",
+        "tr": "RAB şöyle diyor",
+        "ar": "هكذا يقول الرب",
+        "sw": "Hivi ndivyo asemavyo Bwana"
+      },
+      "context": "Prophetische Formel"
+    },
+    "Wahrlich, wahrlich, ich sage euch": {
+      "category": "citations",
+      "translations": {
+        "de": "Wahrlich, wahrlich, ich sage euch",
+        "pl": "Zaprawdę, zaprawdę powiadam wam",
+        "en": "Truly, truly, I say to you",
+        "uk": "Істинно, істинно кажу вам",
+        "it": "In verità, in verità vi dico",
+        "es": "De cierto, de cierto os digo",
+        "fr": "En vérité, en vérité, je vous le dis",
+        "pt": "Em verdade, em verdade vos digo",
+        "ru": "Истинно, истинно говорю вам",
+        "tr": "Gerçekten, gerçekten size derim ki",
+        "ar": "الحق الحق أقول لكم",
+        "sw": "Amin, amin, nawaambia"
+      },
+      "context": "Jesus-Formel"
+    },
+    "wie geschrieben steht": {
+      "category": "citations",
+      "translations": {
+        "de": "wie geschrieben steht",
+        "pl": "jak jest napisane",
+        "en": "as it is written",
+        "uk": "як написано",
+        "it": "come sta scritto",
+        "es": "como está escrito",
+        "fr": "comme il est écrit",
+        "pt": "como está escrito",
+        "ru": "как написано",
+        "tr": "yazılmış olduğu gibi",
+        "ar": "كما هو مكتوب",
+        "sw": "kama ilivyoandikwa"
+      }
+    },
+    "nach dem Wort": {
+      "category": "citations",
+      "translations": {
+        "de": "nach dem Wort",
+        "pl": "według słowa",
+        "en": "according to the word",
+        "uk": "за словом",
+        "it": "secondo la parola",
+        "es": "según la palabra",
+        "fr": "selon la parole",
+        "pt": "segundo a palavra",
+        "ru": "по слову",
+        "tr": "söz uyarınca",
+        "ar": "بحسب الكلمة",
+        "sw": "kwa kadiri ya neno"
+      }
+    },
+    "Höret das Wort des Herrn": {
+      "category": "citations",
+      "translations": {
+        "de": "Höret das Wort des Herrn",
+        "pl": "Słuchajcie słowa Pańskiego",
+        "en": "Hear the word of the Lord",
+        "uk": "Слухайте слово Господнє",
+        "it": "Ascoltate la parola del Signore",
+        "es": "Escuchad la palabra del Señor",
+        "fr": "Écoutez la parole du Seigneur",
+        "pt": "Ouvi a palavra do Senhor",
+        "ru": "Слушайте слово Господне",
+        "tr": "RAB'bin sözünü dinleyin",
+        "ar": "اسمعوا كلمة الرب",
+        "sw": "Sikieni Neno la Bwana"
+      },
+      "context": "Lesungseinleitung"
+    },
+    "Gott spricht": {
+      "category": "citations",
+      "translations": {
+        "de": "Gott spricht",
+        "pl": "Bóg mówi",
+        "en": "God says",
+        "uk": "Бог говорить",
+        "it": "Dio dice",
+        "es": "Dios dice",
+        "fr": "Dieu dit",
+        "pt": "Deus diz",
+        "ru": "Бог говорит",
+        "tr": "Tanrı diyor",
+        "ar": "يقول الله",
+        "sw": "Mungu anasema"
+      }
+    },
+    "der Herr sagt": {
+      "category": "citations",
+      "translations": {
+        "de": "der Herr sagt",
+        "pl": "Pan mówi",
+        "en": "the Lord says",
+        "uk": "Господь каже",
+        "it": "il Signore dice",
+        "es": "el Señor dice",
+        "fr": "le Seigneur dit",
+        "pt": "o Senhor diz",
+        "ru": "Господь говорит",
+        "tr": "RAB diyor",
+        "ar": "يقول الرب",
+        "sw": "Bwana anasema"
+      }
+    },
+    "wie der Prophet sagt": {
+      "category": "citations",
+      "translations": {
+        "de": "wie der Prophet sagt",
+        "pl": "jak mówi prorok",
+        "en": "as the prophet says",
+        "uk": "як говорить пророк",
+        "it": "come dice il profeta",
+        "es": "como dice el profeta",
+        "fr": "comme le dit le prophète",
+        "pt": "como diz o profeta",
+        "ru": "как говорит пророк",
+        "tr": "peygamberin dediği gibi",
+        "ar": "كما يقول النبي",
+        "sw": "kama nabii asemavyo"
+      }
+    },
+    "Spruch des Herrn": {
+      "category": "citations",
+      "translations": {
+        "de": "Spruch des Herrn",
+        "pl": "Wyrocznia Pana",
+        "en": "declares the Lord",
+        "uk": "говорить Господь",
+        "it": "oracolo del Signore",
+        "es": "oráculo del Señor",
+        "fr": "oracle du Seigneur",
+        "pt": "oráculo do Senhor",
+        "ru": "говорит Господь",
+        "tr": "diyor RAB",
+        "ar": "يقول الرب",
+        "sw": "asema Bwana"
+      },
+      "context": "Prophetische Abschlussformel"
+    },
+    "Im Namen des Vaters und des Sohnes und des Heiligen Geistes": {
+      "category": "citations",
+      "translations": {
+        "de": "Im Namen des Vaters und des Sohnes und des Heiligen Geistes",
+        "pl": "W imię Ojca i Syna i Ducha Świętego",
+        "en": "In the name of the Father and of the Son and of the Holy Spirit",
+        "uk": "В ім'я Отця і Сина і Святого Духа",
+        "it": "Nel nome del Padre e del Figlio e dello Spirito Santo",
+        "es": "En el nombre del Padre y del Hijo y del Espíritu Santo",
+        "fr": "Au nom du Père et du Fils et du Saint-Esprit",
+        "pt": "Em nome do Pai e do Filho e do Espírito Santo",
+        "ru": "Во имя Отца и Сына и Святого Духа",
+        "tr": "Baba, Oğul ve Kutsal Ruh'un adıyla",
+        "ar": "باسم الآب والابن والروح القدس",
+        "sw": "Kwa jina la Baba na Mwana na Roho Mtakatifu"
+      },
+      "context": "Trinitarische Formel"
+    },
+    "Der Herr segne dich und behüte dich": {
+      "category": "citations",
+      "translations": {
+        "de": "Der Herr segne dich und behüte dich",
+        "pl": "Niech cię Pan błogosławi i strzeże",
+        "en": "The Lord bless you and keep you",
+        "uk": "Нехай благословить тебе Господь і збереже тебе",
+        "it": "Il Signore ti benedica e ti custodisca",
+        "es": "El Señor te bendiga y te guarde",
+        "fr": "Que le Seigneur te bénisse et te garde",
+        "pt": "O Senhor te abençoe e te guarde",
+        "ru": "Да благословит тебя Господь и сохранит тебя",
+        "tr": "RAB seni kutsasın ve korusun",
+        "ar": "يباركك الرب ويحرسك",
+        "sw": "Bwana akubariki na akulinde"
+      },
+      "context": "Aaronitischer Segen"
+    },
+    "Die Gnade unseres Herrn Jesus Christus": {
+      "category": "citations",
+      "translations": {
+        "de": "Die Gnade unseres Herrn Jesus Christus",
+        "pl": "Łaska Pana naszego Jezusa Chrystusa",
+        "en": "The grace of our Lord Jesus Christ",
+        "uk": "Благодать Господа нашого Ісуса Христа",
+        "it": "La grazia del Signore nostro Gesù Cristo",
+        "es": "La gracia de nuestro Señor Jesucristo",
+        "fr": "La grâce de notre Seigneur Jésus Christ",
+        "pt": "A graça de nosso Senhor Jesus Cristo",
+        "ru": "Благодать Господа нашего Иисуса Христа",
+        "tr": "Rabbimiz İsa Mesih'in lütfu",
+        "ar": "نعمة ربنا يسوع المسيح",
+        "sw": "Neema ya Bwana wetu Yesu Kristo"
+      },
+      "context": "Apostolischer Segen"
+    },
+    "Amen, Amen": {
+      "category": "citations",
+      "translations": {
+        "de": "Amen, Amen",
+        "pl": "Amen, Amen",
+        "en": "Amen, Amen",
+        "uk": "Амінь, Амінь",
+        "it": "Amen, Amen",
+        "es": "Amén, amén",
+        "fr": "Amen, amen",
+        "pt": "Ámen, ámen",
+        "ru": "Аминь, аминь",
+        "tr": "Amin, amin",
+        "ar": "آمين، آمين",
+        "sw": "Amina, Amina"
+      }
+    },
+    "Ehre sei dem Vater": {
+      "category": "citations",
+      "translations": {
+        "de": "Ehre sei dem Vater",
+        "pl": "Chwała Ojcu",
+        "en": "Glory be to the Father",
+        "uk": "Слава Отцю",
+        "it": "Gloria al Padre",
+        "es": "Gloria al Padre",
+        "fr": "Gloire au Père",
+        "pt": "Glória ao Pai",
+        "ru": "Слава Отцу",
+        "tr": "Baba'ya yücelik olsun",
+        "ar": "المجد للآب",
+        "sw": "Utukufu kwa Baba"
+      },
+      "context": "Gloria Patri"
+    },
+    "Herr, erbarme dich": {
+      "category": "citations",
+      "translations": {
+        "de": "Herr, erbarme dich",
+        "pl": "Panie, zmiłuj się",
+        "en": "Lord, have mercy",
+        "uk": "Господи, помилуй",
+        "it": "Signore, pietà",
+        "es": "Señor, ten piedad",
+        "fr": "Seigneur, prends pitié",
+        "pt": "Senhor, tende piedade",
+        "ru": "Господи, помилуй",
+        "tr": "Rab, merhamet et",
+        "ar": "يا رب ارحم",
+        "sw": "Bwana, uhurumie"
+      },
+      "context": "Kyrie eleison"
+    },
+    "Dein Wort ist meines Fusses Leuchte": {
+      "category": "citations",
+      "translations": {
+        "de": "Dein Wort ist meines Fußes Leuchte",
+        "pl": "Twoje słowo jest lampą dla moich stóp",
+        "en": "Your word is a lamp for my feet",
+        "uk": "Слово Твоє — світильник нозі моїй",
+        "it": "La tua parola è lampada ai miei passi",
+        "es": "Lámpara es a mis pies tu palabra",
+        "fr": "Ta parole est une lampe à mes pieds",
+        "pt": "Lâmpada para os meus pés é a tua palavra",
+        "ru": "Слово Твоё — светильник ноге моей",
+        "tr": "Sözün adımlarım için çıradır",
+        "ar": "كلامك مصباح لرجلي",
+        "sw": "Neno lako ni taa ya miguu yangu"
+      },
+      "context": "Psalm 119:105"
+    },
+    "Fürchte dich nicht": {
+      "category": "citations",
+      "translations": {
+        "de": "Fürchte dich nicht",
+        "pl": "Nie bój się",
+        "en": "Fear not",
+        "uk": "Не бійся",
+        "it": "Non temere",
+        "es": "No temas",
+        "fr": "Ne crains pas",
+        "pt": "Não temas",
+        "ru": "Не бойся",
+        "tr": "Korkma",
+        "ar": "لا تخف",
+        "sw": "Usiogope"
+      }
+    },
+    "Ich bin bei euch alle Tage": {
+      "category": "citations",
+      "translations": {
+        "de": "Ich bin bei euch alle Tage",
+        "pl": "Ja jestem z wami przez wszystkie dni",
+        "en": "I am with you always",
+        "uk": "Я з вами по всі дні",
+        "it": "Io sono con voi tutti i giorni",
+        "es": "Yo estoy con vosotros todos los días",
+        "fr": "Je suis avec vous tous les jours",
+        "pt": "Eu estou convosco todos os dias",
+        "ru": "Я с вами во все дни",
+        "tr": "Ben her zaman sizinle birlikteyim",
+        "ar": "أنا معكم كل الأيام",
+        "sw": "Mimi nipo pamoja nanyi siku zote"
+      },
+      "context": "Matthäus 28:20"
+    },
+    "Kommet her zu mir alle": {
+      "category": "citations",
+      "translations": {
+        "de": "Kommet her zu mir alle",
+        "pl": "Przyjdźcie do mnie wszyscy",
+        "en": "Come to me, all",
+        "uk": "Прийдіть до мене всі",
+        "it": "Venite a me, voi tutti",
+        "es": "Venid a mí todos",
+        "fr": "Venez à moi, vous tous",
+        "pt": "Vinde a mim, todos",
+        "ru": "Придите ко Мне все",
+        "tr": "Hepiniz bana gelin",
+        "ar": "تعالوا إليّ يا جميع المتعبين",
+        "sw": "Njooni kwangu, ninyi nyote"
+      },
+      "context": "Matthäus 11:28"
+    },
+    "Gott ist die Liebe": {
+      "category": "citations",
+      "translations": {
+        "de": "Gott ist die Liebe",
+        "pl": "Bóg jest miłością",
+        "en": "God is love",
+        "uk": "Бог є любов",
+        "it": "Dio è amore",
+        "es": "Dios es amor",
+        "fr": "Dieu est amour",
+        "pt": "Deus é amor",
+        "ru": "Бог есть любовь",
+        "tr": "Tanrı sevgidir",
+        "ar": "الله محبة",
+        "sw": "Mungu ni upendo"
+      },
+      "context": "1. Johannes 4:8"
+    },
+    "Im Anfang war das Wort": {
+      "category": "citations",
+      "translations": {
+        "de": "Im Anfang war das Wort",
+        "pl": "Na początku było Słowo",
+        "en": "In the beginning was the Word",
+        "uk": "На початку було Слово",
+        "it": "In principio era il Verbo",
+        "es": "En el principio era el Verbo",
+        "fr": "Au commencement était la Parole",
+        "pt": "No princípio era o Verbo",
+        "ru": "В начале было Слово",
+        "tr": "Başlangıçta Söz vardı",
+        "ar": "في البدء كان الكلمة",
+        "sw": "Hapo mwanzo kulikuwako Neno"
+      },
+      "context": "Johannes 1:1"
+    },
+    "Also hat Gott die Welt geliebt": {
+      "category": "citations",
+      "translations": {
+        "de": "Also hat Gott die Welt geliebt",
+        "pl": "Tak Bóg umiłował świat",
+        "en": "For God so loved the world",
+        "uk": "Бо так полюбив Бог світ",
+        "it": "Dio ha tanto amato il mondo",
+        "es": "Porque de tal manera amó Dios al mundo",
+        "fr": "Car Dieu a tant aimé le monde",
+        "pt": "Porque Deus amou o mundo de tal maneira",
+        "ru": "Ибо так возлюбил Бог мир",
+        "tr": "Çünkü Tanrı dünyayı o kadar çok sevdi ki",
+        "ar": "لأنه هكذا أحبّ الله العالم",
+        "sw": "Kwa maana jinsi hii Mungu aliupenda ulimwengu"
+      },
+      "context": "Johannes 3:16"
+    },
+    "Ich bin der Weg und die Wahrheit und das Leben": {
+      "category": "citations",
+      "translations": {
+        "de": "Ich bin der Weg und die Wahrheit und das Leben",
+        "pl": "Ja jestem drogą i prawdą, i życiem",
+        "en": "I am the way, the truth, and the life",
+        "uk": "Я є дорога, і правда, і життя",
+        "it": "Io sono la via, la verità e la vita",
+        "es": "Yo soy el camino, y la verdad, y la vida",
+        "fr": "Je suis le chemin, la vérité et la vie",
+        "pt": "Eu sou o caminho, e a verdade e a vida",
+        "ru": "Я есмь путь и истина и жизнь",
+        "tr": "Yol, gerçek ve yaşam benim",
+        "ar": "أنا هو الطريق والحق والحياة",
+        "sw": "Mimi ndimi njia, na kweli, na uzima"
+      },
+      "context": "Johannes 14:6"
+    },
+    "eingeweiht": {
+      "category": "general",
+      "translations": {
+        "de": "eingeweiht",
+        "pl": "wtajemniczony",
+        "en": "initiated",
+        "uk": "посвячений",
+        "it": "iniziato a tutto",
+        "es": "iniciado",
+        "fr": "initié",
+        "pt": "iniciado",
+        "ru": "посвящённый",
+        "tr": "sırra ermiş",
+        "ar": "مكرّس",
+        "sw": "ameanzishwa"
+      },
+      "context": "spiritual initiation in Philippians 4:12, not secret society"
+    },
+    "gegründet": {
+      "category": "ecclesiology",
+      "translations": {
+        "de": "gegründet",
+        "pl": "założony",
+        "en": "founded",
+        "uk": "заснований",
+        "it": "fondato",
+        "es": "fundado",
+        "fr": "fondé",
+        "pt": "fundado",
+        "ru": "основанный",
+        "tr": "kurulmuş",
+        "ar": "تأسست",
+        "sw": "ilianzishwa"
+      },
+      "context": "church planting — Paul founded churches across the Roman Empire"
+    },
+    "Gemeindegründung": {
+      "category": "ecclesiology",
+      "translations": {
+        "de": "Gemeindegründung",
+        "pl": "zakładanie zboru",
+        "en": "church planting",
+        "uk": "заснування церкви",
+        "it": "fondazione di chiese",
+        "es": "plantación de iglesias",
+        "fr": "implantation d'église",
+        "pt": "plantação de igrejas",
+        "ru": "основание церкви",
+        "tr": "kilise kurma",
+        "ar": "تأسيس الكنائس",
+        "sw": "Kuanzisha Kanisa"
+      },
+      "context": "establishing new congregations"
+    },
+    "Elfenbeinturm": {
+      "category": "general",
+      "translations": {
+        "de": "Elfenbeinturm",
+        "pl": "wieża z kości słoniowej",
+        "en": "ivory tower",
+        "uk": "вежа зі слонової кістки",
+        "it": "torre d'avorio",
+        "es": "torre de marfil",
+        "fr": "tour d'ivoire",
+        "pt": "torre de marfim",
+        "ru": "башня из слоновой кости",
+        "tr": "fildişi kule",
+        "ar": "برج عاجي",
+        "sw": "mnara wa pembe za ndovu"
+      },
+      "context": "idiom — detachment from reality, academic isolation"
+    },
+    "Bodenhaftung": {
+      "category": "general",
+      "translations": {
+        "de": "Bodenhaftung",
+        "pl": "twardo stąpać po ziemi",
+        "en": "grounded in reality",
+        "uk": "приземленість",
+        "it": "con i piedi per terra",
+        "es": "con los pies en la tierra",
+        "fr": "les pieds sur terre",
+        "pt": "com os pés no chão",
+        "ru": "приземлённость",
+        "tr": "ayakları yere basan",
+        "ar": "واقعية",
+        "sw": "uhalisia"
+      },
+      "context": "idiom — pragmatism, being grounded, opposite of Elfenbeinturm"
+    },
+    "Wachsoldat": {
+      "category": "general",
+      "translations": {
+        "de": "Wachsoldat",
+        "pl": "żołnierz strażnik",
+        "en": "guard soldier",
+        "uk": "вартовий солдат",
+        "it": "soldato di guardia",
+        "es": "soldado de guardia",
+        "fr": "soldat de garde",
+        "pt": "soldado de guarda",
+        "ru": "караульный солдат",
+        "tr": "nöbetçi asker",
+        "ar": "حارس",
+        "sw": "askari wa zamu"
+      },
+      "context": "Roman guard soldier — Paul was chained to a rotating guard (Philippians 1:13). Wach = guard/watch, NOT wax"
+    },
+    "Umfeld": {
+      "category": "general",
+      "translations": {
+        "de": "Umfeld",
+        "pl": "otoczenie",
+        "en": "surroundings",
+        "uk": "оточення",
+        "it": "ambiente circostante",
+        "es": "entorno",
+        "fr": "entourage",
+        "pt": "ambiente",
+        "ru": "окружение",
+        "tr": "çevre",
+        "ar": "المحيط",
+        "sw": "mazingira"
+      },
+      "context": "surroundings, environment, circle of people around someone. NOT Mund (mouth)"
+    }
+  }
+}
