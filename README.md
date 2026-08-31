@@ -1,8 +1,9 @@
 # Barnaba
 
-Live sermon translation. Speech in Swiss German is transcribed, translated into
-multiple languages, and delivered as text and speech in real time. Built to serve
-Christian churches.
+Live sermon or speech translation. Speech in Swiss German is transcribed, translated into
+multiple languages, and delivered as speech in real time. Built to serve
+Christian churches, municipal assemblies, hospitals, schools, integration services and other non-commercial use cases.
+.
 
 ## Status
 
@@ -35,9 +36,8 @@ most people hit.
 ### Cost, order of magnitude
 
 A single A100 on demand at a large provider is **roughly 2–4 USD/hour** (2026,
-pay-as-you-go). For a ~90-minute service including cold start that is **a few to a dozen
--ish USD of GPU time**, *plus* translation and text-to-speech, which grow **linearly with
-the number of target languages**. **Check your own provider** — GPU pricing moves fast.
+pay-as-you-go). For a ~40-minute sermon/speech translation including cold start that is **ca. 10 CHF**, *including* translation and text-to-speech. Note: costs grow **linearly with
+the number of target languages** but they're pretty low anyway. **Check your own provider** — GPU pricing moves fast.
 These are third-party list prices, not a measurement of ours, and this project publishes
 no cost-per-minute figure of its own.
 
