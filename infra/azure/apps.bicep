@@ -41,7 +41,7 @@ param azureSpeechKey string
 @maxLength(6)
 param accessPin string
 @secure()
-@minLength(16)
+@minLength(13)
 param broadcasterPassword string
 @secure()
 @minLength(2)

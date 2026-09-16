@@ -72,6 +72,11 @@ here means the same thing a green run there does.
 
 ## Quick start on Azure
 
+**New here? Follow the step-by-step guide with screenshots:
+[docs/GETTING_STARTED.md](docs/GETTING_STARTED.md).** It covers deployment, the first
+start with the starter broadcaster password `Barnaba2026&!`, broadcasting, the listener
+app, stopping, and changing that password.
+
 Barnaba has one maintained deployment path: Azure Container Registry plus Azure Container
 Apps. Whisper runs on the `Consumption-GPU-NC24-A100` workload profile; gateway and
 control-plane run on the Consumption profile. Local Docker and local runtime deployment

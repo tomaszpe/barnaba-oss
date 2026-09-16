@@ -64,20 +64,22 @@ describe('Azure reference deployment contract', () => {
     expect(buildImages).not.toMatch(/\bdocker\s+(build|compose|run)\b/i);
   });
 
-  it('ships no deployable example credentials', () => {
+  it('ships no example credentials except the documented starter password', () => {
     const parameters = exampleParameters.parameters;
     for (const name of [
       'azureOpenAiKey',
       'azureSpeechKey',
       'accessPin',
-      'broadcasterPassword',
       'churchesConfigJson',
     ]) {
       expect(parameters[name].value, name).toBe('');
     }
+    // The starter password is public: docs/GETTING_STARTED.md prints it and tells the
+    // operator to change it after the first start. The template must still accept it.
+    expect(parameters.broadcasterPassword.value).toBe('Barnaba2026&!');
     expect(apps).toContain('@minLength(6)');
     expect(apps).toContain('@maxLength(6)');
-    expect(apps).toContain('@minLength(16)');
+    expect(apps).toContain('@minLength(13)');
   });
 
   it('has no supported local runtime or CLA gate', () => {

@@ -66,8 +66,13 @@ Whisper build. No image comes from a Barnaba-owned private registry.
 Copy `parameters.example.json` outside the repository, replace every placeholder and
 empty secure value, and do not commit the resulting file. The template rejects empty
 keys, a PIN that is not exactly six characters, and a broadcaster password shorter than
-16 characters. Pass secrets as secure deployment parameters or Key Vault references
+13 characters. Pass secrets as secure deployment parameters or Key Vault references
 according to your organization's policy.
+
+The example file already contains the starter broadcaster password `Barnaba2026&!`.
+It is public, because it is printed in this repository. Change it right after the
+first successful start, as described in
+[docs/GETTING_STARTED.md](../../docs/GETTING_STARTED.md#8-change-the-broadcaster-password).
 
 ```powershell
 az deployment group create `
