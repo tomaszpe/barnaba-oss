@@ -13,15 +13,17 @@ const appDir = path.dirname(fileURLToPath(new URL('../package.json', import.meta
 const dockerfile = readFileSync(path.join(appDir, 'Dockerfile.control-plane'), 'utf8');
 const startup = readFileSync(path.join(appDir, 'startup.sh'), 'utf8');
 
+// .mjs counts too: a check that followed only .js imports passed while the image
+// was missing feedbackRoutes.mjs, which control-plane.js imports at boot.
 const copiedFiles = new Set(
     [...dockerfile.matchAll(/^COPY\s+([^\s]+)\s/gm)]
         .map(match => match[1])
-        .filter(entry => entry.endsWith('.js')),
+        .filter(entry => /\.m?js$/.test(entry)),
 );
 
 const localImportsOf = (file) => {
     const source = readFileSync(path.join(appDir, file), 'utf8');
-    return [...source.matchAll(/from\s+'\.\/([a-zA-Z0-9_.-]+\.js)'/g)].map(match => match[1]);
+    return [...source.matchAll(/from\s+'\.\/([a-zA-Z0-9_.-]+\.m?js)'/g)].map(match => match[1]);
 };
 
 const reachableModules = () => {
@@ -48,6 +50,13 @@ describe('control-plane image contract', () => {
         expect(dockerfile).toMatch(/^COPY\s+public\/\s/m);
         expect(dockerfile).toMatch(/^COPY\s+control-plane\.js\s/m);
         expect(dockerfile).toMatch(/^COPY\s+startup\.sh\s/m);
+    });
+
+    it('overlays the control-plane pages after the shared public files', () => {
+        const shared = dockerfile.search(/^COPY\s+public\/\s+\.\/public\/$/m);
+        const overlay = dockerfile.search(/^COPY\s+public-control\/\s+\.\/public\/$/m);
+        expect(shared).toBeGreaterThanOrEqual(0);
+        expect(overlay).toBeGreaterThan(shared);
     });
 
     it('normalizes a Windows checkout before executing the Linux entrypoint', () => {

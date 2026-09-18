@@ -284,18 +284,13 @@
         }
 
         notify(outcome) {
-            if (!this._isUrgent(outcome)) return;
+            if (outcome !== 'play_started') return;
             this._schedule(0);
         }
 
-        _isUrgent(outcome) {
-            return ['play_started', 'play_completed', 'explicit_drop', 'superseded',
-                'null_audio', 'playback_error'].includes(outcome);
-        }
-
-        _hasPendingLifecycleOutcome() {
+        _hasPendingPlayStarted() {
             const pending = typeof this.peekPending === 'function' ? this.peekPending() : [];
-            return Array.isArray(pending) && pending.some((event) => this._isUrgent(event?.outcome));
+            return Array.isArray(pending) && pending.some((event) => event?.outcome === 'play_started');
         }
 
         _schedule(delayMs) {
@@ -307,7 +302,7 @@
                 } catch {
                     // The persisted ledger remains authoritative; retry below.
                 }
-                if (this._hasPendingLifecycleOutcome()) this._schedule(this.retryMs);
+                if (this._hasPendingPlayStarted()) this._schedule(this.retryMs);
             }, delayMs);
         }
     }

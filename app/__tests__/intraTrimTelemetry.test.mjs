@@ -69,11 +69,7 @@ async function runEmissionPath(text) {
         evalLog: record => evalRecords.push(record),
         // Flags declared ABOVE the slice in server.js, so the sandbox must supply
         // them. assertContextProvides() below fails loudly when a new one appears.
-        B4_CADENCE_V2_SHADOW_ENABLED: false,
-        B4_CADENCE_V2_APPLY_ENABLED: false,
-        B4_REPLAY_CAPTURE_ENABLED: false,
         B4_RHETORICAL_REPEAT_APPLY_ENABLED: false,
-        REP_SHADOW_ENABLED: false,
         FQF_HISTORY_COMMIT_ON_ACCEPT_ENABLED: false,
         FQF_FALLBACK_COORDINATOR_APPLY_RUNTIME_ENABLED: false,
         FQF_SOURCE_LINEAGE_ENABLED: false,

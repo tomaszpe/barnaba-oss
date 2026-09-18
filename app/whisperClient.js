@@ -1,3 +1,4 @@
+import { whisperIdentityHeaders } from './whisperIdentity.mjs';
 /**
  * Whisper Client - HTTP client for Python Whisper Service
  * Phase C: Integration with faster-whisper backend
@@ -273,7 +274,7 @@ function clearAudioBuffer(churchId) {
     if (sessionIds.has(churchId)) {
         const sessionId = sessionIds.get(churchId);
         // Fire and forget session cleanup
-        fetch(`${CONFIG.serviceUrl}/session/${sessionId}`, { method: 'DELETE' })
+        fetchWithRetry(`${CONFIG.serviceUrl}/session/${sessionId}`, { method: 'DELETE', maxRetries: 0 })
             .catch(() => {});
         sessionIds.delete(churchId);
     }
@@ -386,8 +387,11 @@ async function fetchWithRetry(url, options = {}) {
                 }
             }
 
+            const identityHeaders = await whisperIdentityHeaders(url);
             const response = await fetch(url, {
                 ...fetchOptions,
+                headers: { ...fetchOptions.headers, ...identityHeaders },
+                redirect: 'error',
                 signal: controller.signal
             });
 

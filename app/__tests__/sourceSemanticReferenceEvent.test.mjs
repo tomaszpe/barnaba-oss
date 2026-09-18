@@ -79,11 +79,7 @@ async function runEmissionPath(text, {
         evalLog: (record) => evalRecords.push(record),
         // Flags declared ABOVE the slice in server.js, so the sandbox must supply
         // them. assertContextProvides() below fails loudly when a new one appears.
-        B4_CADENCE_V2_SHADOW_ENABLED: false,
-        B4_CADENCE_V2_APPLY_ENABLED: false,
-        B4_REPLAY_CAPTURE_ENABLED: false,
         B4_RHETORICAL_REPEAT_APPLY_ENABLED: false,
-        REP_SHADOW_ENABLED: false,
         FQF_HISTORY_COMMIT_ON_ACCEPT_ENABLED: fqfEnabled,
         FQF_FALLBACK_COORDINATOR_APPLY_RUNTIME_ENABLED: applyEnabled,
         FQF_SOURCE_LINEAGE_ENABLED: lineageEnabled,
@@ -344,17 +340,11 @@ describe('shadow observation point', () => {
         });
 
         expect(enqueued).toHaveLength(1);
-        // Release 1.6.0 added the B4 cadence pair to the candidate. The three text
-        // fields below are what this test is about and stay pinned exactly; the
-        // cadence fields are asserted by shape, because b4CadenceAtMs is a wall clock
-        // reading and pinning it would make the test fail once a day for no reason.
         expect(enqueued[0].dedupHistoryCandidates).toEqual([{
             p2Text: original,
             b4Text: afterHold,
             emittedSourceText: afterHold,
             releaseMeta: expect.objectContaining({ sessionEpoch: 'epoch-test', releaseSeq: 42 }),
-            b4CadenceAtMs: expect.any(Number),
-            b4CadenceText: null,
         }]);
     });
 

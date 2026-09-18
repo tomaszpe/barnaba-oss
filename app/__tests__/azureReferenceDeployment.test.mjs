@@ -1,5 +1,7 @@
 import { describe, expect, it } from 'vitest';
-import { readFileSync } from 'node:fs';
+import { readdirSync, readFileSync } from 'node:fs';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 
 const read = (relativePath) => readFileSync(new URL(relativePath, import.meta.url), 'utf8')
   .replace(/\r\n/g, '\n');
@@ -13,6 +15,23 @@ const readme = read('../../README.md');
 const contributing = read('../../CONTRIBUTING.md');
 const controlPlane = read('../control-plane.js');
 const startup = read('../startup.sh');
+const controlPlaneDockerfile = read('../Dockerfile.control-plane');
+const referenceSettings = JSON.parse(read('../../infra/azure/reference-settings.json'));
+
+// Server-side sources of the gateway, used to prove that every reference setting is read by
+// the code it is passed to. A misspelt or retired name would look configured and change nothing.
+const appRoot = fileURLToPath(new URL('..', import.meta.url));
+const skippedDirectories = new Set(['node_modules', '__tests__', 'public', 'public-control', 'stress-test', 'scripts']);
+const serverSources = (directory) => readdirSync(directory, { withFileTypes: true }).flatMap((entry) => {
+  const full = path.join(directory, entry.name);
+  if (entry.isDirectory()) return skippedDirectories.has(entry.name) ? [] : serverSources(full);
+  return entry.isFile() && /\.m?js$/.test(entry.name) ? [full] : [];
+});
+const gatewayRuntime = serverSources(appRoot)
+  .filter((file) => path.resolve(file) !== path.resolve(appRoot, 'control-plane.js'))
+  .map((file) => readFileSync(file, 'utf8'))
+  .join('\n');
+const readsSetting = (source, name) => new RegExp(`\\b${name}\\b`).test(source);
 
 describe('Azure reference deployment contract', () => {
   it('uses ACR with managed identity and no registry admin credentials', () => {
@@ -76,10 +95,55 @@ describe('Azure reference deployment contract', () => {
     }
     // The starter password is public: docs/GETTING_STARTED.md prints it and tells the
     // operator to change it after the first start. The template must still accept it.
-    expect(parameters.broadcasterPassword.value).toBe('Barnaba2026&!');
+    // gettingStartedGuide.test.mjs checks that the guide prints this same value.
+    expect(parameters.broadcasterPassword.value.length).toBeGreaterThanOrEqual(13);
+    expect(parameters.broadcasterPassword.value).not.toMatch(/^__[A-Z_]+__$/);
     expect(apps).toContain('@minLength(6)');
     expect(apps).toContain('@maxLength(6)');
     expect(apps).toContain('@minLength(13)');
+  });
+
+  it('keeps listener feedback on its own Azure Files share with a single control-plane writer', () => {
+    const controlSection = apps.split("resource controlPlane '")[1];
+
+    expect(foundation).toContain("resource feedbackShare 'Microsoft.Storage/storageAccounts/fileServices/shares@");
+    expect(foundation).toMatch(/resource environmentFeedbackStorage [^{]+\{\s+parent: environment\s+name: 'listener-feedback'/);
+    expect(controlSection).toContain("{ name: 'FEEDBACK_STORAGE_ROOT', value: feedbackMountPath }");
+    expect(controlSection).toContain("{ name: 'FEEDBACK_ENVIRONMENT', value: feedbackEnvironment }");
+    expect(controlSection).toContain("{ name: 'FEEDBACK_PUBLIC_ORIGIN', value: controlPlaneUrl }");
+    expect(controlSection).toContain("storageName: 'listener-feedback'");
+    expect(controlSection).toContain('mountPath: feedbackMountPath');
+    expect(controlSection).toMatch(/minReplicas: 1\s+maxReplicas: 1/);
+    // The image drops to `node`; without these options the share is owned by root and every
+    // report fails to save.
+    expect(controlPlaneDockerfile).toContain('USER node');
+    expect(controlSection).toContain("mountOptions: 'uid=1000,gid=1000,");
+    // The control-plane refuses to save a report unless the storage root is itself the mount.
+    expect(apps).toContain("var feedbackMountPath = '/app/feedback'");
+    expect(controlPlane).toContain('requireMount: true');
+  });
+
+  it('passes the reference settings to the code that reads them', () => {
+    const gatewaySection = apps.split("resource gateway '")[1].split("resource controlPlane '")[0];
+    const controlSection = apps.split("resource controlPlane '")[1];
+
+    expect(apps).toContain("var referenceSettings = loadJsonContent('reference-settings.json')");
+    expect(gatewaySection).toContain('], listenerSettings, gatewaySettings)');
+    expect(controlSection).toContain('], listenerSettings)');
+    expect(Object.keys(referenceSettings.gateway).length).toBeGreaterThan(0);
+
+    for (const [name, value] of Object.entries(referenceSettings.gateway)) {
+      expect(typeof value, name).toBe('string');
+      expect(readsSetting(gatewayRuntime, name), `gateway code does not read ${name}`).toBe(true);
+    }
+    // The listener app reads its features from whichever surface served it, so both
+    // surfaces receive the same group.
+    for (const [name, value] of Object.entries(referenceSettings.listener)) {
+      expect(typeof value, name).toBe('string');
+      expect(readsSetting(gatewayRuntime, name), `gateway code does not read ${name}`).toBe(true);
+      expect(readsSetting(controlPlane, name), `control-plane does not read ${name}`).toBe(true);
+    }
+    expect(referenceSettings.gateway).not.toHaveProperty('EVAL_LOGGING_ENABLED');
   });
 
   it('has no supported local runtime or CLA gate', () => {

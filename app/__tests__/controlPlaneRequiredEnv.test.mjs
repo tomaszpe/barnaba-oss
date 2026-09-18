@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { spawn } from 'child_process';
 import { fileURLToPath } from 'url';
+import os from 'os';
 import path from 'path';
 
 /**
@@ -31,6 +32,10 @@ const COMPLETE_ENV = {
     WHISPER_SERVICE_URL: 'http://whisper.test:8000',
     GATEWAY_URL: 'http://gateway.test:8080',
     CONTROL_PLANE_PORT: '0',
+    // Listener feedback is stored by the Control Plane. The directory is only created on
+    // the first write, so startup needs a valid name and an absolute path, not a mount.
+    FEEDBACK_STORAGE_ROOT: path.join(os.tmpdir(), 'barnaba-feedback-env-test'),
+    FEEDBACK_ENVIRONMENT: 'test-site',
 };
 
 function startControlPlane(env) {
@@ -65,6 +70,8 @@ describe('Control Plane required environment variables', () => {
         ['BROADCASTER_PASSWORD', 'BROADCASTER_PASSWORD environment variable required'],
         ['WHISPER_SERVICE_URL', 'WHISPER_SERVICE_URL environment variable required'],
         ['GATEWAY_URL', 'GATEWAY_URL environment variable required'],
+        ['FEEDBACK_ENVIRONMENT', 'FEEDBACK_ENVIRONMENT must be a lowercase name'],
+        ['FEEDBACK_STORAGE_ROOT', 'An absolute feedback storage root is required'],
     ];
 
     for (const [name, message] of cases) {

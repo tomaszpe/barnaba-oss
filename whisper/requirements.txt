@@ -28,15 +28,21 @@ pydantic==2.13.4
 # transformers 4.36+ required for Whisper pipeline with Flash Attention 2
 #
 # KNOWN ADVISORIES ON THE PINNED VERSION - ACCEPTED RISK, WITH REASONS.
-# pip-audit reports four advisories against 4.57.5. Three are not on this service's path:
+# pip-audit reports five advisories against 4.57.5. Four are not on this service's path:
 #   PYSEC-2025-217  (CVE-2025-14929) X-CLIP CHECKPOINT CONVERSION script. Never invoked.
 #   PYSEC-2026-2288 (CVE-2026-1839)  Trainer._load_rng_state -> torch.load without
 #                                    weights_only. This service does inference only and
 #                                    never constructs a Trainer.
 #   PYSEC-2026-2290 (CVE-2026-5241)  LightGlue model loading path, introduced in 5.2.0.
 #                                    Neither the version nor the model applies.
+#   PYSEC-2026-3929 (CVE-2026-9856)  File write outside the target directory in
+#                                    save_pretrained() of a tokenizer or processor, through
+#                                    chat_template keys of a downloaded tokenizer_config.json.
+#                                    Fixed in 5.10.0. This service never saves a tokenizer or
+#                                    a processor: nothing in this repository calls
+#                                    save_pretrained().
 #
-# The fourth IS on this path and is the reason the pin below is a full SHA:
+# The fifth IS on this path and is the reason the pin below is a full SHA:
 #   PYSEC-2026-2289 (CVE-2026-4372, GHSA-29pf-2h5f-8g72) RCE in every version before
 #   5.3.0 via a malicious `config.json` carrying `_attn_implementation_internal` pointing
 #   at an attacker-controlled repository.
@@ -75,6 +81,17 @@ pydantic==2.13.4
 transformers==4.57.5
 tokenizers==0.22.2
 safetensors==0.8.0
+# ONE KNOWN ADVISORY ON THE PINNED accelerate - ACCEPTED RISK, WITH REASONS.
+#   PYSEC-2026-3804 (CVE-2026-69112) load_checkpoint_in_model() and
+#                                    load_checkpoint_and_dispatch() do not check the file
+#                                    names in the weight_map of a sharded checkpoint index:
+#                                    a crafted index can read files outside the model
+#                                    directory or block on a named pipe. Neither function is
+#                                    on this service's path: nothing in this repository
+#                                    imports accelerate, the pipeline is placed with
+#                                    `device=` and no `device_map`, and transformers 4.57.5
+#                                    mentions both functions only in a docstring. The model
+#                                    files come from the pinned revision described above.
 accelerate==1.14.0
 
 # =============================================================================

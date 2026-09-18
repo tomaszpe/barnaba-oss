@@ -240,7 +240,7 @@ function initGlossary() {
         const mappings = swissMapping.mappings[category];
         for (const [swiss, standard] of Object.entries(mappings)) {
             swissPatterns.push({
-                pattern: new RegExp(`\\b${escapeRegex(swiss)}\\b`, 'gi'),
+                pattern: tokenBoundedPhrasePattern(swiss),
                 swiss: swiss,
                 standard: standard
             });

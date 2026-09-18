@@ -65,9 +65,6 @@ const {
 } = whisperModule;
 
 import { buildWhisperRequestEvidence } from './whisperRequestTracker.js';
-import { createRepE3FallbackGuard } from './repE3FallbackGuard.js';
-const REP_E3_FALLBACK_GUARD_ENABLED = process.env.REP_E3_FALLBACK_GUARD_ENABLED === 'true';
-console.log(`[Config] REP_E3_FALLBACK_GUARD_ENABLED=${REP_E3_FALLBACK_GUARD_ENABLED}`);
 import {
     missingSourceLineage,
     projectSourceLineage,
@@ -75,7 +72,6 @@ import {
     sourceLineageTelemetry,
     sourceWordCount,
 } from './sourceLineage.js';
-import { createRepObserver } from './repObserver.js';
 
 /**
  * The ONLY place where `server.js` reads in-flight request state.
@@ -120,7 +116,6 @@ import {
     buildPipelineObserverMessage,
     buildSourceActivityMessage,
 } from './pipelineObserverContract.js';
-import { appendFeedback } from './feedbackLogService.js';
 import { dispatchPerLanguage } from './translationDispatch.js';
 import { logEmissionDecision } from './emissionDecisionMetrics.js';
 import { decideEmission, logEmissionControllerDecision } from './emissionController.js';
@@ -142,7 +137,6 @@ import {
     stampEmittedSourceIdentity,
 } from './emittedSourceIdentity.js';
 import { protectRhetoricalRepeat } from './b4RhetoricalRepeatPolicy.js';
-import { createB4CadencePolicy } from './b4CadencePolicy.js';
 import {
     allowedDropReasons,
     sanitizeDeliveryOutcomeBatch,
@@ -260,22 +254,6 @@ function evalLog(entry) {
     return written;
 }
 
-const REP_MODE = ['off', 'shadow'].includes(
-    String(process.env.ASR_REP_MODE || 'off').toLowerCase(),
-) ? String(process.env.ASR_REP_MODE || 'off').toLowerCase() : 'off';
-const REP_SHADOW_ENABLED = REP_MODE === 'shadow';
-const repObserver = createRepObserver({
-    mode: REP_MODE,
-    evalLog: (event) => {
-        evalLog(event);
-        // REP payload is already HMAC/anonymized unless the controlled DEV runner
-        // explicitly enables protected text and stores stdout in its ignored run folder.
-        console.log(`[REP_OBSERVER] ${JSON.stringify(event)}`);
-    },
-    ngramWords: process.env.ASR_REP_NGRAM_WORDS || '8',
-    protectedTextEnabled: process.env.ASR_REP_PROTECTED_TEXT_ENABLED === 'true',
-});
-
 if (UAT_PIPELINE_OBSERVER_ENABLED) {
     console.log(`[UAT_OBSERVER] Enabled (source VAD ${UAT_SOURCE_VAD_DBFS} dBFS)`);
 }
@@ -315,12 +293,7 @@ function nextEmissionId() { return ++_emissionCounter; }
 // see WHICH release path (smooth/warmup/pause/fallback) emits open clauses, not
 // just partialFallback (the only path Q1b governs today). Pure logging.
 const SOURCE_RELEASE_AUDIT_ENABLED = process.env.SOURCE_RELEASE_AUDIT_ENABLED !== 'false';
-// DEV-only sealed replay capture. Full sermon text and word-level lineage are
-// written only when the bounded operator explicitly enables this flag.
-const B4_REPLAY_CAPTURE_ENABLED = process.env.B4_REPLAY_CAPTURE_ENABLED === 'true';
 const B4_RHETORICAL_REPEAT_APPLY_ENABLED = process.env.B4_RHETORICAL_REPEAT_APPLY_ENABLED === 'true';
-const B4_CADENCE_V2_SHADOW_ENABLED = process.env.B4_CADENCE_V2_SHADOW_ENABLED === 'true';
-const B4_CADENCE_V2_APPLY_ENABLED = process.env.B4_CADENCE_V2_APPLY_ENABLED === 'true';
 const FQF_HISTORY_COMMIT_ON_ACCEPT_ENABLED = process.env.FQF_HISTORY_COMMIT_ON_ACCEPT_ENABLED === 'true';
 const FQF_FALLBACK_COORDINATOR_APPLY_ENABLED = process.env.FQF_FALLBACK_COORDINATOR_APPLY_ENABLED === 'true';
 const FQF_SOURCE_LINEAGE_ENABLED = process.env.FQF_SOURCE_LINEAGE_ENABLED === 'true';
@@ -349,13 +322,13 @@ function sourceLineageFields(releaseMeta) {
 }
 
 function buildSourceLineage(text, provenance) {
-    return FQF_SOURCE_LINEAGE_ENABLED || REP_SHADOW_ENABLED
+    return FQF_SOURCE_LINEAGE_ENABLED
         ? sourceLineageFromWhisper(text, provenance)
         : null;
 }
 
 function buildProjectedSourceLineage(originalText, emittedText, provenance) {
-    if (!FQF_SOURCE_LINEAGE_ENABLED && !REP_SHADOW_ENABLED) return null;
+    if (!FQF_SOURCE_LINEAGE_ENABLED) return null;
     const originalLineage = sourceLineageFromWhisper(originalText, provenance);
     return projectSourceLineage(originalText, emittedText, originalLineage);
 }
@@ -412,7 +385,6 @@ function ensureFallbackState(churchId) {
 
 function createFallbackState() {
     return {
-        repE3Guard: createRepE3FallbackGuard({ enabled: REP_E3_FALLBACK_GUARD_ENABLED }),
         lastConfirmedAt: Date.now(),
         lastFallbackText: '',
         lastPartial: '',
@@ -429,6 +401,7 @@ function createFallbackState() {
         latestStableProvenance: null,
         latestLatencyTxId: null,
         deadlineFallbackInFlight: false,
+        fallbackSpanVersion: 0,
         // Refined A2.7 (10.07.2026): source-span state for provisional deadline emissions.
         // Which field the supersede actually MATCHES ON depends on the arm - see the
         // arm description below. Do not describe either field as inert:
@@ -447,8 +420,8 @@ function createFallbackState() {
         //     lastDeadlineEmitAt = staleness clock so a never-closed span does not supersede a
         //                       much-later unrelated final.
         //
-        // Both arms: emittedSourceNorm resets on any real non-deadline emission (that reset is
-        // BASELINE behavior too - not a review-fix; do not "fix" it).
+        // Baseline: close the delta span at confirmed ingress, before any buffered release.
+        // reviewFixes: retain its existing non-deadline-release reset semantics.
         emittedSourceNorm: [],
         deadlineLedger: [],
         lastDeadlineEmitAt: 0,
@@ -482,6 +455,7 @@ function routeDeadlineAgeMs(fb, routeKey, nowMs) {
 }
 
 async function emitDeadlineFallback(churchId, fb, overdueRoutes, nowMs) {
+    const fallbackSpanVersion = fb.fallbackSpanVersion;
     const phaseState = state.smoothPhases.get(churchId);
     if (phaseState?.phase !== 'streaming') return false;
     const maxRouteAgeMs = Math.max(...overdueRoutes.map(r => r.ageMs));
@@ -517,12 +491,6 @@ async function emitDeadlineFallback(churchId, fb, overdueRoutes, nowMs) {
         const lineageProvenance = payload.mode === 'deadline_stable'
             ? fb.latestStableProvenance
             : fb.latestPartialProvenance;
-        const e3Decision = fb.repE3Guard.deadlineDecision({ text: payload.text, provenance: lineageProvenance });
-        if (REP_E3_FALLBACK_GUARD_ENABLED) {
-            evalLog({ stage: 'rep_e3_fallback_guard', churchId, ...e3Decision,
-                origin: 'deadline_fallback', decode_id: lineageProvenance?.decodeId ?? null });
-        }
-        if (e3Decision.applied) return false;
         let release = accumulator.add(payload.text, false,
             buildProjectedSourceLineage(lineageSourceText, payload.text, lineageProvenance));
         if (!release) release = accumulator.flush();
@@ -556,10 +524,14 @@ async function emitDeadlineFallback(churchId, fb, overdueRoutes, nowMs) {
 
         if (!config.deadlineFallback.reviewFixesEnabled) {
             const emittedNorm = dpNormWords(payload.text);
-            fb.emittedSourceNorm = [...(fb.emittedSourceNorm || []), ...emittedNorm];
+            if (fb.fallbackSpanVersion === fallbackSpanVersion) {
+                fb.emittedSourceNorm = [...(fb.emittedSourceNorm || []), ...emittedNorm];
+            }
             fb.deadlineLedger = (fb.deadlineLedger || []).filter(
                 e => nowMs - e.at <= config.deadlineFallback.supersedeTtlMs);
             fb.deadlineLedger.push({ norm: emittedNorm, text: payload.text, at: nowMs, superseded: false });
+            // Keep the completed entry for final supersede, but do not overwrite a newer span.
+            if (fb.fallbackSpanVersion !== fallbackSpanVersion) return true;
         }
 
         fb.lastFallbackText = payload.text;
@@ -1784,13 +1756,6 @@ function createDedupHistoryCommitter({
             for (const candidate of sourceCandidates) {
                 commitP2History(candidate.p2Text, churchId);
                 commitB4History(candidate.b4Text, churchId);
-                if (candidate.b4CadenceText) {
-                    commitB4CadenceHistory(
-                        candidate.b4CadenceText,
-                        churchId,
-                        candidate.b4CadenceAtMs,
-                    );
-                }
                 // Queue merges preserve candidates in FIFO order. Acknowledge each
                 // release immediately after its own P2/B4 commit so a pending fallback
                 // is projected against the winner, not a history containing the loser.
@@ -3035,6 +3000,10 @@ app.get('/api/control/config', (req, res) => {
     res.json({
         preserveTtsPitch: config.clientFeatures.preserveTtsPitch,
         instantFeedback: config.clientFeatures.instantFeedback,
+        feedback: {
+            url: process.env.APP_URL ? new URL('/api/feedback', process.env.APP_URL).href : null,
+            clientVersion: 'listener-feedback-v3',
+        },
         listenerPlaybackPolicyV2: config.clientFeatures.listenerPlaybackPolicyV2,
         listenerBoundedScheduler: config.clientFeatures.listenerBoundedScheduler,
         listenerCatchupMaxRate: config.clientFeatures.listenerCatchupMaxRate,
@@ -3724,47 +3693,8 @@ app.post('/api/latency-stats/reset', requireAdminAuth, requireAdminCsrf, (req, r
     res.json({ success: true, message: 'Latency statistics reset' });
 });
 
-const feedbackRateLimits = new Map();
-const FEEDBACK_RATE_LIMIT = { maxRequests: 10, windowMs: 60000 };
-
-function allowFeedback(sessionId) {
-    const now = Date.now();
-    const current = feedbackRateLimits.get(sessionId);
-    if (!current || now >= current.resetAt) {
-        if (feedbackRateLimits.size > 1000) {
-            for (const [key, value] of feedbackRateLimits) {
-                if (now >= value.resetAt) feedbackRateLimits.delete(key);
-            }
-        }
-        feedbackRateLimits.set(sessionId, { count: 1, resetAt: now + FEEDBACK_RATE_LIMIT.windowMs });
-        return true;
-    }
-    current.count += 1;
-    return current.count <= FEEDBACK_RATE_LIMIT.maxRequests;
-}
-
-/** POST /api/feedback - persist listener instant-feedback report to /app/logs. */
-app.post('/api/feedback', async (req, res) => {
-    if (!config.clientFeatures.instantFeedback) {
-        return res.status(404).json({ success: false, error: 'Not found' });
-    }
-    const sessionId = typeof req.body?.sessionId === 'string' ? req.body.sessionId.trim() : '';
-    if (!sessionId) {
-        return res.status(400).json({ success: false, error: 'sessionId is required' });
-    }
-    if (!allowFeedback(sessionId)) {
-        return res.status(429).json({ success: false, error: 'Too many feedback reports' });
-    }
-    try {
-        await appendFeedback(req.body);
-        res.status(201).json({ success: true });
-    } catch (error) {
-        if (/required|invalid/.test(error.message)) {
-            return res.status(400).json({ success: false, error: error.message });
-        }
-        console.error('[Feedback] Write error:', error.message);
-        res.status(500).json({ success: false, error: 'Unable to save feedback' });
-    }
+app.post('/api/feedback', (req, res) => {
+    res.status(410).json({ error: 'Please reload the listener to send feedback directly to control-plane' });
 });
 
 /** Render the admin recorder's captured emission into ONE MP3 with real pauses baked in. */
@@ -4819,13 +4749,6 @@ async function handleBinaryPCMAudio(ws, data, clientState) {
             // (LocalAgreement verified = stable, won't change)
             if (result.confirmed && result.hasNew) {
                 const confirmedSourceLineage = buildSourceLineage(result.confirmed, result.provenance);
-                if (typeof repObserver !== 'undefined') repObserver.observe({
-                    stage: 'asr_gateway_ingress',
-                    churchId,
-                    text: result.confirmed,
-                    lineage: confirmedSourceLineage,
-                    decodeId: result.provenance?.decodeId ?? null,
-                });
                 state.stats.whisperTranscriptions++;
                 updateWhisperActivity(); // Auto-shutdown tracking
                 console.log(`[Whisper] ${churchId} CONFIRMED: ${result.confirmed.length} characters`);
@@ -4855,6 +4778,17 @@ async function handleBinaryPCMAudio(ws, data, clientState) {
                     // Drop the tracked tail and release the hard-cap clock so it cannot anchor a hold
                     // that no longer corresponds to the current confirmed prefix.
                     clearHeldTail(fb);
+                    if (config.deadlineFallback.provisionalEnabled && !config.deadlineFallback.reviewFixesEnabled) {
+                        // Retire the cached hypothesis before a confirmed batch can wait or yield.
+                        fb.fallbackSpanVersion++;
+                        fb.latestPartial = '';
+                        fb.latestStable = '';
+                        fb.latestPartialAt = null;
+                        fb.latestPartialProvenance = null;
+                        fb.latestStableProvenance = null;
+                        fb.latestLatencyTxId = null;
+                        fb.emittedSourceNorm = [];
+                    }
                 }
 
                 // Notify broadcaster of confirmed transcription (always, regardless of mode)
@@ -5157,10 +5091,8 @@ async function handleBinaryPCMAudio(ws, data, clientState) {
                                         //  dispatchIndependent -> translation/broadcast eval records) so D1
                                         //  measures the REAL per-language open-cut exposure (was missing -> the
                                         //  tag never reached translation, partial_emission_rate_pl read ~0).
-                                        await fb.repE3Guard.trackPartial({
-                                            text: release.text, provenance: fb.latestPartialProvenance,
-                                        }, () => processCompleteSentence(churchId, release.text, latencyTxId,
-                                            { emissionCompleteness, origin: 'partial_fallback', releaseReason: 'age_budget_fallback', sourceLineage: release.sourceLineage }));
+                                        await processCompleteSentence(churchId, release.text, latencyTxId,
+                                            { emissionCompleteness, origin: 'partial_fallback', releaseReason: 'age_budget_fallback', sourceLineage: release.sourceLineage });
                                     }
                                 }
 
@@ -5686,28 +5618,6 @@ function jaccardSimilarity(a, b) {
 const B4_HISTORY_SIZE = 3;
 const B4_MIN_EMISSION_WORDS = 6;
 const B4_MIN_CONTENT_STEMS = 3;
-const b4CadencePolicies = new Map();
-
-function getB4CadencePolicy(churchId) {
-    let policy = b4CadencePolicies.get(churchId);
-    if (!policy) {
-        policy = createB4CadencePolicy();
-        b4CadencePolicies.set(churchId, policy);
-    }
-    return policy;
-}
-
-function decideB4Cadence(text, churchId, atMs) {
-    return getB4CadencePolicy(churchId).decide(text, atMs);
-}
-
-function commitB4CadenceHistory(text, churchId, atMs) {
-    return getB4CadencePolicy(churchId).commit(text, atMs);
-}
-
-function clearB4CadenceHistory(churchId) {
-    return b4CadencePolicies.delete(churchId);
-}
 
 function jaccardOverlapGuard(text, churchId, { deferCommit = false, silent = false } = {}) {
     if (!text) return { text, action: 'emit' };
@@ -5954,34 +5864,13 @@ async function processCompleteSentence(churchId, text, latencyTxId = null, optio
     console.log(`[STT] ${churchId}: processing ${text.length} characters`);
     const sourceReleaseText = text;
     const sourceReleaseLineage = FQF_SOURCE_LINEAGE_ENABLED
-        || (typeof REP_SHADOW_ENABLED !== 'undefined' && REP_SHADOW_ENABLED)
         ? (options.sourceLineage || missingSourceLineage('process_entry_unscoped'))
         : null;
     // Audit the source release BEFORE any filter mutates it (shadow).
     let releaseMeta = logSourceReleaseAudit(churchId, text, options.origin, options.releaseReason, options);
-    if (typeof repObserver !== 'undefined') repObserver.observe({
-        stage: 'asr_smooth_release',
-        churchId,
-        text,
-        lineage: sourceReleaseLineage,
-        releaseMeta,
-    });
     const releaseOriginalWordCount = String(text || '').trim().split(/\s+/).filter(Boolean).length;
     const trimEvents = [];
     const logSourceReleaseOutcome = (outcome, blockStage = null, extra = {}) => {
-        const projectedLineage = sourceReleaseLineage
-            ? projectSourceLineage(sourceReleaseText, text, sourceReleaseLineage)
-            : null;
-        if (typeof repObserver !== 'undefined') repObserver.observe({
-            stage: 'source_release_outcome',
-            churchId,
-            text,
-            lineage: projectedLineage,
-            releaseMeta,
-            outcome,
-            blockStage,
-            filterDecisions: trimEvents.map((event) => event.stage),
-        });
         evalLog({ stage: 'source_release_outcome', churchId, ...releaseIdentityFields(releaseMeta), outcome, block_stage: blockStage, origin: releaseMeta?.origin ?? options.origin ?? null, release_reason: releaseMeta?.releaseReason ?? options.releaseReason ?? null, source_len: releaseMeta?.sourceLen ?? String(text || '').length, ...extra });
     };
 
@@ -5995,6 +5884,7 @@ async function processCompleteSentence(churchId, text, latencyTxId = null, optio
         const fbSup = state.fallbackState.get(churchId);
         if (fbSup) {
             const reviewFixes = config.deadlineFallback.reviewFixesEnabled;
+            const resetDeltaOnRelease = reviewFixes || options.origin === 'partial_fallback';
             const nowSup = Date.now();
             if (reviewFixes) {
                 // Staleness: a span that never closed with a real emission must not supersede a much
@@ -6031,8 +5921,7 @@ async function processCompleteSentence(churchId, text, latencyTxId = null, optio
                     evalLog({ stage: 'deadline_supersede', churchId, action: 'suppress', provisional_final_replay: 1, covered_words: decision.coveredWords ?? null, tail_words: decision.tailWords ?? null, source_hash: releaseMeta?.sourceHash ?? null });
                     logSourceReleaseOutcome('blocked_pre_queue', 'deadline_supersede', { reason: 'provisional_final_replay' });
                     if (latencyTxId) completeWhisperOnlyTracking(latencyTxId);
-                    // Baseline consumed by the provisional; the real final closed the span.
-                    fbSup.emittedSourceNorm = [];
+                    if (resetDeltaOnRelease) fbSup.emittedSourceNorm = [];
                     if (reviewFixes) fbSup.deadlineLedger = [];
                     return;
                 }
@@ -6042,11 +5931,8 @@ async function processCompleteSentence(churchId, text, latencyTxId = null, optio
                     text = decision.text;
                 }
             }
-            // New real source release ends the current starvation span -> reset the delta baseline
-            // so the next deadline computes its stable-delta from scratch (never re-emits old head).
-            // 4.52 resets ONLY emittedSourceNorm here and lets deadlineLedger age out by TTL
-            // (per-entry) - wiping the ledger is a reviewFixes behavior.
-            fbSup.emittedSourceNorm = [];
+            // Keep the synchronous partial-fallback reset; confirmed batches close at ingress.
+            if (resetDeltaOnRelease) fbSup.emittedSourceNorm = [];
             if (reviewFixes) fbSup.deadlineLedger = [];
         }
     }
@@ -6159,65 +6045,7 @@ async function processCompleteSentence(churchId, text, latencyTxId = null, optio
     // B4-CTX (02.03.2026): Preserve trimmed prefix as source context for translation
     const preB4Text = text;
     const b4HistoryCandidate = text;
-    const legacyB4Result = jaccardOverlapGuard(text, churchId, { deferCommit: deferDedupHistoryCommit });
-    const b4CadenceAtMs = Date.now();
-    const b4CadenceActive = B4_CADENCE_V2_SHADOW_ENABLED || B4_CADENCE_V2_APPLY_ENABLED;
-    const b4CadenceResult = b4CadenceActive
-        ? decideB4Cadence(text, churchId, b4CadenceAtMs)
-        : null;
-    if (b4CadenceResult && !deferDedupHistoryCommit && b4CadenceResult.action !== 'skip') {
-        commitB4CadenceHistory(b4CadenceResult.text, churchId, b4CadenceAtMs);
-    }
-    const jaccardResult = B4_CADENCE_V2_APPLY_ENABLED ? b4CadenceResult : legacyB4Result;
-    if (b4CadenceActive) {
-        evalLog({
-            stage: 'b4_cadence_v2_shadow',
-            churchId,
-            ...releaseIdentityFields(releaseMeta),
-            legacy_action: legacyB4Result.action,
-            candidate_action: b4CadenceResult.action,
-            candidate_reason: b4CadenceResult.reason,
-            candidate_removed_words: b4CadenceResult.removedWords ?? 0,
-            candidate_best_prefix_words: b4CadenceResult.bestPrefix ?? 0,
-            candidate_non_prefix_safe: b4CadenceResult.nonPrefixSafe === true,
-            policy_applied: B4_CADENCE_V2_APPLY_ENABLED,
-            history_max_age_ms: getB4CadencePolicy(churchId).config.maxAgeMs,
-            history_size: getB4CadencePolicy(churchId).config.historySize,
-        });
-    }
-    if (typeof B4_REPLAY_CAPTURE_ENABLED !== 'undefined' && B4_REPLAY_CAPTURE_ENABLED) {
-        const projectedB4Lineage = sourceReleaseLineage
-            ? projectSourceLineage(sourceReleaseText, preB4Text, sourceReleaseLineage)
-            : null;
-        evalLog({
-            stage: 'b4_replay_capture',
-            churchId,
-            ...releaseIdentityFields(releaseMeta),
-            origin: releaseMeta?.origin ?? options.origin ?? null,
-            release_reason: releaseMeta?.releaseReason ?? options.releaseReason ?? null,
-            source_text: sourceReleaseText,
-            p2_input_text: p2HistoryCandidate,
-            p2_action: crossResult.action,
-            b4_input_text: preB4Text,
-            b4_action: jaccardResult.action,
-            b4_output_text: jaccardResult.text,
-            b4_legacy_action: legacyB4Result.action,
-            b4_cadence_v2_action: b4CadenceResult?.action ?? null,
-            b4_cadence_v2_reason: b4CadenceResult?.reason ?? null,
-            b4_cadence_v2_applied: B4_CADENCE_V2_APPLY_ENABLED,
-            source_lineage: projectedB4Lineage ? {
-                status: projectedB4Lineage.status ?? null,
-                reason: projectedB4Lineage.reason ?? null,
-                logicalChunkIds: Array.isArray(projectedB4Lineage.logicalChunkIds)
-                    ? [...projectedB4Lineage.logicalChunkIds]
-                    : [],
-                wordCount: projectedB4Lineage.wordCount ?? null,
-                wordSpans: Array.isArray(projectedB4Lineage.wordSpans)
-                    ? projectedB4Lineage.wordSpans.map((span) => ({ ...span }))
-                    : [],
-            } : null,
-        });
-    }
+    const jaccardResult = jaccardOverlapGuard(text, churchId, { deferCommit: deferDedupHistoryCommit });
     qualityTracker.trackFilterAction(churchId, 'B4', jaccardResult.action);
     if (jaccardResult.action === 'trim') {
         trimEvents.push({
@@ -6227,11 +6055,8 @@ async function processCompleteSentence(churchId, text, latencyTxId = null, optio
         });
     }
     if (jaccardResult.action === 'skip') {
-        const reason = B4_CADENCE_V2_APPLY_ENABLED
-            ? `cadence_v2:${jaccardResult.reason}`
-            : 'jaccard overlap';
-        qualityTracker.trackPipelineBlock(churchId, 'B4', reason);
-        logSourceReleaseOutcome('blocked_pre_queue', 'B4', { reason });
+        qualityTracker.trackPipelineBlock(churchId, 'B4', 'jaccard overlap');
+        logSourceReleaseOutcome('blocked_pre_queue', 'B4', { reason: 'jaccard overlap' });
         if (latencyTxId) completeWhisperOnlyTracking(latencyTxId);
         return;
     }
@@ -6247,10 +6072,7 @@ async function processCompleteSentence(churchId, text, latencyTxId = null, optio
     // that context for accurate theological translation (e.g., Philipper 2,6-7 → kenosis)
     let b4SourceContext = null;
     if (jaccardResult.action === 'trim' && preB4Text !== text) {
-        let prefix = jaccardResult.contextText
-            || (jaccardResult.nonPrefixSafe
-                ? ''
-                : preB4Text.slice(0, preB4Text.length - text.length).trim());
+        let prefix = preB4Text.slice(0, preB4Text.length - text.length).trim();
         // Limit to 200 words (closest to suffix = most relevant context)
         const prefixWords = prefix.split(/\s+/);
         if (prefixWords.length > 200) {
@@ -6358,17 +6180,6 @@ async function processCompleteSentence(churchId, text, latencyTxId = null, optio
             removal_ratio: Number((intraResult.removalRatio || 0).toFixed(4)),
         });
     }
-
-    if (typeof repObserver !== 'undefined') repObserver.observe({
-        stage: 'asr_source_filter_output',
-        churchId,
-        text,
-        lineage: sourceReleaseLineage
-            ? projectSourceLineage(sourceReleaseText, text, sourceReleaseLineage)
-            : null,
-        releaseMeta,
-        filterDecisions: trimEvents.map((event) => event.stage),
-    });
 
     // P2.7 (05.08.2026): pre-policy reference for the R denominator.
     // Emitted for EVERY post-filter release — regardless of shadow/apply decisions, active
@@ -6542,10 +6353,6 @@ async function processCompleteSentence(churchId, text, latencyTxId = null, optio
                 dedupHistoryCandidates: deferDedupHistoryCommit ? [{
                     p2Text: p2HistoryCandidate,
                     b4Text: b4HistoryCandidate,
-                    b4CadenceText: b4CadenceResult && b4CadenceResult.action !== 'skip'
-                        ? b4CadenceResult.text
-                        : null,
-                    b4CadenceAtMs,
                     emittedSourceText: text,
                     releaseMeta,
                 }] : null,
@@ -6660,7 +6467,7 @@ async function processCompleteSentence(churchId, text, latencyTxId = null, optio
                 observedBeforeEnqueue: false,
             });
         }
-        return enqueueResult;
+        if (!enqueueResult.acceptedForTranslation) return;
     } else {
         console.log(`[DEBUG] ⚠️ SKIPPING TRANSLATION - no active languages for ${churchId}`);
         logSourceReleaseOutcome('blocked_pre_queue', 'no_active_languages', { reason: 'no active listener languages' });
@@ -6731,14 +6538,6 @@ function handleSubscribe(ws, message, clientState) {
     }
 
     const count = churchSubs.get(language).size;
-    evalLog({
-        stage: 'listener_session_bound',
-        churchId,
-        lang: language,
-        listener_session_id: listenerSessionId,
-        authenticated: true,
-        tracked: listenerSessionId !== null,
-    });
     console.log(`[CLIENT] ✅ Subscribed: ${churchId}/${language} (${count} listeners)`);
 
     // DEBUG: Show all subscriptions state
@@ -6750,8 +6549,6 @@ function handleSubscribe(ws, message, clientState) {
         type: 'subscribed',
         churchId,
         language,
-        listenerSessionId,
-        playoutTracking: listenerSessionId !== null,
         languageName: config.languageNames[language]
     }));
 
@@ -6951,8 +6748,6 @@ function handleDisconnect(ws, clientState) {
                     },
                     flushSummary: () => qualityTracker.flushSessionSummary(churchId, 'disconnect_drain'),
                     cleanup: () => {
-                        if (typeof repObserver !== 'undefined') repObserver.closeChurch(churchId);
-                        clearB4CadenceHistory(churchId);
                         fallbackCoordinatorApplyWaiters.failOpenChurch(churchId);
                         state.churches.delete(churchId);
                         state.emissionNgramHistory.delete(churchId);
@@ -7023,8 +6818,6 @@ function handleDisconnect(ws, clientState) {
 
         // Quality tracking: flush session summary + MD report BEFORE state cleanup
         qualityTracker.flushSessionSummary(churchId, 'disconnect');
-        if (typeof repObserver !== 'undefined') repObserver.closeChurch(churchId);
-        clearB4CadenceHistory(churchId);
 
         state.churches.delete(churchId);
         // HOTFIX 7.1: Do NOT delete subscriptions map on broadcaster disconnect.

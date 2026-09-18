@@ -108,6 +108,7 @@ const fakeAudioElement = ({ duration = 5.75, preservesPitch = true, rateCap = In
         get playbackRate() { return rateReadback === undefined ? assignedRate : rateReadback; },
         set playbackRate(value) { assignedRate = Math.min(Number(value), rateCap); },
         addEventListener(event, callback) { listeners[event] = callback; },
+        removeEventListener(event, callback) { if (listeners[event] === callback) delete listeners[event]; },
         play() { if (autoEnd) listeners.ended?.(); return Promise.resolve(); },
         fire(event) { listeners[event]?.(); },
     };

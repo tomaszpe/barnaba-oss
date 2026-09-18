@@ -36,7 +36,7 @@ Barnaba runs as three Azure Container Apps:
 
 | App | What it does | When it runs |
 |---|---|---|
-| **Control panel** (`<prefix>-control`) | The operator's web page. Starts and stops the other two apps, shows the QR code and PIN for listeners, and sends the preacher's audio. It also serves the listener app. | Always |
+| **Control panel** (`<prefix>-control`) | The operator's web page. Starts and stops the other two apps, shows the QR code and PIN for listeners, and sends the preacher's audio. It also serves the listener app and saves the problems that listeners report. | Always |
 | **Gateway** (`<prefix>-gateway`) | Receives the audio, sends the recognised text for translation and speech, and delivers translated speech to listeners' phones. | Only during a service |
 | **Whisper** (`<prefix>-whisper`) | Speech recognition for Swiss German on an NVIDIA A100 GPU. | Only during a service |
 
@@ -87,7 +87,8 @@ every command below.
 ### 3.2 Create the foundation
 
 The foundation contains the container registry, the Container Apps environment with the
-A100 profile, a file share that caches the speech model, and the managed identities.
+A100 profile, a file share that caches the speech model, a file share for listener
+reports, and the managed identities.
 
 ```powershell
 git clone https://github.com/tomaszpe/barnaba-oss.git
@@ -238,6 +239,13 @@ the PIN. On the last screen they can switch the language and the voice at any ti
 app open and the screen unlocked: switching to another app or locking the phone stops
 the translation.
 
+The blue button at the right edge of the listening screen opens **Report an issue**:
+*Wrong word*, *Pause too long*, *Translation is falling behind* or *Other*. **Send
+feedback** in the menu (☰) takes a longer comment and, if the listener wants a reply, an
+email address. The control panel saves the reports in the `listener-feedback` file share
+of the storage account from step 3.2. Only people who have access to that storage account
+can read them.
+
 ## 7. Stop Barnaba
 
 After the service click **STOP BARNABA** and confirm. This stops Whisper and the gateway
@@ -293,8 +301,8 @@ Good to know:
 
 | What you see | What it means and what to do |
 |---|---|
-| You click **START BARNABA**, the password prompt closes and nothing happens | The password was wrong. The panel shows no message in this case and keeps the wrong password for the next click. **Reload the page** (F5) and type the password again. If you have just changed the password, check that you restarted the control panel (step 8.3). |
-| Nothing happens after many attempts in a row | The control panel accepts at most 10 requests per minute from one address. Wait one minute, reload the page and try again. |
+| `Control login failed: Invalid password` | The password was wrong. Click **START BARNABA** again and type it once more. If you have just changed the password, check that you restarted the control panel (step 8.3). |
+| `Control login failed: Too many requests. Please try again later.` | The control panel accepts at most 10 requests per minute from one address. Wait one minute and try again. |
 | `Quick Start failed: Waiting for Whisper Azure readiness and model warm-up timed out after 720s` | Azure did not provide a GPU within 12 minutes. Check your A100 quota for the region and try again. |
 | The congregation list is empty | `churchesConfigJson` is missing or not valid JSON. Fix it as in step 3.4 and deploy again. |
 | Listeners do not see the congregation | The broadcaster is not connected. Check that the **Broadcaster** section shows **Connected**. |

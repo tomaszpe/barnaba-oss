@@ -673,7 +673,7 @@
     <script src="https://cdn.jsdelivr.net/npm/twemoji@14.0.2/dist/twemoji.min.js"
             integrity="sha384-32KMvAMS4DUBcQtHG6fzADguo/tpN1Nh6BAJa2QqZc6/i0K+YPQE+bWiqBRAWuFs"
             crossorigin="anonymous" defer></script>
-    <script src="listenerDelivery.js"></script>
+    <script src="qaReplayCapture.js"></script>
     <script>
         // Initial parse once the DOM has loaded. Twemoji will be available (defer = after HTML parse).
         // If the CDN is unavailable the emoji stay in fallback form (DE on Windows, flags on iOS/Android) - graceful.
@@ -692,24 +692,6 @@
     <link rel="stylesheet" href="/feedback.css?v=3">
 </head>
 <body>
-    <!-- MUST stay ABOVE the inline script block below. That script runs during parsing and binds
-         both elements with `const ... = document.getElementById(...)`. While they sat at the
-         end of <body>, both consts resolved to null for the page's whole lifetime, so the
-         HTMLAudio playback path, the pitch policy, the autoplay unlock and the keep-alive
-         were dead code — every chunk fell through to WebAudio, which forces 1.0x whenever
-         pitch preservation is on. Measured 01.08.2026: web_audio 139/139, effective rate
-         1.0 in all of them. -->
-
-    <!-- Near-silent audio loop for background keep-alive (27.03.2026)
-         -60dB white noise WAV keeps mobile browsers from suspending audio pipeline.
-         True silence is detected by iOS and causes session revoke.
-         WAV generated programmatically in JS — see generateKeepAliveBlob(). -->
-    <audio id="silentAudio" loop preload="auto" playsinline webkit-playsinline></audio>
-
-    <!-- Dedicated media element for server TTS playback.
-         More reliable than WebAudio decode/playback on mobile when screen is off. -->
-    <audio id="ttsAudio" preload="none" playsinline webkit-playsinline></audio>
-
     <div class="container">
         <header class="app-header">
             <img class="brand-logo" src="barnaba-logo-white.png" alt="Barnaba">
@@ -958,19 +940,9 @@
         let instantFeedbackEnabled = false; // Runtime flag: OFF unless explicitly enabled by server config
         let listenerPlaybackPolicyV2Enabled = localStorage.getItem('barnaba_listener_playback_policy_v2') === 'true'; // Runtime flag: OFF unless server config or local override enables it
         let listenerPlaybackPolicyV2Source = listenerPlaybackPolicyV2Enabled ? 'localStorage:true' : 'default:false';
-        let listenerBoundedSchedulerEnabled = false;
+        let listenerCatchupSkipEnabled = false;
         let listenerCatchupMaxRate = 1.3;
         let listenerCatchupChunkAgeMs = 10000;
-        let listenerBacklogBudgetMs = 15000;
-        // Early Catch-up (spec 2026-08-01). OFF unless the server says otherwise; when OFF the
-        // automaton is never instantiated and the playback path is byte for byte today's.
-        let listenerEarlyCatchupEnabled = false;
-        let listenerEarlyCatchupEnterMs = 2500;
-        let listenerEarlyCatchupExitMs = 1200;
-        let listenerEarlyCatchupDwellMs = 15000;
-        let listenerEarlyCatchupRate = 1.25;
-        let fqfT2SupersessionShadowEnabled = false;
-        let fqfT2SupersessionApplyEnabled = false;
 
         function applyListenerPlaybackPolicyV2Config(serverValue) {
             const override = localStorage.getItem('barnaba_listener_playback_policy_v2');
@@ -998,35 +970,14 @@
                     instantFeedbackEnabled = cfg.instantFeedback === true;
                     feedbackConfig = cfg.feedback || { url: null };
                     applyListenerPlaybackPolicyV2Config(cfg.listenerPlaybackPolicyV2 === true);
-                    listenerBoundedSchedulerEnabled = cfg.listenerBoundedScheduler === true;
+                    listenerCatchupSkipEnabled = cfg.listenerCatchupSkip === true;
                     listenerCatchupMaxRate = Math.min(1.5, Math.max(1.0, Number(cfg.listenerCatchupMaxRate) || 1.3));
                     listenerCatchupChunkAgeMs = Math.max(1000, Number(cfg.listenerCatchupChunkAgeMs) || 10000);
-                    listenerBacklogBudgetMs = Math.max(1000, Number(cfg.listenerBacklogBudgetMs) || 15000);
-                    listenerEarlyCatchupEnabled = cfg.listenerEarlyCatchup === true;
-                    fqfT2SupersessionShadowEnabled = cfg.fqfT2SupersessionShadow === true;
-                    fqfT2SupersessionApplyEnabled = cfg.fqfT2SupersessionApply === true;
-                    // `Number(x) || default` turns a legitimate 0 into the default, and the
-                    // server's clamps allow 0 for all three thresholds — enter=0 means "always
-                    // accelerate", dwell=0 means "no minimum time in state". Both are valid
-                    // experiment configurations, and both would have been silently replaced.
-                    // Same null-vs-zero trap as `queue_depth_at_play_start`, one layer down.
-                    const configuredMs = (value, fallback) =>
-                        Math.max(0, Number.isFinite(Number(value)) && value !== null && value !== ''
-                            ? Number(value) : fallback);
-                    listenerEarlyCatchupEnterMs = configuredMs(cfg.listenerEarlyCatchupEnterMs, 2500);
-                    listenerEarlyCatchupExitMs = configuredMs(cfg.listenerEarlyCatchupExitMs, 1200);
-                    listenerEarlyCatchupDwellMs = configuredMs(cfg.listenerEarlyCatchupDwellMs, 15000);
-                    listenerEarlyCatchupRate = Math.min(1.5, Math.max(1.0,
-                        Number.isFinite(Number(cfg.listenerEarlyCatchupRate)) && cfg.listenerEarlyCatchupRate !== null
-                            ? Number(cfg.listenerEarlyCatchupRate) : 1.25));
                     updateInstantFeedbackVisibility();
                     applyTtsPitchPolicy();
                     console.log('[Config] TTS preserve pitch:', preserveTtsPitchEnabled ? 'ENABLED' : 'DISABLED');
                     console.log('[Config] Listener playback policy v2:', listenerPlaybackPolicyV2Enabled ? 'ENABLED' : 'DISABLED', `(${listenerPlaybackPolicyV2Source})`);
-                    console.log('[Config] Listener bounded scheduler:', listenerBoundedSchedulerEnabled ? 'ENABLED' : 'DISABLED', `maxRate=${listenerCatchupMaxRate}x age=${listenerCatchupChunkAgeMs}ms backlog=${listenerBacklogBudgetMs}ms`);
-                    console.log('[Config] Listener early catch-up:', listenerEarlyCatchupEnabled ? 'ENABLED' : 'DISABLED', `enter=${listenerEarlyCatchupEnterMs}ms exit=${listenerEarlyCatchupExitMs}ms dwell=${listenerEarlyCatchupDwellMs}ms rate=${listenerEarlyCatchupRate}x`);
-                    console.log('[Config] FQF T2 supersession shadow:', fqfT2SupersessionShadowEnabled ? 'ENABLED (SHADOW ONLY)' : 'DISABLED');
-                    console.log('[Config] FQF T2 supersession apply:', fqfT2SupersessionApplyEnabled ? 'ENABLED (PENDING WHOLE CHUNKS)' : 'DISABLED');
+                    console.log('[Config] Listener catch-up:', listenerCatchupSkipEnabled ? 'ENABLED' : 'DISABLED', `maxRate=${listenerCatchupMaxRate}x age=${listenerCatchupChunkAgeMs}ms`);
                     if (cfg.gatewayUrl) {
                         const gwHost = new URL(cfg.gatewayUrl).host;
                         const newUrl = `${wsProtocol}//${gwHost}/ws`;
@@ -1887,40 +1838,66 @@
             lastHeardSourceAudioCapturedLocal: null,
             lastHeardSourcePlayStartAt: null,
             chunksReceived: 0,
-            chunksPlayed: 0,        // backward-compatible alias: play_started
-            chunksCompleted: 0,
+            chunksPlayed: 0,
             chunksSkipped: 0,
-            chunksPlaybackErrors: 0,
-            chunksNullAudio: 0,
             pendingDrops: [],
-            chunksExplicitDrops: 0,
             pendingDroppedTotal: 0,
             droppedByReason: {},
-            beaconIntervalId: null,
-            sendInFlight: false,
-            deliveryLedger: null,
-            urgentOutcomeFlusher: null,
+            beaconIntervalId: null
         };
-        const listenerDelivery = window.BarnabaListenerDelivery;
-        telemetry.deliveryLedger = new listenerDelivery.DeliveryLedger({
-            listenerSessionId: telemetry.sessionId,
-        });
-        telemetry.urgentOutcomeFlusher = new listenerDelivery.UrgentOutcomeFlusher({
-            peekPending: () => telemetry.deliveryLedger.peekBatch(2000),
-            flush: () => sendTelemetryBeacon(false),
-        });
+        const qaReplayCapture = window.BarnabaQaReplay ? new window.BarnabaQaReplay.QaReplayCapture() : null;
+        const qaChunkKey = chunk => `${chunk.releaseKey ?? chunk.release_seq ?? chunk.emissionId ?? 'legacy'}:${chunk.lang || language || 'unknown'}:${chunk.sentence_index ?? 0}`;
 
-        function _telemetryRecordOutcome(chunk, outcome, extra = {}) {
-            if (!telemetry.deliveryLedger || !chunk) return null;
-            const event = telemetry.deliveryLedger.record(chunk, outcome, extra);
-            telemetry.urgentOutcomeFlusher?.notify(outcome);
-            return event;
+        async function finishQaReplay() {
+            if (!qaReplayCapture || !qaReplayCapture.session) return;
+            const button = document.getElementById('qaReplayButton');
+            if (button) { button.disabled = true; button.textContent = 'QA: draining...'; }
+            try {
+                await qaReplayCapture.stop({ waitUntilIdle: () => !progressiveQueue.playing && progressiveQueue.pending.size === 0 && !speaking && speechQueue.length === 0 });
+                if (button) button.textContent = 'QA: rendering...';
+                const result = await qaReplayCapture.upload();
+                const link = document.createElement('a');
+                link.href = URL.createObjectURL(result.blob);
+                link.download = result.filename;
+                link.click();
+                setTimeout(() => URL.revokeObjectURL(link.href), 1000);
+                await qaReplayCapture.clear();
+                if (button) { button.textContent = result.partial ? 'QA: partial saved' : 'QA: saved'; button.disabled = false; }
+            } catch (error) {
+                console.error('[QA Replay]', error);
+                if (button) { button.textContent = 'QA: retry stop'; button.disabled = false; }
+            }
         }
 
+        async function initQaReplayControl() {
+            if (!qaReplayCapture || new URLSearchParams(location.search).get('qa') !== '1') return;
+            const button = document.createElement('button');
+            button.id = 'qaReplayButton';
+            button.type = 'button';
+            button.textContent = 'QA: start recording';
+            try {
+                const recovered = await qaReplayCapture.recoverLatest();
+                if (recovered) button.textContent = 'QA: render recovered partial';
+            } catch (error) { console.warn('[QA Replay] Recovery unavailable:', error.message); }
+            button.style.cssText = 'position:fixed;right:12px;bottom:12px;z-index:9999;padding:10px;background:#7a1f1f;color:#fff;border:1px solid #fff;border-radius:8px';
+            button.addEventListener('click', async () => {
+                if (qaReplayCapture.session) { await finishQaReplay(); return; }
+                if (!authenticated || !churchId || !language) { button.textContent = 'QA: join translation first'; return; }
+                try {
+                    await qaReplayCapture.start({ churchId, language });
+                    button.textContent = 'QA: stop and render';
+                } catch (error) {
+                    console.error('[QA Replay]', error);
+                    button.textContent = 'QA: storage unavailable';
+                }
+            });
+            document.body.appendChild(button);
+        }
         const TELEMETRY_BEACON_MS = 10000;
         const TELEMETRY_PLAYS_BUFFER = 50;  // keep last N plays in memory
         const ADAPTIVE_PLAYBACK_ENABLED = localStorage.getItem('barnaba_adaptive_playback') !== 'false';
         const LISTENER_DROP_AGE_BUDGET_MS = Number(localStorage.getItem('barnaba_listener_drop_age_ms')) || 20000;
+        const LISTENER_BACKLOG_BUDGET_MS = Number(localStorage.getItem('barnaba_listener_backlog_ms')) || 15000;
 
         const playbackPolicy = {
             currentRate: 1.0,
@@ -1947,72 +1924,6 @@
             }
         };
 
-        /**
-         * Early Catch-up.
-         *
-         * The existing ladder only reaches 1.15x at age >= 6000 ms and its top step needs
-         * `q >= 4`, which the 04.08 baseline showed is unreachable (queue depth never
-         * exceeded 1 in 139 plays). Meanwhile the whole 0-10 s band belongs to the drop
-         * budget, so by the time the ladder accelerates the scheduler has already cut the
-         * chunk. This automaton enters EARLY, holds with hysteresis, and leaves only after
-         * the queue has genuinely drained for DWELL_MS.
-         *
-         * Sizing is measured, not assumed: on 04.08 demand was 912.4 s against 775.5 s of
-         * actual playing time (95.9% busy inside the window), so covering demand at that
-         * playing time needs 1.177x. EARLY_RATE 1.25 clears it with ~6% to spare.
-         *
-         * The object is created unconditionally — it is a module-level literal — but it is
-         * NEVER CONSULTED when the flag is off: `_tryPlayNext` branches before calling in, so
-         * the OFF arm executes today's code path unchanged. Creation has no side effects: no
-         * timer, no listener, no state read at construction.
-         */
-        const earlyCatchup = {
-            active: false,
-            activeSince: 0,
-            choose(queueDepth, ageMs, now = Date.now()) {
-                const age = Math.max(0, Number(ageMs) || 0);
-                const cap = Math.min(1.5, Math.max(1.0, Number(listenerCatchupMaxRate) || 1.3));
-                const rate = Math.min(cap, Math.max(1.0, Number(listenerEarlyCatchupRate) || 1.25));
-                if (!this.active) {
-                    if (age >= listenerEarlyCatchupEnterMs) {
-                        this.active = true;
-                        this.activeSince = now;
-                        return { rate, active: true };
-                    }
-                    // Below the entry threshold the existing ladder still owns the rate, so
-                    // short-queue behaviour is identical to the control arm.
-                    return { rate: playbackPolicy.choose(queueDepth, age), active: false };
-                }
-                // Leaving requires BOTH a drained queue and a minimum time in state. Dwell is
-                // counted in TIME, not chunks (decision 01.08): chunk length varies, and one
-                // quickly played chunk must not be able to flip the mode.
-                if (age < listenerEarlyCatchupExitMs && (now - this.activeSince) >= listenerEarlyCatchupDwellMs) {
-                    this.exit();
-                    return { rate: 1.0, active: false };
-                }
-                return { rate, active: true };
-            },
-            /**
-             * §3.4 — the ladder's hysteresis only knows the steps {maxRate, 1.15, 1.08}. Coming
-             * out of 1.25x (which is below maxRate=1.3) none of its conditions match, so it
-             * would drop straight to 1.0x in a single step. Zeroing `currentRate` makes the
-             * ladder restart from a clean state instead of inheriting a rate it has no step for.
-             */
-            exit() {
-                this.active = false;
-                this.activeSince = 0;
-                playbackPolicy.currentRate = 1.0;
-            },
-            /**
-             * Queue reset or a new server epoch. Without this the state survives a reconnect
-             * and the next session opens ACTIVE on the strength of some previous session's
-             * backlog — accelerating audio that was never late.
-             */
-            reset() {
-                if (this.active) this.exit();
-            }
-        };
-
         // Clock skew vs server (for audible drift = playStart_local - audioCaptured_local).
         // Maintained from `clock_sync` messages: skew = serverTime - localTime (positive = server ahead).
         // Running min (smallest sample = lowest one-way transit noise).
@@ -2028,12 +1939,11 @@
             return serverTimeMs - clockState.serverSkewMs;
         }
 
-        function _telemetryRecordReceived(chunk) {
+        function _telemetryRecordReceived(_idx) {
             telemetry.chunksReceived++;
-            _telemetryRecordOutcome(chunk, 'chunk_received');
         }
 
-        function _telemetryRecordPlayStart(sentenceIndex, receivedAt, playbackRate, audioCapturedAtSrv, releaseSeq = null, sourceHash = null, chunk = {}, queueDepthAtPlayStart = null, earlyCatchupActive = false) {
+        function _telemetryRecordPlayStart(sentenceIndex, receivedAt, playbackRate, audioCapturedAtSrv, releaseSeq = null, sourceHash = null) {
             const playStartAt = Date.now();
             const ageMs = receivedAt > 0 ? (playStartAt - receivedAt) : 0;
             const realSilenceBeforeMs = telemetry.lastPlayEndAt !== null ? Math.max(0, playStartAt - telemetry.lastPlayEndAt) : null;
@@ -2067,61 +1977,19 @@
                 audibleDriftMs,
                 audioCapturedLocal,
                 release_seq: releaseSeq,
-                source_hash: sourceHash,
-                session_epoch: chunk.session_epoch || null,
-                language: chunk.lang || chunk.language || language || 'unknown',
-                emitted_source_hash: chunk.emitted_source_hash || null,
-                chunk_word_count: Number(chunk.chunk_word_count) || 0,
+                source_hash: sourceHash
             };
             telemetry.plays.push(playRecord);
             if (telemetry.plays.length > TELEMETRY_PLAYS_BUFFER) telemetry.plays.shift();
             telemetry.chunksPlayed++;
-            _telemetryRecordOutcome(chunk, 'play_started', {
-                playback_rate: playbackRate,
-                // Age at play start — the same value the playback policy was given.
-                age_ms: ageMs,
-                // Queue depth the policy saw. Beacon snapshots sample every ~10 s, so they
-                // cannot tell "q>=4 never happens" from "q>=4 was never sampled"; this can.
-                queue_depth_at_play_start: Number.isFinite(queueDepthAtPlayStart) ? queueDepthAtPlayStart : null,
-                // Whether the Early Catch-up automaton owned the rate for THIS chunk. The
-                // source for `early_catchup_active_pct` (spec §5); without it the arm could
-                // only be described by the flag, which says what was allowed, not what ran.
-                early_catchup_active: earlyCatchupActive === true,
-            });
             return playRecord;
         }
 
-        function _telemetryRecordCompleted(chunk, playRecord, playbackFacts = null) {
-            telemetry.chunksCompleted++;
-            _telemetryRecordOutcome(chunk, 'play_completed', {
-                // Requested rate (what the policy asked for) vs the facts below (what the
-                // engine actually did). They diverge on the WebAudio fallback, which forces
-                // 1.0x when pitch preservation is on.
-                playback_rate: playRecord.playbackRate,
-                duration_ms: playRecord.durationMs,
-                playback_engine: playbackFacts?.playbackEngine ?? null,
-                effective_playback_rate: Number.isFinite(playbackFacts?.effectivePlaybackRate)
-                    ? playbackFacts.effectivePlaybackRate
-                    : null,
-                preserves_pitch: typeof playbackFacts?.preservesPitch === 'boolean' ? playbackFacts.preservesPitch : null,
-                decoder_duration_ms: Number.isFinite(playbackFacts?.decoderDurationMs) ? playbackFacts.decoderDurationMs : null,
-            });
-        }
-
-        function _telemetryRecordSkipped(chunk) {
+        function _telemetryRecordSkipped() {
             telemetry.chunksSkipped++;
-            telemetry.chunksNullAudio++;
-            _telemetryRecordOutcome(chunk, 'null_audio');
         }
 
-        function _telemetryRecordPlaybackError(chunk, error) {
-            telemetry.chunksPlaybackErrors++;
-            _telemetryRecordOutcome(chunk, 'playback_error', {
-                error_name: error && error.name ? String(error.name).slice(0, 64) : 'Error',
-            });
-        }
-
-        function _telemetryRecordPendingRemoval(chunk, reason) {
+        function _telemetryRecordPendingDrop(chunk, reason) {
             telemetry.pendingDroppedTotal++;
             telemetry.droppedByReason[reason] = (telemetry.droppedByReason[reason] || 0) + 1;
             telemetry.pendingDrops.push({
@@ -2129,76 +1997,26 @@
                 reason,
                 emissionId: chunk && chunk.emissionId != null ? chunk.emissionId : null,
                 release_seq: chunk && chunk.release_seq != null ? chunk.release_seq : null,
-                session_epoch: chunk && chunk.session_epoch != null ? chunk.session_epoch : null,
-                language: chunk && (chunk.lang || chunk.language) ? (chunk.lang || chunk.language) : null,
                 source_hash: chunk && chunk.source_hash != null ? chunk.source_hash : null,
-                emitted_source_hash: chunk && chunk.emitted_source_hash != null ? chunk.emitted_source_hash : null,
                 sentence_index: chunk && chunk.sentence_index != null ? chunk.sentence_index : null,
-                chunk_word_count: chunk && chunk.chunk_word_count != null ? chunk.chunk_word_count : 0,
                 age_ms: chunk && chunk.receivedAt ? Math.max(0, Date.now() - chunk.receivedAt) : null
             });
             if (telemetry.pendingDrops.length > 100) telemetry.pendingDrops.shift();
-            telemetry.chunksExplicitDrops++;
+            if (qaReplayCapture?.active) qaReplayCapture.recordDrop(qaChunkKey(chunk || {}), reason, { release_seq: chunk?.release_seq ?? null, sentence_index: chunk?.sentence_index ?? null });
         }
 
-        function _telemetryRecordPendingDrop(chunk, reason) {
-            _telemetryRecordPendingRemoval(chunk, reason);
-            _telemetryRecordOutcome(chunk, 'explicit_drop', { reason });
-        }
-
-        function _telemetryRecordSupersessionShadow(candidate, incoming, queueDepth) {
-            _telemetryRecordOutcome(candidate, 'supersession_shadow', {
-                reason: 'superseded_candidate',
-                policy_applied: false,
-                superseded_by_chunk_key: listenerDelivery.canonicalChunkKey(incoming),
-                superseded_by_release_seq: incoming.release_seq ?? null,
-                superseded_by_revision_generation: incoming.revision_generation ?? null,
-                superseded_by_revision_apply_eligible: incoming.revision_apply_eligible ?? null,
-                source_map_v2_shadow_eligible:
-                    listenerDelivery.isRevisionSupersessionV2ShadowEligible(candidate, incoming),
-                t2_supersede_pending_v2_eligible:
-                    candidate.t2_supersede_pending_v2_eligible ?? null,
-                superseded_by_t2_v2_eligible:
-                    incoming.t2_supersede_pending_v2_eligible ?? null,
-                candidate_age_ms: candidate.receivedAt
-                    ? Math.max(0, Date.now() - candidate.receivedAt)
-                    : null,
-                queue_depth_at_observation: queueDepth,
-            });
-        }
-
-        function _telemetryRecordSuperseded(candidate, incoming, queueDepth) {
-            _telemetryRecordPendingRemoval(candidate, 'superseded_candidate');
-            _telemetryRecordOutcome(candidate, 'superseded', {
-                reason: 'superseded_candidate',
-                policy_applied: true,
-                superseded_by_chunk_key: listenerDelivery.canonicalChunkKey(incoming),
-                superseded_by_release_seq: incoming.release_seq ?? null,
-                superseded_by_revision_generation: incoming.revision_generation ?? null,
-                superseded_by_revision_apply_eligible: incoming.revision_apply_eligible ?? null,
-                candidate_age_ms: candidate.receivedAt
-                    ? Math.max(0, Date.now() - candidate.receivedAt)
-                    : null,
-                queue_depth_at_observation: queueDepth,
-            });
-        }
-
-        function buildTelemetrySnapshot({ deliveryEventLimit = 100 } = {}) {
-            const now = Date.now();
+        function buildTelemetrySnapshot() {
             const recent = telemetry.plays.slice(-30);
-            const freshRecent = recent.filter(p => (
-                Number.isFinite(p.playStartAt) && now - p.playStartAt <= 30000
-            ));
-            const ages = freshRecent.map(p => p.ageMs).filter(a => Number.isFinite(a) && a >= 0);
+            const ages = recent.map(p => p.ageMs).filter(a => Number.isFinite(a) && a >= 0);
             const avgAge = ages.length > 0 ? Math.round(ages.reduce((a, b) => a + b, 0) / ages.length) : 0;
             const maxAge = ages.length > 0 ? Math.max(...ages) : 0;
             // Audible drift (full broadcaster-capture -> listener-play) — only populated samples,
             // because it needs clockSync + audioCapturedAt on the chunk.
-            const drifts = freshRecent.map(p => p.audibleDriftMs).filter(d => Number.isFinite(d));
+            const drifts = recent.map(p => p.audibleDriftMs).filter(d => Number.isFinite(d));
             const avgDrift = drifts.length > 0 ? Math.round(drifts.reduce((a, b) => a + b, 0) / drifts.length) : null;
             const maxDrift = drifts.length > 0 ? Math.max(...drifts) : null;
             const minDrift = drifts.length > 0 ? Math.min(...drifts) : null;
-            const realSilences = freshRecent.map(p => p.realSilenceBeforeMs).filter(v => Number.isFinite(v) && v >= 0);
+            const realSilences = recent.map(p => p.realSilenceBeforeMs).filter(v => Number.isFinite(v) && v >= 0);
             const realSilenceMax = realSilences.length > 0 ? Math.max(...realSilences) : null;
             const realSilenceOver7s = realSilences.filter(v => v >= 7000).length;
             const lastPlayed = telemetry.plays.slice().reverse().find(p => p.playStartAt);
@@ -2206,16 +2024,10 @@
                 ? progressiveQueue.pending.size : 0;
             const currentRate = (ttsAudio && Number.isFinite(ttsAudio.playbackRate))
                 ? ttsAudio.playbackRate : 1.0;
+            const now = Date.now();
             const sourceCoverageLagMs = Number.isFinite(telemetry.lastHeardSourceAudioCapturedLocal)
                 ? Math.max(0, Math.round(now - telemetry.lastHeardSourceAudioCapturedLocal))
                 : null;
-            const currentlyPlaying = progressiveQueue && progressiveQueue.playing ? 1 : 0;
-            const unexplained = Math.max(
-                0,
-                telemetry.chunksReceived - telemetry.chunksCompleted
-                    - telemetry.chunksNullAudio - telemetry.chunksPlaybackErrors
-                    - telemetry.chunksExplicitDrops - queueDepth - currentlyPlaying,
-            );
             return {
                 sessionId: telemetry.sessionId,
                 churchId: churchId || 'unknown',
@@ -2225,16 +2037,8 @@
                     queueDepth,
                     currentPlaybackRate: currentRate,
                     chunksReceived: telemetry.chunksReceived,
-                    chunksStarted: telemetry.chunksPlayed,
                     chunksPlayed: telemetry.chunksPlayed,
-                    chunksCompleted: telemetry.chunksCompleted,
                     chunksSkipped: telemetry.chunksSkipped,
-                    chunksPlaybackErrors: telemetry.chunksPlaybackErrors,
-                    chunksNullAudio: telemetry.chunksNullAudio,
-                    chunksExplicitDrops: telemetry.chunksExplicitDrops,
-                    chunksPending: queueDepth,
-                    chunksUnexplained: unexplained,
-                    currentlyPlaying,
                     recentPlaysCount: recent.length,
                     chunkAgeAtPlay_avg_ms: avgAge,
                     chunkAgeAtPlay_max_ms: maxAge,
@@ -2243,12 +2047,6 @@
                     audibleDrift_avg_ms: avgDrift,
                     audibleDrift_min_ms: minDrift,
                     audibleDrift_max_ms: maxDrift,
-                    // Freshness of source coverage, not of this HTTP beacon. A tab can keep
-                    // sending while playback no longer advances the heard source; then the
-                    // growing coverage lag becomes unknown instead of steering Autopilot.
-                    listener_measurement_age_ms: Number.isFinite(telemetry.lastHeardSourcePlayStartAt)
-                        ? Math.max(0, now - telemetry.lastHeardSourcePlayStartAt)
-                        : null,
                     // Coverage lag = now - latest source audio timestamp already heard.
                     // This answers "how far behind the speaker is the listener now?"
                     source_coverage_lag_ms: sourceCoverageLagMs,
@@ -2263,87 +2061,39 @@
                     listener_pending_dropped_sample: telemetry.pendingDrops.slice(-10),
                     clockSkewMs: clockState.serverSkewMs,    // null until first clock_sync
                     clockSamples: clockState.samples,
-                    recentPlays_sample: recent.slice(-10),
-                    delivery_events_delta: telemetry.deliveryLedger.peekBatch(deliveryEventLimit),
+                    recentPlays_sample: recent.slice(-10)
                 }
             };
         }
 
-        const TELEMETRY_UNLOAD_MAX_BYTES = 48 * 1024;
-
-        function telemetryPayloadBytes(payload) {
-            if (typeof TextEncoder !== 'undefined') return new TextEncoder().encode(payload).byteLength;
-            return new Blob([payload]).size;
-        }
-
-        function buildTelemetryPayload({ unload = false } = {}) {
-            const snapshot = buildTelemetrySnapshot({ deliveryEventLimit: unload ? 50 : 100 });
-            let payload = JSON.stringify(snapshot);
-            if (!unload) return payload;
-
-            const compactArrays = [
-                snapshot.snapshot.delivery_events_delta,
-                snapshot.snapshot.recentPlays_sample,
-                snapshot.snapshot.listener_pending_dropped_sample,
-            ];
-            for (const items of compactArrays) {
-                while (telemetryPayloadBytes(payload) > TELEMETRY_UNLOAD_MAX_BYTES && items.length > 0) {
-                    items.pop();
-                    payload = JSON.stringify(snapshot);
-                }
-            }
-            if (telemetryPayloadBytes(payload) > TELEMETRY_UNLOAD_MAX_BYTES) {
-                console.warn('[Telemetry] unload payload exceeds byte budget; outcomes remain in the local ledger');
-                return null;
-            }
-            return payload;
-        }
-        async function sendTelemetryBeacon(useUnloadBeacon = false) {
-            const hasPendingOutcomes = telemetry.deliveryLedger.peekBatch(1).length > 0;
-            if (
-                telemetry.chunksReceived === 0 &&
-                telemetry.chunksPlayed === 0 &&
-                !hasPendingOutcomes
-            ) return;
-            const payload = buildTelemetryPayload({ unload: useUnloadBeacon });
-            if (!payload) return;
+        function sendTelemetryBeacon() {
+            if (telemetry.chunksReceived === 0 && telemetry.chunksPlayed === 0) return; // no data yet
+            const payload = JSON.stringify(buildTelemetrySnapshot());
             try {
-                if (useUnloadBeacon && navigator.sendBeacon) {
+                // navigator.sendBeacon = fire-and-forget, survives page navigation
+                if (navigator.sendBeacon) {
                     const blob = new Blob([payload], { type: 'application/json' });
-                    if (!navigator.sendBeacon('/api/listener-telemetry', blob)) {
-                        console.warn('[Telemetry] unload beacon was not queued; outcomes remain in the local ledger');
-                    }
+                    navigator.sendBeacon('/api/listener-telemetry', blob);
                     return;
                 }
-                if (telemetry.sendInFlight) return;
-                telemetry.sendInFlight = true;
-                const headers = { 'Content-Type': 'application/json' };
-                if (listenerSessionToken) headers.Authorization = `Bearer ${listenerSessionToken}`;
-                const response = await fetch('/api/listener-telemetry', {
+                // Fallback: fetch z keepalive
+                fetch('/api/listener-telemetry', {
                     method: 'POST',
-                    headers,
-                    body: payload
-                });
-                if (response.ok) {
-                    const ack = await response.json().catch(() => ({}));
-                    telemetry.deliveryLedger.acknowledge([
-                        ...(ack.acked_outcome_ids || []),
-                        ...(ack.rejected_outcome_ids || []),
-                    ]);
-                }
+                    headers: { 'Content-Type': 'application/json' },
+                    body: payload,
+                    keepalive: true
+                }).catch(() => {});
             } catch (e) {
                 console.warn('[Telemetry] beacon error:', e && e.message);
-            } finally {
-                telemetry.sendInFlight = false;
             }
         }
 
         function startTelemetryBeacon() {
             if (telemetry.beaconIntervalId) return;
-            telemetry.beaconIntervalId = setInterval(() => sendTelemetryBeacon(false), TELEMETRY_BEACON_MS);
+            telemetry.beaconIntervalId = setInterval(sendTelemetryBeacon, TELEMETRY_BEACON_MS);
             // flush on unload (final snapshot before the tab closes)
-            window.addEventListener('pagehide', () => sendTelemetryBeacon(true));
-            window.addEventListener('beforeunload', () => sendTelemetryBeacon(true));
+            window.addEventListener('pagehide', sendTelemetryBeacon);
+            window.addEventListener('beforeunload', sendTelemetryBeacon);
             console.log('[Telemetry] beacon started, sessionId=' + telemetry.sessionId);
         }
 
@@ -2539,7 +2289,7 @@
             return {
                 sessionId: telemetry.sessionId, churchId: churchId || null,
                 lang: language || null, uiLang: uiLang || 'en', voice: voiceGender || null,
-                clientVersion: 'listener-feedback-v3/gateway@659a8bb01062',
+                clientVersion: 'listener-feedback-v3/control@1864eeff1628',
                 context: {
                     screen: currentScreen,
                     connection: ['connecting', 'open', 'closing', 'closed'][ws?.readyState] || 'closed',
@@ -2752,13 +2502,7 @@
                 authenticateListenerSocket();
                 return;
             }
-            send({
-                type: 'subscribe',
-                churchId,
-                language: lang,
-                voiceGender,
-                listenerSessionId: telemetry.sessionId,
-            });
+            send({ type: 'subscribe', churchId, language: lang, voiceGender });
         }
 
         function isCurrentLanguageMessage(msg) {
@@ -3109,7 +2853,9 @@
         // Text-to-Speech
         // ============================================================
         function speak(text, lang, audioBase64 = null) {
-            speechQueue.push({ text, lang, audioBase64 });
+            const qaKey = `legacy:${lang}:${Date.now()}:${speechQueue.length}`;
+            if (qaReplayCapture?.active && audioBase64) qaReplayCapture.captureChunk(qaKey, audioBase64, { legacy: true });
+            speechQueue.push({ text, lang, audioBase64, qaKey });
             if (!speaking) processQueue();
         }
 
@@ -3133,38 +2879,17 @@
             nextToPlay: 0,
             playing: false,
             currentEmissionId: null,
-            activeSessionEpoch: null,
             releaseNextIndex: new Map(),
             lastPlayedKey: null,
-            shadowSupersessionRelations: new Set(),
-            startingPlayback: null,
 
-            _reset(dropReason = 'playback_reset') {
-                const inFlightPlayback = this.playing === true;
-                const inFlightStart = this.startingPlayback;
-                if (dropReason && this.pending.size > 0) {
-                    this._dropAllPending(dropReason);
-                }
-                if (dropReason && inFlightStart
-                    && inFlightStart.startInvoked !== true
-                    && inFlightStart.cancelled !== true) {
-                    inFlightStart.cancelled = true;
-                    _telemetryRecordPendingDrop(inFlightStart.chunk, dropReason);
-                }
+            _reset() {
                 this.pending.clear();
                 this.totalSentences = null;
                 this.nextToPlay = 0;
-                // A reset may discard pending work, but it must neither interrupt audio that
-                // already started nor open a second playback lane beside an in-flight decode.
-                this.playing = inFlightPlayback;
+                this.playing = false;
                 this.currentEmissionId = null;
-                this.activeSessionEpoch = null;
                 this.releaseNextIndex.clear();
                 this.lastPlayedKey = null;
-                this.shadowSupersessionRelations.clear();
-                this.startingPlayback = inFlightPlayback ? inFlightStart : null;
-                // The backlog that justified accelerating no longer exists.
-                earlyCatchup.reset();
             },
 
             resetForNewEpoch(reason = 'superseded_candidate') {
@@ -3172,7 +2897,7 @@
                 if (this.pending.size > 0) {
                     this._dropAllPending(reason);
                 }
-                this._reset(reason);
+                this._reset();
             },
 
             _releaseKey(msg) {
@@ -3181,20 +2906,8 @@
                 return Number(msg.emissionId) || 0;
             },
 
-            _chunkKey(
-                releaseKey,
-                sentenceIndex,
-                lang = language,
-                sessionEpoch = this.activeSessionEpoch,
-                deliveryUnitId = null,
-            ) {
-                return listenerDelivery.canonicalChunkKey({
-                    session_epoch: sessionEpoch || 'legacy',
-                    release_seq: releaseKey,
-                    language: lang || 'unknown',
-                    delivery_unit_id: deliveryUnitId,
-                    sentence_index: sentenceIndex,
-                });
+            _chunkKey(releaseKey, sentenceIndex, lang = language) {
+                return `${releaseKey}:${lang || 'unknown'}:${sentenceIndex}`;
             },
 
             _compareKey(a, b) {
@@ -3227,12 +2940,11 @@
             },
 
             _markConsumed(chunk) {
-                if ((!listenerPlaybackPolicyV2Enabled && !listenerBoundedSchedulerEnabled) || !chunk) return;
+                if (!listenerPlaybackPolicyV2Enabled || !chunk) return;
                 const consumedKey = { releaseKey: chunk.releaseKey, sentenceIndex: chunk.sentence_index };
                 if (!this.lastPlayedKey || this._compareKey(consumedKey, this.lastPlayedKey) > 0) {
                     this.lastPlayedKey = consumedKey;
                 }
-                if (!listenerPlaybackPolicyV2Enabled) return;
                 if (chunk.is_last) {
                     this.releaseNextIndex.delete(chunk.releaseKey);
                 } else {
@@ -3290,7 +3002,7 @@
                         this._dropChunk(key, 'age_budget');
                     }
                 }
-                while (this._pendingBacklogMs() > listenerBacklogBudgetMs && this.pending.size > 0) {
+                while (this._pendingBacklogMs() > LISTENER_BACKLOG_BUDGET_MS && this.pending.size > 0) {
                     const oldest = Array.from(this.pending.values())
                         .sort((a, b) => a.receivedAt - b.receivedAt)[0];
                     if (!oldest) break;
@@ -3300,29 +3012,32 @@
 
 
             _dropLegacyPending(reason) {
-                for (const key of Array.from(this.pending.keys())) {
-                    this._dropChunk(key, reason);
+                for (const chunk of Array.from(this.pending.values())) {
+                    _telemetryRecordPendingDrop(chunk, reason);
                 }
+                this.pending.clear();
             },
 
             _dropExpiredLegacyPending() {
-                if (!listenerBoundedSchedulerEnabled || listenerPlaybackPolicyV2Enabled) return;
-                const drops = listenerDelivery.selectBudgetDrops({
-                    pending: this.pending,
-                    sessionEpoch: this.activeSessionEpoch,
-                    now: Date.now(),
-                    maxAgeMs: listenerCatchupChunkAgeMs,
-                    maxBacklogMs: listenerBacklogBudgetMs,
-                    estimatedChunkDurationMs: this._estimatedChunkDurationMs(),
-                });
-                for (const { key, reason } of drops) {
-                    this._dropChunk(key, reason);
+                if (!listenerCatchupSkipEnabled || listenerPlaybackPolicyV2Enabled) return;
+                const now = Date.now();
+                const expired = Array.from(this.pending.entries())
+                    .filter(([, chunk]) => now - (chunk.receivedAt || now) > listenerCatchupChunkAgeMs)
+                    .sort((a, b) => (a[1].receivedAt || 0) - (b[1].receivedAt || 0));
+                let maxDroppedIndex = null;
+                for (const [key, chunk] of expired) {
+                    this.pending.delete(key);
+                    maxDroppedIndex = Math.max(maxDroppedIndex ?? -1, Number(chunk.sentence_index) || 0);
+                    _telemetryRecordPendingDrop(chunk, 'skip_ahead_10s');
+                    console.warn(`[ProgressiveQueue] dropped stale legacy chunk idx=${chunk.sentence_index} reason=skip_ahead_10s`);
                 }
-            },
-
-            _nextBoundedCandidate() {
-                this._dropExpiredLegacyPending();
-                return listenerDelivery.selectNextPendingKey(this.pending, { sessionEpoch: this.activeSessionEpoch });
+                if (maxDroppedIndex !== null) {
+                    this.nextToPlay = Math.max(this.nextToPlay, maxDroppedIndex + 1);
+                }
+                if (expired.length > 0 && this.pending.size > 0) {
+                    const nextIndexes = Array.from(this.pending.keys()).map(Number).filter(Number.isFinite).sort((a, b) => a - b);
+                    this.nextToPlay = nextIndexes.length > 0 ? Math.max(this.nextToPlay, nextIndexes[0]) : this.nextToPlay;
+                }
             },
 
             _nextCandidate() {
@@ -3339,80 +3054,45 @@
                         this.releaseNextIndex.set(releaseKey, expected);
                     }
                     const chunkForRelease = Array.from(this.pending.values()).find(c => c.releaseKey === releaseKey);
-                    const key = this._chunkKey(
-                        releaseKey,
-                        expected,
-                        chunkForRelease && chunkForRelease.lang,
-                        chunkForRelease && chunkForRelease.session_epoch,
-                        chunkForRelease && chunkForRelease.delivery_unit_id,
-                    );
+                    const key = this._chunkKey(releaseKey, expected, chunkForRelease && chunkForRelease.lang);
                     if (this.pending.has(key)) return key;
                     if (chunkForRelease) return null;
                 }
                 return null;
             },
 
-            _observeOrApplyRevisionSupersession(incoming) {
-                if (!fqfT2SupersessionShadowEnabled && !fqfT2SupersessionApplyEnabled) return;
-                const candidates = listenerDelivery.selectRevisionSupersessionCandidates(
-                    this.pending,
-                    incoming,
-                );
-                const starting = this.startingPlayback;
-                if (starting?.chunk && starting.startInvoked !== true && starting.cancelled !== true) {
-                    const startingCandidates = listenerDelivery.selectRevisionSupersessionCandidates(
-                        new Map([[starting.key, starting.chunk]]),
-                        incoming,
-                    );
-                    candidates.push(...startingCandidates.map((candidate) => ({
-                        ...candidate,
-                        startingPlayback: true,
-                    })));
-                }
-                for (const { key, chunk } of candidates) {
-                    const relation = `${key}->${incoming.session_epoch}:${incoming.revision_family_id}:${incoming.revision_generation}`;
-                    if (fqfT2SupersessionShadowEnabled && !this.shadowSupersessionRelations.has(relation)) {
-                        this.shadowSupersessionRelations.add(relation);
-                        if (this.shadowSupersessionRelations.size > 4000) {
-                            this.shadowSupersessionRelations.delete(this.shadowSupersessionRelations.values().next().value);
-                        }
-                        _telemetryRecordSupersessionShadow(chunk, incoming, this.pending.size);
-                    }
-                    if (
-                        fqfT2SupersessionApplyEnabled
-                        && (listenerBoundedSchedulerEnabled || listenerPlaybackPolicyV2Enabled)
-                        && listenerDelivery.isRevisionSupersessionApplyEligible(chunk, incoming)
-                        && (this.pending.get(key) === chunk
-                            || (this.startingPlayback?.key === key
-                                && this.startingPlayback.chunk === chunk
-                                && this.startingPlayback.startInvoked !== true
-                                && this.startingPlayback.cancelled !== true))
-                    ) {
-                        const queueDepth = this.pending.size;
-                        if (this.pending.get(key) === chunk) {
-                            this.pending.delete(key);
-                        } else {
-                            this.startingPlayback.cancelled = true;
-                        }
-                        this._advanceReleaseAfterDrop(chunk);
-                        _telemetryRecordSuperseded(chunk, incoming, queueDepth);
-                        console.warn(`[ProgressiveQueue] superseded pending chunk rel=${chunk.release_seq} idx=${chunk.sentence_index}`);
-                    }
-                }
-            },
-
             addChunk(msg) {
-                const {
-                    emissionId, sentence_index, total_sentences, audioBase64, is_last,
-                    audioCapturedAt, release_seq, source_hash, session_epoch,
-                    emitted_source_hash, emitted_source_normalizer, emitted_word_count,
-                    chunk_word_count, source_lineage_status,
-                    delivery_unit_id, source_map_digest,
-                    revision_ticket_id, revision_family_id, revision_generation, revision_evidence,
-                    revision_apply_eligible, source_map_v2_status,
-                    t2_supersede_pending_v2_eligible, revision_supersedes_generations_v2,
-                } = msg;
+                const { emissionId, sentence_index, total_sentences, audioBase64, is_last, audioCapturedAt, release_seq, source_hash } = msg;
+
+                if (!listenerPlaybackPolicyV2Enabled) {
+                    // Legacy behavior: a newer emission replaces unplayed pending chunks.
+                    if (this.currentEmissionId !== null && this.currentEmissionId !== emissionId) {
+                        console.log('[ProgressiveQueue] emission changed - dropping pending, keeping current playback');
+                        if (listenerCatchupSkipEnabled) this._dropLegacyPending('superseded_emission');
+                        else this.pending.clear();
+                        this.nextToPlay = 0;
+                        this.totalSentences = null;
+                    }
+                    this.currentEmissionId = emissionId;
+                    this.totalSentences = total_sentences;
+                    this.pending.set(sentence_index, {
+                        audioBase64, is_last,
+                        emissionId,
+                        sentence_index,
+                        receivedAt: Date.now(),
+                        audioCapturedAt: audioCapturedAt || null,
+                        release_seq: release_seq || null,
+                        source_hash: source_hash || null
+                    });
+                    _telemetryRecordReceived(sentence_index);
+                    this._tryPlayNext();
+                    return;
+                }
+
                 const releaseKey = this._releaseKey(msg);
+                if (this._isNewEpoch(releaseKey)) {
+                    this.resetForNewEpoch('superseded_candidate');
+                }
                 const sentenceIndex = Number(sentence_index) || 0;
                 const chunk = {
                     audioBase64,
@@ -3424,95 +3104,16 @@
                     lang: msg.language || language || 'unknown',
                     receivedAt: Date.now(),
                     audioCapturedAt: audioCapturedAt || null,
-                    session_epoch: session_epoch || 'legacy',
                     release_seq: release_seq || null,
-                    source_hash: source_hash || null,
-                    emitted_source_hash: emitted_source_hash || null,
-                    emitted_source_normalizer: emitted_source_normalizer || null,
-                    emitted_word_count: Number(emitted_word_count) || 0,
-                    chunk_word_count: Number(chunk_word_count) || 0,
-                    source_lineage_status: source_lineage_status || null,
-                    delivery_unit_id: delivery_unit_id || null,
-                    source_map_digest: source_map_digest || null,
-                    revision_ticket_id: revision_ticket_id || null,
-                    revision_family_id: revision_family_id || null,
-                    revision_generation: Number(revision_generation) || null,
-                    revision_evidence: revision_evidence || null,
-                    revision_apply_eligible: typeof revision_apply_eligible === 'boolean'
-                        ? revision_apply_eligible
-                        : null,
-                    source_map_v2_status: source_map_v2_status || null,
-                    t2_supersede_pending_v2_eligible:
-                        typeof t2_supersede_pending_v2_eligible === 'boolean'
-                            ? t2_supersede_pending_v2_eligible
-                            : null,
-                    revision_supersedes_generations_v2:
-                        Array.isArray(revision_supersedes_generations_v2)
-                            ? revision_supersedes_generations_v2
-                            : [],
+                    source_hash: source_hash || null
                 };
-
-                this._observeOrApplyRevisionSupersession(chunk);
-
-                if (!listenerPlaybackPolicyV2Enabled) {
-                    _telemetryRecordReceived(chunk);
-                    if (listenerBoundedSchedulerEnabled) {
-                        if (this.activeSessionEpoch && this.activeSessionEpoch !== chunk.session_epoch) {
-                            this._dropLegacyPending('server_epoch_changed');
-                            this.lastPlayedKey = null;
-                            // New broadcaster session: carrying ACTIVE across it would speed up
-                            // the first chunks of a session that has no backlog of its own.
-                            earlyCatchup.reset();
-                        }
-                        this.activeSessionEpoch = chunk.session_epoch;
-                        this.currentEmissionId = emissionId;
-                        this.totalSentences = total_sentences;
-                        if (this._isLate(chunk)) {
-                            _telemetryRecordPendingDrop(chunk, 'late_arrival');
-                            return;
-                        }
-                        const key = this._chunkKey(
-                            releaseKey,
-                            sentenceIndex,
-                            chunk.lang,
-                            chunk.session_epoch,
-                            chunk.delivery_unit_id,
-                        );
-                        if (this.pending.has(key)) this._dropChunk(key, 'duplicate_chunk');
-                        this.pending.set(key, chunk);
-                        this._tryPlayNext();
-                        return;
-                    }
-
-                    // Original legacy arm remains available when bounded catch-up is disabled.
-                    if (this.currentEmissionId !== null && this.currentEmissionId !== emissionId) {
-                        console.log('[ProgressiveQueue] emission changed - dropping pending, keeping current playback');
-                        this._dropLegacyPending('superseded_emission');
-                        this.nextToPlay = 0;
-                        this.totalSentences = null;
-                    }
-                    this.currentEmissionId = emissionId;
-                    this.totalSentences = total_sentences;
-                    this.pending.set(sentenceIndex, chunk);
-                    this._tryPlayNext();
-                    return;
-                }
-
-                if (this._isNewEpoch(releaseKey)) {
-                    this.resetForNewEpoch('superseded_candidate');
-                }
-                _telemetryRecordReceived(chunk);
+                _telemetryRecordReceived(sentenceIndex);
+                if (qaReplayCapture?.active && audioBase64) qaReplayCapture.captureChunk(qaChunkKey(chunk), audioBase64, { release_seq, sentence_index: sentenceIndex, source_hash });
                 if (this._isLate(chunk)) {
                     _telemetryRecordPendingDrop(chunk, 'late_arrival');
                     return;
                 }
-                this.pending.set(this._chunkKey(
-                    releaseKey,
-                    sentenceIndex,
-                    chunk.lang,
-                    chunk.session_epoch,
-                    chunk.delivery_unit_id,
-                ), chunk);
+                this.pending.set(this._chunkKey(releaseKey, sentenceIndex, chunk.lang), chunk);
                 this._tryPlayNext();
             },
 
@@ -3523,16 +3124,6 @@
                 let next;
                 if (listenerPlaybackPolicyV2Enabled) {
                     key = this._nextCandidate();
-                    if (!key) return;
-                    next = this.pending.get(key);
-                    if (!next) return;
-                    if (this._isLate(next)) {
-                        this._dropChunk(key, 'late_arrival');
-                        this._tryPlayNext();
-                        return;
-                    }
-                } else if (listenerBoundedSchedulerEnabled) {
-                    key = this._nextBoundedCandidate();
                     if (!key) return;
                     next = this.pending.get(key);
                     if (!next) return;
@@ -3554,15 +3145,16 @@
                 const chunkAudioCapturedAt = next.audioCapturedAt || null;
                 const chunkReleaseSeq = next.release_seq || null;
                 const chunkSourceHash = next.source_hash || null;
+                if (listenerPlaybackPolicyV2Enabled) {
+                    this._markConsumed(next);
+                } else {
+                    this.nextToPlay++;
+                }
+
                 if (!next.audioBase64) {
-                    if (listenerPlaybackPolicyV2Enabled || listenerBoundedSchedulerEnabled) {
-                        this._markConsumed(next);
-                    } else {
-                        this.nextToPlay++;
-                    }
                     console.warn(`[ProgressiveQueue] skipping sentence ${playedIndex} (null audio)`);
-                    _telemetryRecordSkipped(next);
-                    if (!listenerPlaybackPolicyV2Enabled && !listenerBoundedSchedulerEnabled && next.is_last && this.pending.size === 0) {
+                    _telemetryRecordSkipped();
+                    if (!listenerPlaybackPolicyV2Enabled && next.is_last && this.pending.size === 0) {
                         this._reset();
                     } else {
                         this._tryPlayNext();
@@ -3571,54 +3163,18 @@
                 }
 
                 this.playing = true;
-                const startingPlayback = {
-                    key: listenerDelivery.canonicalChunkKey(next),
-                    chunk: next,
-                    startInvoked: false,
-                    cancelled: false,
-                };
-                this.startingPlayback = startingPlayback;
                 const playStartAgeMs = chunkReceivedAt > 0 ? (Date.now() - chunkReceivedAt) : 0;
-                // Captured once so telemetry records the exact policy input, not a re-read.
-                const queueDepthAtPlayStart = this.pending.size;
-                // Flag OFF: the automaton is not consulted at all, so this line is exactly the
-                // pre-Early-Catch-up code path. Flag ON: the automaton owns the rate while
-                // ACTIVE and delegates to the ladder below its entry threshold.
-                let adaptiveRate;
-                let earlyCatchupActive = false;
-                if (listenerEarlyCatchupEnabled) {
-                    const decision = earlyCatchup.choose(queueDepthAtPlayStart, playStartAgeMs);
-                    adaptiveRate = decision.rate;
-                    earlyCatchupActive = decision.active;
-                } else {
-                    adaptiveRate = playbackPolicy.choose(queueDepthAtPlayStart, playStartAgeMs);
-                }
-                let playRecord = null;
-                let playbackStartRecorded = false;
-                const recordPlaybackStartInvocation = () => {
-                    startingPlayback.startInvoked = true;
-                };
-                const recordConfirmedPlaybackStart = () => {
-                    if (playbackStartRecorded) return;
-                    playbackStartRecorded = true;
-                    startingPlayback.startInvoked = true;
-                    if (this.startingPlayback === startingPlayback) this.startingPlayback = null;
-                    if (listenerPlaybackPolicyV2Enabled || listenerBoundedSchedulerEnabled) {
-                        this._markConsumed(next);
-                    } else {
-                        this.nextToPlay++;
-                    }
-                    playRecord = _telemetryRecordPlayStart(playedIndex, chunkReceivedAt, adaptiveRate, chunkAudioCapturedAt, chunkReleaseSeq, chunkSourceHash, next, queueDepthAtPlayStart, earlyCatchupActive);
-                };
-                const playbackWasCancelled = () => startingPlayback.cancelled === true;
+                const adaptiveRate = playbackPolicy.choose(this.pending.size, playStartAgeMs);
+                const playRecord = _telemetryRecordPlayStart(playedIndex, chunkReceivedAt, adaptiveRate, chunkAudioCapturedAt, chunkReleaseSeq, chunkSourceHash);
+                const qaPlayIdPromise = qaReplayCapture?.active
+                    ? qaReplayCapture.recordPlayStart(qaChunkKey(next), { requestedPlaybackRate: adaptiveRate, release_seq: chunkReleaseSeq, sentence_index: playedIndex, source_hash: chunkSourceHash })
+                    : Promise.resolve(null);
                 let languageChanged = false;
                 let cancelAudio = () => {};
                 const languageCancellation = new Promise(resolve => {
                     this.cancelForLanguageChange = () => {
                         languageChanged = true;
-                        startingPlayback.cancelled = true;
                         cancelAudio();
-                        this.startingPlayback = null;
                         this.playing = false;
                         this.cancelForLanguageChange = null;
                         resolve();
@@ -3627,22 +3183,18 @@
                 Promise.race([playServerAudio(
                     next.audioBase64,
                     adaptiveRate,
-                    recordConfirmedPlaybackStart,
-                    recordPlaybackStartInvocation,
-                    playbackWasCancelled,
+                    () => languageChanged,
                     cancel => { cancelAudio = cancel; },
                 ), languageCancellation]).then(async playbackFacts => {
                     if (languageChanged) return;
                     this.cancelForLanguageChange = null;
-                    if (!playRecord) throw new Error('Playback completed without a confirmed start');
                     const playEndAt = Date.now();
                     playRecord.playEndAt = playEndAt;
                     playRecord.durationMs = playEndAt - playRecord.playStartAt;
                     telemetry.lastPlayEndAt = playEndAt;
-                    // Persist the actual playback facts in the delivery ledger.
-                    _telemetryRecordCompleted(next, playRecord, playbackFacts);
+                    await qaReplayCapture?.recordPlayEnd(await qaPlayIdPromise, { ...playbackFacts, completed: true });
                     this.playing = false;
-                    if (!listenerPlaybackPolicyV2Enabled && !listenerBoundedSchedulerEnabled && next.is_last && this.pending.size === 0) {
+                    if (!listenerPlaybackPolicyV2Enabled && next.is_last && this.pending.size === 0) {
                         this._reset();
                     } else {
                         this._tryPlayNext();
@@ -3650,13 +3202,9 @@
                 }).catch((err) => {
                     if (languageChanged) return;
                     this.cancelForLanguageChange = null;
-                    if (!playbackWasCancelled()) {
-                        console.warn(`[ProgressiveQueue] playServerAudio error on ${playedIndex}:`, err && err.message);
-                        _telemetryRecordPlaybackError(next, err);
-                    }
-                    if (this.startingPlayback === startingPlayback) this.startingPlayback = null;
+                    console.warn(`[ProgressiveQueue] playServerAudio error on ${playedIndex}:`, err && err.message);
                     this.playing = false;
-                    if (!listenerPlaybackPolicyV2Enabled && !listenerBoundedSchedulerEnabled && next.is_last && this.pending.size === 0) {
+                    if (!listenerPlaybackPolicyV2Enabled && next.is_last && this.pending.size === 0) {
                         this._reset();
                     } else {
                         this._tryPlayNext();
@@ -3761,25 +3309,12 @@
         async function playServerAudio(
             base64,
             playbackRate = 1.0,
-            onPlaybackStarted = () => {},
-            onPlaybackStarting = () => {},
             isPlaybackCancelled = () => false,
             registerCancellation = () => {},
         ) {
-            let playbackStartReported = false;
             const assertNotCancelled = () => {
-                if (isPlaybackCancelled()) {
-                    const error = new Error('Playback superseded before start');
-                    error.name = 'AbortError';
-                    throw error;
-                }
+                if (isPlaybackCancelled()) throw new Error('Playback cancelled');
             };
-            const reportPlaybackStarted = () => {
-                if (playbackStartReported) return;
-                playbackStartReported = true;
-                try { onPlaybackStarted(); } catch { /* telemetry cannot interrupt audio */ }
-            };
-            assertNotCancelled();
             const rateCap = Math.min(1.5, Math.max(1.0, Number(listenerCatchupMaxRate) || 1.2));
             const safePlaybackRate = Math.min(rateCap, Math.max(1.0, Number(playbackRate) || 1.0));
             // Try HTMLAudioElement first (reliable in background)
@@ -3788,8 +3323,7 @@
                 try {
                     ttsPlaybackActive = true;
                     ttsAudio.volume = VOLUME_LEVEL;
-                    // playbackRate is deliberately NOT set here — see the assignment after
-                    // `src` below. Setting it at this point is silently undone.
+                    ttsAudio.playbackRate = safePlaybackRate;
 
                     // Step 3: Register 'ended' listener BEFORE play() — prevents Promise hang
                     // if audio is very short or corrupted and 'ended' fires before listener attached
@@ -3821,20 +3355,8 @@
                     }
 
                     ttsAudio.src = `data:audio/mp3;base64,${base64}`;
-                    // MUST come AFTER `src`. Assigning `src` runs the media load algorithm,
-                    // which resets playbackRate to defaultPlaybackRate — so a rate set before
-                    // it is wiped. Measured on the listener device 01.08.2026: 1.15 assigned
-                    // before `src` reads back as 1.0 after it, and the chunk audibly played at
-                    // 1.0 while telemetry's requested rate still said 1.15. defaultPlaybackRate
-                    // is set as well, so any later re-load keeps the intent instead of quietly
-                    // dropping to 1.0.
-                    ttsAudio.defaultPlaybackRate = safePlaybackRate;
-                    ttsAudio.playbackRate = safePlaybackRate;
-                    assertNotCancelled();
-                    onPlaybackStarting(true);
                     await ttsAudio.play();
                     assertNotCancelled();
-                    reportPlaybackStarted();
                     // Signal active playback to OS (keeps audio alive when screen off)
                     if ('mediaSession' in navigator) navigator.mediaSession.playbackState = 'playing';
 
@@ -3848,30 +3370,16 @@
                     if (audioOn && silentAudio) {
                         silentAudio.play().catch(() => {});
                     }
-                    // Read AFTER 'ended': metadata is loaded by then, so no extra listener is
-                    // needed. This is the decoder's own view of medium length and it is what
-                    // validates the server-side bytes/CBR estimate.
-                    const decoderDurationMs = Number.isFinite(ttsAudio.duration) && ttsAudio.duration > 0
-                        ? Math.round(ttsAudio.duration * 1000)
-                        : null;
-                    // Read BACK from the element, never the value we asked for: the engine may
-                    // clamp the rate, and loading a new `src` can reset it to defaultPlaybackRate.
-                    // An unreadable rate stays null — falling back to the requested value would
-                    // report exactly the confirmation this field exists to test.
-                    const elementRate = Number(ttsAudio.playbackRate);
-                    const effectivePlaybackRate = Number.isFinite(elementRate) && elementRate > 0 ? elementRate : null;
-                    return { playbackEngine: 'html_audio', effectivePlaybackRate, preservesPitch: !!ttsAudio.preservesPitch, decoderDurationMs };
+                    return { playbackEngine: 'html_audio', effectivePlaybackRate: safePlaybackRate, preservesPitch: !!ttsAudio.preservesPitch };
                 } catch (e) {
                     clearAudioWait();
                     if (isPlaybackCancelled()) throw e;
-                    if (!playbackStartReported) onPlaybackStarting(false);
                     ttsPlaybackActive = false;
                     // Resume keep-alive on error too
                     keepAlivePausedForTts = false;
                     if (audioOn && silentAudio) {
                         silentAudio.play().catch(() => {});
                     }
-                    if (e?.name === 'AbortError') throw e;
                     console.log('[Audio] HTMLAudioElement blocked, falling back to WebAudio');
                 }
             }
@@ -3907,15 +3415,13 @@
                 // over catch-up speed in this rare fallback path when the runtime flag is ON.
                 source.playbackRate.value = preserveTtsPitchEnabled ? 1.0 : safePlaybackRate;
                 source.connect(gainNode);
-                source.onended = () => resolve({ playbackEngine: 'web_audio', effectivePlaybackRate: source.playbackRate.value, preservesPitch: false, decoderDurationMs: Math.round(audioBuffer.duration * 1000) });
+                source.onended = () => resolve({ playbackEngine: 'web_audio', effectivePlaybackRate: source.playbackRate.value, preservesPitch: false });
                 registerCancellation(() => {
                     source.onended = null;
                     source.stop();
                     resolve();
                 });
-                onPlaybackStarting(true);
                 source.start(0);
-                reportPlaybackStarted();
             });
         }
 
@@ -3945,12 +3451,14 @@
 
             speaking = true;
 
-            const { text, lang, audioBase64 } = speechQueue.shift();
+            const { text, lang, audioBase64, qaKey } = speechQueue.shift();
 
             try {
                 if (audioBase64) {
                     // Server-side TTS: play MP3 via AudioContext
-                    await playServerAudio(audioBase64);
+                    const qaPlayId = qaReplayCapture?.active ? await qaReplayCapture.recordPlayStart(qaKey, { requestedPlaybackRate: 1 }) : null;
+                    const playbackFacts = await playServerAudio(audioBase64);
+                    await qaReplayCapture?.recordPlayEnd(qaPlayId, { ...playbackFacts, completed: true });
                 } else {
                     // Fallback: Web Speech API
                     await playSpeechSynthesis(text, lang);
@@ -4599,6 +4107,7 @@
             goToScreen(3);
         }
 
+        initQaReplayControl();
         initKeepAliveAudio(); // Load server-hosted silent-noise.wav for keep-alive
         setupMediaSession(); // Initialize background audio support (Step 4)
         setupTtsEventRecovery(); // Event-driven TTS recovery (Step 5)
@@ -4626,6 +4135,16 @@
 
     <!-- Smooth Mode Pending Indicator -->
     <div class="smooth-pending-bar" id="smoothPendingBar"></div>
+
+    <!-- Near-silent audio loop for background keep-alive (27.03.2026)
+         -60dB white noise WAV keeps mobile browsers from suspending audio pipeline.
+         True silence is detected by iOS and causes session revoke.
+         WAV generated programmatically in JS — see generateKeepAliveBlob(). -->
+    <audio id="silentAudio" loop preload="auto" playsinline webkit-playsinline></audio>
+
+    <!-- Dedicated media element for server TTS playback.
+         More reliable than WebAudio decode/playback on mobile when screen is off. -->
+    <audio id="ttsAudio" preload="none" playsinline webkit-playsinline></audio>
 
     <!-- Offline Overlay -->
     <div class="offline-overlay" id="offlineOverlay">

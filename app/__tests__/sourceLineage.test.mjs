@@ -37,28 +37,6 @@ describe('FQF-4B source lineage contract', () => {
         expect(Object.isFrozen(first.wordSpans)).toBe(true);
     });
 
-    it('accepts a complete delta sidecar independently of raw-snapshot alignment', () => {
-        const result = sourceLineageFromWhisper('Hiob sprach.', provenance({
-            alignmentStatus: 'unaligned',
-        }));
-
-        expect(result).toMatchObject({ status: 'complete', reason: null, wordCount: 2 });
-        expect(result.wordSpans).toHaveLength(2);
-    });
-
-    it('still fails closed when the delta sidecar itself is incomplete', () => {
-        const result = sourceLineageFromWhisper('Hiob sprach.', provenance({
-            provenanceStatus: 'incomplete_provenance',
-            alignmentStatus: 'exact',
-        }));
-
-        expect(result).toMatchObject({
-            status: 'ambiguous',
-            reason: 'whisper_alignment_incomplete',
-            wordSpans: [],
-        });
-    });
-
     it('keeps one absolute coordinate space across growing snapshots and separates sessions', () => {
         const first = sourceLineageFromWhisper('Hiob sprach.', provenance());
         const grown = sourceLineageFromWhisper('Hiob sprach.', provenance({

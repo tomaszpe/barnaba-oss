@@ -50,6 +50,23 @@ param churchesConfigJson string
 param whisperModel string = 'Flurin17/whisper-large-v3-turbo-swiss-german'
 param whisperModelRevision string = '34415231e554d1e7005118264f41e287922f9218'
 
+@description('Name of this installation inside the listener-feedback share: lower-case letters, digits and hyphens, starting with a letter or digit.')
+@minLength(1)
+@maxLength(32)
+param feedbackEnvironment string = prefix
+
+// Pipeline and listener settings of the reference environment. See infra/azure/README.md.
+var referenceSettings = loadJsonContent('reference-settings.json')
+var listenerSettings = map(items(referenceSettings.listener), setting => {
+  name: setting.key
+  value: setting.value
+})
+var gatewaySettings = map(items(referenceSettings.gateway), setting => {
+  name: setting.key
+  value: setting.value
+})
+var feedbackMountPath = '/app/feedback'
+
 var containerAppContributorRoleDefinitionId = subscriptionResourceId(
   'Microsoft.Authorization/roleDefinitions',
   'b24988ac-6180-42a0-ab88-20f7382dd24c'
@@ -218,7 +235,7 @@ resource gateway 'Microsoft.App/containerApps@2024-03-01' = {
             cpu: json('1')
             memory: '2Gi'
           }
-          env: [
+          env: concat([
             { name: 'PORT', value: '8080' }
             { name: 'NODE_ENV', value: 'production' }
             { name: 'WHISPER_SERVICE_URL', value: whisperUrl }
@@ -233,7 +250,7 @@ resource gateway 'Microsoft.App/containerApps@2024-03-01' = {
             { name: 'ACCESS_PIN', secretRef: 'access-pin' }
             { name: 'BROADCASTER_PASSWORD', secretRef: 'broadcaster-password' }
             { name: 'USE_SERVER_TTS', value: 'true' }
-          ]
+          ], listenerSettings, gatewaySettings)
           volumeMounts: [
             {
               volumeName: 'churches-config'
@@ -304,7 +321,7 @@ resource controlPlane 'Microsoft.App/containerApps@2024-03-01' = {
             cpu: json('0.5')
             memory: '1Gi'
           }
-          env: [
+          env: concat([
             { name: 'NODE_ENV', value: 'production' }
             { name: 'CONTROL_PLANE_PORT', value: '8090' }
             { name: 'AZURE_USE_MANAGED_IDENTITY', value: 'true' }
@@ -318,15 +335,23 @@ resource controlPlane 'Microsoft.App/containerApps@2024-03-01' = {
             { name: 'GATEWAY_URL', value: gatewayUrl }
             { name: 'CHURCHES_CONFIG_PATH', value: '/app/config/churches.json' }
             { name: 'BROADCASTER_PASSWORD', secretRef: 'broadcaster-password' }
-          ]
+            { name: 'FEEDBACK_STORAGE_ROOT', value: feedbackMountPath }
+            { name: 'FEEDBACK_ENVIRONMENT', value: feedbackEnvironment }
+            { name: 'FEEDBACK_PUBLIC_ORIGIN', value: controlPlaneUrl }
+          ], listenerSettings)
           volumeMounts: [
             {
               volumeName: 'churches-config'
               mountPath: '/app/config'
             }
+            {
+              volumeName: 'listener-feedback'
+              mountPath: feedbackMountPath
+            }
           ]
         }
       ]
+      // One replica only: the control-plane is the single writer of the feedback files.
       scale: {
         minReplicas: 1
         maxReplicas: 1
@@ -341,6 +366,13 @@ resource controlPlane 'Microsoft.App/containerApps@2024-03-01' = {
               path: 'churches.json'
             }
           ]
+        }
+        {
+          name: 'listener-feedback'
+          storageType: 'AzureFile'
+          storageName: 'listener-feedback'
+          // The image runs as the unprivileged `node` user (uid and gid 1000).
+          mountOptions: 'uid=1000,gid=1000,dir_mode=0750,file_mode=0640'
         }
       ]
     }

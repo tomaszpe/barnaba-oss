@@ -13,6 +13,7 @@
  */
 
 import express from 'express';
+import { registerFeedbackRoutes, feedbackPublicConfig, FEEDBACK_VERSION } from './feedbackRoutes.mjs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { execFile } from 'child_process';
@@ -24,7 +25,6 @@ import {
     clearCsrfCookie,
     requireCsrf,
 } from './csrfService.js';
-import { buildClientFeatureConfig } from './clientFeatureConfig.js';
 
 const execFileAsync = promisify(execFile);
 
@@ -64,7 +64,12 @@ const config = {
             process.exit(1);
         })(),
     },
-    clientFeatures: buildClientFeatureConfig(process.env),
+    clientFeatures: {
+        // Track B pitch-preservation rollout: opt in on DEV before enabling in PROD.
+        preserveTtsPitch: process.env.PWA_PRESERVE_PITCH_ENABLED === 'true',
+        instantFeedback: process.env.INSTANT_FEEDBACK_ENABLED === 'true',
+        listenerPlaybackPolicyV2: process.env.LISTENER_PLAYBACK_POLICY_V2_ENABLED === 'true',
+    },
     timeouts: {
         containerStart: 120000,  // 120s for az rest (async operation)
         healthCheck: 10000,      // 10s for health pings
@@ -179,6 +184,15 @@ function forwardCsrfHeader(req) {
     return token ? { 'x-barnaba-csrf': token } : {};
 }
 
+// The broadcaster cookie the Gateway signs is host-only for whichever origin served the
+// login, so a panel loaded from the Control Plane can hold a live session token with no
+// usable cookie for the Gateway hop. Forward the explicit header too, or every session-
+// gated proxy 401s at a moment the operator looks fully logged in.
+function forwardSessionHeader(req) {
+    const token = req.headers['x-session-token'];
+    return token ? { 'x-session-token': token } : {};
+}
+
 function forwardSetCookies(response, res) {
     const getSetCookie = response.headers.getSetCookie?.();
     if (Array.isArray(getSetCookie) && getSetCookie.length > 0) {
@@ -246,6 +260,22 @@ function rateLimitMiddleware(req, res, next) {
 // Express App
 // ============================================================
 const app = express();
+const feedbackStore = registerFeedbackRoutes(app, {
+    storageRoot: process.env.FEEDBACK_STORAGE_ROOT,
+    environment: process.env.FEEDBACK_ENVIRONMENT,
+    version: FEEDBACK_VERSION,
+    requireMount: true,
+    instantEnabled: config.clientFeatures.instantFeedback,
+    allowedOrigins: [process.env.FEEDBACK_PUBLIC_ORIGIN, config.urls.gateway],
+}, express.json({ limit: '16kb' }));
+async function updateFeedbackSession(action, res) {
+    try { await feedbackStore[action](); return true; }
+    catch {
+        console.warn('[Feedback] Unable to persist translation session');
+        res.status(503).json({ success: false, code: 'feedback_session_unavailable' });
+        return false;
+    }
+}
 app.use(express.json());
 
 // No-cache for HTML files (prevent stale browser cache after deploys)
@@ -657,6 +687,7 @@ app.post('/api/control/start-gateway', rateLimitMiddleware, requireControlCsrf, 
     state.lastAction = { action: 'start-gateway', time: Date.now(), status: 'in_progress' };
 
     const result = await startContainer(config.azure.gatewayContainer);
+    if (result.success && !await updateFeedbackSession('startSession', res)) return;
 
     state.lastAction.status = result.success ? 'completed' : 'failed';
     state.lastAction.error = result.error;
@@ -675,6 +706,7 @@ app.post('/api/control/start-system', rateLimitMiddleware, requireControlCsrf, a
 
     try {
         const result = await startSystem();
+        if (result.success && !await updateFeedbackSession('startSession', res)) return;
         res.status(result.success ? 200 : 500).json(result);
     } catch (error) {
         state.lastAction = {
@@ -710,6 +742,7 @@ app.post('/api/control/stop-whisper', rateLimitMiddleware, async (req, res) => {
     state.lastAction = { action: 'stop-whisper', time: Date.now(), status: 'in_progress' };
 
     const result = await stopContainer(config.azure.whisperContainer);
+    if (result.success && !await updateFeedbackSession('endSession', res)) return;
 
     state.lastAction.status = result.success ? 'completed' : 'failed';
     state.lastAction.error = result.error;
@@ -752,6 +785,7 @@ app.post('/api/control/stop-all', rateLimitMiddleware, requireControlCsrf, async
     ]);
 
     const success = whisperResult.success && gatewayResult.success;
+    if (success && !await updateFeedbackSession('endSession', res)) return;
     state.lastAction.status = success ? 'completed' : 'failed';
 
     res.json({
@@ -842,25 +876,12 @@ app.post('/api/auth/:endpoint', async (req, res) => {
  * GET /api/control/config - Expose gateway URL for broadcaster
  */
 app.get('/api/control/config', (req, res) => {
-    // No-store, not merely no-cache: the value decides which arm the listener is in, so a
-    // revalidated 304 from any intermediary would be indistinguishable from a fresh read.
-    res.set('Cache-Control', 'no-store');
     res.json({
         gatewayUrl: config.urls.gateway,
+        feedback: feedbackPublicConfig('/api/feedback'),
         preserveTtsPitch: config.clientFeatures.preserveTtsPitch,
         instantFeedback: config.clientFeatures.instantFeedback,
         listenerPlaybackPolicyV2: config.clientFeatures.listenerPlaybackPolicyV2,
-        listenerBoundedScheduler: config.clientFeatures.listenerBoundedScheduler,
-        listenerCatchupMaxRate: config.clientFeatures.listenerCatchupMaxRate,
-        listenerCatchupChunkAgeMs: config.clientFeatures.listenerCatchupChunkAgeMs,
-        listenerBacklogBudgetMs: config.clientFeatures.listenerBacklogBudgetMs,
-        listenerEarlyCatchup: config.clientFeatures.listenerEarlyCatchup,
-        listenerEarlyCatchupEnterMs: config.clientFeatures.listenerEarlyCatchupEnterMs,
-        listenerEarlyCatchupExitMs: config.clientFeatures.listenerEarlyCatchupExitMs,
-        listenerEarlyCatchupDwellMs: config.clientFeatures.listenerEarlyCatchupDwellMs,
-        listenerEarlyCatchupRate: config.clientFeatures.listenerEarlyCatchupRate,
-        fqfT2SupersessionShadow: config.clientFeatures.fqfT2SupersessionShadow,
-        fqfT2SupersessionApply: config.clientFeatures.fqfT2SupersessionApply,
     });
 });
 
@@ -873,11 +894,18 @@ app.get('/api/whisper/status', async (req, res) => {
         const timeout = setTimeout(() => controller.abort(), 10000);
         const response = await fetch(`${config.urls.gateway}/api/whisper/status`, {
             signal: controller.signal,
-            headers: req.headers.cookie ? { Cookie: req.headers.cookie } : {},
+            headers: {
+                ...(req.headers.cookie ? { Cookie: req.headers.cookie } : {}),
+                ...forwardSessionHeader(req),
+            },
         });
         clearTimeout(timeout);
         const data = await response.json();
-        res.json(data);
+        // Pass the Gateway's status through. Flattening it to 200 turned an auth failure
+        // into "Whisper not available" in the panel - a healthy GPU reported as an outage
+        // (02.09.2026). A proxy that rewrites status codes cannot be debugged from the
+        // client.
+        res.status(response.status).json(data);
     } catch (error) {
         res.status(503).json({ initialized: false, error: 'Gateway not available' });
     }
@@ -892,11 +920,14 @@ app.get('/api/latency-stats', async (req, res) => {
         const timeout = setTimeout(() => controller.abort(), 5000);
         const response = await fetch(`${config.urls.gateway}/api/latency-stats`, {
             signal: controller.signal,
-            headers: req.headers.cookie ? { Cookie: req.headers.cookie } : {},
+            headers: {
+                ...(req.headers.cookie ? { Cookie: req.headers.cookie } : {}),
+                ...forwardSessionHeader(req),
+            },
         });
         clearTimeout(timeout);
         const data = await response.json();
-        res.json(data);
+        res.status(response.status).json(data);
     } catch (error) {
         res.status(503).json({ error: 'Gateway not available' });
     }
@@ -1015,24 +1046,6 @@ app.post('/api/listener-telemetry', async (req, res) => {
         res.status(response.status).json(data);
     } catch (error) {
         console.warn('[listener-telemetry] proxy failed:', error && error.message);
-        res.status(503).json({ success: false, error: 'Gateway not available' });
-    }
-});
-
-/** Proxy listener instant-feedback reports to Gateway for persistent JSONL storage. */
-app.post('/api/feedback', async (req, res) => {
-    try {
-        const controller = new AbortController();
-        const timeout = setTimeout(() => controller.abort(), 5000);
-        const response = await fetch(`${config.urls.gateway}/api/feedback`, {
-            method: 'POST', headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(req.body || {}), signal: controller.signal
-        });
-        clearTimeout(timeout);
-        const data = await response.json().catch(() => ({}));
-        res.status(response.status).json(data);
-    } catch (error) {
-        console.warn('[feedback] proxy failed:', error && error.message);
         res.status(503).json({ success: false, error: 'Gateway not available' });
     }
 });

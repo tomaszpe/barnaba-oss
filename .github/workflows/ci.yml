@@ -114,17 +114,19 @@ jobs:
         run: pip install -r requirements-test.txt
 
       - name: Audit Python dependencies
-        # FOUR advisories are accepted, by ID, with the reasoning in
+        # SIX advisories are accepted, by ID, with the reasoning in
         # whisper/requirements.txt. Naming them one by one is the point: a new
-        # advisory - or a fifth one on transformers - turns this step red instead
-        # of hiding behind a blanket "we know about transformers".
+        # advisory - including another one on transformers or accelerate - turns
+        # this step red instead of hiding behind a blanket "we know about transformers".
         #   PYSEC-2025-217  X-CLIP checkpoint conversion, never invoked
         #   PYSEC-2026-2288 Trainer._load_rng_state, inference-only service
         #   PYSEC-2026-2289 CVE-2026-4372, mitigated by the pinned config.json
         #   PYSEC-2026-2290 LightGlue loading path, neither version nor model applies
+        #   PYSEC-2026-3804 accelerate checkpoint index loaders, never called
+        #   PYSEC-2026-3929 tokenizer save_pretrained, the service never saves one
         run: |
           pip install pip-audit==2.9.0
-          pip-audit --strict --requirement requirements.txt             --ignore-vuln PYSEC-2025-217             --ignore-vuln PYSEC-2026-2288             --ignore-vuln PYSEC-2026-2289             --ignore-vuln PYSEC-2026-2290
+          pip-audit --strict --requirement requirements.txt             --ignore-vuln PYSEC-2025-217             --ignore-vuln PYSEC-2026-2288             --ignore-vuln PYSEC-2026-2289             --ignore-vuln PYSEC-2026-2290             --ignore-vuln PYSEC-2026-3804             --ignore-vuln PYSEC-2026-3929
 
       - name: Run tests
         # Tests that need a locally cached tokenizer snapshot skip themselves here;

@@ -90,13 +90,8 @@ export function sourceLineageFromWhisper(text, provenance) {
         start >= normalizedSpans[index - 1].start
         && end >= normalizedSpans[index - 1].end
     ));
-    // `confirmedWordSpans` describe the post-dedup delta, while `alignmentStatus`
-    // describes the whole raw decoder snapshot. A malformed timestamp belonging to
-    // a word removed by timestamp dedup can therefore make the raw snapshot
-    // `unaligned` even though the emitted delta has a complete, independently
-    // validated sidecar. The checks above re-prove the delta word-for-word and
-    // sample-for-sample, so only the delta provenance status is authoritative here.
-    const alignmentComplete = provenance.provenanceStatus === 'complete';
+    const alignmentComplete = provenance.provenanceStatus === 'complete'
+        && ['exact', 'complete'].includes(provenance.alignmentStatus);
 
     const chunkId = logicalChunkId(provenance);
     if (!exactWords || !validRanges || !validInputBounds || !monotonicRanges || !alignmentComplete || !chunkId) {

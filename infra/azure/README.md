@@ -44,8 +44,9 @@ az deployment group create `
 ```
 
 The foundation contains ACR, a workload-profile Container Apps environment, the A100
-profile, an Azure Files model cache, and separate managed identities for image pulls and
-control-plane operations. ACR admin credentials remain disabled.
+profile, an Azure Files model cache, an Azure Files share for listener feedback, and
+separate managed identities for image pulls and control-plane operations. ACR admin
+credentials remain disabled.
 
 ## 2. Build in ACR
 
@@ -83,6 +84,27 @@ az deployment group create `
 
 The gateway and control-plane are public HTTPS endpoints. Whisper has internal ingress
 only: it has no end-user authentication and must not be exposed directly.
+
+### Pipeline settings
+
+`reference-settings.json` holds the settings of the project's reference environment:
+sentence buffering, parallel translation and speech delivery, duplicate removal,
+fallbacks for late text, and the listener features. `apps.bicep` passes the `gateway`
+group to the gateway and the `listener` group to both the gateway and the control-plane,
+because the listener app reads its features from whichever of the two served it. The
+defaults in the code are more conservative. Removing a setting changes latency and
+translation behaviour, not only logging. Logging that stores sermon text on the container
+disk (`EVAL_LOGGING_ENABLED`) is not part of the reference settings and stays off.
+
+### Listener feedback
+
+Listeners can report problems from their phone. The control-plane appends each report as
+one JSON line to the `listener-feedback` Azure Files share, mounted at `/app/feedback`,
+under a directory named by `feedbackEnvironment` (default: the prefix). The control-plane
+does not start without `FEEDBACK_STORAGE_ROOT` and `FEEDBACK_ENVIRONMENT`, and it refuses
+to save a report when the share is not mounted. It is the only writer of these files, so
+it must keep exactly one replica. Reports can contain free text and an optional email
+address typed by listeners: limit access to the storage account accordingly.
 
 ## 4. Qualification smoke test
 

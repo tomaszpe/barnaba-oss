@@ -13,9 +13,8 @@ import { readFileSync } from 'fs';
  * That makes the arrangement quietly fragile: adding one `const X = process.env...`
  * near the top of server.js breaks both files, and it breaks them as a
  * `ReferenceError` thrown from generated code inside the sandbox, pointing at
- * `evalmachine.<anonymous>:749`. Release 1.6.0 added B4_CADENCE_V2_SHADOW_ENABLED and
- * cost 15 red tests that way, with a stack trace that named neither the flag's origin
- * nor the fix.
+ * `evalmachine.<anonymous>:749`. One such flag once cost 15 red tests that way, with a
+ * stack trace that named neither the flag's origin nor the fix.
  *
  * `assertContextProvides` turns that into a setup-time failure that says which names
  * are missing. The fragility is inherent to running a source slice out of context;

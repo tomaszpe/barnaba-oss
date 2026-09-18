@@ -47,6 +47,13 @@ describe('clean-room Swiss German mapping', () => {
             .toBe('Dabei bist du bei dem Haus.');
     });
 
+    it('does not replace short words inside Standard German words with umlauts', () => {
+        const sentence = 'Wir sind müde, er drückt die Hand, der Brief an die Römer.';
+
+        expect(normalizeSwissGerman(sentence)).toBe(sentence);
+        expect(normalizeSwissGerman(sentence.normalize('NFD'))).toBe(sentence.normalize('NFD'));
+    });
+
     it('treats combining marks as token characters in decomposed Unicode', () => {
         const nfc = 'Chräi bi dir';
         const nfd = nfc.normalize('NFD');

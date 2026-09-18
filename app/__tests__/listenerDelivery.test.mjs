@@ -227,8 +227,8 @@ describe('persistent listener outcome ledger', () => {
     });
 });
 
-describe('urgent playback lifecycle telemetry', () => {
-    it('flushes play_started immediately but leaves chunk_received on the regular batch', async () => {
+describe('urgent playback-started telemetry', () => {
+    it('flushes play_started immediately but leaves other outcomes on the regular batch', async () => {
         const { policy } = loadPolicy();
         const scheduled = [];
         const pending = [{ outcome: 'play_started' }];
@@ -277,27 +277,4 @@ describe('urgent playback lifecycle telemetry', () => {
         expect(scheduled).toHaveLength(1);
         expect(scheduled[0].delayMs).toBe(750);
     });
-
-    it.each(['play_completed', 'explicit_drop', 'superseded', 'null_audio', 'playback_error'])(
-        'flushes and retries %s until acknowledged, even without another audio start', async (outcome) => {
-            const { policy } = loadPolicy();
-            const scheduled = [];
-            const pending = [{ outcome }];
-            let attempts = 0;
-            const flusher = new policy.UrgentOutcomeFlusher({
-                peekPending: () => pending,
-                flush: async () => { if (++attempts === 2) pending.length = 0; },
-                schedule: (callback, delayMs) => {
-                    scheduled.push({ callback, delayMs });
-                    return scheduled.length;
-                },
-            });
-            flusher.notify(outcome);
-            expect(scheduled[0].delayMs).toBe(0);
-            await scheduled.shift().callback();
-            expect(scheduled[0].delayMs).toBe(500);
-            await scheduled.shift().callback();
-            expect(scheduled).toHaveLength(0);
-        },
-    );
 });

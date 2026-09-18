@@ -59,9 +59,13 @@ RUN npm ci --omit=dev && npm cache clean --force
 # boot with ERR_MODULE_NOT_FOUND. Locked by app/__tests__/controlPlaneImageContract.test.mjs.
 COPY control-plane.js ./
 COPY csrfService.js ./
-COPY clientFeatureConfig.js ./
+COPY feedbackRoutes.mjs ./
+COPY feedbackStore.mjs ./
 COPY startup.sh ./
 COPY public/ ./public/
+# The control plane serves its own operator panel and listener pages. They replace
+# the gateway's copies of the same files; everything else in public/ is shared.
+COPY public-control/ ./public/
 COPY config/ ./config/
 
 # The build context is often produced on Windows. Normalize defensively even when

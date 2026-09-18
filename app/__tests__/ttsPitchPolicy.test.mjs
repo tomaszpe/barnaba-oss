@@ -3,6 +3,7 @@ import { describe, expect, it } from 'vitest';
 import { buildClientFeatureConfig } from '../clientFeatureConfig.js';
 
 const indexSource = readFileSync(new URL('../public/index.html', import.meta.url), 'utf8');
+const controlIndexSource = readFileSync(new URL('../public-control/index.html', import.meta.url), 'utf8');
 const controlPlaneSource = readFileSync(new URL('../control-plane.js', import.meta.url), 'utf8');
 const gatewaySource = readFileSync(new URL('../server.js', import.meta.url), 'utf8');
 
@@ -11,14 +12,16 @@ describe('TTS pitch-preservation rollout', () => {
     expect(buildClientFeatureConfig({}).preserveTtsPitch).toBe(false);
     expect(buildClientFeatureConfig({ PWA_PRESERVE_PITCH_ENABLED: 'false' }).preserveTtsPitch).toBe(false);
     expect(buildClientFeatureConfig({ PWA_PRESERVE_PITCH_ENABLED: 'true' }).preserveTtsPitch).toBe(true);
-    expect(controlPlaneSource).toContain("buildClientFeatureConfig(process.env)");
+    // Control Plane reads its three listener flags directly; the same strict 'true' test.
+    expect(controlPlaneSource).toContain("preserveTtsPitch: process.env.PWA_PRESERVE_PITCH_ENABLED === 'true',");
     expect(gatewaySource).toContain("buildClientFeatureConfig(process.env)");
   });
 
   it('passes the runtime flag through both client-config endpoints', () => {
-    expect(controlPlaneSource).toMatch(/gatewayUrl: config\.urls\.gateway,\s+preserveTtsPitch: config\.clientFeatures\.preserveTtsPitch,/);
+    expect(controlPlaneSource).toMatch(/gatewayUrl: config\.urls\.gateway,[\s\S]*?preserveTtsPitch: config\.clientFeatures\.preserveTtsPitch,/);
     expect(gatewaySource).toMatch(/app\.get\('\/api\/control\/config',[\s\S]*?preserveTtsPitch: config\.clientFeatures\.preserveTtsPitch/);
     expect(indexSource).toContain('preserveTtsPitchEnabled = cfg.preserveTtsPitch === true;');
+    expect(controlIndexSource).toContain('preserveTtsPitchEnabled = cfg.preserveTtsPitch === true;');
   });
 
   it('enables native HTMLAudio pitch preservation only after runtime opt-in', () => {

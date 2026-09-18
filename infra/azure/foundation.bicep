@@ -122,6 +122,28 @@ resource environmentModelStorage 'Microsoft.App/managedEnvironments/storages@202
   }
 }
 
+// Listener feedback reports: JSON lines written by the control-plane only.
+resource feedbackShare 'Microsoft.Storage/storageAccounts/fileServices/shares@2023-05-01' = {
+  parent: modelShareService
+  name: 'listener-feedback'
+  properties: {
+    enabledProtocols: 'SMB'
+  }
+}
+
+resource environmentFeedbackStorage 'Microsoft.App/managedEnvironments/storages@2024-03-01' = {
+  parent: environment
+  name: 'listener-feedback'
+  properties: {
+    azureFile: {
+      accessMode: 'ReadWrite'
+      accountName: modelStorage.name
+      accountKey: modelStorage.listKeys().keys[0].value
+      shareName: feedbackShare.name
+    }
+  }
+}
+
 resource pullIdentity 'Microsoft.ManagedIdentity/userAssignedIdentities@2023-01-31' = {
   name: pullIdentityName
   location: location
@@ -154,3 +176,4 @@ output controlIdentityId string = controlIdentity.id
 output controlIdentityClientId string = controlIdentity.properties.clientId
 output modelStorageName string = modelStorage.name
 output modelShareName string = modelShare.name
+output feedbackShareName string = feedbackShare.name
