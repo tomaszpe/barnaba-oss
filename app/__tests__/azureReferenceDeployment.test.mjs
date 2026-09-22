@@ -89,6 +89,7 @@ describe('Azure reference deployment contract', () => {
       'azureOpenAiKey',
       'azureSpeechKey',
       'accessPin',
+      'sessionSecret',
       'churchesConfigJson',
     ]) {
       expect(parameters[name].value, name).toBe('');
@@ -101,6 +102,19 @@ describe('Azure reference deployment contract', () => {
     expect(apps).toContain('@minLength(6)');
     expect(apps).toContain('@maxLength(6)');
     expect(apps).toContain('@minLength(13)');
+  });
+
+  /**
+   * Without a dedicated signing key the gateway derives one from the PIN and the broadcaster
+   * password, so changing either one invalidates every listener session and sends every phone
+   * back to the PIN screen. docs/GETTING_STARTED.md promises that this does not happen.
+   */
+  it('signs listener sessions with a dedicated secret, not with the PIN and password', () => {
+    const gatewaySection = apps.split("resource gateway '")[1].split("resource controlPlane '")[0];
+    expect(apps).toContain('param sessionSecret string');
+    expect(apps).toContain('@minLength(32)');
+    expect(gatewaySection).toContain("{ name: 'session-secret', value: sessionSecret }");
+    expect(gatewaySection).toContain("{ name: 'SESSION_SECRET', secretRef: 'session-secret' }");
   });
 
   it('keeps listener feedback on its own Azure Files share with a single control-plane writer', () => {

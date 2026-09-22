@@ -135,8 +135,16 @@ Change these values:
 | `azureSpeechRegion`, `azureSpeechKey` | from your Azure Speech resource |
 | `accessPin` | six digits that listeners type to join, for example `482913` |
 | `broadcasterPassword` | leave `Barnaba2026&!` for the first start |
+| `sessionSecret` | 32 or more random characters, see right below the table |
 | `churchesConfigJson` | your congregations as a JSON text, see below |
 | `location` | your region from step 3.1 |
+
+`sessionSecret` signs the sessions that keep a listener signed in on their phone. Generate
+one and keep it: if you change it later, every phone has to enter the PIN again.
+
+```powershell
+-join ((48..57) + (65..90) + (97..122) | Get-Random -Count 48 | ForEach-Object { [char]$_ })
+```
 
 `churchesConfigJson` is a list of congregations written as one line of text. Each entry
 needs an `id` (lower-case letters, digits and hyphens) and a display `name`:
@@ -144,6 +152,7 @@ needs an `id` (lower-case letters, digits and hyphens) and a display `name`:
 ```json
 "accessPin": { "value": "482913" },
 "broadcasterPassword": { "value": "Barnaba2026&!" },
+"sessionSecret": { "value": "paste the generated value here" },
 "churchesConfigJson": { "value": "[{\"id\":\"my-church\",\"name\":\"My Church\"}]" }
 ```
 
@@ -291,8 +300,8 @@ Then reload again and try the old one: it must no longer work.
 
 Good to know:
 
-- Listeners who were connected must enter the PIN again. Their session key is derived from
-  the password and the PIN.
+- Listeners stay signed in. Their session is signed with `sessionSecret`, which does not
+  change with the password.
 - You change the listener PIN (`accessPin`) the same way.
 - If you use `infra/azure/smoke-test.ps1`, set `$env:BROADCASTER_PASSWORD` to the new
   password.

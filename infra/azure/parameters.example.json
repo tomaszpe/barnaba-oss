@@ -15,6 +15,7 @@
     "azureSpeechKey": { "value": "" },
     "accessPin": { "value": "" },
     "broadcasterPassword": { "value": "Barnaba2026&!" },
+    "sessionSecret": { "value": "" },
     "churchesConfigJson": {
       "value": ""
     }

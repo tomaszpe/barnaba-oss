@@ -43,6 +43,12 @@ param accessPin string
 @secure()
 @minLength(13)
 param broadcasterPassword string
+// Signing key for listener and broadcaster session tokens. Without it the gateway derives
+// the key from the PIN and the broadcaster password, so changing either one signs every
+// phone out and sends every listener back to the PIN screen.
+@secure()
+@minLength(32)
+param sessionSecret string
 @secure()
 @minLength(2)
 param churchesConfigJson string
@@ -223,6 +229,7 @@ resource gateway 'Microsoft.App/containerApps@2024-03-01' = {
         { name: 'azure-speech-key', value: azureSpeechKey }
         { name: 'access-pin', value: accessPin }
         { name: 'broadcaster-password', value: broadcasterPassword }
+        { name: 'session-secret', value: sessionSecret }
         { name: 'churches-config', value: churchesConfigJson }
       ]
     }
@@ -249,6 +256,7 @@ resource gateway 'Microsoft.App/containerApps@2024-03-01' = {
             { name: 'AZURE_SPEECH_KEY', secretRef: 'azure-speech-key' }
             { name: 'ACCESS_PIN', secretRef: 'access-pin' }
             { name: 'BROADCASTER_PASSWORD', secretRef: 'broadcaster-password' }
+            { name: 'SESSION_SECRET', secretRef: 'session-secret' }
             { name: 'USE_SERVER_TTS', value: 'true' }
           ], listenerSettings, gatewaySettings)
           volumeMounts: [
