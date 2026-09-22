@@ -30,6 +30,15 @@ param(
 Set-StrictMode -Version Latest
 $ErrorActionPreference = 'Stop'
 
+# Windows PowerShell 5.1 loads the web cmdlet assembly on first use, so
+# [Microsoft.PowerShell.Commands.WebRequestSession] cannot be resolved while this script
+# is still defining its functions. Reading the cmdlet loads the assembly and the script
+# then starts on a clean 5.1 session as well as on PowerShell 7.
+Get-Command Invoke-WebRequest | Out-Null
+# System.Net.Http is not loaded by default in Windows PowerShell 5.1 either, and the
+# transcription request below is built on HttpClient.
+Add-Type -AssemblyName System.Net.Http
+
 function Invoke-AzureCliText {
     param([Parameter(Mandatory)][string[]] $Arguments)
 
@@ -75,6 +84,21 @@ function Invoke-ControlJson {
         $request.Body = ($Body | ConvertTo-Json -Compress)
     }
     return Invoke-RestMethod @request
+}
+
+function Wait-ForSystemReady {
+    param([Parameter(Mandatory)][object] $Session)
+
+    $deadline = [DateTimeOffset]::UtcNow.AddSeconds($StartupTimeoutSeconds)
+    do {
+        $status = Invoke-ControlJson -Method GET -Path '/api/control/status' -Session $Session
+        if ($status.systemReady -and $status.whisper.health.model_loaded) {
+            return $status
+        }
+        Start-Sleep -Seconds 10
+    } while ([DateTimeOffset]::UtcNow -lt $deadline)
+
+    throw "System did not reach systemReady with model_loaded=true within ${StartupTimeoutSeconds}s."
 }
 
 function Invoke-Transcription {
@@ -139,6 +163,7 @@ $csrfToken = $null
 $startAttempted = $false
 $shutdownConfirmed = $false
 $smokePassed = $false
+$failure = $null
 
 try {
     $health = Invoke-RestMethod -Method Get -Uri "${ControlPlaneUrl}/health" -TimeoutSec 30
@@ -156,16 +181,30 @@ try {
     $csrfToken = $csrfCookie.Value
 
     $startAttempted = $true
-    $startResult = Invoke-ControlJson -Method POST -Path '/api/control/start-system' `
-        -Session $session -CsrfToken $csrfToken
-    if (-not $startResult.success) {
-        throw 'Control-plane did not complete start-system successfully.'
+    # Container Apps cuts off an HTTP request that sends nothing for 240 s, and start-system
+    # holds the connection while Whisper gets a GPU and loads the model - close to four
+    # minutes on a cold environment. The cut arrives as 504 while the start carries on to the
+    # end, so a 504 is not a verdict here. The status endpoint below is.
+    try {
+        $startResult = Invoke-ControlJson -Method POST -Path '/api/control/start-system' `
+            -Session $session -CsrfToken $csrfToken
+        if (-not $startResult.success) {
+            throw 'Control-plane did not complete start-system successfully.'
+        }
+    }
+    catch {
+        $statusCode = 0
+        if ($_.Exception -is [System.Net.WebException] -and $_.Exception.Response) {
+            $statusCode = [int]$_.Exception.Response.StatusCode
+        }
+        elseif ($_.Exception.GetType().Name -eq 'HttpResponseException') {
+            $statusCode = [int]$_.Exception.Response.StatusCode
+        }
+        if ($statusCode -ne 504) { throw }
+        Write-Host 'start-system outlived the ingress timeout; the status endpoint decides.'
     }
 
-    $status = Invoke-ControlJson -Method GET -Path '/api/control/status' -Session $session
-    if (-not $status.systemReady -or -not $status.whisper.health.model_loaded) {
-        throw 'System status is not ready with model_loaded=true after start-system.'
-    }
+    $status = Wait-ForSystemReady -Session $session
     $readyAt = [DateTimeOffset]::UtcNow
 
     $speechUri = "https://${AzureSpeechRegion}.tts.speech.microsoft.com/cognitiveservices/v1"
@@ -192,7 +231,7 @@ try {
     Wait-ForStoppedApps
     $shutdownConfirmed = $true
 
-    $sourceCommit = (& git -C (Join-Path $PSScriptRoot '..\..') rev-parse HEAD).Trim()
+    $sourceCommit = (& git -C (Join-Path $PSScriptRoot '../..') rev-parse HEAD).Trim()
     if ($LASTEXITCODE -ne 0 -or $sourceCommit -notmatch '^[0-9a-f]{40}$') {
         throw 'Cannot resolve the full public candidate commit.'
     }
@@ -231,6 +270,11 @@ try {
         shutdownConfirmed = $shutdownConfirmed
     } | ConvertTo-Json
 }
+catch {
+    # Kept so the shutdown below cannot become the only thing the operator sees.
+    $failure = $_
+    throw
+}
 finally {
     if ($startAttempted -and -not $shutdownConfirmed -and $csrfToken) {
         try {
@@ -245,6 +289,9 @@ finally {
         Remove-Item -LiteralPath $audioPath -Force
     }
     if (-not $smokePassed) {
-        Write-Error 'AZURE_REFERENCE_DEPLOYMENT_PASS was not achieved.'
+        # Write-Error here terminates under $ErrorActionPreference = 'Stop' and would
+        # replace the original exception, leaving no reason on screen.
+        $reason = if ($failure) { $failure.Exception.Message } else { 'no error was recorded' }
+        Write-Error "AZURE_REFERENCE_DEPLOYMENT_PASS was not achieved: $reason"
     }
 }

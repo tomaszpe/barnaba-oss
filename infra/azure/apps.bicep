@@ -74,7 +74,10 @@ var containerAppContributorRoleDefinitionId = subscriptionResourceId(
 var registryServer = registry.properties.loginServer
 var defaultDomain = environment.properties.defaultDomain
 var gatewayUrl = 'https://${gatewayName}.${defaultDomain}'
-var whisperUrl = 'https://${whisperName}.${defaultDomain}'
+// Whisper takes internal traffic only, so its name resolves under the environment's
+// internal domain, not the public one. Reading the address off the resource keeps the
+// gateway and the control plane pointed at it even if the ingress mode ever changes.
+var whisperUrl = 'https://${whisper.properties.configuration.ingress.fqdn}'
 var controlPlaneUrl = 'https://${controlPlaneName}.${defaultDomain}'
 var resourceTags = {
   project: 'barnaba'
@@ -168,10 +171,13 @@ resource whisper 'Microsoft.App/containerApps@2024-03-01' = {
                 port: 8000
                 scheme: 'HTTP'
               }
-              initialDelaySeconds: 300
+              // Container Apps accepts initialDelaySeconds only up to 60, so the wait for the
+              // model to load lives in the retries: 60 + 10 x 30 = 360 s before the replica is
+              // reported unhealthy. A readiness failure only keeps the replica out of rotation.
+              initialDelaySeconds: 60
               periodSeconds: 30
               timeoutSeconds: 30
-              failureThreshold: 5
+              failureThreshold: 10
             }
           ]
         }

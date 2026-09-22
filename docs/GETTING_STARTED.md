@@ -60,7 +60,11 @@ Azure:
 
 Your computer:
 
-- [Azure CLI](https://learn.microsoft.com/cli/azure/install-azure-cli), Git and PowerShell.
+- [Azure CLI](https://learn.microsoft.com/cli/azure/install-azure-cli) and Git.
+- PowerShell, because the two scripts below are PowerShell scripts. Windows already has
+  it. On macOS and Linux, install
+  [PowerShell 7](https://learn.microsoft.com/powershell/scripting/install/installing-powershell)
+  and run them with `pwsh`. Nothing else about Barnaba differs between the three systems.
 - No Docker. Azure builds the images for you.
 
 For the service:

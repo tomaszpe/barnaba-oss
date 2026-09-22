@@ -28,7 +28,7 @@ if (-not (Get-Command git -ErrorAction SilentlyContinue)) {
     throw 'Git is required to verify image provenance.'
 }
 
-$repoRoot = (Resolve-Path (Join-Path $PSScriptRoot '..\..')).Path
+$repoRoot = (Resolve-Path (Join-Path $PSScriptRoot '../..')).Path
 $sourceStatus = (& git -C $repoRoot status --porcelain --untracked-files=all)
 if ($LASTEXITCODE -ne 0) {
     throw 'Cannot read the source tree status.'
@@ -54,14 +54,14 @@ if ($LASTEXITCODE -ne 0 -or [string]::IsNullOrWhiteSpace($registryServer)) {
 $baseImage = "$registryServer/barnaba-whisper-base:$ImageTag"
 
 Invoke-AzureCli @(
-    'acr', 'build', '--registry', $AcrName,
+    'acr', 'build', '--no-logs', '--registry', $AcrName,
     '--image', "barnaba-whisper-base:$ImageTag",
     '--file', (Join-Path $repoRoot 'whisper/Dockerfile.base'),
     (Join-Path $repoRoot 'whisper')
 )
 
 Invoke-AzureCli @(
-    'acr', 'build', '--registry', $AcrName,
+    'acr', 'build', '--no-logs', '--registry', $AcrName,
     '--image', "barnaba-whisper:$ImageTag",
     '--build-arg', "WHISPER_BASE_IMAGE=$baseImage",
     '--file', (Join-Path $repoRoot 'whisper/Dockerfile'),
@@ -69,14 +69,14 @@ Invoke-AzureCli @(
 )
 
 Invoke-AzureCli @(
-    'acr', 'build', '--registry', $AcrName,
+    'acr', 'build', '--no-logs', '--registry', $AcrName,
     '--image', "barnaba-gateway:$ImageTag",
     '--file', (Join-Path $repoRoot 'app/Dockerfile'),
     (Join-Path $repoRoot 'app')
 )
 
 Invoke-AzureCli @(
-    'acr', 'build', '--registry', $AcrName,
+    'acr', 'build', '--no-logs', '--registry', $AcrName,
     '--image', "barnaba-control-plane:$ImageTag",
     '--file', (Join-Path $repoRoot 'app/Dockerfile.control-plane'),
     (Join-Path $repoRoot 'app')
