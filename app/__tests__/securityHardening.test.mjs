@@ -97,6 +97,11 @@ describe('security hardening regressions', () => {
     expect(serverSource).toContain('objectSrc: ["\'none\'"]');
     expect(serverSource).toContain('frameAncestors: ["\'none\'"]');
     expect(serverSource).toContain("scriptSrc: [\"'self'\", \"'unsafe-inline'\", 'https://cdn.jsdelivr.net']");
+    // helmet's default script-src-attr 'none' blocked every inline onclick= handler on the
+    // gateway origin: buttons did nothing, with no error and no request. The listener page
+    // binds its buttons that way, so the directive and the markup must agree.
+    expect(listenerSource).toContain('onclick="verifyPIN()"');
+    expect(serverSource).toContain("scriptSrcAttr: [\"'unsafe-inline'\"]");
     expect(listenerSource).toContain('integrity="sha384-');
   });
 

@@ -1865,6 +1865,9 @@ app.use(helmet({
         directives: {
             defaultSrc: ["'self'"],
             scriptSrc: ["'self'", "'unsafe-inline'", 'https://cdn.jsdelivr.net'],
+            // helmet defaults to script-src-attr 'none', which blocks the inline onclick=
+            // handlers the pages in public/ rely on. script-src already allows 'unsafe-inline'.
+            scriptSrcAttr: ["'unsafe-inline'"],
             styleSrc: ["'self'", "'unsafe-inline'"],
             imgSrc: ["'self'", 'data:', 'blob:', 'https://cdn.jsdelivr.net'],
             connectSrc: ["'self'", 'https:', 'wss:', 'ws:'],

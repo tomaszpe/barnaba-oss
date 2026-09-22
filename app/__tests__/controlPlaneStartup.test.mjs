@@ -34,4 +34,15 @@ describe('control-plane startup sequencing', () => {
     expect(adminHtml).toContain('startSystemFromControlPlane((message, percent) => qsSetProgress(percent ?? 20, message))');
     expect(adminHtml).toContain("updateProgress('BARNABA is ready!', 100)");
   });
+
+  /**
+   * The QR code must point at the origin the admin's browser is actually on, which is the
+   * Control Plane. Forwarding the gateway origin sent every listener to the gateway page
+   * instead, where inline handlers are blocked by CSP and no button works.
+   */
+  it('forwards the browser-facing origin to the gateway when building the join QR', () => {
+    expect(controlPlaneSource).toContain("'X-Barnaba-Public-Origin': `${proto}://${host}`");
+    expect(controlPlaneSource).toContain("req.get('x-forwarded-host')");
+    expect(controlPlaneSource).not.toContain("'X-Barnaba-Public-Origin': normalizeOrigin(config.urls.gateway)");
+  });
 });

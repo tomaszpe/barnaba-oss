@@ -841,6 +841,10 @@ app.get('/api/churches', (req, res) => {
 app.post('/api/auth/:endpoint', async (req, res) => {
     const endpoint = req.params.endpoint;
     const gatewayUrl = `${config.urls.gateway}/api/auth/${endpoint}`;
+    // The gateway builds the QR join URL from this. It must be the origin the broadcaster's
+    // browser sees the control plane on, not the gateway's own address.
+    const proto = String(req.get('x-forwarded-proto') || req.protocol || '').split(',')[0].trim();
+    const host = String(req.get('x-forwarded-host') || req.get('host') || '').split(',')[0].trim();
 
     try {
         const controller = new AbortController();
@@ -850,7 +854,7 @@ app.post('/api/auth/:endpoint', async (req, res) => {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                'X-Barnaba-Public-Origin': normalizeOrigin(config.urls.gateway) || config.urls.gateway,
+                'X-Barnaba-Public-Origin': `${proto}://${host}`,
                 ...(req.headers.cookie ? { Cookie: req.headers.cookie } : {}),
                 ...forwardCsrfHeader(req),
             },
