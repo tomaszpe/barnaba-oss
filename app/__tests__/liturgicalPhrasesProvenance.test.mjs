@@ -37,20 +37,27 @@ describe('public-domain liturgical phrase corpus', () => {
         }
     });
 
-    it('keeps every verified language complete except the documented Swahili gaps', () => {
-        const expectedSwahiliGaps = new Set([
-            'aaronic_blessing_1',
-            'aaronic_blessing_2',
-            'aaronic_blessing_3',
-            'lord_have_mercy_matt_17_15',
-        ]);
+    it('keeps every verified language complete except the documented gaps', () => {
+        const expectedGaps = {
+            sw: new Set([
+                'aaronic_blessing_1',
+                'aaronic_blessing_2',
+                'aaronic_blessing_3',
+                'lord_have_mercy_matt_17_15',
+            ]),
+            // Matthew 17:15 has no contiguous "Lord, have mercy" in these editions.
+            fa: new Set(['lord_have_mercy_matt_17_15']),
+            zh: new Set(['lord_have_mercy_matt_17_15']),
+        };
 
-        for (const language of data.languages.filter((language) => language !== 'sw')) {
+        for (const language of data.languages.filter((language) => !expectedGaps[language])) {
             expect(data.phrases.filter((phrase) => !phrase[language])).toEqual([]);
         }
-        expect(new Set(
-            data.phrases.filter((phrase) => !phrase.sw).map(({ id }) => id),
-        )).toEqual(expectedSwahiliGaps);
+        for (const [language, gaps] of Object.entries(expectedGaps)) {
+            expect(new Set(
+                data.phrases.filter((phrase) => !phrase[language]).map(({ id }) => id),
+            )).toEqual(gaps);
+        }
     });
 
     it('falls through for Turkish and for Swahili phrases outside the New Testament', async () => {

@@ -96,6 +96,30 @@
             invalidEmail: 'أدخل عنوان بريد إلكتروني صالحاً.',
             sessionLimit: 'تم حفظ 500 بلاغ في جلسة الترجمة هذه. يمكنك إرسال المزيد عند بدء جلسة جديدة.',
         },
+        fa: {
+            menu: 'ارسال بازخورد', issueLabel: 'مشکل را شرح دهید (اختیاری)', noteLabel: 'بازخورد شما',
+            emailLabel: 'ایمیل (اختیاری)', emailHelp: 'فقط اگر مایلید به شما پاسخ دهیم.',
+            saveError: 'ذخیره نشد. متن شما همچنان اینجاست. برای تلاش دوباره OK را بزنید.',
+            categoryError: 'گزارش ذخیره نشد. برای تلاش دوباره همان دسته را دوباره انتخاب کنید.',
+            invalidEmail: 'لطفاً یک نشانی ایمیل معتبر وارد کنید.',
+            sessionLimit: 'این جلسه ترجمه به سقف ۵۰۰ گزارش رسیده است. گزارش‌های بیشتر را می‌توانید در جلسه بعدی بفرستید.',
+        },
+        'pt-BR': {
+            menu: 'Enviar comentário', issueLabel: 'Descreva o problema (opcional)', noteLabel: 'Seu comentário',
+            emailLabel: 'E-mail (opcional)', emailHelp: 'Somente se você quiser uma resposta.',
+            saveError: 'Não foi possível salvar. Seu texto continua aqui. Toque em OK para tentar de novo.',
+            categoryError: 'Não foi possível salvar o relato. Selecione a mesma categoria de novo para tentar outra vez.',
+            invalidEmail: 'Digite um endereço de e-mail válido.',
+            sessionLimit: 'Esta sessão de tradução atingiu o limite de 500 relatos. Você poderá enviar mais em uma nova sessão.',
+        },
+        zh: {
+            menu: '发送反馈', issueLabel: '描述问题（可选）', noteLabel: '您的反馈',
+            emailLabel: '电子邮箱（可选）', emailHelp: '仅在您希望我们回复时填写。',
+            saveError: '保存失败。您的文字仍在此处。请按 OK 重试。',
+            categoryError: '报告保存失败。请再次选择同一类别以重试。',
+            invalidEmail: '请输入有效的电子邮箱地址。',
+            sessionLimit: '本次翻译会话已达到 500 条报告的上限。您可以在新的会话中继续提交。',
+        },
     };
     window.feedbackMenuLabel = lang => (TEXT[lang] || TEXT.en).menu;
 

@@ -83,7 +83,9 @@ control-plane run on the Consumption profile. Local Docker and local runtime dep
 are deliberately outside the supported surface.
 
 Before starting, obtain A100 quota in a supported Azure region and prepare Azure OpenAI
-and Azure Speech resources. Then, from a clean clone:
+and Azure Speech resources. Give the `gpt-4.1` deployment about 50,000 tokens per minute for
+each language listeners will use; too little shows up as silences, not as an error
+([details](docs/GETTING_STARTED.md#2-before-you-start)). Then, from a clean clone:
 
 ```powershell
 az group create --name barnaba-oss-rg --location swedencentral

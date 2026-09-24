@@ -107,7 +107,10 @@ const LANGUAGE_NAMES = {
     'ru': 'Russian',
     'sw': 'Swahili',
     'tr': 'Turkish',
-    'uk': 'Ukrainian'
+    'uk': 'Ukrainian',
+    'fa': 'Persian (Farsi, Iran)',
+    'pt-BR': 'Portuguese (Brazilian)',
+    'zh': 'Mandarin Chinese (Simplified)'
 };
 
 const UNINITIALIZED_DENOMINATIONAL_STYLES = Symbol('uninitialized-denominational-styles');
@@ -151,7 +154,10 @@ const FEW_SHOT_EXAMPLE_OUTPUTS = {
     'ru': 'Он сказал, что сила, Послание к Филиппийцам, глава четвёртая, стих тринадцатый, сила Божья несёт нас через все трудности.',
     'sw': 'Alisema kwamba nguvu, Wafilipi sura ya nne, mstari wa kumi na tatu, nguvu ya Mungu inatubeba kupitia magumu yote.',
     'tr': 'Tanrı\'nın gücünün, Filipililer bölüm dört, ayet on üç, bizi tüm zorluklardan taşıdığını söyledi.',
-    'uk': 'Він сказав, що сила, Послання до Филип\'ян, розділ четвертий, вірш тринадцятий, сила Божа несе нас через усі труднощі.'
+    'uk': 'Він сказав, що сила, Послання до Филип\'ян, розділ четвертий, вірш тринадцятий, сила Божа несе нас через усі труднощі.',
+    'fa': 'او گفت که قوت، فیلیپیان باب چهارم، آیه سیزدهم، قوت خدا ما را از میان همه سختی‌ها عبور می‌دهد.',
+    'pt-BR': 'Ele disse que a força, Filipenses capítulo quatro, versículo treze, a força de Deus nos sustenta em meio a todas as dificuldades.',
+    'zh': '他说，这力量，腓立比书第四章第十三节，神的力量带着我们度过一切困难。'
 };
 
 // Previous context buffer for translation continuity.
@@ -449,6 +455,50 @@ function getLanguageSpecificRules(targetLang, properNouns = '') {
    - "Isaya 6:1-5" → "Isaya sura ya sita, mistari ya kwanza hadi ya tano"
    - "1 Wakorintho 13" → "Barua ya kwanza kwa Wakorintho, sura ya kumi na tatu"
    - Maintain correct Swahili noun class prefixes for theological terms
+   - German idioms: translate the MEANING, not the words
+   - Incomplete Bible citations: preserve quote marks and ellipsis as-is
+   - Abbreviations and proper nouns${properNouns}: keep as-is
+
+`;
+    }
+    if (targetLang === 'fa') {
+        return `6. **PERSIAN (FARSI) THEOLOGICAL TRANSLATION RULES (for TTS)**
+   - Use standard written Persian of Iran, not Dari or Tajik
+   - Use the vocabulary of Iranian Protestant churches:
+     * Jesus = "عیسی مسیح", God = "خدا", Lord = "خداوند", Holy Spirit = "روح‌القدس"
+     * Church = "کلیسا", Baptism = "تعمید", Gospel = "انجیل", Lord's Supper = "شام خداوند"
+   - Scripture references must be spelled out for natural reading
+   - "فیلیپیان ۴:۱۳" → "فیلیپیان باب چهارم، آیه سیزدهم"
+   - "اشعیا ۶:۱-۵" → "اشعیا باب ششم، آیات یکم تا پنجم"
+   - "اول قرنتیان ۱۳" → "رساله اول قرنتیان، باب سیزدهم"
+   - German idioms: translate the MEANING, not the words
+   - Incomplete Bible citations: preserve quote marks and ellipsis as-is
+   - Abbreviations and proper nouns${properNouns}: keep as-is
+
+`;
+    }
+    if (targetLang === 'pt-BR') {
+        return `6. **BRAZILIAN PORTUGUESE THEOLOGICAL TRANSLATION RULES (for TTS)**
+   - Use Brazilian Portuguese, not European: address the congregation as "vocês", use Brazilian spelling and vocabulary
+   - Use the vocabulary of Brazilian evangelical churches ("pregação", "culto", "Santa Ceia", "irmãos")
+   - Scripture references must be spelled out for natural reading
+   - "Filipenses 4:13" → "Filipenses capítulo quatro, versículo treze"
+   - "Isaías 6:1-5" → "Isaías capítulo seis, versículos um a cinco"
+   - "1 Coríntios 13" → "Primeira carta aos Coríntios, capítulo treze"
+   - German idioms: translate the MEANING, not the words
+   - Incomplete Bible citations: preserve quote marks and ellipsis as-is
+   - Abbreviations and proper nouns${properNouns}: keep as-is
+
+`;
+    }
+    if (targetLang === 'zh') {
+        return `6. **MANDARIN CHINESE THEOLOGICAL TRANSLATION RULES (for TTS)**
+   - Write Simplified Chinese characters (Mainland China) with Chinese punctuation (，。？！)
+   - Use Protestant terminology: God = "神", Holy Spirit = "圣灵", Jesus = "耶稣", Lord = "主"
+   - Scripture references must be spelled out for natural reading
+   - "腓立比书 4:13" → "腓立比书第四章第十三节"
+   - "以赛亚书 6:1-5" → "以赛亚书第六章第一节到第五节"
+   - "哥林多前书 13" → "哥林多前书第十三章"
    - German idioms: translate the MEANING, not the words
    - Incomplete Bible citations: preserve quote marks and ellipsis as-is
    - Abbreviations and proper nouns${properNouns}: keep as-is

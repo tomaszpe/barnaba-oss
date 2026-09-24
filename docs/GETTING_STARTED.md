@@ -56,7 +56,29 @@ Azure:
 - **A100 quota** in a region that offers the `Consumption-GPU-NC24-A100` workload profile.
 - An **Azure OpenAI** resource with a model deployment named exactly **`gpt-4.1`**. The
   default configuration calls a deployment with that name. You need the endpoint and a key.
+  Give the deployment enough **tokens per minute (TPM)**, see the table below.
 - An **Azure Speech** resource. You need its key and region.
+
+How much TPM the `gpt-4.1` deployment needs depends on how many languages people are
+listening to. A language with no listener is not translated. One translation request uses
+about 2,200 to 2,300 tokens, almost all of them input: instructions, glossary and the
+preceding context. Measured in the reference deployment (GPT-4.1 `2025-04-14`, Standard):
+
+| Languages with a listener | Measured, median per minute | Measured, highest minute | Deployment capacity to set |
+|---|---|---|---|
+| 4 | 106,000 TPM | 123,000 TPM | **200,000 TPM** |
+| 12 | 324,000 TPM | 428,000 TPM | **600,000 TPM** |
+| 15 (all) | not measured | not measured | **750,000 TPM** |
+
+Plan **50,000 TPM for each language you expect to be listened to.** That leaves about a
+third above the highest minute we measured. With a Standard deployment you pay for the
+tokens you use; the capacity only sets the ceiling, so a higher ceiling costs nothing by
+itself. It does need regional quota in your subscription.
+
+Too little capacity does not show up as an error on the control panel. Listeners hear
+long silences and skipped sentences, and the gateway log shows
+`FAILED: Translation provider rate limit`, then `FAILED: Translation provider circuit is open`.
+A deployment with 50,000 TPM failed this way with four languages and one listener each.
 
 Your computer:
 
@@ -308,6 +330,7 @@ Good to know:
 | `Control login failed: Invalid password` | The password was wrong. Click **START BARNABA** again and type it once more. If you have just changed the password, check that you restarted the control panel (step 8.3). |
 | `Control login failed: Too many requests. Please try again later.` | The control panel accepts at most 10 requests per minute from one address. Wait one minute and try again. |
 | `Quick Start failed: Waiting for Whisper Azure readiness and model warm-up timed out after 720s` | Azure did not provide a GPU within 12 minutes. Check your A100 quota for the region and try again. |
+| Long silences and missing sentences; the gateway log shows `Translation provider rate limit` or `circuit is open` | The `gpt-4.1` deployment has too few tokens per minute for the number of languages being listened to. Raise its capacity as in section 2 (50,000 TPM per language). |
 | The congregation list is empty | `churchesConfigJson` is missing or not valid JSON. Fix it as in step 3.4 and deploy again. |
 | Listeners do not see the congregation | The broadcaster is not connected. Check that the **Broadcaster** section shows **Connected**. |
 

@@ -930,7 +930,7 @@ const config = {
         key: process.env.AZURE_OPENAI_KEY,
         endpoint: process.env.AZURE_OPENAI_ENDPOINT,
     },
-    targetLanguages: ['ar', 'de', 'en', 'es', 'fr', 'it', 'pl', 'pt', 'ru', 'sw', 'tr', 'uk'],
+    targetLanguages: ['ar', 'de', 'en', 'es', 'fr', 'it', 'pl', 'pt', 'ru', 'sw', 'tr', 'uk', 'fa', 'pt-BR', 'zh'],
     languageNames: {
         'ar': 'العربية',
         'de': 'Deutsch',
@@ -943,7 +943,10 @@ const config = {
         'ru': 'Русский',
         'sw': 'Kiswahili',
         'tr': 'Türkçe',
-        'uk': 'Українська'
+        'uk': 'Українська',
+        'fa': 'فارسی',
+        'pt-BR': 'Português BR',
+        'zh': '中文'
     },
     // Whisper Auto-Shutdown Configuration (05.02.2026)
     // Automatically stops Whisper container after inactivity to save costs
@@ -3775,7 +3778,17 @@ app.post('/api/recording-render', requireBroadcasterSession, parseQaReplayUpload
  *
  * Logged to eval-*.jsonl with stage='listener_telemetry' for post-mortem in
  * the offline evaluation report generator (drift section).
+ *
+ * Counters a player does not report stay null. A zero here must mean "measured zero",
+ * never "nothing was measured" — those two read identically in a report and only one
+ * of them is evidence.
  */
+const reportedCount = (value) => {
+    if (value == null) return null;
+    const parsed = Number(value);
+    return Number.isFinite(parsed) ? parsed : null;
+};
+
 app.post('/api/listener-telemetry', (req, res) => {
     const body = req.body || {};
     const snapshot = body.snapshot || {};
@@ -3799,12 +3812,26 @@ app.post('/api/listener-telemetry', (req, res) => {
         ));
     const acceptForPlayoutLedger = listenerAuth.valid && activeListener;
     const droppedByReason = {};
+    // Silently discarding an unknown reason hides listener-side loss behind an empty map,
+    // which is exactly how real drops once stayed invisible; silently accepting it would
+    // let any client invent a reason. Neither: it gets an explicit path.
+    const rejectedDropReasons = [];
     if (snapshot.dropped_by_reason && typeof snapshot.dropped_by_reason === 'object') {
         for (const [reason, value] of Object.entries(snapshot.dropped_by_reason)) {
             if (allowedDropReasons.has(reason)) {
                 droppedByReason[reason] = Number(value) || 0;
+            } else if (rejectedDropReasons.length < 10) {
+                rejectedDropReasons.push({
+                    reason: String(reason).slice(0, 64),
+                    count: Number(value) || 0,
+                    refused_by: 'allowedDropReasons',
+                });
             }
         }
+    }
+    if (rejectedDropReasons.length > 0) {
+        console.warn('[TELEMETRY] drop reasons outside allowedDropReasons:',
+            rejectedDropReasons.map(entry => `${entry.reason}=${entry.count}`).join(', '));
     }
     const pendingDropSample = sanitizePendingDropSample(snapshot.listener_pending_dropped_sample, 10);
     const listenerMeasurementAgeMs = sanitizeListenerMeasurementAgeMs(
@@ -3836,15 +3863,16 @@ app.post('/api/listener-telemetry', (req, res) => {
         currentPlaybackRate: Number(snapshot.currentPlaybackRate) || 1.0,
         chunksReceived: snapshot.chunksReceived,
         chunksPlayed: Number(snapshot.chunksPlayed) || 0,
-        chunksStarted: Number(snapshot.chunksStarted ?? snapshot.chunksPlayed) || 0,
-        chunksCompleted: Number(snapshot.chunksCompleted) || 0,
-        chunksSkipped: Number(snapshot.chunksSkipped) || 0,
-        chunksPlaybackErrors: Number(snapshot.chunksPlaybackErrors) || 0,
-        chunksNullAudio: Number(snapshot.chunksNullAudio) || 0,
-        chunksExplicitDrops: Number(snapshot.chunksExplicitDrops) || 0,
-        chunksPending: Number(snapshot.chunksPending ?? snapshot.queueDepth) || 0,
-        chunksUnexplained: Number(snapshot.chunksUnexplained) || 0,
-        currentlyPlaying: Number(snapshot.currentlyPlaying) || 0,
+        chunksStarted: reportedCount(snapshot.chunksStarted ?? snapshot.chunksPlayed),
+        chunksCompleted: reportedCount(snapshot.chunksCompleted),
+        chunksSkipped: reportedCount(snapshot.chunksSkipped),
+        chunksPlaybackErrors: reportedCount(snapshot.chunksPlaybackErrors),
+        chunksNullAudio: reportedCount(snapshot.chunksNullAudio),
+        chunksExplicitDrops: reportedCount(snapshot.chunksExplicitDrops),
+        chunksPending: reportedCount(snapshot.chunksPending ?? snapshot.queueDepth),
+        chunksUnexplained: reportedCount(snapshot.chunksUnexplained),
+        currentlyPlaying: reportedCount(snapshot.currentlyPlaying),
+        dropped_by_reason_rejected: rejectedDropReasons,
         recentPlaysCount: Number(snapshot.recentPlaysCount) || 0,
         ageMs: Number(snapshot.chunkAgeAtPlay_avg_ms) || 0,
         chunkAgeAtPlay_avg_ms: Number(snapshot.chunkAgeAtPlay_avg_ms) || 0,

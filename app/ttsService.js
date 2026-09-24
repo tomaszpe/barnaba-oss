@@ -71,6 +71,18 @@ const VOICE_MAP = {
     'uk': {
         male: 'uk-UA-OstapNeural',
         female: 'uk-UA-PolinaNeural'
+    },
+    'fa': {
+        male: 'fa-IR-FaridNeural',
+        female: 'fa-IR-DilaraNeural'
+    },
+    'pt-BR': {
+        male: 'pt-BR-AntonioNeural',
+        female: 'pt-BR-FranciscaNeural'
+    },
+    'zh': {
+        male: 'zh-CN-YunxiNeural',
+        female: 'zh-CN-XiaoxiaoNeural'
     }
 };
 

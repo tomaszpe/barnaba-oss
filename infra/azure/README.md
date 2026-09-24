@@ -17,7 +17,9 @@ local runtime.
 - an Azure subscription and Azure CLI;
 - the `containerapp` Azure CLI extension;
 - A100 quota in a region that supports `Consumption-GPU-NC24-A100`;
-- an Azure OpenAI endpoint and key;
+- an Azure OpenAI endpoint and key, with a `gpt-4.1` deployment of about 50,000 tokens per
+  minute for each language listeners will use (see
+  [docs/GETTING_STARTED.md](../../docs/GETTING_STARTED.md#2-before-you-start));
 - an Azure Speech resource and key.
 
 Check profile availability before spending anything:

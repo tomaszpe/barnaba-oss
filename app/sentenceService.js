@@ -26,7 +26,7 @@ const CONFIG = {
 };
 
 // German sentence-ending punctuation
-const SENTENCE_ENDERS = /([.!?])\s*/g;
+const SENTENCE_ENDERS = /([.!?。！？])\s*/g;
 
 // German thought-starting conjunctions (indicate new thought/sentence)
 const THOUGHT_STARTERS = [

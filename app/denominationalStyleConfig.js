@@ -3,6 +3,7 @@ export const OPERATOR_DENOMINATIONAL_TRANSLATION_STYLES_ENV =
 
 export const DENOMINATIONAL_STYLE_LANGUAGES = Object.freeze([
     'ar', 'de', 'en', 'es', 'fr', 'it', 'pl', 'pt', 'ru', 'sw', 'tr', 'uk',
+    'fa', 'pt-BR', 'zh',
 ]);
 
 export const DEFAULT_DENOMINATIONAL_TRANSLATION_STYLE =

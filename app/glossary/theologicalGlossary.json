@@ -1,7 +1,7 @@
 {
   "version": "2.1.0",
   "lastUpdated": "2026-03-26",
-  "description": "Theological glossary for Protestant church sermon translation (12 languages)",
+  "description": "Theological glossary for Protestant church sermon translation (15 languages)",
   "termCount": 352,
   "languages": [
     "de",
@@ -15,7 +15,10 @@
     "ru",
     "tr",
     "ar",
-    "sw"
+    "sw",
+    "fa",
+    "pt-BR",
+    "zh"
   ],
   "categories": {
     "trinity": "Terms related to the Holy Trinity",
@@ -48,7 +51,10 @@
         "ru": "Бог",
         "tr": "Tanrı",
         "ar": "الله",
-        "sw": "Mungu"
+        "sw": "Mungu",
+        "fa": "خدا",
+        "pt-BR": "Deus",
+        "zh": "神"
       }
     },
     "Herr": {
@@ -65,7 +71,10 @@
         "ru": "Господь",
         "tr": "Rab",
         "ar": "الرب",
-        "sw": "Bwana"
+        "sw": "Bwana",
+        "fa": "خداوند",
+        "pt-BR": "Senhor",
+        "zh": "主"
       }
     },
     "Vater": {
@@ -82,7 +91,10 @@
         "ru": "Отец",
         "tr": "Baba",
         "ar": "الآب",
-        "sw": "Baba"
+        "sw": "Baba",
+        "fa": "پدر",
+        "pt-BR": "Pai",
+        "zh": "父"
       },
       "context": "God the Father"
     },
@@ -100,7 +112,10 @@
         "ru": "Сын",
         "tr": "Oğul",
         "ar": "الابن",
-        "sw": "Mwana"
+        "sw": "Mwana",
+        "fa": "پسر",
+        "pt-BR": "Filho",
+        "zh": "子"
       },
       "context": "God the Son"
     },
@@ -118,7 +133,10 @@
         "ru": "Святой Дух",
         "tr": "Kutsal Ruh",
         "ar": "الروح القدس",
-        "sw": "Roho Mtakatifu"
+        "sw": "Roho Mtakatifu",
+        "fa": "روح‌القدس",
+        "pt-BR": "Espírito Santo",
+        "zh": "圣灵"
       }
     },
     "Dreieinigkeit": {
@@ -135,7 +153,10 @@
         "ru": "Троица",
         "tr": "Teslis",
         "ar": "الثالوث",
-        "sw": "Utatu"
+        "sw": "Utatu",
+        "fa": "تثلیث",
+        "pt-BR": "Trindade",
+        "zh": "三位一体"
       }
     },
     "Dreifaltigkeit": {
@@ -152,7 +173,10 @@
         "ru": "Троица",
         "tr": "Teslis",
         "ar": "الثالوث",
-        "sw": "Utatu"
+        "sw": "Utatu",
+        "fa": "تثلیث",
+        "pt-BR": "Trindade",
+        "zh": "三位一体"
       }
     },
     "Allmächtiger": {
@@ -169,7 +193,10 @@
         "ru": "Всемогущий",
         "tr": "Her Şeye Gücü Yeten",
         "ar": "القدير",
-        "sw": "Mwenyezi"
+        "sw": "Mwenyezi",
+        "fa": "قادر مطلق",
+        "pt-BR": "Todo-Poderoso",
+        "zh": "全能者"
       }
     },
     "Schöpfer": {
@@ -186,7 +213,10 @@
         "ru": "Творец",
         "tr": "Yaradan",
         "ar": "الخالق",
-        "sw": "Muumba"
+        "sw": "Muumba",
+        "fa": "خالق",
+        "pt-BR": "Criador",
+        "zh": "创造主"
       }
     },
     "Herr Gott": {
@@ -203,7 +233,10 @@
         "ru": "Господь Бог",
         "tr": "Rab Tanrı",
         "ar": "الرب الإله",
-        "sw": "Bwana Mungu"
+        "sw": "Bwana Mungu",
+        "fa": "خداوند خدا",
+        "pt-BR": "Senhor Deus",
+        "zh": "主神"
       }
     },
     "himmlischer Vater": {
@@ -220,7 +253,10 @@
         "ru": "Отец Небесный",
         "tr": "Göksel Baba",
         "ar": "الآب السماوي",
-        "sw": "Baba wa Mbinguni"
+        "sw": "Baba wa Mbinguni",
+        "fa": "پدر آسمانی",
+        "pt-BR": "Pai celestial",
+        "zh": "天父"
       }
     },
     "Ewiger": {
@@ -237,7 +273,10 @@
         "ru": "Вечный",
         "tr": "Ebedi Olan",
         "ar": "الأزلي",
-        "sw": "Wa Milele"
+        "sw": "Wa Milele",
+        "fa": "خدای ابدی",
+        "pt-BR": "Eterno",
+        "zh": "永恒者"
       }
     },
     "Höchster": {
@@ -254,7 +293,10 @@
         "ru": "Всевышний",
         "tr": "Yüce Olan",
         "ar": "العلي",
-        "sw": "Aliye Juu"
+        "sw": "Aliye Juu",
+        "fa": "خدای متعال",
+        "pt-BR": "Altíssimo",
+        "zh": "至高者"
       }
     },
     "Christus": {
@@ -271,7 +313,10 @@
         "ru": "Христос",
         "tr": "Mesih",
         "ar": "المسيح",
-        "sw": "Kristo"
+        "sw": "Kristo",
+        "fa": "مسیح",
+        "pt-BR": "Cristo",
+        "zh": "基督"
       }
     },
     "Jesus": {
@@ -288,7 +333,10 @@
         "ru": "Иисус",
         "tr": "İsa",
         "ar": "يسوع",
-        "sw": "Yesu"
+        "sw": "Yesu",
+        "fa": "عیسی",
+        "pt-BR": "Jesus",
+        "zh": "耶稣"
       }
     },
     "Jesus Christus": {
@@ -305,7 +353,10 @@
         "ru": "Иисус Христос",
         "tr": "İsa Mesih",
         "ar": "يسوع المسيح",
-        "sw": "Yesu Kristo"
+        "sw": "Yesu Kristo",
+        "fa": "عیسی مسیح",
+        "pt-BR": "Jesus Cristo",
+        "zh": "耶稣基督"
       }
     },
     "Heiland": {
@@ -322,7 +373,10 @@
         "ru": "Спаситель",
         "tr": "Kurtarıcı",
         "ar": "المخلّص",
-        "sw": "Mwokozi"
+        "sw": "Mwokozi",
+        "fa": "منجی",
+        "pt-BR": "Salvador",
+        "zh": "救主"
       }
     },
     "Erlöser": {
@@ -339,7 +393,10 @@
         "ru": "Искупитель",
         "tr": "Kurtarıcı",
         "ar": "الفادي",
-        "sw": "Mkombozi"
+        "sw": "Mkombozi",
+        "fa": "رهاننده",
+        "pt-BR": "Redentor",
+        "zh": "救赎主"
       }
     },
     "Messias": {
@@ -356,7 +413,10 @@
         "ru": "Мессия",
         "tr": "Mesih",
         "ar": "المسيّا",
-        "sw": "Masihi"
+        "sw": "Masihi",
+        "fa": "مسیحا",
+        "pt-BR": "Messias",
+        "zh": "弥赛亚"
       }
     },
     "Lamm Gottes": {
@@ -373,7 +433,10 @@
         "ru": "Агнец Божий",
         "tr": "Tanrı Kuzusu",
         "ar": "حمل الله",
-        "sw": "Mwana-Kondoo wa Mungu"
+        "sw": "Mwana-Kondoo wa Mungu",
+        "fa": "برّه خدا",
+        "pt-BR": "Cordeiro de Deus",
+        "zh": "神的羔羊"
       }
     },
     "Menschensohn": {
@@ -390,7 +453,10 @@
         "ru": "Сын Человеческий",
         "tr": "İnsanoğlu",
         "ar": "ابن الإنسان",
-        "sw": "Mwana wa Adamu"
+        "sw": "Mwana wa Adamu",
+        "fa": "پسر انسان",
+        "pt-BR": "Filho do Homem",
+        "zh": "人子"
       }
     },
     "Sohn Gottes": {
@@ -407,7 +473,10 @@
         "ru": "Сын Божий",
         "tr": "Tanrı'nın Oğlu",
         "ar": "ابن الله",
-        "sw": "Mwana wa Mungu"
+        "sw": "Mwana wa Mungu",
+        "fa": "پسر خدا",
+        "pt-BR": "Filho de Deus",
+        "zh": "神的儿子"
       }
     },
     "Kreuz": {
@@ -424,7 +493,10 @@
         "ru": "Крест",
         "tr": "Haç",
         "ar": "الصليب",
-        "sw": "Msalaba"
+        "sw": "Msalaba",
+        "fa": "صلیب",
+        "pt-BR": "Cruz",
+        "zh": "十字架"
       }
     },
     "Kreuzigung": {
@@ -441,7 +513,10 @@
         "ru": "Распятие",
         "tr": "Çarmıha gerilme",
         "ar": "الصلب",
-        "sw": "Kusulubiwa"
+        "sw": "Kusulubiwa",
+        "fa": "مصلوب شدن",
+        "pt-BR": "Crucificação",
+        "zh": "钉十字架"
       }
     },
     "Opfer": {
@@ -458,7 +533,10 @@
         "ru": "Жертва",
         "tr": "Kurban",
         "ar": "الذبيحة",
-        "sw": "Dhabihu"
+        "sw": "Dhabihu",
+        "fa": "قربانی",
+        "pt-BR": "Sacrifício",
+        "zh": "献祭"
       }
     },
     "Blut Christi": {
@@ -475,7 +553,10 @@
         "ru": "Кровь Христова",
         "tr": "Mesih'in Kanı",
         "ar": "دم المسيح",
-        "sw": "Damu ya Kristo"
+        "sw": "Damu ya Kristo",
+        "fa": "خون مسیح",
+        "pt-BR": "Sangue de Cristo",
+        "zh": "基督的血"
       }
     },
     "Leib Christi": {
@@ -492,7 +573,10 @@
         "ru": "Тело Христово",
         "tr": "Mesih'in Bedeni",
         "ar": "جسد المسيح",
-        "sw": "Mwili wa Kristo"
+        "sw": "Mwili wa Kristo",
+        "fa": "بدن مسیح",
+        "pt-BR": "Corpo de Cristo",
+        "zh": "基督的身体"
       }
     },
     "Auferstehung": {
@@ -509,7 +593,10 @@
         "ru": "Воскресение",
         "tr": "Diriliş",
         "ar": "القيامة",
-        "sw": "Ufufuo"
+        "sw": "Ufufuo",
+        "fa": "رستاخیز",
+        "pt-BR": "Ressurreição",
+        "zh": "复活"
       }
     },
     "Himmelfahrt": {
@@ -526,7 +613,10 @@
         "ru": "Вознесение",
         "tr": "Göğe Yükseliş",
         "ar": "الصعود",
-        "sw": "Kupaa"
+        "sw": "Kupaa",
+        "fa": "صعود",
+        "pt-BR": "Ascensão",
+        "zh": "升天"
       }
     },
     "Wiederkunft": {
@@ -543,7 +633,10 @@
         "ru": "Второе пришествие",
         "tr": "İkinci Geliş",
         "ar": "المجيء الثاني",
-        "sw": "Kuja kwa Pili"
+        "sw": "Kuja kwa Pili",
+        "fa": "بازگشت مسیح",
+        "pt-BR": "Segunda Vinda",
+        "zh": "基督再来"
       }
     },
     "Menschwerdung": {
@@ -560,7 +653,10 @@
         "ru": "Воплощение",
         "tr": "Beden alma",
         "ar": "التجسد",
-        "sw": "Kufanyika Mwili"
+        "sw": "Kufanyika Mwili",
+        "fa": "تجسم",
+        "pt-BR": "Encarnação",
+        "zh": "道成肉身"
       }
     },
     "König der Könige": {
@@ -577,7 +673,10 @@
         "ru": "Царь царей",
         "tr": "Krallar Kralı",
         "ar": "ملك الملوك",
-        "sw": "Mfalme wa Wafalme"
+        "sw": "Mfalme wa Wafalme",
+        "fa": "پادشاه پادشاهان",
+        "pt-BR": "Rei dos reis",
+        "zh": "万王之王"
       }
     },
     "Herr der Herren": {
@@ -594,7 +693,10 @@
         "ru": "Господь господствующих",
         "tr": "Rabler Rabbi",
         "ar": "رب الأرباب",
-        "sw": "Bwana wa Mabwana"
+        "sw": "Bwana wa Mabwana",
+        "fa": "رب‌الارباب",
+        "pt-BR": "Senhor dos senhores",
+        "zh": "万主之主"
       }
     },
     "Mittler": {
@@ -611,7 +713,10 @@
         "ru": "Посредник",
         "tr": "Arabulucu",
         "ar": "الوسيط",
-        "sw": "Mpatanishi"
+        "sw": "Mpatanishi",
+        "fa": "واسطه",
+        "pt-BR": "Mediador",
+        "zh": "中保"
       }
     },
     "Fürsprecher": {
@@ -628,7 +733,10 @@
         "ru": "Ходатай",
         "tr": "Savunucu",
         "ar": "الشفيع",
-        "sw": "Mwombezi"
+        "sw": "Mwombezi",
+        "fa": "شفیع",
+        "pt-BR": "Advogado",
+        "zh": "代求者"
       }
     },
     "Hoherpriester": {
@@ -645,7 +753,10 @@
         "ru": "Первосвященник",
         "tr": "Başkâhin",
         "ar": "رئيس الكهنة",
-        "sw": "Kuhani Mkuu"
+        "sw": "Kuhani Mkuu",
+        "fa": "کاهن اعظم",
+        "pt-BR": "Sumo Sacerdote",
+        "zh": "大祭司"
       }
     },
     "guter Hirte": {
@@ -662,7 +773,10 @@
         "ru": "добрый Пастырь",
         "tr": "İyi Çoban",
         "ar": "الراعي الصالح",
-        "sw": "Mchungaji Mwema"
+        "sw": "Mchungaji Mwema",
+        "fa": "شبان نیکو",
+        "pt-BR": "bom Pastor",
+        "zh": "好牧人"
       }
     },
     "Gnade": {
@@ -679,7 +793,10 @@
         "ru": "Благодать",
         "tr": "Lütuf",
         "ar": "النعمة",
-        "sw": "Neema"
+        "sw": "Neema",
+        "fa": "فیض",
+        "pt-BR": "Graça",
+        "zh": "恩典"
       }
     },
     "Erlösung": {
@@ -696,7 +813,10 @@
         "ru": "Искупление",
         "tr": "Fidyeyle kurtuluş",
         "ar": "الفداء",
-        "sw": "Ukombozi"
+        "sw": "Ukombozi",
+        "fa": "فدیه",
+        "pt-BR": "Redenção",
+        "zh": "救赎"
       }
     },
     "Heil": {
@@ -713,7 +833,10 @@
         "ru": "Спасение",
         "tr": "Kurtuluş",
         "ar": "الخلاص",
-        "sw": "Wokovu"
+        "sw": "Wokovu",
+        "fa": "نجات",
+        "pt-BR": "Salvação",
+        "zh": "救恩"
       }
     },
     "Rettung": {
@@ -730,7 +853,10 @@
         "ru": "Избавление",
         "tr": "Kurtarış",
         "ar": "الإنقاذ",
-        "sw": "Uokoaji"
+        "sw": "Uokoaji",
+        "fa": "رهایی",
+        "pt-BR": "Livramento",
+        "zh": "拯救"
       }
     },
     "Vergebung": {
@@ -747,7 +873,10 @@
         "ru": "Прощение",
         "tr": "Bağışlanma",
         "ar": "المغفرة",
-        "sw": "Msamaha"
+        "sw": "Msamaha",
+        "fa": "بخشش",
+        "pt-BR": "Perdão",
+        "zh": "赦免"
       }
     },
     "Sünde": {
@@ -764,7 +893,10 @@
         "ru": "Грех",
         "tr": "Günah",
         "ar": "الخطيئة",
-        "sw": "Dhambi"
+        "sw": "Dhambi",
+        "fa": "گناه",
+        "pt-BR": "Pecado",
+        "zh": "罪"
       }
     },
     "Sünder": {
@@ -781,7 +913,10 @@
         "ru": "Грешник",
         "tr": "Günahkâr",
         "ar": "الخاطئ",
-        "sw": "Mtenda Dhambi"
+        "sw": "Mtenda Dhambi",
+        "fa": "گناهکار",
+        "pt-BR": "Pecador",
+        "zh": "罪人"
       }
     },
     "Busse": {
@@ -798,7 +933,10 @@
         "ru": "Покаяние",
         "tr": "Tövbe",
         "ar": "التوبة",
-        "sw": "Toba"
+        "sw": "Toba",
+        "fa": "توبه",
+        "pt-BR": "Arrependimento",
+        "zh": "悔改"
       }
     },
     "Reue": {
@@ -815,7 +953,10 @@
         "ru": "Сокрушение",
         "tr": "Pişmanlık",
         "ar": "الندامة",
-        "sw": "Majuto"
+        "sw": "Majuto",
+        "fa": "پشیمانی",
+        "pt-BR": "Contrição",
+        "zh": "痛悔"
       }
     },
     "Bekehrung": {
@@ -832,7 +973,10 @@
         "ru": "Обращение",
         "tr": "Dönüş",
         "ar": "الاهتداء",
-        "sw": "Kuongoka"
+        "sw": "Kuongoka",
+        "fa": "بازگشت به خدا",
+        "pt-BR": "Conversão",
+        "zh": "归信"
       }
     },
     "Wiedergeburt": {
@@ -849,7 +993,10 @@
         "ru": "Рождение свыше",
         "tr": "Yeniden doğuş",
         "ar": "الولادة الجديدة",
-        "sw": "Kuzaliwa Upya"
+        "sw": "Kuzaliwa Upya",
+        "fa": "تولد تازه",
+        "pt-BR": "Novo nascimento",
+        "zh": "重生"
       }
     },
     "Rechtfertigung": {
@@ -866,7 +1013,10 @@
         "ru": "Оправдание",
         "tr": "Aklanma",
         "ar": "التبرير",
-        "sw": "Kuhesabiwa Haki"
+        "sw": "Kuhesabiwa Haki",
+        "fa": "عادل شمرده شدن",
+        "pt-BR": "Justificação",
+        "zh": "称义"
       }
     },
     "Heiligung": {
@@ -883,7 +1033,10 @@
         "ru": "Освящение",
         "tr": "Kutsal kılınma",
         "ar": "التقديس",
-        "sw": "Utakaso"
+        "sw": "Utakaso",
+        "fa": "تقدیس",
+        "pt-BR": "Santificação",
+        "zh": "成圣"
       }
     },
     "Versöhnung": {
@@ -900,7 +1053,10 @@
         "ru": "Примирение",
         "tr": "Barışma",
         "ar": "المصالحة",
-        "sw": "Upatanisho"
+        "sw": "Upatanisho",
+        "fa": "آشتی",
+        "pt-BR": "Reconciliação",
+        "zh": "和好"
       }
     },
     "Sühne": {
@@ -917,7 +1073,10 @@
         "ru": "Искупление",
         "tr": "Kefaret",
         "ar": "الكفارة",
-        "sw": "Upatanisho wa Dhambi"
+        "sw": "Upatanisho wa Dhambi",
+        "fa": "کفاره",
+        "pt-BR": "Expiação",
+        "zh": "赎罪"
       }
     },
     "Verlorenheit": {
@@ -934,7 +1093,10 @@
         "ru": "Погибель",
         "tr": "Helak",
         "ar": "الضلال",
-        "sw": "Kupotea"
+        "sw": "Kupotea",
+        "fa": "گمشدگی",
+        "pt-BR": "Perdição",
+        "zh": "失丧"
       }
     },
     "Schuld": {
@@ -951,7 +1113,10 @@
         "ru": "Вина",
         "tr": "Suçluluk",
         "ar": "الذنب",
-        "sw": "Hatia"
+        "sw": "Hatia",
+        "fa": "تقصیر",
+        "pt-BR": "Culpa",
+        "zh": "罪疚"
       }
     },
     "Befreiung": {
@@ -968,7 +1133,10 @@
         "ru": "Освобождение",
         "tr": "Özgür kılma",
         "ar": "التحرير",
-        "sw": "Uhuru"
+        "sw": "Uhuru",
+        "fa": "آزادی",
+        "pt-BR": "Libertação",
+        "zh": "释放"
       }
     },
     "Erneuerung": {
@@ -985,7 +1153,10 @@
         "ru": "Обновление",
         "tr": "Yenilenme",
         "ar": "التجديد",
-        "sw": "Upya"
+        "sw": "Upya",
+        "fa": "تجدید",
+        "pt-BR": "Renovação",
+        "zh": "更新"
       }
     },
     "Verheissung": {
@@ -1002,7 +1173,10 @@
         "ru": "Обетование",
         "tr": "Vaat",
         "ar": "الوعد",
-        "sw": "Ahadi"
+        "sw": "Ahadi",
+        "fa": "وعده",
+        "pt-BR": "Promessa",
+        "zh": "应许"
       }
     },
     "Barmherzigkeit": {
@@ -1019,7 +1193,10 @@
         "ru": "Милосердие",
         "tr": "Merhamet",
         "ar": "الرحمة",
-        "sw": "Huruma"
+        "sw": "Huruma",
+        "fa": "رحمت",
+        "pt-BR": "Misericórdia",
+        "zh": "怜悯"
       }
     },
     "Gerechtigkeit": {
@@ -1036,7 +1213,10 @@
         "ru": "Праведность",
         "tr": "Doğruluk",
         "ar": "البر",
-        "sw": "Haki"
+        "sw": "Haki",
+        "fa": "عدالت",
+        "pt-BR": "Justiça",
+        "zh": "公义"
       }
     },
     "Berufung": {
@@ -1053,7 +1233,10 @@
         "ru": "Призвание",
         "tr": "Çağrı",
         "ar": "الدعوة",
-        "sw": "Wito"
+        "sw": "Wito",
+        "fa": "دعوت",
+        "pt-BR": "Chamado",
+        "zh": "呼召"
       }
     },
     "Erwählung": {
@@ -1070,7 +1253,10 @@
         "ru": "Избрание",
         "tr": "Seçim",
         "ar": "الاختيار",
-        "sw": "Uchaguzi"
+        "sw": "Uchaguzi",
+        "fa": "برگزیدگی",
+        "pt-BR": "Eleição",
+        "zh": "拣选"
       }
     },
     "Erbsünde": {
@@ -1087,7 +1273,10 @@
         "ru": "Первородный грех",
         "tr": "Asli günah",
         "ar": "الخطيئة الأصلية",
-        "sw": "Dhambi ya Asili"
+        "sw": "Dhambi ya Asili",
+        "fa": "گناه اولیه",
+        "pt-BR": "Pecado original",
+        "zh": "原罪"
       }
     },
     "Kirche": {
@@ -1104,7 +1293,10 @@
         "ru": "Церковь",
         "tr": "Kilise",
         "ar": "الكنيسة",
-        "sw": "Kanisa"
+        "sw": "Kanisa",
+        "fa": "کلیسا",
+        "pt-BR": "Igreja",
+        "zh": "教会"
       }
     },
     "Gemeinde": {
@@ -1121,7 +1313,10 @@
         "ru": "Община",
         "tr": "Cemaat",
         "ar": "الجماعة",
-        "sw": "Kanisa"
+        "sw": "Kanisa",
+        "fa": "جماعت",
+        "pt-BR": "Congregação",
+        "zh": "会众"
       }
     },
     "Gemeinschaft": {
@@ -1138,7 +1333,10 @@
         "ru": "Общение",
         "tr": "Paydaşlık",
         "ar": "الشركة",
-        "sw": "Ushirika"
+        "sw": "Ushirika",
+        "fa": "مشارکت",
+        "pt-BR": "Comunhão",
+        "zh": "团契"
       }
     },
     "Glaubensgemeinschaft": {
@@ -1155,7 +1353,10 @@
         "ru": "Община верующих",
         "tr": "İman topluluğu",
         "ar": "جماعة الإيمان",
-        "sw": "Jumuiya ya Imani"
+        "sw": "Jumuiya ya Imani",
+        "fa": "جامعه ایمانداران",
+        "pt-BR": "Comunidade de fé",
+        "zh": "信仰群体"
       }
     },
     "Prediger": {
@@ -1172,7 +1373,10 @@
         "ru": "Екклесиаст",
         "tr": "Vaiz",
         "ar": "الجامعة",
-        "sw": "Mhubiri"
+        "sw": "Mhubiri",
+        "fa": "جامعه",
+        "pt-BR": "Eclesiastes",
+        "zh": "传道书"
       }
     },
     "Pastor": {
@@ -1189,7 +1393,10 @@
         "ru": "Пастор",
         "tr": "Pastör",
         "ar": "القسّ",
-        "sw": "Mchungaji"
+        "sw": "Mchungaji",
+        "fa": "کشیش",
+        "pt-BR": "Pastor",
+        "zh": "牧师"
       }
     },
     "Pfarrer": {
@@ -1206,7 +1413,10 @@
         "ru": "Служитель",
         "tr": "Vaiz",
         "ar": "القسّ",
-        "sw": "Mchungaji"
+        "sw": "Mchungaji",
+        "fa": "کشیش",
+        "pt-BR": "Ministro",
+        "zh": "牧师"
       }
     },
     "Ältester": {
@@ -1223,7 +1433,10 @@
         "ru": "Пресвитер",
         "tr": "İhtiyar",
         "ar": "الشيخ",
-        "sw": "Mzee"
+        "sw": "Mzee",
+        "fa": "پیر کلیسا",
+        "pt-BR": "Presbítero",
+        "zh": "长老"
       }
     },
     "Diakon": {
@@ -1240,7 +1453,10 @@
         "ru": "Диакон",
         "tr": "Diyakon",
         "ar": "الشمّاس",
-        "sw": "Shemasi"
+        "sw": "Shemasi",
+        "fa": "شماس",
+        "pt-BR": "Diácono",
+        "zh": "执事"
       }
     },
     "Gläubige": {
@@ -1257,7 +1473,10 @@
         "ru": "Верующий",
         "tr": "İmanlı",
         "ar": "المؤمن",
-        "sw": "Mwamini"
+        "sw": "Mwamini",
+        "fa": "ایماندار",
+        "pt-BR": "Crente",
+        "zh": "信徒"
       }
     },
     "Bruder": {
@@ -1274,7 +1493,10 @@
         "ru": "Брат",
         "tr": "Erkek kardeş",
         "ar": "الأخ",
-        "sw": "Ndugu"
+        "sw": "Ndugu",
+        "fa": "برادر",
+        "pt-BR": "Irmão",
+        "zh": "弟兄"
       }
     },
     "Schwester": {
@@ -1291,7 +1513,10 @@
         "ru": "Сестра",
         "tr": "Kız kardeş",
         "ar": "الأخت",
-        "sw": "Dada"
+        "sw": "Dada",
+        "fa": "خواهر",
+        "pt-BR": "Irmã",
+        "zh": "姊妹"
       }
     },
     "Geschwister": {
@@ -1308,7 +1533,10 @@
         "ru": "Братья и сёстры",
         "tr": "Kardeşler",
         "ar": "الإخوة والأخوات",
-        "sw": "Ndugu"
+        "sw": "Ndugu",
+        "fa": "خواهران و برادران",
+        "pt-BR": "Irmãos e irmãs",
+        "zh": "弟兄姊妹"
       }
     },
     "Jünger": {
@@ -1325,7 +1553,10 @@
         "ru": "Ученик",
         "tr": "Öğrenci",
         "ar": "التلميذ",
-        "sw": "Mwanafunzi"
+        "sw": "Mwanafunzi",
+        "fa": "شاگرد",
+        "pt-BR": "Discípulo",
+        "zh": "门徒"
       }
     },
     "Nachfolge": {
@@ -1342,7 +1573,10 @@
         "ru": "Ученичество",
         "tr": "Öğrencilik",
         "ar": "التلمذة",
-        "sw": "Uanafunzi"
+        "sw": "Uanafunzi",
+        "fa": "پیروی از مسیح",
+        "pt-BR": "Discipulado",
+        "zh": "跟随基督"
       }
     },
     "Dienst": {
@@ -1359,7 +1593,10 @@
         "ru": "Служение",
         "tr": "Hizmet",
         "ar": "الخدمة",
-        "sw": "Huduma"
+        "sw": "Huduma",
+        "fa": "خدمت",
+        "pt-BR": "Ministério",
+        "zh": "事奉"
       }
     },
     "Mission": {
@@ -1376,7 +1613,10 @@
         "ru": "Миссия",
         "tr": "Misyon",
         "ar": "الإرسالية",
-        "sw": "Utume"
+        "sw": "Utume",
+        "fa": "بشارت",
+        "pt-BR": "Missão",
+        "zh": "宣教"
       }
     },
     "Zeugnis": {
@@ -1393,7 +1633,10 @@
         "ru": "Свидетельство",
         "tr": "Tanıklık",
         "ar": "الشهادة",
-        "sw": "Ushuhuda"
+        "sw": "Ushuhuda",
+        "fa": "شهادت",
+        "pt-BR": "Testemunho",
+        "zh": "见证"
       }
     },
     "Taufe": {
@@ -1410,7 +1653,10 @@
         "ru": "Крещение",
         "tr": "Vaftiz",
         "ar": "المعمودية",
-        "sw": "Ubatizo"
+        "sw": "Ubatizo",
+        "fa": "تعمید",
+        "pt-BR": "Batismo",
+        "zh": "洗礼"
       }
     },
     "Täufling": {
@@ -1427,7 +1673,10 @@
         "ru": "Крещаемый",
         "tr": "Vaftiz adayı",
         "ar": "المعتمد",
-        "sw": "Mbatizwa"
+        "sw": "Mbatizwa",
+        "fa": "تعمیدگیرنده",
+        "pt-BR": "Batizando",
+        "zh": "受洗者"
       }
     },
     "Abendmahl": {
@@ -1444,7 +1693,10 @@
         "ru": "Вечеря Господня",
         "tr": "Rab'bin Sofrası",
         "ar": "العشاء الرباني",
-        "sw": "Meza ya Bwana"
+        "sw": "Meza ya Bwana",
+        "fa": "شام خداوند",
+        "pt-BR": "Santa Ceia",
+        "zh": "圣餐"
       }
     },
     "Kommunion": {
@@ -1461,7 +1713,10 @@
         "ru": "Причастие",
         "tr": "Komünyon",
         "ar": "المناولة",
-        "sw": "Ushirika"
+        "sw": "Ushirika",
+        "fa": "عشای ربانی",
+        "pt-BR": "Comunhão",
+        "zh": "圣餐"
       }
     },
     "Brot": {
@@ -1478,7 +1733,10 @@
         "ru": "Хлеб",
         "tr": "Ekmek",
         "ar": "الخبز",
-        "sw": "Mkate"
+        "sw": "Mkate",
+        "fa": "نان",
+        "pt-BR": "Pão",
+        "zh": "饼"
       },
       "context": "Eucharistic bread"
     },
@@ -1496,7 +1754,10 @@
         "ru": "Вино",
         "tr": "Şarap",
         "ar": "الخمر",
-        "sw": "Divai"
+        "sw": "Divai",
+        "fa": "شراب",
+        "pt-BR": "Vinho",
+        "zh": "葡萄酒"
       },
       "context": "Eucharistic wine"
     },
@@ -1514,7 +1775,10 @@
         "ru": "Чаша",
         "tr": "Kâse",
         "ar": "الكأس",
-        "sw": "Kikombe"
+        "sw": "Kikombe",
+        "fa": "جام",
+        "pt-BR": "Cálice",
+        "zh": "杯"
       }
     },
     "Brotbrechen": {
@@ -1531,7 +1795,10 @@
         "ru": "Хлебопреломление",
         "tr": "Ekmeğin bölünmesi",
         "ar": "كسر الخبز",
-        "sw": "Kuumega Mkate"
+        "sw": "Kuumega Mkate",
+        "fa": "پاره کردن نان",
+        "pt-BR": "Partir do pão",
+        "zh": "擘饼"
       }
     },
     "Konfirmation": {
@@ -1548,7 +1815,10 @@
         "ru": "Конфирмация",
         "tr": "Konfirmasyon",
         "ar": "التثبيت",
-        "sw": "Kipaimara"
+        "sw": "Kipaimara",
+        "fa": "تأیید ایمان",
+        "pt-BR": "Confirmação",
+        "zh": "坚信礼"
       }
     },
     "Trauung": {
@@ -1565,7 +1835,10 @@
         "ru": "Бракосочетание",
         "tr": "Nikâh töreni",
         "ar": "مراسم الزواج",
-        "sw": "Harusi"
+        "sw": "Harusi",
+        "fa": "مراسم ازدواج",
+        "pt-BR": "Cerimônia de casamento",
+        "zh": "婚礼"
       }
     },
     "Beerdigung": {
@@ -1582,7 +1855,10 @@
         "ru": "Похороны",
         "tr": "Cenaze töreni",
         "ar": "مراسم الدفن",
-        "sw": "Mazishi"
+        "sw": "Mazishi",
+        "fa": "مراسم تدفین",
+        "pt-BR": "Funeral",
+        "zh": "葬礼"
       }
     },
     "Salbung": {
@@ -1599,7 +1875,10 @@
         "ru": "Помазание",
         "tr": "Meshetme",
         "ar": "المسحة",
-        "sw": "Kupakwa Mafuta"
+        "sw": "Kupakwa Mafuta",
+        "fa": "مسح",
+        "pt-BR": "Unção",
+        "zh": "膏抹"
       }
     },
     "Bibel": {
@@ -1616,7 +1895,10 @@
         "ru": "Библия",
         "tr": "Kutsal Kitap",
         "ar": "الكتاب المقدس",
-        "sw": "Biblia"
+        "sw": "Biblia",
+        "fa": "کتاب مقدس",
+        "pt-BR": "Bíblia",
+        "zh": "圣经"
       }
     },
     "Heilige Schrift": {
@@ -1633,7 +1915,10 @@
         "ru": "Священное Писание",
         "tr": "Kutsal Yazılar",
         "ar": "الكتاب المقدس",
-        "sw": "Maandiko Matakatifu"
+        "sw": "Maandiko Matakatifu",
+        "fa": "کتب مقدسه",
+        "pt-BR": "Escrituras Sagradas",
+        "zh": "圣经"
       }
     },
     "Wort Gottes": {
@@ -1650,7 +1935,10 @@
         "ru": "Слово Божье",
         "tr": "Tanrı'nın Sözü",
         "ar": "كلمة الله",
-        "sw": "Neno la Mungu"
+        "sw": "Neno la Mungu",
+        "fa": "کلام خدا",
+        "pt-BR": "Palavra de Deus",
+        "zh": "神的话语"
       }
     },
     "Evangelium": {
@@ -1667,7 +1955,10 @@
         "ru": "Евангелие",
         "tr": "Müjde",
         "ar": "الإنجيل",
-        "sw": "Injili"
+        "sw": "Injili",
+        "fa": "انجیل",
+        "pt-BR": "Evangelho",
+        "zh": "福音"
       }
     },
     "Altes Testament": {
@@ -1684,7 +1975,10 @@
         "ru": "Ветхий Завет",
         "tr": "Eski Antlaşma",
         "ar": "العهد القديم",
-        "sw": "Agano la Kale"
+        "sw": "Agano la Kale",
+        "fa": "عهد عتیق",
+        "pt-BR": "Antigo Testamento",
+        "zh": "旧约"
       }
     },
     "Neues Testament": {
@@ -1701,7 +1995,10 @@
         "ru": "Новый Завет",
         "tr": "Yeni Antlaşma",
         "ar": "العهد الجديد",
-        "sw": "Agano Jipya"
+        "sw": "Agano Jipya",
+        "fa": "عهد جدید",
+        "pt-BR": "Novo Testamento",
+        "zh": "新约"
       }
     },
     "Psalm": {
@@ -1718,7 +2015,10 @@
         "ru": "Псалом",
         "tr": "Mezmur",
         "ar": "مزمور",
-        "sw": "Zaburi"
+        "sw": "Zaburi",
+        "fa": "مزمور",
+        "pt-BR": "Salmo",
+        "zh": "诗篇"
       }
     },
     "Prophet": {
@@ -1735,7 +2035,10 @@
         "ru": "Пророк",
         "tr": "Peygamber",
         "ar": "النبي",
-        "sw": "Nabii"
+        "sw": "Nabii",
+        "fa": "نبی",
+        "pt-BR": "Profeta",
+        "zh": "先知"
       }
     },
     "Prophezeiung": {
@@ -1752,7 +2055,10 @@
         "ru": "Пророчество",
         "tr": "Peygamberlik",
         "ar": "النبوءة",
-        "sw": "Unabii"
+        "sw": "Unabii",
+        "fa": "نبوت",
+        "pt-BR": "Profecia",
+        "zh": "预言"
       }
     },
     "Apostel": {
@@ -1769,7 +2075,10 @@
         "ru": "Апостол",
         "tr": "Elçi",
         "ar": "الرسول",
-        "sw": "Mtume"
+        "sw": "Mtume",
+        "fa": "رسول",
+        "pt-BR": "Apóstolo",
+        "zh": "使徒"
       }
     },
     "Offenbarung": {
@@ -1786,7 +2095,10 @@
         "ru": "Откровение",
         "tr": "Vahiy",
         "ar": "الرؤيا",
-        "sw": "Ufunuo"
+        "sw": "Ufunuo",
+        "fa": "مکاشفه",
+        "pt-BR": "Revelação",
+        "zh": "启示"
       }
     },
     "Gebot": {
@@ -1803,7 +2115,10 @@
         "ru": "Заповедь",
         "tr": "Buyruk",
         "ar": "الوصية",
-        "sw": "Amri"
+        "sw": "Amri",
+        "fa": "فرمان",
+        "pt-BR": "Mandamento",
+        "zh": "诫命"
       }
     },
     "Zehn Gebote": {
@@ -1820,7 +2135,10 @@
         "ru": "Десять заповедей",
         "tr": "On Buyruk",
         "ar": "الوصايا العشر",
-        "sw": "Amri Kumi"
+        "sw": "Amri Kumi",
+        "fa": "ده فرمان",
+        "pt-BR": "Dez Mandamentos",
+        "zh": "十诫"
       }
     },
     "Gleichnis": {
@@ -1837,7 +2155,10 @@
         "ru": "Притча",
         "tr": "Benzetme",
         "ar": "المَثَل",
-        "sw": "Mfano"
+        "sw": "Mfano",
+        "fa": "مَثَل",
+        "pt-BR": "Parábola",
+        "zh": "比喻"
       }
     },
     "Vers": {
@@ -1854,7 +2175,10 @@
         "ru": "Стих",
         "tr": "Ayet",
         "ar": "آية",
-        "sw": "Mstari"
+        "sw": "Mstari",
+        "fa": "آیه",
+        "pt-BR": "Versículo",
+        "zh": "节"
       }
     },
     "Kapitel": {
@@ -1871,7 +2195,10 @@
         "ru": "Глава",
         "tr": "Bölüm",
         "ar": "إصحاح",
-        "sw": "Sura"
+        "sw": "Sura",
+        "fa": "باب",
+        "pt-BR": "Capítulo",
+        "zh": "章"
       }
     },
     "Bergpredigt": {
@@ -1888,7 +2215,10 @@
         "ru": "Нагорная проповедь",
         "tr": "Dağdaki Vaaz",
         "ar": "الموعظة على الجبل",
-        "sw": "Mahubiri ya Mlimani"
+        "sw": "Mahubiri ya Mlimani",
+        "fa": "موعظه بالای کوه",
+        "pt-BR": "Sermão do Monte",
+        "zh": "登山宝训"
       }
     },
     "Vaterunser": {
@@ -1905,7 +2235,10 @@
         "ru": "Отче наш",
         "tr": "Rab'bin Duası",
         "ar": "الصلاة الربانية",
-        "sw": "Sala ya Bwana"
+        "sw": "Sala ya Bwana",
+        "fa": "دعای ربانی",
+        "pt-BR": "Pai Nosso",
+        "zh": "主祷文"
       }
     },
     "Seligpreisung": {
@@ -1922,7 +2255,10 @@
         "ru": "Заповедь блаженства",
         "tr": "Kutluluk",
         "ar": "التطويبة",
-        "sw": "Heri"
+        "sw": "Heri",
+        "fa": "خوشابه‌حال",
+        "pt-BR": "Bem-aventurança",
+        "zh": "八福"
       }
     },
     "Gebet": {
@@ -1939,7 +2275,10 @@
         "ru": "Молитва",
         "tr": "Dua",
         "ar": "الصلاة",
-        "sw": "Sala"
+        "sw": "Sala",
+        "fa": "دعا",
+        "pt-BR": "Oração",
+        "zh": "祷告"
       }
     },
     "Fürbitte": {
@@ -1956,7 +2295,10 @@
         "ru": "Ходатайственная молитва",
         "tr": "Şefaat duası",
         "ar": "الشفاعة",
-        "sw": "Maombezi"
+        "sw": "Maombezi",
+        "fa": "دعای شفاعت",
+        "pt-BR": "Intercessão",
+        "zh": "代祷"
       }
     },
     "Segen": {
@@ -1973,7 +2315,10 @@
         "ru": "Благословение",
         "tr": "Bereketleme",
         "ar": "البركة",
-        "sw": "Baraka"
+        "sw": "Baraka",
+        "fa": "برکت",
+        "pt-BR": "Bênção",
+        "zh": "祝福"
       }
     },
     "Lobpreis": {
@@ -1990,7 +2335,10 @@
         "ru": "Хвала",
         "tr": "Övgü",
         "ar": "التسبيح",
-        "sw": "Sifa"
+        "sw": "Sifa",
+        "fa": "ستایش",
+        "pt-BR": "Louvor",
+        "zh": "赞美"
       }
     },
     "Anbetung": {
@@ -2007,7 +2355,10 @@
         "ru": "Поклонение",
         "tr": "Tapınma",
         "ar": "العبادة",
-        "sw": "Ibada"
+        "sw": "Ibada",
+        "fa": "پرستش",
+        "pt-BR": "Adoração",
+        "zh": "敬拜"
       }
     },
     "Predigt": {
@@ -2024,7 +2375,10 @@
         "ru": "Проповедь",
         "tr": "Vaaz",
         "ar": "العظة",
-        "sw": "Mahubiri"
+        "sw": "Mahubiri",
+        "fa": "موعظه",
+        "pt-BR": "Pregação",
+        "zh": "讲道"
       }
     },
     "Gottesdienst": {
@@ -2041,7 +2395,10 @@
         "ru": "Богослужение",
         "tr": "İbadet",
         "ar": "خدمة العبادة",
-        "sw": "Ibada"
+        "sw": "Ibada",
+        "fa": "جلسه عبادتی",
+        "pt-BR": "Culto",
+        "zh": "崇拜"
       }
     },
     "Andacht": {
@@ -2058,7 +2415,10 @@
         "ru": "Молитвенное собрание",
         "tr": "Kısa ibadet",
         "ar": "التأمل",
-        "sw": "Tafakuri"
+        "sw": "Tafakuri",
+        "fa": "تفکر روحانی",
+        "pt-BR": "Devocional",
+        "zh": "灵修"
       }
     },
     "Lied": {
@@ -2075,7 +2435,10 @@
         "ru": "Гимн",
         "tr": "İlahi",
         "ar": "ترنيمة",
-        "sw": "Wimbo"
+        "sw": "Wimbo",
+        "fa": "سرود",
+        "pt-BR": "Hino",
+        "zh": "诗歌"
       }
     },
     "Choral": {
@@ -2092,7 +2455,10 @@
         "ru": "Хорал",
         "tr": "Koral",
         "ar": "ترنيمة جماعية",
-        "sw": "Kwaya"
+        "sw": "Kwaya",
+        "fa": "سرود روحانی",
+        "pt-BR": "Coral",
+        "zh": "圣诗"
       }
     },
     "Halleluja": {
@@ -2109,7 +2475,10 @@
         "ru": "Аллилуйя",
         "tr": "Haleluya",
         "ar": "هللويا",
-        "sw": "Haleluya"
+        "sw": "Haleluya",
+        "fa": "هللویاه",
+        "pt-BR": "Aleluia",
+        "zh": "哈利路亚"
       }
     },
     "Amen": {
@@ -2126,7 +2495,10 @@
         "ru": "Аминь",
         "tr": "Amin",
         "ar": "آمين",
-        "sw": "Amina"
+        "sw": "Amina",
+        "fa": "آمین",
+        "pt-BR": "Amém",
+        "zh": "阿们"
       }
     },
     "Lesung": {
@@ -2143,7 +2515,10 @@
         "ru": "Чтение Писания",
         "tr": "Kutsal Kitap okuması",
         "ar": "القراءة",
-        "sw": "Kusoma"
+        "sw": "Kusoma",
+        "fa": "قرائت کلام",
+        "pt-BR": "Leitura bíblica",
+        "zh": "读经"
       }
     },
     "Kollekte": {
@@ -2160,7 +2535,10 @@
         "ru": "Сбор пожертвований",
         "tr": "Sunu",
         "ar": "التقدمة",
-        "sw": "Sadaka"
+        "sw": "Sadaka",
+        "fa": "هدایا",
+        "pt-BR": "Oferta",
+        "zh": "奉献"
       }
     },
     "Opfergabe": {
@@ -2177,7 +2555,10 @@
         "ru": "Пожертвование",
         "tr": "Sunu",
         "ar": "التقدمة",
-        "sw": "Sadaka"
+        "sw": "Sadaka",
+        "fa": "هدیه",
+        "pt-BR": "Oferta",
+        "zh": "奉献"
       }
     },
     "Dankgebet": {
@@ -2194,7 +2575,10 @@
         "ru": "Благодарственная молитва",
         "tr": "Şükran duası",
         "ar": "صلاة الشكر",
-        "sw": "Sala ya Shukrani"
+        "sw": "Sala ya Shukrani",
+        "fa": "دعای شکرگزاری",
+        "pt-BR": "Oração de ação de graças",
+        "zh": "感恩祷告"
       }
     },
     "Bekenntnis": {
@@ -2211,7 +2595,10 @@
         "ru": "Исповедание",
         "tr": "İtiraf",
         "ar": "الاعتراف",
-        "sw": "Ungamo"
+        "sw": "Ungamo",
+        "fa": "اعتراف",
+        "pt-BR": "Confissão",
+        "zh": "认罪"
       }
     },
     "Glaubensbekenntnis": {
@@ -2228,7 +2615,10 @@
         "ru": "Символ веры",
         "tr": "İman ikrarı",
         "ar": "قانون الإيمان",
-        "sw": "Kanuni ya Imani"
+        "sw": "Kanuni ya Imani",
+        "fa": "اعتقادنامه",
+        "pt-BR": "Confissão de fé",
+        "zh": "信经"
       }
     },
     "Himmel": {
@@ -2245,7 +2635,10 @@
         "ru": "Небеса",
         "tr": "Cennet",
         "ar": "السماء",
-        "sw": "Mbingu"
+        "sw": "Mbingu",
+        "fa": "آسمان",
+        "pt-BR": "Céu",
+        "zh": "天堂"
       }
     },
     "Hölle": {
@@ -2262,7 +2655,10 @@
         "ru": "Ад",
         "tr": "Cehennem",
         "ar": "الجحيم",
-        "sw": "Jehanamu"
+        "sw": "Jehanamu",
+        "fa": "جهنم",
+        "pt-BR": "Inferno",
+        "zh": "地狱"
       }
     },
     "ewiges Leben": {
@@ -2279,7 +2675,10 @@
         "ru": "Вечная жизнь",
         "tr": "Sonsuz yaşam",
         "ar": "الحياة الأبدية",
-        "sw": "Uzima wa Milele"
+        "sw": "Uzima wa Milele",
+        "fa": "حیات جاودانی",
+        "pt-BR": "Vida eterna",
+        "zh": "永生"
       }
     },
     "ewige Verdammnis": {
@@ -2296,7 +2695,10 @@
         "ru": "Вечное осуждение",
         "tr": "Sonsuz mahkumiyet",
         "ar": "الهلاك الأبدي",
-        "sw": "Adhabu ya Milele"
+        "sw": "Adhabu ya Milele",
+        "fa": "هلاکت ابدی",
+        "pt-BR": "Condenação eterna",
+        "zh": "永远的沉沦"
       }
     },
     "Jüngstes Gericht": {
@@ -2313,7 +2715,10 @@
         "ru": "Страшный суд",
         "tr": "Son Yargılama",
         "ar": "الدينونة الأخيرة",
-        "sw": "Hukumu ya Mwisho"
+        "sw": "Hukumu ya Mwisho",
+        "fa": "داوری نهایی",
+        "pt-BR": "Juízo Final",
+        "zh": "最后的审判"
       }
     },
     "Reich Gottes": {
@@ -2330,7 +2735,10 @@
         "ru": "Царство Божие",
         "tr": "Tanrı'nın Egemenliği",
         "ar": "ملكوت الله",
-        "sw": "Ufalme wa Mungu"
+        "sw": "Ufalme wa Mungu",
+        "fa": "ملکوت خدا",
+        "pt-BR": "Reino de Deus",
+        "zh": "神的国"
       }
     },
     "Himmelreich": {
@@ -2347,7 +2755,10 @@
         "ru": "Царство Небесное",
         "tr": "Göklerin Egemenliği",
         "ar": "ملكوت السماوات",
-        "sw": "Ufalme wa Mbinguni"
+        "sw": "Ufalme wa Mbinguni",
+        "fa": "ملکوت آسمان",
+        "pt-BR": "Reino dos Céus",
+        "zh": "天国"
       }
     },
     "Endzeit": {
@@ -2364,7 +2775,10 @@
         "ru": "Последнее время",
         "tr": "Son zamanlar",
         "ar": "آخر الأيام",
-        "sw": "Siku za Mwisho"
+        "sw": "Siku za Mwisho",
+        "fa": "زمان‌های آخر",
+        "pt-BR": "Fim dos tempos",
+        "zh": "末世"
       }
     },
     "Auferweckung": {
@@ -2381,7 +2795,10 @@
         "ru": "Воскрешение",
         "tr": "Diriltme",
         "ar": "الإقامة",
-        "sw": "Kufufuliwa"
+        "sw": "Kufufuliwa",
+        "fa": "زنده کردن",
+        "pt-BR": "Ressurreição",
+        "zh": "复活"
       }
     },
     "Totenauferstehung": {
@@ -2398,7 +2815,10 @@
         "ru": "Воскресение мёртвых",
         "tr": "Ölülerin dirilişi",
         "ar": "قيامة الأموات",
-        "sw": "Ufufuo wa Wafu"
+        "sw": "Ufufuo wa Wafu",
+        "fa": "قیامت مردگان",
+        "pt-BR": "Ressurreição dos mortos",
+        "zh": "死人复活"
       }
     },
     "Ewigkeit": {
@@ -2415,7 +2835,10 @@
         "ru": "Вечность",
         "tr": "Sonsuzluk",
         "ar": "الأبدية",
-        "sw": "Milele"
+        "sw": "Milele",
+        "fa": "ابدیت",
+        "pt-BR": "Eternidade",
+        "zh": "永恒"
       }
     },
     "Seligkeit": {
@@ -2432,7 +2855,10 @@
         "ru": "Блаженство",
         "tr": "Bahtiyarlık",
         "ar": "الطوبى",
-        "sw": "Baraka"
+        "sw": "Baraka",
+        "fa": "سعادت ابدی",
+        "pt-BR": "Bem-aventurança",
+        "zh": "福乐"
       }
     },
     "Paradies": {
@@ -2449,7 +2875,10 @@
         "ru": "Рай",
         "tr": "Cennet",
         "ar": "الفردوس",
-        "sw": "Paradiso"
+        "sw": "Paradiso",
+        "fa": "فردوس",
+        "pt-BR": "Paraíso",
+        "zh": "乐园"
       }
     },
     "Glaube": {
@@ -2466,7 +2895,10 @@
         "ru": "Вера",
         "tr": "İman",
         "ar": "الإيمان",
-        "sw": "Imani"
+        "sw": "Imani",
+        "fa": "ایمان",
+        "pt-BR": "Fé",
+        "zh": "信心"
       }
     },
     "allein durch Gnade": {
@@ -2483,7 +2915,10 @@
         "ru": "Только благодатью",
         "tr": "Yalnız lütufla",
         "ar": "بالنعمة وحدها",
-        "sw": "kwa Neema peke yake"
+        "sw": "kwa Neema peke yake",
+        "fa": "تنها به فیض",
+        "pt-BR": "Somente pela graça",
+        "zh": "唯独恩典"
       },
       "context": "Sola Gratia"
     },
@@ -2501,7 +2936,10 @@
         "ru": "Только верою",
         "tr": "Yalnız imanla",
         "ar": "بالإيمان وحده",
-        "sw": "kwa Imani peke yake"
+        "sw": "kwa Imani peke yake",
+        "fa": "تنها به ایمان",
+        "pt-BR": "Somente pela fé",
+        "zh": "唯独信心"
       },
       "context": "Sola Fide"
     },
@@ -2519,7 +2957,10 @@
         "ru": "Только Писание",
         "tr": "Yalnız Kutsal Yazılar",
         "ar": "الكتاب المقدس وحده",
-        "sw": "Maandiko peke yake"
+        "sw": "Maandiko peke yake",
+        "fa": "تنها کتاب مقدس",
+        "pt-BR": "Somente a Escritura",
+        "zh": "唯独圣经"
       },
       "context": "Sola Scriptura"
     },
@@ -2537,7 +2978,10 @@
         "ru": "Только Христос",
         "tr": "Yalnız Mesih",
         "ar": "المسيح وحده",
-        "sw": "Kristo peke yake"
+        "sw": "Kristo peke yake",
+        "fa": "تنها مسیح",
+        "pt-BR": "Somente Cristo",
+        "zh": "唯独基督"
       },
       "context": "Solus Christus"
     },
@@ -2555,7 +2999,10 @@
         "ru": "Реформация",
         "tr": "Reform",
         "ar": "الإصلاح",
-        "sw": "Matengenezo"
+        "sw": "Matengenezo",
+        "fa": "اصلاحات دینی",
+        "pt-BR": "Reforma",
+        "zh": "宗教改革"
       }
     },
     "evangelisch": {
@@ -2572,7 +3019,10 @@
         "ru": "Евангельский",
         "tr": "Evanjelik",
         "ar": "إنجيلي",
-        "sw": "ya Kiinjili"
+        "sw": "ya Kiinjili",
+        "fa": "انجیلی",
+        "pt-BR": "Evangélico",
+        "zh": "新教的"
       }
     },
     "reformiert": {
@@ -2589,7 +3039,10 @@
         "ru": "Реформатский",
         "tr": "Reform",
         "ar": "مُصلَح",
-        "sw": "ya Kimatengenezo"
+        "sw": "ya Kimatengenezo",
+        "fa": "اصلاح‌شده",
+        "pt-BR": "Reformado",
+        "zh": "改革宗"
       }
     },
     "lutherisch": {
@@ -2606,7 +3059,10 @@
         "ru": "Лютеранский",
         "tr": "Lüteriyen",
         "ar": "لوثري",
-        "sw": "ya Kilutheri"
+        "sw": "ya Kilutheri",
+        "fa": "لوتری",
+        "pt-BR": "Luterano",
+        "zh": "路德宗"
       }
     },
     "Priestertum aller Gläubigen": {
@@ -2623,7 +3079,10 @@
         "ru": "Всеобщее священство верующих",
         "tr": "Bütün imanlıların kâhinliği",
         "ar": "كهنوت جميع المؤمنين",
-        "sw": "Ukuhani wa Waamini Wote"
+        "sw": "Ukuhani wa Waamini Wote",
+        "fa": "کهانت همه ایمانداران",
+        "pt-BR": "Sacerdócio universal de todos os crentes",
+        "zh": "信徒皆祭司"
       }
     },
     "Geist Gottes": {
@@ -2640,7 +3099,10 @@
         "ru": "Дух Божий",
         "tr": "Tanrı'nın Ruhu",
         "ar": "روح الله",
-        "sw": "Roho wa Mungu"
+        "sw": "Roho wa Mungu",
+        "fa": "روح خدا",
+        "pt-BR": "Espírito de Deus",
+        "zh": "神的灵"
       }
     },
     "Tröster": {
@@ -2657,7 +3119,10 @@
         "ru": "Утешитель",
         "tr": "Tesellici",
         "ar": "المعزّي",
-        "sw": "Msaidizi"
+        "sw": "Msaidizi",
+        "fa": "تسلی‌دهنده",
+        "pt-BR": "Consolador",
+        "zh": "保惠师"
       }
     },
     "Geistesgabe": {
@@ -2674,7 +3139,10 @@
         "ru": "Духовный дар",
         "tr": "Ruhsal armağan",
         "ar": "موهبة روحية",
-        "sw": "Karama ya Roho"
+        "sw": "Karama ya Roho",
+        "fa": "عطای روحانی",
+        "pt-BR": "Dom espiritual",
+        "zh": "属灵恩赐"
       }
     },
     "Frucht des Geistes": {
@@ -2691,7 +3159,10 @@
         "ru": "Плод Духа",
         "tr": "Ruh'un Ürünü",
         "ar": "ثمر الروح",
-        "sw": "Tunda la Roho"
+        "sw": "Tunda la Roho",
+        "fa": "ثمره روح",
+        "pt-BR": "Fruto do Espírito",
+        "zh": "圣灵的果子"
       }
     },
     "Erfüllung mit dem Heiligen Geist": {
@@ -2708,7 +3179,10 @@
         "ru": "Исполнение Святым Духом",
         "tr": "Kutsal Ruh'la Doluluk",
         "ar": "الامتلاء بالروح القدس",
-        "sw": "Kujazwa na Roho Mtakatifu"
+        "sw": "Kujazwa na Roho Mtakatifu",
+        "fa": "پر شدن از روح‌القدس",
+        "pt-BR": "Enchimento do Espírito Santo",
+        "zh": "被圣灵充满"
       }
     },
     "Pfingsten": {
@@ -2725,7 +3199,10 @@
         "ru": "Пятидесятница",
         "tr": "Pentikost",
         "ar": "يوم الخمسين",
-        "sw": "Pentekoste"
+        "sw": "Pentekoste",
+        "fa": "پنطیکاست",
+        "pt-BR": "Pentecostes",
+        "zh": "五旬节"
       }
     },
     "Liebe": {
@@ -2742,7 +3219,10 @@
         "ru": "Любовь",
         "tr": "Sevgi",
         "ar": "المحبة",
-        "sw": "Upendo"
+        "sw": "Upendo",
+        "fa": "محبت",
+        "pt-BR": "Amor",
+        "zh": "爱"
       }
     },
     "Hoffnung": {
@@ -2759,7 +3239,10 @@
         "ru": "Надежда",
         "tr": "Umut",
         "ar": "الرجاء",
-        "sw": "Tumaini"
+        "sw": "Tumaini",
+        "fa": "امید",
+        "pt-BR": "Esperança",
+        "zh": "盼望"
       }
     },
     "Frieden": {
@@ -2776,7 +3259,10 @@
         "ru": "Мир",
         "tr": "Esenlik",
         "ar": "السلام",
-        "sw": "Amani"
+        "sw": "Amani",
+        "fa": "آرامش",
+        "pt-BR": "Paz",
+        "zh": "平安"
       }
     },
     "Freude": {
@@ -2793,7 +3279,10 @@
         "ru": "Радость",
         "tr": "Sevinç",
         "ar": "الفرح",
-        "sw": "Furaha"
+        "sw": "Furaha",
+        "fa": "شادی",
+        "pt-BR": "Alegria",
+        "zh": "喜乐"
       }
     },
     "Wahrheit": {
@@ -2810,7 +3299,10 @@
         "ru": "Истина",
         "tr": "Gerçek",
         "ar": "الحق",
-        "sw": "Ukweli"
+        "sw": "Ukweli",
+        "fa": "حقیقت",
+        "pt-BR": "Verdade",
+        "zh": "真理"
       }
     },
     "Licht": {
@@ -2827,7 +3319,10 @@
         "ru": "Свет",
         "tr": "Işık",
         "ar": "النور",
-        "sw": "Nuru"
+        "sw": "Nuru",
+        "fa": "نور",
+        "pt-BR": "Luz",
+        "zh": "光"
       }
     },
     "Dunkelheit": {
@@ -2844,7 +3339,10 @@
         "ru": "Тьма",
         "tr": "Karanlık",
         "ar": "الظلمة",
-        "sw": "Giza"
+        "sw": "Giza",
+        "fa": "تاریکی",
+        "pt-BR": "Trevas",
+        "zh": "黑暗"
       }
     },
     "Leben": {
@@ -2861,7 +3359,10 @@
         "ru": "Жизнь",
         "tr": "Yaşam",
         "ar": "الحياة",
-        "sw": "Uzima"
+        "sw": "Uzima",
+        "fa": "حیات",
+        "pt-BR": "Vida",
+        "zh": "生命"
       }
     },
     "Tod": {
@@ -2878,7 +3379,10 @@
         "ru": "Смерть",
         "tr": "Ölüm",
         "ar": "الموت",
-        "sw": "Mauti"
+        "sw": "Mauti",
+        "fa": "مرگ",
+        "pt-BR": "Morte",
+        "zh": "死亡"
       }
     },
     "Seele": {
@@ -2895,7 +3399,10 @@
         "ru": "Душа",
         "tr": "Can",
         "ar": "النفس",
-        "sw": "Nafsi"
+        "sw": "Nafsi",
+        "fa": "جان",
+        "pt-BR": "Alma",
+        "zh": "灵魂"
       }
     },
     "Geist": {
@@ -2912,7 +3419,10 @@
         "ru": "Дух",
         "tr": "Ruh",
         "ar": "الروح",
-        "sw": "Roho"
+        "sw": "Roho",
+        "fa": "روح",
+        "pt-BR": "Espírito",
+        "zh": "灵"
       }
     },
     "Herz": {
@@ -2929,7 +3439,10 @@
         "ru": "Сердце",
         "tr": "Yürek",
         "ar": "القلب",
-        "sw": "Moyo"
+        "sw": "Moyo",
+        "fa": "دل",
+        "pt-BR": "Coração",
+        "zh": "心"
       }
     },
     "Gewissen": {
@@ -2946,7 +3459,10 @@
         "ru": "Совесть",
         "tr": "Vicdan",
         "ar": "الضمير",
-        "sw": "Dhamiri"
+        "sw": "Dhamiri",
+        "fa": "وجدان",
+        "pt-BR": "Consciência",
+        "zh": "良心"
       }
     },
     "Geduld": {
@@ -2963,7 +3479,10 @@
         "ru": "Терпение",
         "tr": "Sabır",
         "ar": "الصبر",
-        "sw": "Uvumilivu"
+        "sw": "Uvumilivu",
+        "fa": "صبر",
+        "pt-BR": "Paciência",
+        "zh": "忍耐"
       }
     },
     "Demut": {
@@ -2980,7 +3499,10 @@
         "ru": "Смирение",
         "tr": "Alçakgönüllülük",
         "ar": "التواضع",
-        "sw": "Unyenyekevu"
+        "sw": "Unyenyekevu",
+        "fa": "فروتنی",
+        "pt-BR": "Humildade",
+        "zh": "谦卑"
       }
     },
     "Treue": {
@@ -2997,7 +3519,10 @@
         "ru": "Верность",
         "tr": "Sadakat",
         "ar": "الأمانة",
-        "sw": "Uaminifu"
+        "sw": "Uaminifu",
+        "fa": "وفاداری",
+        "pt-BR": "Fidelidade",
+        "zh": "信实"
       }
     },
     "Güte": {
@@ -3014,7 +3539,10 @@
         "ru": "Благость",
         "tr": "İyilik",
         "ar": "الصلاح",
-        "sw": "Wema"
+        "sw": "Wema",
+        "fa": "نیکویی",
+        "pt-BR": "Bondade",
+        "zh": "良善"
       }
     },
     "Sanftmut": {
@@ -3031,7 +3559,10 @@
         "ru": "Кротость",
         "tr": "Uysallık",
         "ar": "الوداعة",
-        "sw": "Upole"
+        "sw": "Upole",
+        "fa": "ملایمت",
+        "pt-BR": "Mansidão",
+        "zh": "温柔"
       }
     },
     "Selbstbeherrschung": {
@@ -3048,7 +3579,10 @@
         "ru": "Воздержание",
         "tr": "Özdenetim",
         "ar": "ضبط النفس",
-        "sw": "Kiasi"
+        "sw": "Kiasi",
+        "fa": "خویشتن‌داری",
+        "pt-BR": "Domínio próprio",
+        "zh": "节制"
       }
     },
     "Weisheit": {
@@ -3065,7 +3599,10 @@
         "ru": "Мудрость",
         "tr": "Bilgelik",
         "ar": "الحكمة",
-        "sw": "Hekima"
+        "sw": "Hekima",
+        "fa": "حکمت",
+        "pt-BR": "Sabedoria",
+        "zh": "智慧"
       }
     },
     "Kraft": {
@@ -3082,7 +3619,10 @@
         "ru": "Сила",
         "tr": "Güç",
         "ar": "القوة",
-        "sw": "Nguvu"
+        "sw": "Nguvu",
+        "fa": "قوت",
+        "pt-BR": "Força",
+        "zh": "力量"
       },
       "context": "spiritual strength in Philippians 4:13"
     },
@@ -3100,7 +3640,10 @@
         "ru": "Чудо",
         "tr": "Mucize",
         "ar": "المعجزة",
-        "sw": "Muujiza"
+        "sw": "Muujiza",
+        "fa": "معجزه",
+        "pt-BR": "Milagre",
+        "zh": "神迹"
       }
     },
     "Zeichen": {
@@ -3117,7 +3660,10 @@
         "ru": "Знамение",
         "tr": "Belirti",
         "ar": "آية",
-        "sw": "Ishara"
+        "sw": "Ishara",
+        "fa": "نشانه",
+        "pt-BR": "Sinal",
+        "zh": "记号"
       }
     },
     "Heilung": {
@@ -3134,7 +3680,10 @@
         "ru": "Исцеление",
         "tr": "Şifa",
         "ar": "الشفاء",
-        "sw": "Uponyaji"
+        "sw": "Uponyaji",
+        "fa": "شفا",
+        "pt-BR": "Cura",
+        "zh": "医治"
       }
     },
     "Engel": {
@@ -3151,7 +3700,10 @@
         "ru": "Ангел",
         "tr": "Melek",
         "ar": "الملاك",
-        "sw": "Malaika"
+        "sw": "Malaika",
+        "fa": "فرشته",
+        "pt-BR": "Anjo",
+        "zh": "天使"
       }
     },
     "Teufel": {
@@ -3168,7 +3720,10 @@
         "ru": "Дьявол",
         "tr": "İblis",
         "ar": "إبليس",
-        "sw": "Ibilisi"
+        "sw": "Ibilisi",
+        "fa": "ابلیس",
+        "pt-BR": "Diabo",
+        "zh": "魔鬼"
       }
     },
     "Satan": {
@@ -3185,7 +3740,10 @@
         "ru": "Сатана",
         "tr": "Şeytan",
         "ar": "الشيطان",
-        "sw": "Shetani"
+        "sw": "Shetani",
+        "fa": "شیطان",
+        "pt-BR": "Satanás",
+        "zh": "撒但"
       }
     },
     "Böse": {
@@ -3202,7 +3760,10 @@
         "ru": "Зло",
         "tr": "Kötülük",
         "ar": "الشر",
-        "sw": "Uovu"
+        "sw": "Uovu",
+        "fa": "بدی",
+        "pt-BR": "Mal",
+        "zh": "恶"
       }
     },
     "Versuchung": {
@@ -3219,7 +3780,10 @@
         "ru": "Искушение",
         "tr": "Ayartı",
         "ar": "التجربة",
-        "sw": "Jaribu"
+        "sw": "Jaribu",
+        "fa": "وسوسه",
+        "pt-BR": "Tentação",
+        "zh": "试探"
       }
     },
     "Prüfung": {
@@ -3236,7 +3800,10 @@
         "ru": "Испытание",
         "tr": "Denenme",
         "ar": "الامتحان",
-        "sw": "Mtihani"
+        "sw": "Mtihani",
+        "fa": "آزمایش",
+        "pt-BR": "Provação",
+        "zh": "试炼"
       }
     },
     "Leiden": {
@@ -3253,7 +3820,10 @@
         "ru": "Страдание",
         "tr": "Acı",
         "ar": "الآلام",
-        "sw": "Mateso"
+        "sw": "Mateso",
+        "fa": "رنج",
+        "pt-BR": "Sofrimento",
+        "zh": "苦难"
       }
     },
     "Trost": {
@@ -3270,7 +3840,10 @@
         "ru": "Утешение",
         "tr": "Teselli",
         "ar": "التعزية",
-        "sw": "Faraja"
+        "sw": "Faraja",
+        "fa": "تسلی",
+        "pt-BR": "Consolo",
+        "zh": "安慰"
       }
     },
     "Dankbarkeit": {
@@ -3287,7 +3860,10 @@
         "ru": "Благодарность",
         "tr": "Şükran",
         "ar": "الامتنان",
-        "sw": "Shukrani"
+        "sw": "Shukrani",
+        "fa": "شکرگزاری",
+        "pt-BR": "Gratidão",
+        "zh": "感恩"
       }
     },
     "Gehorsam": {
@@ -3304,7 +3880,10 @@
         "ru": "Послушание",
         "tr": "İtaat",
         "ar": "الطاعة",
-        "sw": "Utii"
+        "sw": "Utii",
+        "fa": "اطاعت",
+        "pt-BR": "Obediência",
+        "zh": "顺服"
       }
     },
     "Vertrauen": {
@@ -3321,7 +3900,10 @@
         "ru": "Доверие",
         "tr": "Güven",
         "ar": "الثقة",
-        "sw": "Imani"
+        "sw": "Imani",
+        "fa": "توکل",
+        "pt-BR": "Confiança",
+        "zh": "信靠"
       }
     },
     "Hingabe": {
@@ -3338,7 +3920,10 @@
         "ru": "Посвящение",
         "tr": "Adanma",
         "ar": "التكريس",
-        "sw": "Kujitolea"
+        "sw": "Kujitolea",
+        "fa": "سرسپردگی",
+        "pt-BR": "Entrega",
+        "zh": "委身"
       }
     },
     "Nächstenliebe": {
@@ -3355,7 +3940,10 @@
         "ru": "Любовь к ближнему",
         "tr": "Komşu sevgisi",
         "ar": "محبة القريب",
-        "sw": "Upendo wa Jirani"
+        "sw": "Upendo wa Jirani",
+        "fa": "محبت به همسایه",
+        "pt-BR": "Amor ao próximo",
+        "zh": "爱人如己"
       }
     },
     "Bund": {
@@ -3372,7 +3960,10 @@
         "ru": "Завет",
         "tr": "Antlaşma",
         "ar": "العهد",
-        "sw": "Agano"
+        "sw": "Agano",
+        "fa": "عهد",
+        "pt-BR": "Aliança",
+        "zh": "约"
       }
     },
     "Neuer Bund": {
@@ -3389,7 +3980,10 @@
         "ru": "Новый Завет",
         "tr": "Yeni Antlaşma",
         "ar": "العهد الجديد",
-        "sw": "Agano Jipya"
+        "sw": "Agano Jipya",
+        "fa": "عهد جدید",
+        "pt-BR": "Nova Aliança",
+        "zh": "新约"
       }
     },
     "Gaben": {
@@ -3406,7 +4000,10 @@
         "ru": "Дары",
         "tr": "Armağanlar",
         "ar": "المواهب",
-        "sw": "Karama"
+        "sw": "Karama",
+        "fa": "عطایا",
+        "pt-BR": "Dons",
+        "zh": "恩赐"
       }
     },
     "Ostern": {
@@ -3423,7 +4020,10 @@
         "ru": "Пасха",
         "tr": "Paskalya",
         "ar": "عيد القيامة",
-        "sw": "Pasaka"
+        "sw": "Pasaka",
+        "fa": "عید رستاخیز",
+        "pt-BR": "Páscoa",
+        "zh": "复活节"
       }
     },
     "Weihnachten": {
@@ -3440,7 +4040,10 @@
         "ru": "Рождество",
         "tr": "Noel",
         "ar": "عيد الميلاد",
-        "sw": "Krismasi"
+        "sw": "Krismasi",
+        "fa": "عید میلاد مسیح",
+        "pt-BR": "Natal",
+        "zh": "圣诞节"
       }
     },
     "Advent": {
@@ -3457,7 +4060,10 @@
         "ru": "Адвент",
         "tr": "Advent",
         "ar": "المجيء",
-        "sw": "Majilio"
+        "sw": "Majilio",
+        "fa": "ایام انتظار میلاد مسیح",
+        "pt-BR": "Advento",
+        "zh": "降临节"
       }
     },
     "Karfreitag": {
@@ -3474,7 +4080,10 @@
         "ru": "Страстная пятница",
         "tr": "Kutsal Cuma",
         "ar": "الجمعة العظيمة",
-        "sw": "Ijumaa Kuu"
+        "sw": "Ijumaa Kuu",
+        "fa": "جمعه نیک",
+        "pt-BR": "Sexta-feira Santa",
+        "zh": "受难日"
       }
     },
     "Passionszeit": {
@@ -3491,7 +4100,10 @@
         "ru": "Великий пост",
         "tr": "Büyük Oruç",
         "ar": "زمن الآلام",
-        "sw": "Kwaresima"
+        "sw": "Kwaresima",
+        "fa": "ایام روزه",
+        "pt-BR": "Quaresma",
+        "zh": "预苦期"
       }
     },
     "Erntedank": {
@@ -3508,7 +4120,10 @@
         "ru": "Праздник жатвы",
         "tr": "Hasat Şükran Günü",
         "ar": "عيد الشكر",
-        "sw": "Shukrani ya Mavuno"
+        "sw": "Shukrani ya Mavuno",
+        "fa": "جشن شکرگزاری برداشت محصول",
+        "pt-BR": "Culto de ação de graças pela colheita",
+        "zh": "丰收感恩节"
       }
     },
     "Heiligabend": {
@@ -3525,7 +4140,10 @@
         "ru": "Сочельник",
         "tr": "Noel arifesi",
         "ar": "ليلة عيد الميلاد",
-        "sw": "Usiku wa Krismasi"
+        "sw": "Usiku wa Krismasi",
+        "fa": "شب کریسمس",
+        "pt-BR": "Véspera de Natal",
+        "zh": "平安夜"
       }
     },
     "Altar": {
@@ -3542,7 +4160,10 @@
         "ru": "Алтарь",
         "tr": "Sunak",
         "ar": "المذبح",
-        "sw": "Madhabahu"
+        "sw": "Madhabahu",
+        "fa": "مذبح",
+        "pt-BR": "Altar",
+        "zh": "祭坛"
       }
     },
     "Kanzel": {
@@ -3559,7 +4180,10 @@
         "ru": "Кафедра",
         "tr": "Kürsü",
         "ar": "المنبر",
-        "sw": "Mimbari"
+        "sw": "Mimbari",
+        "fa": "منبر",
+        "pt-BR": "Púlpito",
+        "zh": "讲台"
       }
     },
     "Taufbecken": {
@@ -3576,7 +4200,10 @@
         "ru": "Купель",
         "tr": "Vaftiz kurnası",
         "ar": "جرن المعمودية",
-        "sw": "Beseni la Ubatizo"
+        "sw": "Beseni la Ubatizo",
+        "fa": "حوض تعمید",
+        "pt-BR": "Pia batismal",
+        "zh": "洗礼盆"
       }
     },
     "Abraham": {
@@ -3593,7 +4220,10 @@
         "ru": "Авраам",
         "tr": "İbrahim",
         "ar": "إبراهيم",
-        "sw": "Ibrahimu"
+        "sw": "Ibrahimu",
+        "fa": "ابراهیم",
+        "pt-BR": "Abraão",
+        "zh": "亚伯拉罕"
       }
     },
     "Isaak": {
@@ -3610,7 +4240,10 @@
         "ru": "Исаак",
         "tr": "İshak",
         "ar": "إسحاق",
-        "sw": "Isaka"
+        "sw": "Isaka",
+        "fa": "اسحاق",
+        "pt-BR": "Isaque",
+        "zh": "以撒"
       }
     },
     "Jakob": {
@@ -3627,7 +4260,10 @@
         "ru": "Иаков",
         "tr": "Yakup",
         "ar": "يعقوب",
-        "sw": "Yakobo"
+        "sw": "Yakobo",
+        "fa": "یعقوب",
+        "pt-BR": "Jacó",
+        "zh": "雅各"
       }
     },
     "Mose": {
@@ -3644,7 +4280,10 @@
         "ru": "Моисей",
         "tr": "Musa",
         "ar": "موسى",
-        "sw": "Musa"
+        "sw": "Musa",
+        "fa": "موسی",
+        "pt-BR": "Moisés",
+        "zh": "摩西"
       }
     },
     "Moses": {
@@ -3661,7 +4300,10 @@
         "ru": "Моисей",
         "tr": "Musa",
         "ar": "موسى",
-        "sw": "Musa"
+        "sw": "Musa",
+        "fa": "موسی",
+        "pt-BR": "Moisés",
+        "zh": "摩西"
       }
     },
     "David": {
@@ -3678,7 +4320,10 @@
         "ru": "Давид",
         "tr": "Davut",
         "ar": "داود",
-        "sw": "Daudi"
+        "sw": "Daudi",
+        "fa": "داود",
+        "pt-BR": "Davi",
+        "zh": "大卫"
       }
     },
     "Salomo": {
@@ -3695,7 +4340,10 @@
         "ru": "Соломон",
         "tr": "Süleyman",
         "ar": "سليمان",
-        "sw": "Sulemani"
+        "sw": "Sulemani",
+        "fa": "سلیمان",
+        "pt-BR": "Salomão",
+        "zh": "所罗门"
       }
     },
     "Paulus": {
@@ -3712,7 +4360,10 @@
         "ru": "Павел",
         "tr": "Pavlus",
         "ar": "بولس",
-        "sw": "Paulo"
+        "sw": "Paulo",
+        "fa": "پولس",
+        "pt-BR": "Paulo",
+        "zh": "保罗"
       }
     },
     "Petrus": {
@@ -3729,7 +4380,10 @@
         "ru": "Пётр",
         "tr": "Petrus",
         "ar": "بطرس",
-        "sw": "Petro"
+        "sw": "Petro",
+        "fa": "پطرس",
+        "pt-BR": "Pedro",
+        "zh": "彼得"
       }
     },
     "Johannes": {
@@ -3746,7 +4400,10 @@
         "ru": "Иоанн",
         "tr": "Yuhanna",
         "ar": "يوحنا",
-        "sw": "Yohana"
+        "sw": "Yohana",
+        "fa": "یوحنا",
+        "pt-BR": "João",
+        "zh": "约翰"
       }
     },
     "Maria": {
@@ -3763,7 +4420,10 @@
         "ru": "Мария",
         "tr": "Meryem",
         "ar": "مريم",
-        "sw": "Mariamu"
+        "sw": "Mariamu",
+        "fa": "مریم",
+        "pt-BR": "Maria",
+        "zh": "马利亚"
       }
     },
     "Josef": {
@@ -3780,7 +4440,10 @@
         "ru": "Иосиф",
         "tr": "Yusuf",
         "ar": "يوسف",
-        "sw": "Yusufu"
+        "sw": "Yusufu",
+        "fa": "یوسف",
+        "pt-BR": "José",
+        "zh": "约瑟"
       }
     },
     "Noah": {
@@ -3797,7 +4460,10 @@
         "ru": "Ной",
         "tr": "Nuh",
         "ar": "نوح",
-        "sw": "Nuhu"
+        "sw": "Nuhu",
+        "fa": "نوح",
+        "pt-BR": "Noé",
+        "zh": "挪亚"
       }
     },
     "Adam": {
@@ -3814,7 +4480,10 @@
         "ru": "Адам",
         "tr": "Adem",
         "ar": "آدم",
-        "sw": "Adamu"
+        "sw": "Adamu",
+        "fa": "آدم",
+        "pt-BR": "Adão",
+        "zh": "亚当"
       }
     },
     "Eva": {
@@ -3831,7 +4500,10 @@
         "ru": "Ева",
         "tr": "Havva",
         "ar": "حواء",
-        "sw": "Hawa"
+        "sw": "Hawa",
+        "fa": "حوا",
+        "pt-BR": "Eva",
+        "zh": "夏娃"
       }
     },
     "Elija": {
@@ -3848,7 +4520,10 @@
         "ru": "Илия",
         "tr": "İlyas",
         "ar": "إيليا",
-        "sw": "Eliya"
+        "sw": "Eliya",
+        "fa": "ایلیا",
+        "pt-BR": "Elias",
+        "zh": "以利亚"
       }
     },
     "Elisa": {
@@ -3866,7 +4541,10 @@
         "ru": "Елисей",
         "tr": "Elişa",
         "ar": "إليشع",
-        "sw": "Elisha"
+        "sw": "Elisha",
+        "fa": "الیشع",
+        "pt-BR": "Eliseu",
+        "zh": "以利沙"
       }
     },
     "Elischa": {
@@ -3884,7 +4562,10 @@
         "ru": "Елисей",
         "tr": "Elişa",
         "ar": "إليشع",
-        "sw": "Elisha"
+        "sw": "Elisha",
+        "fa": "الیشع",
+        "pt-BR": "Eliseu",
+        "zh": "以利沙"
       }
     },
     "Jesaja": {
@@ -3901,7 +4582,10 @@
         "ru": "Исаия",
         "tr": "Yeşaya",
         "ar": "إشعياء",
-        "sw": "Isaya"
+        "sw": "Isaya",
+        "fa": "اشعیا",
+        "pt-BR": "Isaías",
+        "zh": "以赛亚"
       }
     },
     "Jeremia": {
@@ -3918,7 +4602,10 @@
         "ru": "Иеремия",
         "tr": "Yeremya",
         "ar": "إرميا",
-        "sw": "Yeremia"
+        "sw": "Yeremia",
+        "fa": "ارمیا",
+        "pt-BR": "Jeremias",
+        "zh": "耶利米"
       }
     },
     "Daniel": {
@@ -3935,7 +4622,10 @@
         "ru": "Даниил",
         "tr": "Daniel",
         "ar": "دانيال",
-        "sw": "Danieli"
+        "sw": "Danieli",
+        "fa": "دانیال",
+        "pt-BR": "Daniel",
+        "zh": "但以理"
       }
     },
     "Jakobus": {
@@ -3952,7 +4642,10 @@
         "ru": "Иаков",
         "tr": "Yakup",
         "ar": "يعقوب",
-        "sw": "Yakobo"
+        "sw": "Yakobo",
+        "fa": "یعقوب",
+        "pt-BR": "Tiago",
+        "zh": "雅各"
       }
     },
     "Matthäus": {
@@ -3969,7 +4662,10 @@
         "ru": "Матфей",
         "tr": "Matta",
         "ar": "متّى",
-        "sw": "Mathayo"
+        "sw": "Mathayo",
+        "fa": "متی",
+        "pt-BR": "Mateus",
+        "zh": "马太"
       }
     },
     "Markus": {
@@ -3986,7 +4682,10 @@
         "ru": "Марк",
         "tr": "Markos",
         "ar": "مرقس",
-        "sw": "Marko"
+        "sw": "Marko",
+        "fa": "مرقس",
+        "pt-BR": "Marcos",
+        "zh": "马可"
       }
     },
     "Lukas": {
@@ -4003,7 +4702,10 @@
         "ru": "Лука",
         "tr": "Luka",
         "ar": "لوقا",
-        "sw": "Luka"
+        "sw": "Luka",
+        "fa": "لوقا",
+        "pt-BR": "Lucas",
+        "zh": "路加"
       }
     },
     "Thomas": {
@@ -4020,7 +4722,10 @@
         "ru": "Фома",
         "tr": "Tomas",
         "ar": "توما",
-        "sw": "Tomaso"
+        "sw": "Tomaso",
+        "fa": "توما",
+        "pt-BR": "Tomé",
+        "zh": "多马"
       }
     },
     "Timotheus": {
@@ -4037,7 +4742,10 @@
         "ru": "Тимофей",
         "tr": "Timoteos",
         "ar": "تيموثاوس",
-        "sw": "Timotheo"
+        "sw": "Timotheo",
+        "fa": "تیموتائوس",
+        "pt-BR": "Timóteo",
+        "zh": "提摩太"
       }
     },
     "Barnabas": {
@@ -4054,7 +4762,10 @@
         "ru": "Варнава",
         "tr": "Barnaba",
         "ar": "برنابا",
-        "sw": "Barnaba"
+        "sw": "Barnaba",
+        "fa": "برنابا",
+        "pt-BR": "Barnabé",
+        "zh": "巴拿巴"
       }
     },
     "Lazarus": {
@@ -4071,7 +4782,10 @@
         "ru": "Лазарь",
         "tr": "Lazar",
         "ar": "لعازر",
-        "sw": "Lazaro"
+        "sw": "Lazaro",
+        "fa": "ایلعازر",
+        "pt-BR": "Lázaro",
+        "zh": "拉撒路"
       }
     },
     "Samuel": {
@@ -4088,7 +4802,10 @@
         "ru": "Самуил",
         "tr": "Samuel",
         "ar": "صموئيل",
-        "sw": "Samweli"
+        "sw": "Samweli",
+        "fa": "سموئیل",
+        "pt-BR": "Samuel",
+        "zh": "撒母耳"
       }
     },
     "Saul": {
@@ -4105,7 +4822,10 @@
         "ru": "Саул",
         "tr": "Saul",
         "ar": "شاول",
-        "sw": "Sauli"
+        "sw": "Sauli",
+        "fa": "شائول",
+        "pt-BR": "Saul",
+        "zh": "扫罗"
       }
     },
     "Judas": {
@@ -4122,7 +4842,10 @@
         "ru": "Иуда",
         "tr": "Yahuda",
         "ar": "يهوذا",
-        "sw": "Yuda"
+        "sw": "Yuda",
+        "fa": "یهودا",
+        "pt-BR": "Judas",
+        "zh": "犹大"
       }
     },
     "Maria Magdalena": {
@@ -4139,7 +4862,10 @@
         "ru": "Мария Магдалина",
         "tr": "Mecdelli Meryem",
         "ar": "مريم المجدلية",
-        "sw": "Maria Magdalena"
+        "sw": "Maria Magdalena",
+        "fa": "مریم مجدلیه",
+        "pt-BR": "Maria Madalena",
+        "zh": "抹大拉的马利亚"
       }
     },
     "Johannes der Täufer": {
@@ -4156,7 +4882,10 @@
         "ru": "Иоанн Креститель",
         "tr": "Vaftizci Yahya",
         "ar": "يوحنا المعمدان",
-        "sw": "Yohana Mbatizaji"
+        "sw": "Yohana Mbatizaji",
+        "fa": "یحیی تعمیددهنده",
+        "pt-BR": "João Batista",
+        "zh": "施洗约翰"
       }
     },
     "1. Mose": {
@@ -4173,7 +4902,10 @@
         "ru": "Бытие",
         "tr": "Yaratılış",
         "ar": "التكوين",
-        "sw": "Mwanzo"
+        "sw": "Mwanzo",
+        "fa": "پیدایش",
+        "pt-BR": "Gênesis",
+        "zh": "创世记"
       },
       "context": "Erstes Buch Mose"
     },
@@ -4191,7 +4923,10 @@
         "ru": "Бытие",
         "tr": "Yaratılış",
         "ar": "التكوين",
-        "sw": "Mwanzo"
+        "sw": "Mwanzo",
+        "fa": "پیدایش",
+        "pt-BR": "Gênesis",
+        "zh": "创世记"
       }
     },
     "2. Mose": {
@@ -4208,7 +4943,10 @@
         "ru": "Исход",
         "tr": "Mısır'dan Çıkış",
         "ar": "الخروج",
-        "sw": "Kutoka"
+        "sw": "Kutoka",
+        "fa": "خروج",
+        "pt-BR": "Êxodo",
+        "zh": "出埃及记"
       },
       "context": "Zweites Buch Mose"
     },
@@ -4226,7 +4964,10 @@
         "ru": "Исход",
         "tr": "Mısır'dan Çıkış",
         "ar": "الخروج",
-        "sw": "Kutoka"
+        "sw": "Kutoka",
+        "fa": "خروج",
+        "pt-BR": "Êxodo",
+        "zh": "出埃及记"
       }
     },
     "3. Mose": {
@@ -4243,7 +4984,10 @@
         "ru": "Левит",
         "tr": "Levililer",
         "ar": "اللاويين",
-        "sw": "Mambo ya Walawi"
+        "sw": "Mambo ya Walawi",
+        "fa": "لاویان",
+        "pt-BR": "Levítico",
+        "zh": "利未记"
       },
       "context": "Drittes Buch Mose"
     },
@@ -4261,7 +5005,10 @@
         "ru": "Числа",
         "tr": "Çölde Sayım",
         "ar": "العدد",
-        "sw": "Hesabu"
+        "sw": "Hesabu",
+        "fa": "اعداد",
+        "pt-BR": "Números",
+        "zh": "民数记"
       },
       "context": "Viertes Buch Mose"
     },
@@ -4279,7 +5026,10 @@
         "ru": "Второзаконие",
         "tr": "Yasa'nın Tekrarı",
         "ar": "التثنية",
-        "sw": "Kumbukumbu la Torati"
+        "sw": "Kumbukumbu la Torati",
+        "fa": "تثنیه",
+        "pt-BR": "Deuteronômio",
+        "zh": "申命记"
       },
       "context": "Fünftes Buch Mose"
     },
@@ -4297,7 +5047,10 @@
         "ru": "Иисус Навин",
         "tr": "Yeşu",
         "ar": "يشوع",
-        "sw": "Yoshua"
+        "sw": "Yoshua",
+        "fa": "یوشع",
+        "pt-BR": "Josué",
+        "zh": "约书亚记"
       }
     },
     "Richter": {
@@ -4314,7 +5067,10 @@
         "ru": "Судей",
         "tr": "Hâkimler",
         "ar": "القضاة",
-        "sw": "Waamuzi"
+        "sw": "Waamuzi",
+        "fa": "داوران",
+        "pt-BR": "Juízes",
+        "zh": "士师记"
       }
     },
     "Rut": {
@@ -4331,7 +5087,10 @@
         "ru": "Руфь",
         "tr": "Rut",
         "ar": "راعوث",
-        "sw": "Ruthu"
+        "sw": "Ruthu",
+        "fa": "روت",
+        "pt-BR": "Rute",
+        "zh": "路得记"
       }
     },
     "1. Samuel": {
@@ -4348,7 +5107,10 @@
         "ru": "1-я Царств",
         "tr": "1. Samuel",
         "ar": "صموئيل الأول",
-        "sw": "1 Samweli"
+        "sw": "1 Samweli",
+        "fa": "اول سموئیل",
+        "pt-BR": "1 Samuel",
+        "zh": "撒母耳记上"
       }
     },
     "2. Samuel": {
@@ -4365,7 +5127,10 @@
         "ru": "2-я Царств",
         "tr": "2. Samuel",
         "ar": "صموئيل الثاني",
-        "sw": "2 Samweli"
+        "sw": "2 Samweli",
+        "fa": "دوم سموئیل",
+        "pt-BR": "2 Samuel",
+        "zh": "撒母耳记下"
       }
     },
     "1. Könige": {
@@ -4382,7 +5147,10 @@
         "ru": "3-я Царств",
         "tr": "1. Krallar",
         "ar": "الملوك الأول",
-        "sw": "1 Wafalme"
+        "sw": "1 Wafalme",
+        "fa": "اول پادشاهان",
+        "pt-BR": "1 Reis",
+        "zh": "列王纪上"
       }
     },
     "2. Könige": {
@@ -4399,7 +5167,10 @@
         "ru": "4-я Царств",
         "tr": "2. Krallar",
         "ar": "الملوك الثاني",
-        "sw": "2 Wafalme"
+        "sw": "2 Wafalme",
+        "fa": "دوم پادشاهان",
+        "pt-BR": "2 Reis",
+        "zh": "列王纪下"
       }
     },
     "1. Chronik": {
@@ -4416,7 +5187,10 @@
         "ru": "1-я Паралипоменон",
         "tr": "1. Tarihler",
         "ar": "أخبار الأيام الأول",
-        "sw": "1 Mambo ya Nyakati"
+        "sw": "1 Mambo ya Nyakati",
+        "fa": "اول تواریخ",
+        "pt-BR": "1 Crônicas",
+        "zh": "历代志上"
       }
     },
     "2. Chronik": {
@@ -4433,7 +5207,10 @@
         "ru": "2-я Паралипоменон",
         "tr": "2. Tarihler",
         "ar": "أخبار الأيام الثاني",
-        "sw": "2 Mambo ya Nyakati"
+        "sw": "2 Mambo ya Nyakati",
+        "fa": "دوم تواریخ",
+        "pt-BR": "2 Crônicas",
+        "zh": "历代志下"
       }
     },
     "Esra": {
@@ -4450,7 +5227,10 @@
         "ru": "Ездра",
         "tr": "Ezra",
         "ar": "عزرا",
-        "sw": "Ezra"
+        "sw": "Ezra",
+        "fa": "عزرا",
+        "pt-BR": "Esdras",
+        "zh": "以斯拉记"
       }
     },
     "Nehemia": {
@@ -4467,7 +5247,10 @@
         "ru": "Неемия",
         "tr": "Nehemya",
         "ar": "نحميا",
-        "sw": "Nehemia"
+        "sw": "Nehemia",
+        "fa": "نحمیا",
+        "pt-BR": "Neemias",
+        "zh": "尼希米记"
       }
     },
     "Ester": {
@@ -4484,7 +5267,10 @@
         "ru": "Есфирь",
         "tr": "Ester",
         "ar": "أستير",
-        "sw": "Esta"
+        "sw": "Esta",
+        "fa": "استر",
+        "pt-BR": "Ester",
+        "zh": "以斯帖记"
       }
     },
     "Hiob": {
@@ -4501,7 +5287,10 @@
         "ru": "Иов",
         "tr": "Eyüp",
         "ar": "أيوب",
-        "sw": "Ayubu"
+        "sw": "Ayubu",
+        "fa": "ایوب",
+        "pt-BR": "Jó",
+        "zh": "约伯记"
       }
     },
     "Psalmen": {
@@ -4518,7 +5307,10 @@
         "ru": "Псалмы",
         "tr": "Mezmurlar",
         "ar": "المزامير",
-        "sw": "Zaburi"
+        "sw": "Zaburi",
+        "fa": "مزامیر",
+        "pt-BR": "Salmos",
+        "zh": "诗篇"
       }
     },
     "Sprüche": {
@@ -4535,7 +5327,10 @@
         "ru": "Притчи",
         "tr": "Süleyman'ın Özdeyişleri",
         "ar": "الأمثال",
-        "sw": "Mithali"
+        "sw": "Mithali",
+        "fa": "امثال",
+        "pt-BR": "Provérbios",
+        "zh": "箴言"
       }
     },
     "Hoheslied": {
@@ -4552,7 +5347,10 @@
         "ru": "Песнь Песней",
         "tr": "Ezgiler Ezgisi",
         "ar": "نشيد الأنشاد",
-        "sw": "Wimbo Ulio Bora"
+        "sw": "Wimbo Ulio Bora",
+        "fa": "غزل غزلها",
+        "pt-BR": "Cantares",
+        "zh": "雅歌"
       }
     },
     "Jesajabook": {
@@ -4569,7 +5367,10 @@
         "ru": "Исаия",
         "tr": "Yeşaya",
         "ar": "إشعياء",
-        "sw": "Isaya"
+        "sw": "Isaya",
+        "fa": "اشعیا",
+        "pt-BR": "Isaías",
+        "zh": "以赛亚书"
       }
     },
     "Jeremiabook": {
@@ -4586,7 +5387,10 @@
         "ru": "Иеремия",
         "tr": "Yeremya",
         "ar": "إرميا",
-        "sw": "Yeremia"
+        "sw": "Yeremia",
+        "fa": "ارمیا",
+        "pt-BR": "Jeremias",
+        "zh": "耶利米书"
       }
     },
     "Klagelieder": {
@@ -4603,7 +5407,10 @@
         "ru": "Плач Иеремии",
         "tr": "Ağıtlar",
         "ar": "مراثي إرميا",
-        "sw": "Maombolezo"
+        "sw": "Maombolezo",
+        "fa": "مراثی ارمیا",
+        "pt-BR": "Lamentações",
+        "zh": "耶利米哀歌"
       }
     },
     "Hesekiel": {
@@ -4620,7 +5427,10 @@
         "ru": "Иезекииль",
         "tr": "Hezekiel",
         "ar": "حزقيال",
-        "sw": "Ezekieli"
+        "sw": "Ezekieli",
+        "fa": "حزقیال",
+        "pt-BR": "Ezequiel",
+        "zh": "以西结书"
       }
     },
     "Danielbook": {
@@ -4637,7 +5447,10 @@
         "ru": "Даниил",
         "tr": "Daniel",
         "ar": "دانيال",
-        "sw": "Danieli"
+        "sw": "Danieli",
+        "fa": "دانیال",
+        "pt-BR": "Daniel",
+        "zh": "但以理书"
       }
     },
     "Hosea": {
@@ -4654,7 +5467,10 @@
         "ru": "Осия",
         "tr": "Hoşea",
         "ar": "هوشع",
-        "sw": "Hosea"
+        "sw": "Hosea",
+        "fa": "هوشع",
+        "pt-BR": "Oseias",
+        "zh": "何西阿书"
       }
     },
     "Joel": {
@@ -4671,7 +5487,10 @@
         "ru": "Иоиль",
         "tr": "Yoel",
         "ar": "يوئيل",
-        "sw": "Yoeli"
+        "sw": "Yoeli",
+        "fa": "یوئیل",
+        "pt-BR": "Joel",
+        "zh": "约珥书"
       }
     },
     "Amos": {
@@ -4688,7 +5507,10 @@
         "ru": "Амос",
         "tr": "Amos",
         "ar": "عاموس",
-        "sw": "Amosi"
+        "sw": "Amosi",
+        "fa": "عاموس",
+        "pt-BR": "Amós",
+        "zh": "阿摩司书"
       }
     },
     "Obadja": {
@@ -4705,7 +5527,10 @@
         "ru": "Авдий",
         "tr": "Obadya",
         "ar": "عوبديا",
-        "sw": "Obadia"
+        "sw": "Obadia",
+        "fa": "عوبدیا",
+        "pt-BR": "Obadias",
+        "zh": "俄巴底亚书"
       }
     },
     "Jona": {
@@ -4722,7 +5547,10 @@
         "ru": "Иона",
         "tr": "Yunus",
         "ar": "يونان",
-        "sw": "Yona"
+        "sw": "Yona",
+        "fa": "یونس",
+        "pt-BR": "Jonas",
+        "zh": "约拿书"
       }
     },
     "Micha": {
@@ -4739,7 +5567,10 @@
         "ru": "Михей",
         "tr": "Mika",
         "ar": "ميخا",
-        "sw": "Mika"
+        "sw": "Mika",
+        "fa": "میکاه",
+        "pt-BR": "Miqueias",
+        "zh": "弥迦书"
       }
     },
     "Nahum": {
@@ -4756,7 +5587,10 @@
         "ru": "Наум",
         "tr": "Nahum",
         "ar": "ناحوم",
-        "sw": "Nahumu"
+        "sw": "Nahumu",
+        "fa": "ناحوم",
+        "pt-BR": "Naum",
+        "zh": "那鸿书"
       }
     },
     "Habakuk": {
@@ -4773,7 +5607,10 @@
         "ru": "Аввакум",
         "tr": "Habakkuk",
         "ar": "حبقوق",
-        "sw": "Habakuki"
+        "sw": "Habakuki",
+        "fa": "حبقوق",
+        "pt-BR": "Habacuque",
+        "zh": "哈巴谷书"
       }
     },
     "Zefanja": {
@@ -4790,7 +5627,10 @@
         "ru": "Софония",
         "tr": "Sefanya",
         "ar": "صفنيا",
-        "sw": "Sefania"
+        "sw": "Sefania",
+        "fa": "صفنیا",
+        "pt-BR": "Sofonias",
+        "zh": "西番雅书"
       }
     },
     "Haggai": {
@@ -4807,7 +5647,10 @@
         "ru": "Аггей",
         "tr": "Hagay",
         "ar": "حجّي",
-        "sw": "Hagai"
+        "sw": "Hagai",
+        "fa": "حجی",
+        "pt-BR": "Ageu",
+        "zh": "哈该书"
       }
     },
     "Sacharja": {
@@ -4824,7 +5667,10 @@
         "ru": "Захария",
         "tr": "Zekeriya",
         "ar": "زكريا",
-        "sw": "Zekaria"
+        "sw": "Zekaria",
+        "fa": "زکریا",
+        "pt-BR": "Zacarias",
+        "zh": "撒迦利亚书"
       }
     },
     "Maleachi": {
@@ -4841,7 +5687,10 @@
         "ru": "Книга пророка Малахии",
         "tr": "Malaki",
         "ar": "ملاخي",
-        "sw": "Malaki"
+        "sw": "Malaki",
+        "fa": "ملاکی",
+        "pt-BR": "Malaquias",
+        "zh": "玛拉基书"
       }
     },
     "Matthäusevangelium": {
@@ -4858,7 +5707,10 @@
         "ru": "Евангелие от Матфея",
         "tr": "Matta",
         "ar": "إنجيل متّى",
-        "sw": "Injili ya Mathayo"
+        "sw": "Injili ya Mathayo",
+        "fa": "انجیل متی",
+        "pt-BR": "Evangelho de Mateus",
+        "zh": "马太福音"
       }
     },
     "Markusevangelium": {
@@ -4875,7 +5727,10 @@
         "ru": "Евангелие от Марка",
         "tr": "Markos",
         "ar": "إنجيل مرقس",
-        "sw": "Injili ya Marko"
+        "sw": "Injili ya Marko",
+        "fa": "انجیل مرقس",
+        "pt-BR": "Evangelho de Marcos",
+        "zh": "马可福音"
       }
     },
     "Lukasevangelium": {
@@ -4892,7 +5747,10 @@
         "ru": "Евангелие от Луки",
         "tr": "Luka",
         "ar": "إنجيل لوقا",
-        "sw": "Injili ya Luka"
+        "sw": "Injili ya Luka",
+        "fa": "انجیل لوقا",
+        "pt-BR": "Evangelho de Lucas",
+        "zh": "路加福音"
       }
     },
     "Johannesevangelium": {
@@ -4909,7 +5767,10 @@
         "ru": "Евангелие от Иоанна",
         "tr": "Yuhanna",
         "ar": "إنجيل يوحنا",
-        "sw": "Injili ya Yohana"
+        "sw": "Injili ya Yohana",
+        "fa": "انجیل یوحنا",
+        "pt-BR": "Evangelho de João",
+        "zh": "约翰福音"
       }
     },
     "Apostelgeschichte": {
@@ -4926,7 +5787,10 @@
         "ru": "Деяния святых Апостолов",
         "tr": "Elçilerin İşleri",
         "ar": "أعمال الرسل",
-        "sw": "Matendo ya Mitume"
+        "sw": "Matendo ya Mitume",
+        "fa": "اعمال رسولان",
+        "pt-BR": "Atos dos Apóstolos",
+        "zh": "使徒行传"
       }
     },
     "Römerbrief": {
@@ -4943,7 +5807,10 @@
         "ru": "Послание к Римлянам",
         "tr": "Romalılar",
         "ar": "رومية",
-        "sw": "Warumi"
+        "sw": "Warumi",
+        "fa": "رومیان",
+        "pt-BR": "Romanos",
+        "zh": "罗马书"
       }
     },
     "1. Korinther": {
@@ -4960,7 +5827,10 @@
         "ru": "Первое послание к Коринфянам",
         "tr": "1. Korintliler",
         "ar": "كورنثوس الأولى",
-        "sw": "1 Wakorintho"
+        "sw": "1 Wakorintho",
+        "fa": "اول قرنتیان",
+        "pt-BR": "1 Coríntios",
+        "zh": "哥林多前书"
       }
     },
     "2. Korinther": {
@@ -4977,7 +5847,10 @@
         "ru": "Второе послание к Коринфянам",
         "tr": "2. Korintliler",
         "ar": "كورنثوس الثانية",
-        "sw": "2 Wakorintho"
+        "sw": "2 Wakorintho",
+        "fa": "دوم قرنتیان",
+        "pt-BR": "2 Coríntios",
+        "zh": "哥林多后书"
       }
     },
     "Galaterbrief": {
@@ -4994,7 +5867,10 @@
         "ru": "Послание к Галатам",
         "tr": "Galatyalılar",
         "ar": "غلاطية",
-        "sw": "Wagalatia"
+        "sw": "Wagalatia",
+        "fa": "غلاطیان",
+        "pt-BR": "Gálatas",
+        "zh": "加拉太书"
       }
     },
     "Epheserbrief": {
@@ -5011,7 +5887,10 @@
         "ru": "Послание к Ефесянам",
         "tr": "Efesliler",
         "ar": "أفسس",
-        "sw": "Waefeso"
+        "sw": "Waefeso",
+        "fa": "افسسیان",
+        "pt-BR": "Efésios",
+        "zh": "以弗所书"
       }
     },
     "Philipperbrief": {
@@ -5028,7 +5907,10 @@
         "ru": "Послание к Филиппийцам",
         "tr": "Filipililer",
         "ar": "فيلبي",
-        "sw": "Wafilipi"
+        "sw": "Wafilipi",
+        "fa": "فیلیپیان",
+        "pt-BR": "Filipenses",
+        "zh": "腓立比书"
       }
     },
     "Kolosserbrief": {
@@ -5045,7 +5927,10 @@
         "ru": "Послание к Колоссянам",
         "tr": "Koloseliler",
         "ar": "كولوسي",
-        "sw": "Wakolosai"
+        "sw": "Wakolosai",
+        "fa": "کولسیان",
+        "pt-BR": "Colossenses",
+        "zh": "歌罗西书"
       }
     },
     "1. Thessalonicher": {
@@ -5062,7 +5947,10 @@
         "ru": "Первое послание к Фессалоникийцам",
         "tr": "1. Selanikliler",
         "ar": "تسالونيكي الأولى",
-        "sw": "1 Wathesalonike"
+        "sw": "1 Wathesalonike",
+        "fa": "اول تسالونیکیان",
+        "pt-BR": "1 Tessalonicenses",
+        "zh": "帖撒罗尼迦前书"
       }
     },
     "2. Thessalonicher": {
@@ -5079,7 +5967,10 @@
         "ru": "Второе послание к Фессалоникийцам",
         "tr": "2. Selanikliler",
         "ar": "تسالونيكي الثانية",
-        "sw": "2 Wathesalonike"
+        "sw": "2 Wathesalonike",
+        "fa": "دوم تسالونیکیان",
+        "pt-BR": "2 Tessalonicenses",
+        "zh": "帖撒罗尼迦后书"
       }
     },
     "1. Timotheus": {
@@ -5096,7 +5987,10 @@
         "ru": "Первое послание к Тимофею",
         "tr": "1. Timoteos",
         "ar": "تيموثاوس الأولى",
-        "sw": "1 Timotheo"
+        "sw": "1 Timotheo",
+        "fa": "اول تیموتائوس",
+        "pt-BR": "1 Timóteo",
+        "zh": "提摩太前书"
       }
     },
     "2. Timotheus": {
@@ -5113,7 +6007,10 @@
         "ru": "Второе послание к Тимофею",
         "tr": "2. Timoteos",
         "ar": "تيموثاوس الثانية",
-        "sw": "2 Timotheo"
+        "sw": "2 Timotheo",
+        "fa": "دوم تیموتائوس",
+        "pt-BR": "2 Timóteo",
+        "zh": "提摩太后书"
       }
     },
     "Titusbrief": {
@@ -5130,7 +6027,10 @@
         "ru": "Послание к Титу",
         "tr": "Titus",
         "ar": "تيطس",
-        "sw": "Tito"
+        "sw": "Tito",
+        "fa": "تیطس",
+        "pt-BR": "Tito",
+        "zh": "提多书"
       }
     },
     "Philemonbrief": {
@@ -5147,7 +6047,10 @@
         "ru": "Послание к Филимону",
         "tr": "Filimon",
         "ar": "فليمون",
-        "sw": "Filemoni"
+        "sw": "Filemoni",
+        "fa": "فلیمون",
+        "pt-BR": "Filemom",
+        "zh": "腓利门书"
       }
     },
     "Hebräerbrief": {
@@ -5164,7 +6067,10 @@
         "ru": "Послание к Евреям",
         "tr": "İbraniler",
         "ar": "العبرانيين",
-        "sw": "Waebrania"
+        "sw": "Waebrania",
+        "fa": "عبرانیان",
+        "pt-BR": "Hebreus",
+        "zh": "希伯来书"
       }
     },
     "Jakobusbrief": {
@@ -5181,7 +6087,10 @@
         "ru": "Послание Иакова",
         "tr": "Yakup",
         "ar": "يعقوب",
-        "sw": "Yakobo"
+        "sw": "Yakobo",
+        "fa": "یعقوب",
+        "pt-BR": "Tiago",
+        "zh": "雅各书"
       }
     },
     "1. Petrus": {
@@ -5198,7 +6107,10 @@
         "ru": "Первое послание Петра",
         "tr": "1. Petrus",
         "ar": "بطرس الأولى",
-        "sw": "1 Petro"
+        "sw": "1 Petro",
+        "fa": "اول پطرس",
+        "pt-BR": "1 Pedro",
+        "zh": "彼得前书"
       }
     },
     "2. Petrus": {
@@ -5215,7 +6127,10 @@
         "ru": "Второе послание Петра",
         "tr": "2. Petrus",
         "ar": "بطرس الثانية",
-        "sw": "2 Petro"
+        "sw": "2 Petro",
+        "fa": "دوم پطرس",
+        "pt-BR": "2 Pedro",
+        "zh": "彼得后书"
       }
     },
     "1. Johannes": {
@@ -5232,7 +6147,10 @@
         "ru": "Первое послание Иоанна",
         "tr": "1. Yuhanna",
         "ar": "يوحنا الأولى",
-        "sw": "1 Yohana"
+        "sw": "1 Yohana",
+        "fa": "اول یوحنا",
+        "pt-BR": "1 João",
+        "zh": "约翰一书"
       }
     },
     "2. Johannes": {
@@ -5249,7 +6167,10 @@
         "ru": "Второе послание Иоанна",
         "tr": "2. Yuhanna",
         "ar": "يوحنا الثانية",
-        "sw": "2 Yohana"
+        "sw": "2 Yohana",
+        "fa": "دوم یوحنا",
+        "pt-BR": "2 João",
+        "zh": "约翰二书"
       }
     },
     "3. Johannes": {
@@ -5266,7 +6187,10 @@
         "ru": "Третье послание Иоанна",
         "tr": "3. Yuhanna",
         "ar": "يوحنا الثالثة",
-        "sw": "3 Yohana"
+        "sw": "3 Yohana",
+        "fa": "سوم یوحنا",
+        "pt-BR": "3 João",
+        "zh": "约翰三书"
       }
     },
     "Judasbrief": {
@@ -5283,7 +6207,10 @@
         "ru": "Послание Иуды",
         "tr": "Yahuda",
         "ar": "يهوذا",
-        "sw": "Yuda"
+        "sw": "Yuda",
+        "fa": "یهودا",
+        "pt-BR": "Judas",
+        "zh": "犹大书"
       }
     },
     "Offenbarung des Johannes": {
@@ -5300,7 +6227,10 @@
         "ru": "Откровение Иоанна Богослова",
         "tr": "Vahiy",
         "ar": "رؤيا يوحنا",
-        "sw": "Ufunuo wa Yohana"
+        "sw": "Ufunuo wa Yohana",
+        "fa": "مکاشفه",
+        "pt-BR": "Apocalipse",
+        "zh": "启示录"
       }
     },
     "Es steht geschrieben": {
@@ -5317,7 +6247,10 @@
         "ru": "Написано",
         "tr": "Yazılmıştır",
         "ar": "مكتوب",
-        "sw": "Imeandikwa"
+        "sw": "Imeandikwa",
+        "fa": "مکتوب است",
+        "pt-BR": "Está escrito",
+        "zh": "经上记着说"
       },
       "context": "Zitatformel"
     },
@@ -5335,7 +6268,10 @@
         "ru": "Так говорит Господь",
         "tr": "RAB şöyle diyor",
         "ar": "هكذا يقول الرب",
-        "sw": "Hivi ndivyo asemavyo Bwana"
+        "sw": "Hivi ndivyo asemavyo Bwana",
+        "fa": "خداوند چنین می‌گوید",
+        "pt-BR": "Assim diz o Senhor",
+        "zh": "耶和华如此说"
       },
       "context": "Prophetische Formel"
     },
@@ -5353,7 +6289,10 @@
         "ru": "Истинно, истинно говорю вам",
         "tr": "Gerçekten, gerçekten size derim ki",
         "ar": "الحق الحق أقول لكم",
-        "sw": "Amin, amin, nawaambia"
+        "sw": "Amin, amin, nawaambia",
+        "fa": "آمین آمین به شما می‌گویم",
+        "pt-BR": "Em verdade, em verdade vos digo",
+        "zh": "我实实在在地告诉你们"
       },
       "context": "Jesus-Formel"
     },
@@ -5371,7 +6310,10 @@
         "ru": "как написано",
         "tr": "yazılmış olduğu gibi",
         "ar": "كما هو مكتوب",
-        "sw": "kama ilivyoandikwa"
+        "sw": "kama ilivyoandikwa",
+        "fa": "چنانکه مکتوب است",
+        "pt-BR": "como está escrito",
+        "zh": "正如经上所记"
       }
     },
     "nach dem Wort": {
@@ -5388,7 +6330,10 @@
         "ru": "по слову",
         "tr": "söz uyarınca",
         "ar": "بحسب الكلمة",
-        "sw": "kwa kadiri ya neno"
+        "sw": "kwa kadiri ya neno",
+        "fa": "مطابق کلام",
+        "pt-BR": "segundo a palavra",
+        "zh": "照着神的话"
       }
     },
     "Höret das Wort des Herrn": {
@@ -5405,7 +6350,10 @@
         "ru": "Слушайте слово Господне",
         "tr": "RAB'bin sözünü dinleyin",
         "ar": "اسمعوا كلمة الرب",
-        "sw": "Sikieni Neno la Bwana"
+        "sw": "Sikieni Neno la Bwana",
+        "fa": "کلام خداوند را بشنوید",
+        "pt-BR": "Ouçam a palavra do Senhor",
+        "zh": "你们要听耶和华的话"
       },
       "context": "Lesungseinleitung"
     },
@@ -5423,7 +6371,10 @@
         "ru": "Бог говорит",
         "tr": "Tanrı diyor",
         "ar": "يقول الله",
-        "sw": "Mungu anasema"
+        "sw": "Mungu anasema",
+        "fa": "خدا می‌فرماید",
+        "pt-BR": "Deus diz",
+        "zh": "神说"
       }
     },
     "der Herr sagt": {
@@ -5440,7 +6391,10 @@
         "ru": "Господь говорит",
         "tr": "RAB diyor",
         "ar": "يقول الرب",
-        "sw": "Bwana anasema"
+        "sw": "Bwana anasema",
+        "fa": "خداوند می‌گوید",
+        "pt-BR": "o Senhor diz",
+        "zh": "主说"
       }
     },
     "wie der Prophet sagt": {
@@ -5457,7 +6411,10 @@
         "ru": "как говорит пророк",
         "tr": "peygamberin dediği gibi",
         "ar": "كما يقول النبي",
-        "sw": "kama nabii asemavyo"
+        "sw": "kama nabii asemavyo",
+        "fa": "چنانکه نبی می‌گوید",
+        "pt-BR": "como diz o profeta",
+        "zh": "正如先知所说"
       }
     },
     "Spruch des Herrn": {
@@ -5474,7 +6431,10 @@
         "ru": "говорит Господь",
         "tr": "diyor RAB",
         "ar": "يقول الرب",
-        "sw": "asema Bwana"
+        "sw": "asema Bwana",
+        "fa": "این است کلام خداوند",
+        "pt-BR": "diz o Senhor",
+        "zh": "这是耶和华说的"
       },
       "context": "Prophetische Abschlussformel"
     },
@@ -5492,7 +6452,10 @@
         "ru": "Во имя Отца и Сына и Святого Духа",
         "tr": "Baba, Oğul ve Kutsal Ruh'un adıyla",
         "ar": "باسم الآب والابن والروح القدس",
-        "sw": "Kwa jina la Baba na Mwana na Roho Mtakatifu"
+        "sw": "Kwa jina la Baba na Mwana na Roho Mtakatifu",
+        "fa": "به اسم پدر و پسر و روح‌القدس",
+        "pt-BR": "Em nome do Pai e do Filho e do Espírito Santo",
+        "zh": "奉父、子、圣灵的名"
       },
       "context": "Trinitarische Formel"
     },
@@ -5510,7 +6473,10 @@
         "ru": "Да благословит тебя Господь и сохранит тебя",
         "tr": "RAB seni kutsasın ve korusun",
         "ar": "يباركك الرب ويحرسك",
-        "sw": "Bwana akubariki na akulinde"
+        "sw": "Bwana akubariki na akulinde",
+        "fa": "خداوند تو را برکت دهد و تو را محافظت نماید",
+        "pt-BR": "O Senhor te abençoe e te guarde",
+        "zh": "愿耶和华赐福给你，保护你"
       },
       "context": "Aaronitischer Segen"
     },
@@ -5528,7 +6494,10 @@
         "ru": "Благодать Господа нашего Иисуса Христа",
         "tr": "Rabbimiz İsa Mesih'in lütfu",
         "ar": "نعمة ربنا يسوع المسيح",
-        "sw": "Neema ya Bwana wetu Yesu Kristo"
+        "sw": "Neema ya Bwana wetu Yesu Kristo",
+        "fa": "فیض خداوند ما عیسی مسیح",
+        "pt-BR": "A graça de nosso Senhor Jesus Cristo",
+        "zh": "愿我们主耶稣基督的恩惠"
       },
       "context": "Apostolischer Segen"
     },
@@ -5546,7 +6515,10 @@
         "ru": "Аминь, аминь",
         "tr": "Amin, amin",
         "ar": "آمين، آمين",
-        "sw": "Amina, Amina"
+        "sw": "Amina, Amina",
+        "fa": "آمین، آمین",
+        "pt-BR": "Amém, amém",
+        "zh": "阿们，阿们"
       }
     },
     "Ehre sei dem Vater": {
@@ -5563,7 +6535,10 @@
         "ru": "Слава Отцу",
         "tr": "Baba'ya yücelik olsun",
         "ar": "المجد للآب",
-        "sw": "Utukufu kwa Baba"
+        "sw": "Utukufu kwa Baba",
+        "fa": "جلال بر پدر",
+        "pt-BR": "Glória ao Pai",
+        "zh": "愿荣耀归于父"
       },
       "context": "Gloria Patri"
     },
@@ -5581,7 +6556,10 @@
         "ru": "Господи, помилуй",
         "tr": "Rab, merhamet et",
         "ar": "يا رب ارحم",
-        "sw": "Bwana, uhurumie"
+        "sw": "Bwana, uhurumie",
+        "fa": "خداوندا، رحم کن",
+        "pt-BR": "Senhor, tem piedade",
+        "zh": "主啊，求你怜悯"
       },
       "context": "Kyrie eleison"
     },
@@ -5599,7 +6577,10 @@
         "ru": "Слово Твоё — светильник ноге моей",
         "tr": "Sözün adımlarım için çıradır",
         "ar": "كلامك مصباح لرجلي",
-        "sw": "Neno lako ni taa ya miguu yangu"
+        "sw": "Neno lako ni taa ya miguu yangu",
+        "fa": "کلام تو برای پایهای من چراغ است",
+        "pt-BR": "Lâmpada para os meus pés é a tua palavra",
+        "zh": "你的话是我脚前的灯"
       },
       "context": "Psalm 119:105"
     },
@@ -5617,7 +6598,10 @@
         "ru": "Не бойся",
         "tr": "Korkma",
         "ar": "لا تخف",
-        "sw": "Usiogope"
+        "sw": "Usiogope",
+        "fa": "مترس",
+        "pt-BR": "Não temas",
+        "zh": "不要惧怕"
       }
     },
     "Ich bin bei euch alle Tage": {
@@ -5634,7 +6618,10 @@
         "ru": "Я с вами во все дни",
         "tr": "Ben her zaman sizinle birlikteyim",
         "ar": "أنا معكم كل الأيام",
-        "sw": "Mimi nipo pamoja nanyi siku zote"
+        "sw": "Mimi nipo pamoja nanyi siku zote",
+        "fa": "من هر روزه با شما هستم",
+        "pt-BR": "Eu estou com vocês todos os dias",
+        "zh": "我就常与你们同在"
       },
       "context": "Matthäus 28:20"
     },
@@ -5652,7 +6639,10 @@
         "ru": "Придите ко Мне все",
         "tr": "Hepiniz bana gelin",
         "ar": "تعالوا إليّ يا جميع المتعبين",
-        "sw": "Njooni kwangu, ninyi nyote"
+        "sw": "Njooni kwangu, ninyi nyote",
+        "fa": "بیایید نزد من ای تمام زحمتکشان",
+        "pt-BR": "Venham a mim, todos",
+        "zh": "凡劳苦担重担的人可以到我这里来"
       },
       "context": "Matthäus 11:28"
     },
@@ -5670,7 +6660,10 @@
         "ru": "Бог есть любовь",
         "tr": "Tanrı sevgidir",
         "ar": "الله محبة",
-        "sw": "Mungu ni upendo"
+        "sw": "Mungu ni upendo",
+        "fa": "خدا محبت است",
+        "pt-BR": "Deus é amor",
+        "zh": "神就是爱"
       },
       "context": "1. Johannes 4:8"
     },
@@ -5688,7 +6681,10 @@
         "ru": "В начале было Слово",
         "tr": "Başlangıçta Söz vardı",
         "ar": "في البدء كان الكلمة",
-        "sw": "Hapo mwanzo kulikuwako Neno"
+        "sw": "Hapo mwanzo kulikuwako Neno",
+        "fa": "در ابتدا کلمه بود",
+        "pt-BR": "No princípio era o Verbo",
+        "zh": "太初有道"
       },
       "context": "Johannes 1:1"
     },
@@ -5706,7 +6702,10 @@
         "ru": "Ибо так возлюбил Бог мир",
         "tr": "Çünkü Tanrı dünyayı o kadar çok sevdi ki",
         "ar": "لأنه هكذا أحبّ الله العالم",
-        "sw": "Kwa maana jinsi hii Mungu aliupenda ulimwengu"
+        "sw": "Kwa maana jinsi hii Mungu aliupenda ulimwengu",
+        "fa": "زیرا خدا جهان را اینقدر محبت نمود",
+        "pt-BR": "Porque Deus amou o mundo de tal maneira",
+        "zh": "神爱世人"
       },
       "context": "Johannes 3:16"
     },
@@ -5724,7 +6723,10 @@
         "ru": "Я есмь путь и истина и жизнь",
         "tr": "Yol, gerçek ve yaşam benim",
         "ar": "أنا هو الطريق والحق والحياة",
-        "sw": "Mimi ndimi njia, na kweli, na uzima"
+        "sw": "Mimi ndimi njia, na kweli, na uzima",
+        "fa": "من راه و راستی و حیات هستم",
+        "pt-BR": "Eu sou o caminho, a verdade e a vida",
+        "zh": "我就是道路、真理、生命"
       },
       "context": "Johannes 14:6"
     },
@@ -5742,7 +6744,10 @@
         "ru": "посвящённый",
         "tr": "sırra ermiş",
         "ar": "مكرّس",
-        "sw": "ameanzishwa"
+        "sw": "ameanzishwa",
+        "fa": "تعلیم یافته",
+        "pt-BR": "iniciado",
+        "zh": "得了秘诀"
       },
       "context": "spiritual initiation in Philippians 4:12, not secret society"
     },
@@ -5760,7 +6765,10 @@
         "ru": "основанный",
         "tr": "kurulmuş",
         "ar": "تأسست",
-        "sw": "ilianzishwa"
+        "sw": "ilianzishwa",
+        "fa": "بنیان نهاده",
+        "pt-BR": "fundado",
+        "zh": "建立"
       },
       "context": "church planting — Paul founded churches across the Roman Empire"
     },
@@ -5778,7 +6786,10 @@
         "ru": "основание церкви",
         "tr": "kilise kurma",
         "ar": "تأسيس الكنائس",
-        "sw": "Kuanzisha Kanisa"
+        "sw": "Kuanzisha Kanisa",
+        "fa": "تأسیس کلیسا",
+        "pt-BR": "Plantação de igrejas",
+        "zh": "植堂"
       },
       "context": "establishing new congregations"
     },
@@ -5796,7 +6807,10 @@
         "ru": "башня из слоновой кости",
         "tr": "fildişi kule",
         "ar": "برج عاجي",
-        "sw": "mnara wa pembe za ndovu"
+        "sw": "mnara wa pembe za ndovu",
+        "fa": "برج عاج",
+        "pt-BR": "torre de marfim",
+        "zh": "象牙塔"
       },
       "context": "idiom — detachment from reality, academic isolation"
     },
@@ -5814,7 +6828,10 @@
         "ru": "приземлённость",
         "tr": "ayakları yere basan",
         "ar": "واقعية",
-        "sw": "uhalisia"
+        "sw": "uhalisia",
+        "fa": "واقع‌بینی",
+        "pt-BR": "com os pés no chão",
+        "zh": "脚踏实地"
       },
       "context": "idiom — pragmatism, being grounded, opposite of Elfenbeinturm"
     },
@@ -5832,7 +6849,10 @@
         "ru": "караульный солдат",
         "tr": "nöbetçi asker",
         "ar": "حارس",
-        "sw": "askari wa zamu"
+        "sw": "askari wa zamu",
+        "fa": "سرباز نگهبان",
+        "pt-BR": "soldado de guarda",
+        "zh": "看守的兵丁"
       },
       "context": "Roman guard soldier — Paul was chained to a rotating guard (Philippians 1:13). Wach = guard/watch, NOT wax"
     },
@@ -5850,7 +6870,10 @@
         "ru": "окружение",
         "tr": "çevre",
         "ar": "المحيط",
-        "sw": "mazingira"
+        "sw": "mazingira",
+        "fa": "اطرافیان",
+        "pt-BR": "ambiente",
+        "zh": "周围的人"
       },
       "context": "surroundings, environment, circle of people around someone. NOT Mund (mouth)"
     }

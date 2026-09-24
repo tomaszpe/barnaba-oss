@@ -17,7 +17,10 @@
     "ru",
     "uk",
     "ar",
-    "sw"
+    "sw",
+    "fa",
+    "pt-BR",
+    "zh"
   ],
   "excludedLanguages": {
     "tr": "No modern Turkish edition with sufficiently verified public-domain status was identified; Turkish falls back to the normal translation path."
@@ -77,6 +80,21 @@
       "edition": "Krapf Swahili New Testament 1850",
       "status": "Public Domain",
       "url": "https://ebible.org/find/details.php?id=swh1850"
+    },
+    "pt-BR": {
+      "edition": "Tradução Brasileira 1917",
+      "status": "Public Domain",
+      "url": "https://github.com/nehemiaharchives/bbl/tree/master/resources/bbltexts/tb"
+    },
+    "fa": {
+      "edition": "Persian Old Version 1895",
+      "status": "Public Domain",
+      "url": "https://ebible.org/find/details.php?id=pesOPV"
+    },
+    "zh": {
+      "edition": "Chinese Union Version 1919 (simplified script, 神 edition)",
+      "status": "Public Domain",
+      "url": "https://ebible.org/find/details.php?id=cmn-cu89s"
     }
   },
   "categories": {
@@ -104,7 +122,10 @@
       "ru": "во имя Отца и Сына и Святаго Духа",
       "uk": "в імя Отця, і Сина, й сьвятого Духа",
       "ar": "بِٱسْمِ ٱلْآبِ وَٱلِٱبْنِ وَٱلرُّوحِ ٱلْقُدُسِ",
-      "sw": "kwa jina la Baba, na la Mwana, na la Roho Mtakatifu"
+      "sw": "kwa jina la Baba, na la Mwana, na la Roho Mtakatifu",
+      "pt-BR": "em o nome do Pai, e do Filho, e do Espírito Santo",
+      "fa": "به اسم اب و ابن و روح‌القدس",
+      "zh": "奉父、子、圣灵的名"
     },
     {
       "id": "amen",
@@ -120,12 +141,15 @@
       "ru": "Аминь",
       "uk": "Амінь",
       "ar": "آمِينَ",
-      "sw": "Amen"
+      "sw": "Amen",
+      "pt-BR": "Amém",
+      "fa": "آمین",
+      "zh": "阿们"
     },
     {
       "id": "hallelujah",
       "category": "doxology",
-      "sourceReference": "Psalm 150:6; Revelation 19:1 for Swahili",
+      "sourceReference": "Psalm 150:6; Revelation 19:1 for Swahili and Chinese",
       "de": "Halleluja",
       "en": "Praise Yah",
       "es": "Aleluya",
@@ -136,7 +160,10 @@
       "ru": "Аллилуия",
       "uk": "Аллилуя",
       "ar": "هَلِّلُويَا",
-      "sw": "Haleluya"
+      "sw": "Haleluya",
+      "pt-BR": "Louvai a Jeová",
+      "fa": "هللویاه",
+      "zh": "哈利路亚"
     },
     {
       "id": "lords_prayer_intro",
@@ -152,7 +179,10 @@
       "ru": "Отче наш, сущий на небесах! да святится имя Твое;",
       "uk": "Отче наш, що на небі! Нехай святить ся імя твоє.",
       "ar": "أَبَانَا ٱلَّذِي فِي ٱلسَّمَاوَاتِ، لِيَتَقَدَّسِ ٱسْمُكَ.",
-      "sw": "Baba yetu uliye mbinguni: Jina lako litukuzwe."
+      "sw": "Baba yetu uliye mbinguni: Jina lako litukuzwe.",
+      "pt-BR": "Pai nosso, que estás nos céus; santificado seja o teu nome;",
+      "fa": "ای پدر ما که در آسمانی، نام تو مقدس باد.",
+      "zh": "我们在天上的父：愿人都尊你的名为圣。"
     },
     {
       "id": "lords_prayer_kingdom_will",
@@ -168,7 +198,10 @@
       "ru": "да приидет Царствие Твое; да будет воля Твоя и на земле, как на небе;",
       "uk": "Нехай прийде царство твоє. Нехай буде воля твоя, як на небі, так і на землї.",
       "ar": "لِيَأْتِ مَلَكُوتُكَ. لِتَكُنْ مَشِيئَتُكَ كَمَا فِي ٱلسَّمَاءِ كَذَلِكَ عَلَى ٱلْأَرْضِ.",
-      "sw": "Ufalme wako ufike. Utakalo lifanyike duniani kama mbinguni."
+      "sw": "Ufalme wako ufike. Utakalo lifanyike duniani kama mbinguni.",
+      "pt-BR": "venha o teu reino; seja feita a tua vontade, assim na terra como no céu.",
+      "fa": "ملکوت تو بیاید. اراده تو چنانکه در آسمان است، بر زمین نیز کرده شود.",
+      "zh": "愿你的国降临；愿你的旨意行在地上，如同行在天上。"
     },
     {
       "id": "lords_prayer_bread",
@@ -184,7 +217,10 @@
       "ru": "хлеб наш насущный дай нам на сей день;",
       "uk": "Хлїб наш щоденний дай нам сьогоднї.",
       "ar": "خُبْزَنَا كَفَافَنَا أَعْطِنَا ٱلْيَوْمَ.",
-      "sw": "Utupe leo chakula chetu tunachohitaji."
+      "sw": "Utupe leo chakula chetu tunachohitaji.",
+      "pt-BR": "O pão nosso de cada dia nos dá hoje;",
+      "fa": "نان کفاف ما را امروز به ما بده.",
+      "zh": "我们日用的饮食，今日赐给我们。"
     },
     {
       "id": "lords_prayer_forgive",
@@ -200,7 +236,10 @@
       "ru": "и прости нам долги наши, как и мы прощаем должникам нашим;",
       "uk": "І прости нам довги наші, як і ми прощаємо довжникам нашим.",
       "ar": "وَٱغْفِرْ لَنَا ذُنُوبَنَا كَمَا نَغْفِرُ نَحْنُ أَيْضًا لِلْمُذْنِبِينَ إِلَيْنَا.",
-      "sw": "Utusamehe makosa yetu, kama nasi tunavyowasamehe waliotukosea."
+      "sw": "Utusamehe makosa yetu, kama nasi tunavyowasamehe waliotukosea.",
+      "pt-BR": "e perdoa-nos as nossas dívidas, assim como nós também temos perdoado aos nossos devedores;",
+      "fa": "و قرض های ما را ببخش چنانکه ما نیز قرضداران خود را می‌بخشیم.",
+      "zh": "免我们的债，如同我们免了人的债。"
     },
     {
       "id": "lords_prayer_temptation",
@@ -216,7 +255,10 @@
       "ru": "и не введи нас в искушение, но избавь нас от лукавого.",
       "uk": "І не введи нас у спокусу, а ізбави нас од лукавого.",
       "ar": "وَلَا تُدْخِلْنَا فِي تَجْرِبَةٍ، لَكِنْ نَجِّنَا مِنَ ٱلشِّرِّيرِ.",
-      "sw": "Usitutie katika majaribu, lakini utuokoe na yule Mwovu."
+      "sw": "Usitutie katika majaribu, lakini utuokoe na yule Mwovu.",
+      "pt-BR": "e não nos deixes cair em tentação, mas livra-nos do mal.",
+      "fa": "و ما را در آزمایش میاور، بلکه از شریر ما را رهایی ده.",
+      "zh": "不叫我们遇见试探；救我们脱离凶恶。"
     },
     {
       "id": "aaronic_blessing_1",
@@ -231,7 +273,10 @@
       "pt": "Jeová te abençoe e te guarde",
       "ru": "да благословит тебя Господь и сохранит тебя",
       "uk": "Господь благослови тебе, і хорони тебе",
-      "ar": "يُبَارِكُكَ ٱلرَّبُّ وَيَحْرُسُكَ"
+      "ar": "يُبَارِكُكَ ٱلرَّبُّ وَيَحْرُسُكَ",
+      "pt-BR": "Jeová te abençoe e te guarde",
+      "fa": "یهوه تو را برکت دهد و تو را محافظت نماید",
+      "zh": "愿耶和华赐福给你，保护你"
     },
     {
       "id": "aaronic_blessing_2",
@@ -246,7 +291,10 @@
       "pt": "Jeová faça resplandecer o seu rosto sobre ti e se compadeça de ti",
       "ru": "да призрит на тебя Господь светлым лицем Своим и помилует тебя",
       "uk": "Господь нехай сьвітить лицем своїм над тобою, та милує тебе",
-      "ar": "يُضِيءُ ٱلرَّبُّ بِوَجْهِهِ عَلَيْكَ وَيَرْحَمُكَ"
+      "ar": "يُضِيءُ ٱلرَّبُّ بِوَجْهِهِ عَلَيْكَ وَيَرْحَمُكَ",
+      "pt-BR": "Jeová faça resplandecer o seu rosto sobre ti e se compadeça de ti",
+      "fa": "یهوه روی خود را بر تو تابان سازد و بر تو رحمت کند",
+      "zh": "愿耶和华使他的脸光照你，赐恩给你"
     },
     {
       "id": "aaronic_blessing_3",
@@ -261,7 +309,10 @@
       "pt": "Jeová levante sobre ti o seu rosto e te dê a paz",
       "ru": "да обратит Господь лице Свое на тебя и даст тебе мир",
       "uk": "Нехай оберне Господь лице своє на тебе і дасть тобі впокій",
-      "ar": "يَرْفَعُ ٱلرَّبُّ وَجْهَهُ عَلَيْكَ وَيَمْنَحُكَ سَلَامًا"
+      "ar": "يَرْفَعُ ٱلرَّبُّ وَجْهَهُ عَلَيْكَ وَيَمْنَحُكَ سَلَامًا",
+      "pt-BR": "Jeová levante sobre ti o seu rosto e te dê a paz",
+      "fa": "یهوه روی خود را بر تو برافرازد و تو را سلامتی بخشد",
+      "zh": "愿耶和华向你仰脸，赐你平安"
     },
     {
       "id": "lord_have_mercy_matt_17_15",
@@ -276,7 +327,8 @@
       "pt": "Senhor, compadece-te",
       "ru": "Господи! помилуй",
       "uk": "Господи, помилуй",
-      "ar": "يَا سَيِّدُ، ٱرْحَمْ"
+      "ar": "يَا سَيِّدُ، ٱرْحَمْ",
+      "pt-BR": "Senhor, compadece-te"
     },
     {
       "id": "this_is_body_matt_26_26",
@@ -292,7 +344,10 @@
       "ru": "сие есть Тело Мое",
       "uk": "се єсть тїло моє",
       "ar": "هَذَا هُوَ جَسَدِي",
-      "sw": "huu ni mwili wangu"
+      "sw": "huu ni mwili wangu",
+      "pt-BR": "este é o meu corpo",
+      "fa": "این است بدن من",
+      "zh": "这是我的身体"
     },
     {
       "id": "this_is_blood_matt_26_28",
@@ -308,7 +363,10 @@
       "ru": "сие есть Кровь Моя Нового Завета",
       "uk": "се бо єсть кров моя нового завіту",
       "ar": "هَذَا هُوَ دَمِي ٱلَّذِي لِلْعَهْدِ ٱلْجَدِيدِ",
-      "sw": "hii ni damu yangu inayothibitisha agano"
+      "sw": "hii ni damu yangu inayothibitisha agano",
+      "pt-BR": "este é o meu sangue, o sangue da aliança",
+      "fa": "این است خون من در عهد جدید",
+      "zh": "这是我立约的血"
     },
     {
       "id": "do_in_remembrance_luke_22_19",
@@ -324,7 +382,10 @@
       "ru": "сие творите в Мое воспоминание",
       "uk": "Се чинїть на мій спомин",
       "ar": "اِصْنَعُوا هَذَا لِذِكْرِي",
-      "sw": "Fanyeni hivi kwa kunikumbuka"
+      "sw": "Fanyeni hivi kwa kunikumbuka",
+      "pt-BR": "fazei isso em memória de mim",
+      "fa": "این را به یاد من به‌جا آرید",
+      "zh": "你们也应当如此行，为的是记念我"
     },
     {
       "id": "bread_of_life_john_6_35",
@@ -340,7 +401,10 @@
       "ru": "Я есмь хлеб жизни",
       "uk": "Я хлїб життя",
       "ar": "أَنَا هُوَ خُبْزُ ٱلْحَيَاةِ",
-      "sw": "Mimi ndimi mkate wa uzima"
+      "sw": "Mimi ndimi mkate wa uzima",
+      "pt-BR": "Eu sou o pão da vida",
+      "fa": "من نان حیات هستم",
+      "zh": "我就是生命的粮"
     },
     {
       "id": "resurrection_and_life_john_11_25",
@@ -356,7 +420,10 @@
       "ru": "Я есмь воскресение и жизнь",
       "uk": "Я воскресеннє і життє",
       "ar": "أَنَا هُوَ ٱلْقِيَامَةُ وَٱلْحَيَاةُ",
-      "sw": "Mimi ndimi ufufuo na uzima"
+      "sw": "Mimi ndimi ufufuo na uzima",
+      "pt-BR": "Eu sou a ressurreição e a vida",
+      "fa": "من قیامت و حیات هستم",
+      "zh": "复活在我，生命也在我"
     },
     {
       "id": "peace_greeting_john_20_21",
@@ -372,7 +439,10 @@
       "ru": "мир вам",
       "uk": "Упокій вам",
       "ar": "سَلَامٌ لَكُمْ",
-      "sw": "Amani kwenu"
+      "sw": "Amani kwenu",
+      "pt-BR": "Paz seja convosco",
+      "fa": "سلام بر شما باد",
+      "zh": "愿你们平安"
     }
   ]
 }

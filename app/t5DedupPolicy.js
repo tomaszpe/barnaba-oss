@@ -2,6 +2,8 @@ const DEFAULT_T5_DEDUP_WINDOW = 5;
 const DEFAULT_T5_DEDUP_THRESHOLD = 0.45;
 const DEFAULT_T5_V2_OVERLAP_THRESHOLD = 0.85;
 const DEFAULT_T5_SHORT_TEXT_CHARS = 40;
+// Languages written without spaces between words: word-overlap checks do not apply.
+const T5_EXACT_ONLY_LANGUAGES = new Set(['zh']);
 
 const DEFAULT_TRANSLATION_STOPWORDS = new Set([
     'the', 'a', 'an', 'is', 'are', 'was', 'were', 'be', 'been', 'being',
@@ -75,6 +77,14 @@ function evaluatePostTranslationDedup(text, language, history, options = {}) {
                 metrics: { text_len: text.length, history_index: i, jaccard: 1, overlap_ratio: 1, new_content_ratio: 0 },
             };
         }
+    }
+
+    if (T5_EXACT_ONLY_LANGUAGES.has(language)) {
+        return {
+            legacy: emitDecision('exact_only_language'),
+            v2: emitDecision('exact_only_language'),
+            metrics: { text_len: text.length, history_index: null, content_word_count: null },
+        };
     }
 
     const contentWords = tokenizeContentWords(text, stopwords);
