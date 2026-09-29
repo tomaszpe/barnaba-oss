@@ -2,7 +2,7 @@ import { readFileSync } from 'node:fs';
 import vm from 'node:vm';
 import { describe, expect, it } from 'vitest';
 
-const indexSource = readFileSync(new URL('../public-control/index.html', import.meta.url), 'utf8');
+const indexSource = readFileSync(new URL('../public/index.html', import.meta.url), 'utf8');
 const gatewaySource = readFileSync(new URL('../server.js', import.meta.url), 'utf8');
 
 const slice = (from, to) => {

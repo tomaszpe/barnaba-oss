@@ -1039,9 +1039,14 @@ app.post('/api/listener-telemetry', async (req, res) => {
     try {
         const controller = new AbortController();
         const timeout = setTimeout(() => controller.abort(), 5000);
+        // Delivery outcomes enter the gateway's playout ledger only from an authenticated
+        // listener, so pass on the listener's own bearer token (28.09).
+        const headers = { 'Content-Type': 'application/json' };
+        const authorization = typeof req.headers.authorization === 'string' ? req.headers.authorization.trim() : '';
+        if (/^Bearer\s+[^\s]{1,2048}$/i.test(authorization)) headers.Authorization = authorization;
         const response = await fetch(`${config.urls.gateway}/api/listener-telemetry`, {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+            headers,
             body: JSON.stringify(req.body || {}),
             signal: controller.signal
         });

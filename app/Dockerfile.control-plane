@@ -63,8 +63,9 @@ COPY feedbackRoutes.mjs ./
 COPY feedbackStore.mjs ./
 COPY startup.sh ./
 COPY public/ ./public/
-# The control plane serves its own operator panel and listener pages. They replace
-# the gateway's copies of the same files; everything else in public/ is shared.
+# The control plane serves its own operator panel. It replaces the gateway's copy of
+# admin.html; the listener page and everything else in public/ is shared, so the
+# QR code and the gateway serve the same listener page.
 COPY public-control/ ./public/
 COPY config/ ./config/
 

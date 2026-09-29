@@ -1,4 +1,4 @@
-import { readFileSync } from 'node:fs';
+import { existsSync, readFileSync } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { describe, expect, it } from 'vitest';
@@ -57,6 +57,15 @@ describe('control-plane image contract', () => {
         const overlay = dockerfile.search(/^COPY\s+public-control\/\s+\.\/public\/$/m);
         expect(shared).toBeGreaterThanOrEqual(0);
         expect(overlay).toBeGreaterThan(shared);
+    });
+
+    // 27.09: the QR code opens the control plane, which carried its own older listener page;
+    // fixes shipped to the gateway page never reached listeners. One page, served by both.
+    it('serves the same listener page as the gateway', () => {
+        for (const file of ['index.html', 'sw.js', 'listenerDelivery.js']) {
+            expect(existsSync(path.join(appDir, 'public-control', file))).toBe(false);
+            expect(existsSync(path.join(appDir, 'public', file))).toBe(true);
+        }
     });
 
     it('normalizes a Windows checkout before executing the Linux entrypoint', () => {

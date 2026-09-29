@@ -3,7 +3,8 @@ import { describe, expect, it } from 'vitest';
 import { buildClientFeatureConfig } from '../clientFeatureConfig.js';
 
 const indexSource = readFileSync(new URL('../public/index.html', import.meta.url), 'utf8');
-const controlIndexSource = readFileSync(new URL('../public-control/index.html', import.meta.url), 'utf8');
+// The control plane serves the same listener page as the gateway (one page since 28.09).
+const controlIndexSource = readFileSync(new URL('../public/index.html', import.meta.url), 'utf8');
 const controlPlaneSource = readFileSync(new URL('../control-plane.js', import.meta.url), 'utf8');
 const gatewaySource = readFileSync(new URL('../server.js', import.meta.url), 'utf8');
 

@@ -1,16 +1,16 @@
 Barnaba - public export
 =======================
 
-source-commit:  cf2cc984936a04978b3900635e763cb6f47d26c3
+source-commit:  aecff53393eb151f840de4b9eb33177c6cf8e5c8
 source-branch:  oss/product-dev-20260916
-commit-date:    2026-09-24T16:58:16+02:00
+commit-date:    2026-09-29T12:06:38+02:00
 worktree:       clean
-tooling-commit: cf2cc984936a04978b3900635e763cb6f47d26c3
-manifest:       tools/oss-export/manifest.txt (296 wpisow)
+tooling-commit: aecff53393eb151f840de4b9eb33177c6cf8e5c8
+manifest:       tools/oss-export/manifest.txt (294 wpisow)
 generated:      tools/oss-export/generated.txt (36 plikow)
 dependencies:   domkniete
 legal-provenance: approved
-files:          332
+files:          330
 scan:           0 trafien
 
 SHA256 wyeksportowanych plikow:
@@ -44,7 +44,7 @@ f70a50a065a430db5b16d8ddb962236cf32e630534f2688fcf1bcf7e37c890b0  app/__tests__/
 ddb0fef4e365c7994c7ae8a4982fd929b3f17cc1a1ae74b6e36f015768dab042  app/__tests__/committedPrefix.test.mjs
 dcf3a965086c7b0a4aa12165886b074d9aefe8c9d3cb50a060cc5ce7cb045384  app/__tests__/concurrencyLimiter.test.mjs
 c64aa96c3d1bdc5481ae95a4226ea5df4c753523d629c1db8f63224a997b3024  app/__tests__/contextBuffer.test.mjs
-53cfd06bad319437b6e98e00f7aa848a1bdfece5c2e9c73558beec6e6dcd93e4  app/__tests__/controlPlaneImageContract.test.mjs
+e240215917e40457748662431eae7dc44d91b2f7862b973acdf1b48ab3dea2b6  app/__tests__/controlPlaneImageContract.test.mjs
 43f4f2e4298f1d4a70843579bc7e12203ea98259ffadb7d6ac7afe34506931f2  app/__tests__/controlPlaneRequiredEnv.test.mjs
 f7ebabb6792cf44ca7d7c042a69bc0ce57f4852dd2005ed329b5b6b91c40a3b9  app/__tests__/controlPlaneStartup.test.mjs
 0cfb0182ed64fd32dbf71c38c0890f131ad6face6456adf098849222ea066a01  app/__tests__/deadlineFallbackSpanReset.test.mjs
@@ -68,7 +68,7 @@ e4c9e8677f0afef4ec3429dc1186fbe0d8959aa6ea7671406686399bac44e715  app/__tests__/
 f960e3ffafb0b3717969a327d3c7dfaccf38a6ebe02f8c324a20a0f8b06f0b44  app/__tests__/hgDedupIntegration.test.mjs
 4ef8c3801a634ff6278e7b51f599220a06ef8fb65ee1c25eb2d4648adf039692  app/__tests__/hgDedupService.test.mjs
 3cc1bf205fdf30d1effdec9ccc5b115b29df692f1407bd7c38f3cc3621ef5f12  app/__tests__/holdNPolicy.test.mjs
-2d176b46963d367a100a1d773ffdb1d380e7ac7ecb25e705b9a2209577725e76  app/__tests__/instantFeedbackUi.test.mjs
+37163e68c56fb35faa53ac6fe3168a7fc432546c0cd1883e98e812a414efefac  app/__tests__/instantFeedbackUi.test.mjs
 63b9356f137e92d47d1a09267e04e7fdb17088dbac49cd2b6fc38d320eaeeb9a  app/__tests__/intraEmissionDedupService.test.mjs
 bbe911e8b2808ccf317fbd48255586e5b4cbef928e3a4e00b2246150ab6afe6e  app/__tests__/intraTrimTelemetry.test.mjs
 c3077cea5e743a588a3a299e9a5af0190daad367e2e888664f073060cee1a49b  app/__tests__/languageRouting.test.mjs
@@ -79,7 +79,7 @@ f5ceae88731af197059a3482e94ad1f1081a3b0aa2618eb3ff4add6a64b86f48  app/__tests__/
 be5c43ae06e6bf9695205e2f85908dadea65a993dec8c00fdddece4c512e2e19  app/__tests__/listenerFeedbackStore.test.mjs
 6b0207c7211bb03f3a8066f69ced7f0d24f4832c381249f43b4a00b013eb8431  app/__tests__/listenerLanguageSwitch.test.mjs
 5403f23bb0a009d031d4c5368056bee1a6c116b04f92d74d48cdd071c5214005  app/__tests__/listenerPlayoutLedger.test.mjs
-94e858ad7e9951893ee7b88db58ab0a2c485c65abf002cf1e1e876d1537bee2f  app/__tests__/listenerReconnectSingleSocket.test.mjs
+050a146539fad529f5b4c156c11137ffd3526828774b5ab1b2ec90bd479754e2  app/__tests__/listenerReconnectSingleSocket.test.mjs
 8576b02f40f6aec03811207ea07f88e7502b5351292e414b54bf9a84d34d0520  app/__tests__/listenerSessionGateway.test.mjs
 d2d96480544128e8f9ade905e916fafdd86e900e9b625f40a7730727f53aafe8  app/__tests__/listenerTelemetryContract.test.mjs
 a3324bfc29ece834d296744fc49a33ca36bf1ed6272265d02d65aed955e2f529  app/__tests__/liturgicalPhrasesProvenance.test.mjs
@@ -136,7 +136,7 @@ dea21790e6dbf189b99a70c5e8d74ec16a16e172a59c17b6e9f0e0d0e3c9584a  app/__tests__/
 cfe5520c5cf6996dad7de09b4efef9b42d3003d2b9ce8ce2e58d96c2864283af  app/__tests__/translationServiceProviderIntegration.test.mjs
 dde091e02a12c4ec296f9124de07be9964c7378a41a3f1e5a45e8eac87ed8fae  app/__tests__/ttsChunkDeliveryContract.test.mjs
 b155b96d447ff2215555ab04f4678a4c1b63edc05b4fbe8b172c760f15c227d7  app/__tests__/ttsNumeralNormalization.test.mjs
-8d602ab14f4edef9be7a5db3f2660b328de8d768c23f1f72829d053cde1c6202  app/__tests__/ttsPitchPolicy.test.mjs
+ef38c8891c23dba2a350149504707465febb3426dddcd9e3c273bc389900442f  app/__tests__/ttsPitchPolicy.test.mjs
 caf1c1ad61cd5b02ab2fc67d1e9d764c08a18b5344c43bf6bc6f42ab3c3ed13b  app/__tests__/ttsServiceProgressive.test.mjs
 6602b8d40e1c8ed4b578fe9271c662dc17ad849d84f594c76fcac5eec2fa9d3a  app/__tests__/whisperClientRequestTracking.test.mjs
 0fb541ff1a9c68e9318ed4433f458348a9a0427a0c900e5079ffee55903e6b19  app/__tests__/whisperClientSessionLock.test.mjs
@@ -158,13 +158,13 @@ c458b2a251972c0e62f53e0bf092fb454026524329307b3aee5ace6ded4766f6  app/cache/litu
 de57076de1e92a1a51ef99629e715dad1dfe2c894ef8f9b029692e7ca9a0f760  app/concurrencyLimiter.js
 67bdb0629dfd1b8db6b53b3d15840902c0321f01efca9ad243058a846aaecd4b  app/config/churchData.example.json
 513dbc51c50564a4e17188747c3a34ce32dd28338ed842ec719843e1314dace8  app/config/churches.example.json
-20650d7a5eebd32aaa09cae4ace93ecadfaa20bebe98d0af48057a68081c2f71  app/control-plane.js
+a5ac259f9a67e2e46e3d3bb0c4bf4d5e222e76c519329cf44287a113bb88e8a6  app/control-plane.js
 b1b6db8ed75dfc8e2c4b05e8c0ff7646e397fa64dbce7bf3183ed23dd1ed19db  app/csrfService.js
 4955c4453211990b9dc33a89a35ea7499646190e861715c47a5a0d3896c1ebf6  app/deadlineProvisional.js
 c1a2c2e62d47af432dded0ea0f02e2735c23d174af2ac9538fdabb349781b259  app/denominationalStyleConfig.js
 974f3e169ae749988fb23db4ab2cb427e6a091df39c712d978fba2d23857af94  app/disconnectDrain.js
 c22cc2d25d76e2534cf69743b1370ec904f85265dc2793dd3f3aff12fdb07bf0  app/Dockerfile
-e427cd22c9ae6b0d56ee13b245b8ebdde229e2d2a9b2c1e8516f6d779f25d20c  app/Dockerfile.control-plane
+93951ddd2ab1af90c68cced14b42491ef66ac861567d392f68922e5b6e416d22  app/Dockerfile.control-plane
 2c223c5609f0351605f716f96b437406dcc7deb681a21845456421cef8ab2367  app/emissionController.js
 429a2400a3937565e881dcc526fd0f7fbcb2d86de7c48352e324373bcb645ec9  app/emissionDecisionMetrics.js
 8ff09e807cccb184aecdaf2299279199b0f11cabbba368cb7d2abaed4ca298fe  app/emissionMetricsSummary.js
@@ -203,17 +203,15 @@ a789c24a173958a0ef39ecd03e251cfb7a76d290d3ba6bcefa8c15d553871007  app/public/fee
 140a05e8af633d8002c55c4c04cc8243b17521a6f9cba6a34b254a9995c4cabf  app/public/feedback.js
 457becc51a7ae6438b83c3655e2956d65015541a6fbe8d682a7edcf07bbaa71d  app/public/icon.svg
 c7f9636529861b913c4236a680212f18fdf1ed7f586cc9c0476a335b43a513da  app/public/icon-maskable.svg
-270610e54a4b3f347e8e119b365325d35c4987fcf2f74965772622916151f3df  app/public/index.html
+f5b2e36abbc51ed62beec56ae0c78cae9376c46c2e783fa305e16bf8c1b00e31  app/public/index.html
 5a09a710fd9910eedceb493ee3b9f0bf3730408d61b56049c96996d4d1513b29  app/public/listenerDelivery.js
 527331c606dadd4c28a5cd758c25769aacecd5b9c419d54e023288fc26c12156  app/public/manifest.json
 01e0f4648eff183723b7519cecf84178840ffef98348c2ba7042bfdb49d5c06d  app/public/node.html
 2dd9f230a0dc1d1222ebf7e9dfb7199ea6d64108e90695cf4dfb9b87b43bb79b  app/public/pcm-recorder-processor.js
-51fa7ee27fdc07e9c0260f6f213128545f68931635d854b2ec218c563e1315e5  app/public/silent-noise.wav
+034fbe76e762451c3a09ea05c169597250ba0c3f2c9d588db9730f26f08e206d  app/public/silent-noise.wav
 a1e8ec9eb4b9fe89b726548507f4b81be90cd627816efb458c45a433143576ab  app/public/sw.js
 0e2cdd56c2f3aba5d63b03966aaa25b36e542b525c1b13cf04a297332390175d  app/public-control/admin.html
-d9c7abaf5ee0a8be9c21d6299b8aff67f34ac6d6308734e2b6924e77182fbc2f  app/public-control/index.html
 ba66508e58a05431caf5d26bb8d0c26397b9f88c3644bf1f514b29dff8e0c8c7  app/public-control/qaReplayCapture.js
-fa4141a9ef3ce1f3fcfdcde62a1c53e057b1ba12ead8bae84bb01bce5610af08  app/public-control/sw.js
 b492626cf90cb396dc1633630f2f887ec1e604a651db6b52f4e412ec3cd65168  app/qaReplayRenderer.js
 747c4ec12d2650035fa1cc0cffaa2c5f934dd1f0c561ddfbbba02244fa08a013  app/qualityTracker.js
 6896e5dd04728d3eda87402987e922fd80b6cf63939b544cc2e56b00bb5c5411  app/revisionActionEligibility.js

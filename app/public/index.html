@@ -2854,15 +2854,58 @@
             offlineOverlay.classList.remove('visible');
         }
 
+        // Exactly one live listener socket at a time. connect() cancels a scheduled retry
+        // and retires the previous socket; the generation counter makes any late event from
+        // a retired socket inert, so a second reconnect trigger cannot open a second
+        // gateway subscription.
+        let wsGeneration = 0;
+        let wsReconnectTimer = null;
+
+        function cancelScheduledReconnect() {
+            if (wsReconnectTimer === null) return;
+            clearTimeout(wsReconnectTimer);
+            wsReconnectTimer = null;
+        }
+
+        function scheduleReconnect(delayMs) {
+            cancelScheduledReconnect();
+            wsReconnectTimer = setTimeout(() => {
+                wsReconnectTimer = null;
+                connect();
+            }, delayMs);
+        }
+
+        function retirePreviousSocket() {
+            const previous = ws;
+            if (!previous) return;
+            // Detach first: close() fires onclose, which would otherwise schedule another
+            // reconnect on top of the one already in progress.
+            previous.onopen = null;
+            previous.onclose = null;
+            previous.onerror = null;
+            previous.onmessage = null;
+            if (previous.readyState === WebSocket.OPEN
+                || previous.readyState === WebSocket.CONNECTING) {
+                try { previous.close(); } catch { /* already closing */ }
+            }
+        }
+
         function connect() {
+            cancelScheduledReconnect();
+            retirePreviousSocket();
+
             // Default offline until first message arrives — disables screen 4 lang/voice tiles.
             document.body.classList.add('gateway-offline');
             statusDot.className = 'status-dot connecting';
             statusText.textContent = getUIStrings(uiLang || 'en').connecting;
 
-            ws = new WebSocket(WS_URL);
+            const generation = ++wsGeneration;
+            const socket = new WebSocket(WS_URL);
+            ws = socket;
+            const isCurrentSocket = () => generation === wsGeneration && ws === socket;
 
-            ws.onopen = () => {
+            socket.onopen = () => {
+                if (!isCurrentSocket()) return;
                 reconnectAttempts = 0;
                 hideOfflineOverlay();
                 wsListenerAuthenticated = false;
@@ -2878,7 +2921,10 @@
                 }
             };
 
-            ws.onclose = () => {
+            socket.onclose = () => {
+                // A retired socket may still emit close. Acting on it would paint the UI
+                // offline while a newer socket is live, and would queue a second retry.
+                if (!isCurrentSocket()) return;
                 serverConfirmed = false;
                 wsListenerAuthenticated = false;
                 document.body.classList.add('gateway-offline');
@@ -2888,14 +2934,15 @@
                 if (reconnectAttempts >= OFFLINE_THRESHOLD) {
                     showOfflineOverlay();
                 }
-                setTimeout(connect, 3000);
+                scheduleReconnect(3000);
             };
 
-            ws.onerror = () => {
+            socket.onerror = () => {
                 // onerror always followed by onclose, counter handled there
             };
 
-            ws.onmessage = e => {
+            socket.onmessage = e => {
+                if (!isCurrentSocket()) return;
                 if (!serverConfirmed) {
                     serverConfirmed = true;
                     document.body.classList.remove('gateway-offline');
@@ -3244,15 +3291,9 @@
                 initAudioContext();
                 startSilentKeepAlive();
 
-                // Unlock ttsAudio element from user gesture context (Android/iOS autoplay policy)
-                if (ttsAudio && ttsAudio.paused) {
-                    ttsAudio.muted = true;
-                    ttsAudio.play().then(() => {
-                        ttsAudio.pause();
-                        ttsAudio.muted = false;
-                        console.log('[Audio] TTS element unlocked by user gesture');
-                    }).catch(() => {});
-                }
+                // Usually reached from the 'subscribed' WebSocket message, outside any gesture,
+                // where iOS refuses it; every tap retries (see unlockAudioFromGesture).
+                unlockAudioFromGesture();
             }
         }
 
@@ -3883,7 +3924,7 @@
             if (!silentAudio) return;
             silentAudio.src = '/silent-noise.wav';
             silentAudio.volume = 0.01; // Extra quiet, but > 0
-            console.log('[Background] Keep-alive: /silent-noise.wav (server-hosted, -60dB noise)');
+            console.log('[Background] Keep-alive: /silent-noise.wav (server-hosted, -80 dBFS noise; iOS ignores .volume)');
 
             // Event-driven recovery: if OS pauses keep-alive, resume immediately
             silentAudio.addEventListener('pause', () => {
@@ -3966,6 +4007,7 @@
                 try {
                     ttsPlaybackActive = true;
                     ttsAudio.volume = VOLUME_LEVEL;
+                    ttsAudio.muted = false; // no earlier unlock attempt may leave speech muted
                     // playbackRate is deliberately NOT set here — see the assignment after
                     // `src` below. Setting it at this point is silently undone.
 
@@ -4246,6 +4288,35 @@
             speechSynthesis.speak(new SpeechSynthesisUtterance(''));
         }, { once: true });
 
+        // iOS starts sound only inside a tap. Retry on every tap until the TTS element has
+        // really played once; a failed attempt must never leave it muted (27.09: two iPhones
+        // heard only the keep-alive noise).
+        let ttsAudioUnlocked = false;
+        function unlockAudioFromGesture() {
+            if (!audioOn) return;
+            // Safari 16.4+ (iOS 16.4+): media playback category, so the ring/silent switch no
+            // longer mutes the Web Audio fallback. Absent elsewhere, then a no-op.
+            try {
+                if (navigator.audioSession && navigator.audioSession.type !== 'playback') {
+                    navigator.audioSession.type = 'playback';
+                }
+            } catch (e) { /* not supported */ }
+            initAudioContext();
+            if (audioContext && audioContext.state === 'suspended') audioContext.resume().catch(() => {});
+            if (!ttsAudio || ttsAudioUnlocked || ttsPlaybackActive || !ttsAudio.paused) return;
+            // A real source: iOS rejects play() on an element that has none.
+            ttsAudio.muted = false;
+            ttsAudio.src = '/silent-noise.wav';
+            const unlockSrc = ttsAudio.src;
+            Promise.resolve(ttsAudio.play()).then(() => {
+                ttsAudioUnlocked = true;
+                if (ttsAudio.src === unlockSrc) ttsAudio.pause();
+                console.log('[Audio] TTS element unlocked by user gesture');
+            }).catch(() => { /* not a gesture: the next tap retries */ });
+        }
+        document.addEventListener('click', unlockAudioFromGesture);
+        document.addEventListener('touchend', unlockAudioFromGesture);
+
         // ============================================================
         // PIN Authentication
         // ============================================================
@@ -4451,7 +4522,7 @@
 
         // ============================================================
         // Background Keep-Alive + MediaSession (27.03.2026 — event-driven rewrite)
-        // Near-silent <audio loop> with -60dB noise keeps audio session alive.
+        // Near-silent <audio loop> with -80 dBFS noise keeps audio session alive.
         // MediaSession provides lock screen controls and signals active playback.
         // Step 4: All 4 action handlers (iOS requires seekbackward/seekforward).
         // Step 5: Event-driven recovery — no setInterval (dead on screen-off).
@@ -4619,15 +4690,19 @@
                     startSilentKeepAlive();
                 }
 
-                // Check WebSocket and reconnect if needed
-                if (!ws || ws.readyState !== WebSocket.OPEN) {
+                // Check WebSocket and reconnect if needed. connect() cancels any retry the
+                // close handler already scheduled and retires the old socket, so resuming
+                // cannot leave two sockets subscribed to the same language.
+                const reconnected = !ws || ws.readyState !== WebSocket.OPEN;
+                if (reconnected) {
                     console.log('[WS] Disconnected - reconnecting...');
                     if (progressiveQueue) progressiveQueue.resetForNewEpoch('superseded_candidate');
                     connect();
                 }
 
-                // Re-subscribe to language if we were subscribed before
-                if (churchId && language && authenticated) {
+                // Re-subscribe only when the socket survived the background phase. After a
+                // reconnect the new socket's onopen already re-subscribes.
+                if (!reconnected && churchId && language && authenticated) {
                     setTimeout(() => {
                         if (ws?.readyState === WebSocket.OPEN) {
                             console.log('[WS] Re-subscribing to', churchId, language, voiceGender);
@@ -4637,6 +4712,10 @@
                 }
             } else {
                 console.log('[App] Going to background');
+                // Flush before the browser freezes our timers. Without this the last
+                // measurement before backgrounding is lost: on 20.09 the Portuguese
+                // listener left a 227 s hole with no counters on either side.
+                sendTelemetryBeacon();
                 // Keep wake lock if possible, but browser may release it
             }
         });
