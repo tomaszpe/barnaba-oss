@@ -59,7 +59,18 @@ describe('Azure reference deployment contract', () => {
       expect(template).toContain("'managed-by': 'bicep'");
     }
     expect(foundation.match(/tags: resourceTags/g)).toHaveLength(5);
-    expect(apps.match(/tags: resourceTags/g)).toHaveLength(3);
+    expect(apps.match(/tags: resourceTags/g)).toHaveLength(4);
+  });
+
+  it('leaves Whisper and the gateway stopped after the deployment', () => {
+    const script = apps.split("resource stopServiceApps '")[1];
+    expect(script).toBeDefined();
+    expect(script).toContain('${controlIdentity.id}');
+    expect(script).toContain("value: '${whisper.id} ${gateway.id}'");
+    expect(script).toContain('/stop?api-version=');
+    expect(script).toMatch(/dependsOn: \[\s+controlWhisperRole\s+controlGatewayRole\s+\]/);
+    // No forceUpdateTag: a redeploy with a new password must not stop a running service.
+    expect(script).not.toContain('forceUpdateTag');
   });
 
   it('keeps Whisper internal while exposing gateway and control-plane over HTTPS', () => {

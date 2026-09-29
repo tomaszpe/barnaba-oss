@@ -1,11 +1,11 @@
 Barnaba - public export
 =======================
 
-source-commit:  aecff53393eb151f840de4b9eb33177c6cf8e5c8
+source-commit:  424142a68d6f364592a6b9901af7ec6ddadf1fd8
 source-branch:  oss/product-dev-20260916
-commit-date:    2026-09-29T12:06:38+02:00
+commit-date:    2026-09-29T14:55:59+02:00
 worktree:       clean
-tooling-commit: aecff53393eb151f840de4b9eb33177c6cf8e5c8
+tooling-commit: 424142a68d6f364592a6b9901af7ec6ddadf1fd8
 manifest:       tools/oss-export/manifest.txt (294 wpisow)
 generated:      tools/oss-export/generated.txt (36 plikow)
 dependencies:   domkniete
@@ -34,7 +34,7 @@ b41d5b7a036bac97294b4b7c0c067fcf8750b6fa17d13554463efd0218a140b7  app/__tests__/
 242d5b4ab8038632ec0ab88f03da850413116c853390056828f618b658a63f00  app/__tests__/audioElementBinding.test.mjs
 d90857e649ee2c4c5d2a8494be9ebf45e718e78a71e7f8bb8f006116e12f6648  app/__tests__/authServiceSessions.test.mjs
 dd2319ce6da1cb5852e8f6d22f1b20847f57e55e8528277d5a09ce89debc7b13  app/__tests__/autopilotPolicy.test.mjs
-68d67ac567c5ba696835ef6c5401700fdefe9b7c50a3efac7d98deea43ae3e33  app/__tests__/azureReferenceDeployment.test.mjs
+7236e6a2e8bf62b1974cca2293aa0ad6135be785145200ab476005aa1e7010ea  app/__tests__/azureReferenceDeployment.test.mjs
 263f3d4d063ba6eebc319b70db1f0fb771ed9221f92cfeb8ab673a1f32ec75ed  app/__tests__/b4RhetoricalRepeatPolicy.test.mjs
 df4a883d1d84222f6168b107a6fef8b285c0b39996caa2152785b93b656daaf4  app/__tests__/boundaryCommitLedger.test.mjs
 d0aa8392b2fbf86a26d927013ceb433465a6137082bc2e61239d1a567b6136db  app/__tests__/boundaryConfirmation.test.mjs
@@ -249,7 +249,7 @@ eee895d759587675dd3bc3cc740df0cbd62cff23c57d6d47f1163c22bf28a30e  app/whisperReq
 72190ea81ddf3f48e735d09c8d4a1fac882b855deb8f46423aefc49bf47df050  app/wsRateLimit.js
 0eedd874156928546ded73df8857edad0669989923bdbfec03b36a58fa61ba37  CODE_OF_CONDUCT.md
 1269f41f773729bd5f7d075a155a717cec9ad61d8fcab2ef93a997e3227cc006  CONTRIBUTING.md
-7ec5aad27a1065e1626eafa0e7fe05bb8ea9313fc4481501b8d980626f322315  docs/GETTING_STARTED.md
+991f6e615bae7171f1d6a201b11673a7c8fb8c4f8cb519599d162180e0532c03  docs/GETTING_STARTED.md
 83906393981af4e8ac136baff3bb79e168c0a44d9243bdbf762a22acf0e768a2  docs/images/getting-started/01-control-panel.png
 ae13444ca4fed7d1d978d0abc9dc96f851e0047a25e9d014d42fe344c618c101  docs/images/getting-started/02-password.png
 f486449a1acfd1914a57616c2c1177a1d4e48cfd653c6f2f7e43effd45c1ed37  docs/images/getting-started/03-starting.png
@@ -261,11 +261,11 @@ f486449a1acfd1914a57616c2c1177a1d4e48cfd653c6f2f7e43effd45c1ed37  docs/images/ge
 57cb1735f55ddc0afd06f5dae058b64b22de2e39566f4b408ba9178bed1a1956  docs/images/getting-started/09-listener-church.png
 e2f0aa8dd77985e87e8565da32f62dcb615a834b3d304e5ce63b93d9555f1b5c  docs/images/getting-started/10-listener-pin.png
 d5d48bc448cb6c12ca4de7d3227ded795f945233b0b9f825614b4bb35e361368  docs/images/getting-started/11-listener-listening.png
-c4c7ae79b243374b24cd4428539bd48180ed089f6a85b2662abc371c154a3f4c  infra/azure/apps.bicep
+6547faa2420ab876ac3238a7adfe94f20cc2a812516e819984819b7b3af66d78  infra/azure/apps.bicep
 894cd0a6466a69ec536cc7f92d25359a416183a1431d59724d36f90e958be2bd  infra/azure/build-images.ps1
 38b1405c44d3247b29671dd5b6993f3d7965ccd52bcc935a987205a7c761a5a5  infra/azure/foundation.bicep
 c2f92708f4af44cd96bb995b5a5e099b4e0a80d6910d87afbe4b3b45ff02a61a  infra/azure/parameters.example.json
-8171490931993277fb385cea4819ca82eec5f9cb9843cfe5051f57662c1db8a7  infra/azure/README.md
+0e84f74982d5d19fac0cef99a790eb970f81ed207f3a45e587c57f6afc0d09fe  infra/azure/README.md
 f981e6223af847a047243cd2a68ae12e5022a3898754e5b75280ff5aae412290  infra/azure/reference-settings.json
 6c12c26d97306d9741795cb4d7c8187a909ded3cf6bc0989d585367487b206d9  infra/azure/smoke-test.ps1
 0d96a4ff68ad6d4b6f1f30f713b18d5184912ba8dd389f86aa7710db079abcb0  LICENSE

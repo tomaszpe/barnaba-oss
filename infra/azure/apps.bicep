@@ -405,6 +405,51 @@ resource controlGatewayRole 'Microsoft.Authorization/roleAssignments@2022-04-01'
   }
 }
 
+// Azure creates a Container App running, and a new Whisper app takes an A100 replica straight
+// away. Nothing runs between services until the operator presses START in the control panel,
+// so the deployment stops Whisper and the gateway with the control-plane identity.
+// The script runs once: an unchanged redeploy (new password or PIN) does not stop a running
+// service.
+resource stopServiceApps 'Microsoft.Resources/deploymentScripts@2023-08-01' = {
+  name: '${prefix}-stop-service-apps'
+  location: location
+  kind: 'AzureCLI'
+  tags: resourceTags
+  identity: {
+    type: 'UserAssigned'
+    userAssignedIdentities: {
+      '${controlIdentity.id}': {}
+    }
+  }
+  properties: {
+    azCliVersion: '2.63.0'
+    retentionInterval: 'PT1H'
+    cleanupPreference: 'OnSuccess'
+    timeout: 'PT15M'
+    environmentVariables: [
+      { name: 'APP_IDS', value: '${whisper.id} ${gateway.id}' }
+      { name: 'ARM_URL', value: az.environment().resourceManager }
+    ]
+    // Role assignments can take a few minutes to reach the identity, so each stop is retried.
+    scriptContent: '''
+set -eu
+for app in $APP_IDS; do
+  attempt=1
+  until az rest --method post --url "${ARM_URL%/}${app}/stop?api-version=2024-03-01" --output none; do
+    if [ "$attempt" -ge 30 ]; then echo "Could not stop ${app}"; exit 1; fi
+    attempt=$((attempt + 1))
+    sleep 10
+  done
+  echo "Stopped ${app}"
+done
+'''
+  }
+  dependsOn: [
+    controlWhisperRole
+    controlGatewayRole
+  ]
+}
+
 output gatewayUrl string = gatewayUrl
 output whisperUrl string = whisperUrl
 output controlPlaneUrl string = controlPlaneUrl

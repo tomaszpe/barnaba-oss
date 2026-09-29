@@ -87,6 +87,15 @@ az deployment group create `
 The gateway and control-plane are public HTTPS endpoints. Whisper has internal ingress
 only: it has no end-user authentication and must not be exposed directly.
 
+Azure creates every Container App running. The template ends with a deployment script
+(`stopServiceApps`) that stops Whisper and the gateway with the control-plane identity, so no
+A100 replica runs until the operator starts the system. The script runs only on the first
+deployment; redeploying with a new password or PIN does not stop a running service.
+
+For congregations in Switzerland, [docs/GETTING_STARTED.md](../../docs/GETTING_STARTED.md#churches-and-organisations-in-switzerland)
+recommends Switzerland North for Azure OpenAI and Azure Speech. The apps stay in a region
+with an A100, because Switzerland North offers none.
+
 ### Pipeline settings
 
 `reference-settings.json` holds the settings of the project's reference environment:

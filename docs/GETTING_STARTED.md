@@ -80,6 +80,23 @@ long silences and skipped sentences, and the gateway log shows
 `FAILED: Translation provider rate limit`, then `FAILED: Translation provider circuit is open`.
 A deployment with 50,000 TPM failed this way with four languages and one listener each.
 
+### Churches and organisations in Switzerland
+
+We recommend Azure region **Switzerland North** (`switzerlandnorth`) for everything that
+can run there:
+
+- the **Azure OpenAI** resource, with a **Standard** deployment of `gpt-4.1`. A Standard
+  deployment processes the text in the region of the resource. The default quota for
+  `gpt-4.1` Standard in Switzerland North can be as low as 50,000 TPM; request more before
+  the first service (see the table above);
+- the **Azure Speech** resource; set `azureSpeechRegion` to `switzerlandnorth`.
+
+Switzerland North has **no A100 GPU** (`Consumption-GPU-NC24-A100`), which speech
+recognition needs. The template keeps the three apps (control panel, gateway and Whisper) in
+one environment, so they run in a region with an A100, for example Sweden Central. The
+sermon audio is recognised there; the translation and the spoken translation are produced in
+Switzerland.
+
 Your computer:
 
 - [Azure CLI](https://learn.microsoft.com/cli/azure/install-azure-cli) and Git.
@@ -193,15 +210,17 @@ az deployment group show --resource-group barnaba-oss-rg --name barnaba-apps `
 `controlPlaneUrl` is the address you need. The operator's page is
 **`<controlPlaneUrl>/admin.html`**. Keep that address private.
 
-Check that Whisper and the gateway are not running yet:
+The deployment leaves Whisper and the gateway stopped, so the GPU costs nothing until you
+start Barnaba. Check it:
 
 ```powershell
 az containerapp list --resource-group barnaba-oss-rg `
   --query "[].{name:name, state:properties.runningStatus}" --output table
 ```
 
-If either shows `Running`, stop it from the control panel ([section 7](#7-stop-barnaba))
-or with `az containerapp stop`.
+`barnaba-control` shows `Running`, `barnaba-whisper` and `barnaba-gateway` show `Stopped`.
+If either of the two shows `Running`, open the control panel and stop it as in
+[section 7](#7-stop-barnaba).
 
 ## 4. Start Barnaba
 
