@@ -36,7 +36,9 @@ There is **no bug bounty** and no payment.
 - The ASR service (`whisper/`), including its HTTP surface.
 - Anything that causes source audio, transcripts or translated text to reach a place it
   should not — that is the confidentiality property this project cares about most.
-- The container definitions and `docker-compose.yml` in this repository.
+- The container definitions in this repository.
+- The Azure reference deployment templates and scripts in `infra/azure/`, including
+  permissions, secret handling, network access and deployment defaults.
 
 **Out of scope:**
 
@@ -44,11 +46,15 @@ There is **no bug bounty** and no payment.
   ASR model itself are configured, not bundled. Report those to their owners.
 - **Any deployment you or a third party run.** This repository is application code; a
   specific instance is not ours.
-- **The reference deployment's infrastructure.** It is not part of this repository and its
-  configuration is not published here.
 - Missing hardening that the documentation already calls out as the deployer's
   responsibility — for example running without TLS in front of the gateway. If the
   documentation is what is wrong, that is a valid documentation issue.
+
+## Infrastructure improvements
+
+Suggestions to improve the Azure reference deployment are welcome through issues and
+pull requests. See CONTRIBUTING.md. Report security vulnerabilities privately using the
+channels above, rather than in a public issue or pull request.
 
 ## Things worth knowing before you report
 

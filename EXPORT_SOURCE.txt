@@ -5,6 +5,7 @@ source-commit:  424142a68d6f364592a6b9901af7ec6ddadf1fd8
 source-branch:  oss/product-dev-20260916
 commit-date:    2026-09-29T14:55:59+02:00
 worktree:       clean
+policy-adjustment: 2026-09-30; NOTICE and SECURITY.md updated after export by owner instruction
 tooling-commit: 424142a68d6f364592a6b9901af7ec6ddadf1fd8
 manifest:       tools/oss-export/manifest.txt (294 wpisow)
 generated:      tools/oss-export/generated.txt (36 plikow)
@@ -269,9 +270,9 @@ c2f92708f4af44cd96bb995b5a5e099b4e0a80d6910d87afbe4b3b45ff02a61a  infra/azure/pa
 f981e6223af847a047243cd2a68ae12e5022a3898754e5b75280ff5aae412290  infra/azure/reference-settings.json
 6c12c26d97306d9741795cb4d7c8187a909ded3cf6bc0989d585367487b206d9  infra/azure/smoke-test.ps1
 0d96a4ff68ad6d4b6f1f30f713b18d5184912ba8dd389f86aa7710db079abcb0  LICENSE
-42cf1ff8f6259f793d5b64bb5b75b545ebcdf18fb2849a0af6ce0ea1f0fc2951  NOTICE
+85cadb1195b1b89f8095effbad80ca881b4f38dab230d478be99930339ca0222  NOTICE
 58297633b744f44e7d1603fb6883b7f815834068953910269e01ec4bf3017a16  README.md
-f07cd041bb52b72da2a238ce215f112571cff0b27853018c04fcfb471274600c  SECURITY.md
+fa222c79cb827b0abf232c9feb1eae8907e253499e48e1a241f3c34754aeb358  SECURITY.md
 9d679d35eaacdc1ff6e7aa02f9d2a4ef6d95e5af981dc2ef3d9a86f3dd7f1596  TRADEMARKS.md
 d46779a52bfb360ee0df876e4c87a1e12e3b2ca83a5eed22d7ccbfc71205e52c  whisper/.dockerignore
 a6dca18f8173e4f26eaa770af03a3516995164e7e5debd6ebeecbbd8f740b220  whisper/__init__.py

@@ -48,11 +48,11 @@ different model regardless of how this code were licensed.
 
 For questions about use, deployment, or licensing, contact: tomaszpe@barnaba.ch
 
-Note on contributions: this project requires a signed Contributor License
-Agreement (CLA) before a contribution can be merged. See CLA.md and
-CONTRIBUTING.md. The CLA keeps the right to license the codebase as a whole in
-one pair of hands. Contributions received without a signed CLA cannot be
-merged.
+Note on contributions: this project does not require a Contributor License
+Agreement (CLA). Contributors keep their copyright. By intentionally submitting
+a contribution for inclusion in Barnaba, they agree that it may be distributed
+under the project's AGPL-3.0-or-later license. No separate right to relicense
+contributions is requested. See CONTRIBUTING.md.
 
 ------------------------------------------------------------------------------
 THIRD-PARTY MODELS AND SERVICES (not covered by this license)
